@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vendor Login - Timeless Moments</title>
+    <link rel="stylesheet" href="css/vendor-login.css">
+</head>
+<body>
+    <div class="header">
+        <h1>Timeless Moments</h1>
+        <p>Vendor Login</p>
+    </div>
+    
+    <div class="form-container">
+        <h2>Vendor Login</h2>
+        <form id="vendorLoginForm">
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" id="email" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="password" required>
+            </div>
+            
+            <div class="error-message" id="errorMessage" style="display: none;">
+                Invalid email or password!
+            </div>
+            
+            <div class="divider"></div>
+            
+            <button type="submit" class="submit-btn">Login</button>
+            
+            <div class="links">
+                <a href="vendor-forget-password.html">Forgot Password?</a>
+                <a href="vendor-register.html">Don't have an account? Register</a>
+            </div>
+        </form>
+    </div>
+    
+    <!-- Popup -->
+    <div class="popup" id="popup">
+        <div class="popup-content">
+            <h2>✅ Login Successful!</h2>
+            <p>Welcome back to Timeless Moments!</p>
+            <p>Redirecting to your dashboard...</p>
+            <div class="loading-bar">
+                <div class="loading-progress"></div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('vendorLoginForm');
+            const errorMessage = document.getElementById('errorMessage');
+            const popup = document.getElementById('popup');
+            
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+                
+                // Hide previous error message
+                errorMessage.style.display = 'none';
+                
+                // Get vendors from localStorage
+                const vendors = JSON.parse(localStorage.getItem('vendors')) || [];
+                
+                // Find vendor with matching email and password
+                const vendor = vendors.find(v => v.email === email && v.password === password);
+                
+                if (vendor) {
+                    // Login successful
+                    // Set current vendor session
+                    localStorage.setItem('currentVendor', JSON.stringify(vendor));
+                    
+                    // Show success popup
+                    popup.style.display = 'flex';
+                    
+                    // Redirect after 2 seconds
+                    setTimeout(() => {
+                        window.location.href = 'vendor-dashboard.html';
+                    }, 2000);
+                } else {
+                    // Login failed
+                    errorMessage.style.display = 'block';
+                }
+            });
+        });
+        
+        function closePopup() {
+            document.getElementById('popup').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

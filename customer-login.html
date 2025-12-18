@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Login - Timeless Moments</title>
+    <link rel="stylesheet" href="css/customer-login.css">
+</head>
+<body>
+    <div class="header">
+        <h1>Timeless Moments</h1>
+        <p>Customer Login</p>
+    </div>
+    
+    <div class="form-container">
+        <h2>Customer Login</h2>
+        <form id="loginForm">
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" id="email" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="password" required>
+            </div>
+            
+            <div class="error-message" id="errorMessage" style="display: none;">
+                Invalid email or password!
+            </div>
+            
+            <div class="divider"></div>
+            
+            <button type="submit" class="submit-btn">Login</button>
+            
+            <div class="links">
+                <a href="customer-forget-password.html">Forgot Password?</a>
+                <a href="customer-register.html">Don't have an account? Register</a>
+            </div>
+        </form>
+    </div>
+    
+    <!-- Popup -->
+    <div class="popup" id="popup">
+        <div class="popup-content">
+            <h2>✅ Login Successful!</h2>
+            <p>Welcome back to Timeless Moments!</p>
+            <button onclick="redirectToDashboard()">Continue</button>
+        </div>
+    </div>
+    
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const errorMessage = document.getElementById('errorMessage');
+            const popup = document.getElementById('popup');
+            
+            // Hide previous error message
+            errorMessage.style.display = 'none';
+            
+            // Get users from localStorage
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            
+            // Find user with matching email and password
+            const user = users.find(u => u.email === email && u.password === password);
+            
+            if (user) {
+                // Login successful
+                // Store current user session
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                
+                // Show success popup
+                popup.style.display = 'flex';
+                
+                // Redirect after 2 seconds
+                setTimeout(() => {
+                    window.location.href = "customer-dashboard.html";
+                }, 2000);
+            } else {
+                // Login failed
+                errorMessage.style.display = 'block';
+            }
+        });
+        
+        function redirectToDashboard() {
+            window.location.href = "customer-dashboard.html";
+        }
+    </script>
+</body>
+</html>

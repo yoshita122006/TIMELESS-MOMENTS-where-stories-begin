@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Services - Timeless Moments</title>
+  <style>
+    :root {
+      --light-blue: #e1f5fe;
+      --light-pink: #fce4ec;
+      --light-purple: #f3e5f5;
+      --medium-blue: #81d4fa;
+      --medium-pink: #f8bbd9;
+      --medium-purple: #e1bee7;
+      --dark-blue: #0288d1;
+      --dark-pink: #f06292;
+      --dark-purple: #8b5cf6;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, var(--light-purple) 0%, var(--light-blue) 50%, var(--light-pink) 100%);
+      min-height: 100vh;
+      color: #333;
+      background-attachment: fixed;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--medium-blue), var(--medium-pink), var(--medium-purple));
+      padding: 20px 0;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .logo h1 {
+      color: white;
+      font-size: 32px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .logo p {
+      color: white;
+      font-size: 14px;
+      opacity: 0.9;
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      flex-wrap: wrap;
+    }
+
+    nav ul li {
+      margin-left: 25px;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      padding: 8px 15px;
+      border-radius: 20px;
+      transition: all 0.3s ease;
+    }
+
+    nav ul li a:hover {
+      background: rgba(255,255,255,0.2);
+    }
+
+    .services {
+      padding: 60px 0;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 50px;
+      color: var(--dark-purple);
+      font-size: 32px;
+      background: rgba(255,255,255,0.8);
+      display: inline-block;
+      padding: 10px 30px;
+      border-radius: 20px;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+    }
+
+    .service-card {
+      background: white;
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+      transition: all 0.3s ease;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 280px;
+      color: #333;
+    }
+
+    .service-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.12);
+    }
+
+    .service-title {
+      color: var(--dark-blue);
+      margin-bottom: 15px;
+      font-size: 22px;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .service-card p {
+      color: #666;
+      margin-bottom: 20px;
+      line-height: 1.6;
+      text-align: center;
+    }
+
+    .service-btn {
+      background: linear-gradient(135deg, var(--light-blue), var(--light-pink));
+      color: var(--dark-purple);
+      padding: 10px 20px;
+      border-radius: 20px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      display: inline-block;
+      margin-top: auto;
+    }
+
+    .service-btn:hover {
+      background: linear-gradient(135deg, var(--medium-blue), var(--medium-pink));
+      color: white;
+      transform: scale(1.05);
+    }
+
+    footer {
+      background: linear-gradient(135deg, var(--medium-blue), var(--medium-pink), var(--medium-purple));
+      color: white;
+      padding: 40px 0;
+      text-align: center;
+      margin-top: 60px;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin: 20px 0;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      color: white;
+      text-decoration: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .footer-links a:hover {
+      opacity: 0.8;
+    }
+
+    .copyright {
+      margin-top: 20px;
+      opacity: 0.8;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <div class="logo">
+          <h1>Timeless Moments</h1>
+          <p>Where Stories Begin – Book All Event Services in One Place</p>
+        </div>
+        <nav>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="login form list in homepage.html">Login</a></li>
+            <li><a href="feedback form.html">Feedback</a></li>
+            <li><a href="about.html">About</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <section class="services">
+      <h2 class="section-title">Our Services</h2>
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-card-content">
+            <h3 class="service-title">Venue</h3>
+            <p>Find and book the perfect venue for your event. We offer a wide selection of beautiful locations for weddings, parties, and corporate events.</p>
+            <a href="venue-vendors.html" class="service-btn">Book Now</a>
+          </div>
+        </div>
+        <div class="service-card">
+          <div class="service-card-content">
+            <h3 class="service-title">Photography</h3>
+            <p>Capture your memories with professional photographers. Our team specializes in wedding, event, and portrait photography.</p>
+            <a href="photography-vendors.html" class="service-btn">Book Now</a>
+          </div>
+        </div>
+        <div class="service-card">
+          <div class="service-card-content">
+            <h3 class="service-title">Catering</h3>
+            <p>Delicious catering services for every occasion. From intimate gatherings to large events, we provide exceptional food experiences.</p>
+            <a href="catering-vendors.html" class="service-btn">Book Now</a>
+          </div>
+        </div>
+        <div class="service-card">
+          <div class="service-card-content">
+            <h3 class="service-title">Entertainment</h3>
+            <p>Hire entertainers to make your event lively. We offer DJs, live bands, performers, and other entertainment options.</p>
+            <a href="entertainment-vendor.html" class="service-btn">Book Now</a>
+          </div>
+        </div>
+        <div class="service-card">
+          <div class="service-card-content">
+            <h3 class="service-title">Decoration</h3>
+            <p>Elegant decorations to match your theme. Our creative team will transform your venue into a beautiful space.</p>
+            <a href="decoration-vendors.html" class="service-btn">Book Now</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <div class="container">
+      <div class="logo">
+        <h1>Timeless Moments</h1>
+        <p>Where Stories Begin – Book All Event Services in One Place</p>
+      </div>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="login form list in homepage.html">Login</a>
+        <a href="feedback form.html">Feedback</a>
+        <a href="about.html">About</a>
+      </div>
+      <div class="copyright">
+        &copy; 2025 Timeless Moments. All rights reserved.
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

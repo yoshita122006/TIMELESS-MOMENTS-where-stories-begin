@@ -1,0 +1,2971 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entertainment Services - Timeless Moments</title>
+    <link rel="stylesheet" href="common.css">
+    <style>
+        /* Additional specific styles for entertainment service if needed */
+        .shortlist-btn.added {
+            background: var(--success-green);
+            color: white;
+        }
+        
+        .shortlist-btn.added:hover {
+            background: #45a049;
+        }
+        
+        .duration-filter {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .duration-inputs {
+            display: flex;
+            gap: 10px;
+            margin-top: 5px;
+        }
+        
+        .duration-inputs input {
+            flex: 1;
+            padding: 10px;
+            border: 2px solid var(--light-blue);
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        /* Booking Modal Styles */
+.booking-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.booking-modal.show {
+    display: flex;
+}
+
+.booking-form-container {
+    background: white;
+    border-radius: 12px;
+    padding: 0;
+    width: 90%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.booking-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 25px;
+    border-bottom: 1px solid #eee;
+    background: var(--primary-color);
+    color: white;
+    border-radius: 12px 12px 0 0;
+}
+
+.booking-header h3 {
+    margin: 0;
+    font-size: 1.3rem;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#bookingForm {
+    padding: 25px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #333;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #e1e1e1;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: border-color 0.3s;
+    box-sizing: border-box;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+.form-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.form-actions .btn {
+    flex: 1;
+    padding: 12px;
+}
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Timeless Moments</h1>
+        <p>Find the Perfect Entertainment for Your Special Day</p>
+    </div>
+    
+    <div class="controls-container">
+        <div class="search-box">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="searchInput" placeholder="Search entertainment services by name, specialty, or location...">
+        </div>
+        
+        <div class="filters">
+            <div class="filter-group">
+                <label for="stateFilter">State</label>
+                <select id="stateFilter">
+                    <option value="all">All States</option>
+                    <option value="Andhra Pradesh">Andhra Pradesh</option>
+                    <option value="Telangana">Telangana</option>
+                    <option value="Karnataka">Karnataka</option>
+                    <option value="Kerala">Kerala</option>
+                    <option value="Tamil Nadu">Tamil Nadu</option>
+                </select>
+            </div>
+            
+            <div class="filter-group">
+                <label for="entertainmentTypeFilter">Entertainment Type</label>
+                <select id="entertainmentTypeFilter">
+                    <option value="all">All Types</option>
+                    <option value="DJ">DJ</option>
+                    <option value="Dance Group">Dance Group</option>
+                    <option value="Live Band">Live Band</option>
+                    <option value="Folk Music">Folk Music</option>
+                    <option value="Classical Music">Classical Music</option>
+                    <option value="Comedian">Comedian</option>
+                    <option value="Anchor">Anchor</option>
+                    <option value="Magic Show">Magic Show</option>
+                </select>
+            </div>
+            
+            <div class="filter-group duration-filter">
+                <label for="minDuration">Duration Range (hours)</label>
+                <div class="duration-inputs">
+                    <input type="number" id="minDuration" placeholder="Min" min="0">
+                    <input type="number" id="maxDuration" placeholder="Max" min="0">
+                </div>
+            </div>
+        </div>
+        
+        <button class="reset-filters" id="resetFilters">Reset All Filters</button>
+        
+        <div class="catering-stats">
+            <div class="stat-card">
+                <div class="stat-number" id="totalEntertainment">0</div>
+                <div class="stat-label">Total Entertainers</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="avgRating">0.0</div>
+                <div class="stat-label">Average Rating</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="statesCovered">0</div>
+                <div class="stat-label">States Covered</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="topRated">0</div>
+                <div class="stat-label">Top Rated (4.5+)</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="catering-container">
+        <div class="catering-grid" id="entertainmentGrid">
+            <!-- Entertainment cards will be dynamically inserted here -->
+        </div>
+    </div>
+
+    <div class="shortlist-toast" id="shortlistToast">
+        Service added to shortlist!
+    </div>
+    <!-- Booking Form Modal -->
+<div class="booking-modal" id="bookingModal">
+    <div class="booking-form-container">
+        <div class="booking-header">
+            <h3>Book Entertainment Service</h3>
+            <button class="close-btn" id="closeBookingForm">&times;</button>
+        </div>
+        <form id="bookingForm">
+            <div class="form-group">
+                <label for="customerName">Your Name *</label>
+                <input type="text" id="customerName" name="customerName" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="customerPhone">Phone Number *</label>
+                <input type="tel" id="customerPhone" name="customerPhone" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="customerEmail">Email Address</label>
+                <input type="email" id="customerEmail" name="customerEmail">
+            </div>
+            
+            <div class="form-group">
+                <label for="eventType">Event Type *</label>
+                <select id="eventType" name="eventType" required>
+                    <option value="">Select Event Type</option>
+                    <option value="wedding">Wedding</option>
+                    <option value="engagement">Engagement</option>
+                    <option value="birthday">Birthday</option>
+                    <option value="corporate">Corporate Event</option>
+                    <option value="anniversary">Anniversary</option>
+                    <option value="reception">Reception</option>
+                    <option value="sangeet">Sangeet</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="eventDate">Event Date *</label>
+                <input type="date" id="eventDate" name="eventDate" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="eventTime">Event Time *</label>
+                <input type="time" id="eventTime" name="eventTime" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="performanceDuration">Performance Duration (hours) *</label>
+                <input type="number" id="performanceDuration" name="performanceDuration" min="1" max="8" required placeholder="e.g., 3">
+            </div>
+            
+            <div class="form-group">
+                <label for="venueType">Venue Type *</label>
+                <select id="venueType" name="venueType" required>
+                    <option value="">Select Venue Type</option>
+                    <option value="indoor">Indoor Hall</option>
+                    <option value="outdoor">Outdoor Garden</option>
+                    <option value="hotel">Hotel Ballroom</option>
+                    <option value="home">Home/Residence</option>
+                    <option value="community">Community Hall</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="eventAddress">Event Venue Address *</label>
+                <textarea id="eventAddress" name="eventAddress" rows="3" required></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="musicPreference">Music/Performance Preference</label>
+                <select id="musicPreference" name="musicPreference">
+                    <option value="">Select Preference</option>
+                    <option value="bollywood">Bollywood</option>
+                    <option value="regional">Regional Language</option>
+                    <option value="international">International</option>
+                    <option value="classical">Classical</option>
+                    <option value="folk">Folk/Traditional</option>
+                    <option value="mix">Mix of Everything</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="performanceStyle">Performance Style Preference</label>
+                <textarea id="performanceStyle" name="performanceStyle" rows="2" placeholder="Any specific dance styles, comedy themes, or magic preferences..."></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="specialRequirements">Special Requirements</label>
+                <textarea id="specialRequirements" name="specialRequirements" rows="3" placeholder="Any specific songs, cultural elements, technical requirements, or special arrangements..."></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="audienceSize">Expected Audience Size</label>
+                <input type="number" id="audienceSize" name="audienceSize" min="1" placeholder="Approximate number of guests">
+            </div>
+            
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" id="cancelBooking">Cancel</button>
+                <button type="submit" class="btn btn-primary">Submit Booking Request</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+    <script>
+        // Entertainment data with packages for all 40 entertainers
+        const entertainmentData = {
+            "Andhra Pradesh": [
+                {
+                    "id": 161,
+                    "name": "Vizag Beats Entertainment",
+                    "specialty": "DJ",
+                    "rating": 4.3,
+                    "price": "₹10,000 - ₹25,000",
+                    "image": "https://www.showtimeevent.com/blog/wp-content/uploads/2025/03/dj-artist-in-udaipur.png",
+                    "experience": "4 years",
+                    "features": ["Bollywood Music", "International Hits", "Lighting Effects", "Sound System"],
+                    "contact": {"phone": "+91 9876543210"},
+                    "packages": [
+                        {
+                            "name": "Basic DJ Package",
+                            "price": "₹10,000",
+                            "features": [
+                                "3 hours performance",
+                                "Basic sound system",
+                                "Standard lighting",
+                                "Bollywood & International music",
+                                "1 DJ"
+                            ]
+                        },
+                        {
+                            "name": "Standard DJ Package",
+                            "price": "₹17,500",
+                            "features": [
+                                "5 hours performance",
+                                "Professional sound system",
+                                "Enhanced lighting effects",
+                                "Custom playlist creation",
+                                "2 DJs with MC support"
+                            ]
+                        },
+                        {
+                            "name": "Premium DJ Package",
+                            "price": "₹25,000",
+                            "features": [
+                                "8 hours performance",
+                                "Premium sound system",
+                                "Advanced lighting & laser effects",
+                                "Personalized music consultation",
+                                "2 DJs + MC + Assistant",
+                                "Special effects (smoke/fog)"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 162,
+                    "name": "Tirupati Rhythm Crew",
+                    "specialty": "Dance Group",
+                    "rating": 4.4,
+                    "price": "₹12,000 - ₹28,000",
+                    "image": "https://getethnic.com/wp-content/uploads/2021/12/Indian-Dance-Costumes-23-1.jpg",
+                    "experience": "5 years",
+                    "features": ["Traditional Dance", "Bollywood Dance", "Folk Dance", "Costume Changes"],
+                    "contact": {"phone": "+91 9876543211"},
+                    "packages": [
+                        {
+                            "name": "Basic Dance Package",
+                            "price": "₹12,000",
+                            "features": [
+                                "2 dance performances (15 mins each)",
+                                "4 dancers",
+                                "Traditional costumes",
+                                "Basic choreography",
+                                "Soundtrack provided"
+                            ]
+                        },
+                        {
+                            "name": "Standard Dance Package",
+                            "price": "₹20,000",
+                            "features": [
+                                "3 dance performances (20 mins each)",
+                                "6 dancers",
+                                "Traditional & Bollywood costumes",
+                                "Advanced choreography",
+                                "Live music coordination"
+                            ]
+                        },
+                        {
+                            "name": "Premium Dance Package",
+                            "price": "₹28,000",
+                            "features": [
+                                "4 dance performances (25 mins each)",
+                                "8 dancers",
+                                "Multiple costume changes",
+                                "Professional choreography",
+                                "Live musicians included",
+                                "Audience interaction"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 163,
+                    "name": "Vijayawada Live Tunes",
+                    "specialty": "Live Band",
+                    "rating": 4.5,
+                    "price": "₹14,000 - ₹31,000",
+                    "image": "https://www.showtimeevent.com/blog/wp-content/uploads/2025/03/live-band-in-visakhapatnam.png",
+                    "experience": "6 years",
+                    "features": ["Live Vocals", "Multiple Instruments", "Bilingual Performance", "Custom Songs"],
+                    "contact": {"phone": "+91 9876543212"},
+                    "packages": [
+                        {
+                            "name": "Basic Band Package",
+                            "price": "₹14,000",
+                            "features": [
+                                "3 hours performance",
+                                "3-piece band (vocals, guitar, drums)",
+                                "Popular covers",
+                                "Basic sound system",
+                                "1 set list"
+                            ]
+                        },
+                        {
+                            "name": "Standard Band Package",
+                            "price": "₹22,500",
+                            "features": [
+                                "5 hours performance",
+                                "5-piece band (vocals, guitar, drums, keyboard, bass)",
+                                "Extended song list",
+                                "Professional sound system",
+                                "Custom song requests"
+                            ]
+                        },
+                        {
+                            "name": "Premium Band Package",
+                            "price": "₹31,000",
+                            "features": [
+                                "8 hours performance",
+                                "7-piece band with backup vocals",
+                                "Unlimited song requests",
+                                "Premium sound system",
+                                "Original compositions",
+                                "Audience participation"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 164,
+                    "name": "Rayalaseema Folk Vibes",
+                    "specialty": "Folk Music",
+                    "rating": 4.6,
+                    "price": "₹16,000 - ₹34,000",
+                    "image": "https://gostops.com/blog/wp-content/uploads/2017/07/folk-music-1.jpg",
+                    "experience": "7 years",
+                    "features": ["Traditional Instruments", "Folk Songs", "Cultural Performance", "Regional Music"],
+                    "contact": {"phone": "+91 9876543213"},
+                    "packages": [
+                        {
+                            "name": "Basic Folk Package",
+                            "price": "₹16,000",
+                            "features": [
+                                "2 hours performance",
+                                "3 folk artists",
+                                "Traditional instruments",
+                                "Regional folk songs",
+                                "Basic sound setup"
+                            ]
+                        },
+                        {
+                            "name": "Standard Folk Package",
+                            "price": "₹25,000",
+                            "features": [
+                                "4 hours performance",
+                                "5 folk artists",
+                                "Multiple traditional instruments",
+                                "Extended folk repertoire",
+                                "Professional sound system"
+                            ]
+                        },
+                        {
+                            "name": "Premium Folk Package",
+                            "price": "₹34,000",
+                            "features": [
+                                "6 hours performance",
+                                "7 folk artists with dancers",
+                                "Complete traditional ensemble",
+                                "Custom folk arrangements",
+                                "Premium sound system",
+                                "Cultural narration"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 165,
+                    "name": "Amaravati Classical Beats",
+                    "specialty": "Classical Music",
+                    "rating": 4.7,
+                    "price": "₹18,000 - ₹37,000",
+                    "image": "https://static2.tripoto.com/media/filter/tst/img/45716/TripDocument/1486534348_screen_shot_2017_02_08_at_11_41_48_am.png",
+                    "experience": "8 years",
+                    "features": ["Carnatic Music", "Hindustani Music", "Traditional Instruments", "Vocal Performance"],
+                    "contact": {"phone": "+91 9876543214"},
+                    "packages": [
+                        {
+                            "name": "Basic Classical Package",
+                            "price": "₹18,000",
+                            "features": [
+                                "2 hours performance",
+                                "2 classical artists",
+                                "Vocal & instrumental",
+                                "Traditional ragas",
+                                "Basic sound system"
+                            ]
+                        },
+                        {
+                            "name": "Standard Classical Package",
+                            "price": "₹27,500",
+                            "features": [
+                                "4 hours performance",
+                                "4 classical artists",
+                                "Multiple instruments",
+                                "Extended classical repertoire",
+                                "Professional sound system"
+                            ]
+                        },
+                        {
+                            "name": "Premium Classical Package",
+                            "price": "₹37,000",
+                            "features": [
+                                "6 hours performance",
+                                "6 classical artists ensemble",
+                                "Complete classical experience",
+                                "Custom classical arrangements",
+                                "Premium acoustic system",
+                                "Musical narration"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 166,
+                    "name": "Guntur Laugh Factory",
+                    "specialty": "Comedian",
+                    "rating": 4.3,
+                    "price": "₹20,000 - ₹40,000",
+                    "image": "https://content.jdmagicbox.com/v2/comp/jodhpur/g7/0291px291.x291.240704005043.g4g7/catalogue/sahil-horane-jodhpur-comedians-79lhcddwml-250.jpg",
+                    "experience": "9 years",
+                    "features": ["Stand-up Comedy", "Roast Sessions", "Audience Interaction", "Clean Humor"],
+                    "contact": {"phone": "+91 9876543215"},
+                    "packages": [
+                        {
+                            "name": "Basic Comedy Package",
+                            "price": "₹20,000",
+                            "features": [
+                                "1 hour stand-up performance",
+                                "Clean family humor",
+                                "Basic audience interaction",
+                                "Pre-written material",
+                                "1 comedian"
+                            ]
+                        },
+                        {
+                            "name": "Standard Comedy Package",
+                            "price": "₹30,000",
+                            "features": [
+                                "2 hours comedy performance",
+                                "Interactive comedy",
+                                "Customized jokes for event",
+                                "Roast sessions available",
+                                "1 comedian + assistant"
+                            ]
+                        },
+                        {
+                            "name": "Premium Comedy Package",
+                            "price": "₹40,000",
+                            "features": [
+                                "3 hours comedy extravaganza",
+                                "Multiple comedy formats",
+                                "Fully customized content",
+                                "Interactive games & roasts",
+                                "2 comedians + host",
+                                "Post-event meet & greet"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 167,
+                    "name": "Kakinada Event Anchors",
+                    "specialty": "Anchor",
+                    "rating": 4.4,
+                    "price": "₹22,000 - ₹43,000",
+                    "image": "https://images.unsplash.com/photo-1493863641943-9b68992a8d07?w=800",
+                    "experience": "10 years",
+                    "features": ["Bilingual Anchoring", "Event Management", "Audience Engagement", "Script Writing"],
+                    "contact": {"phone": "+91 9876543216"},
+                    "packages": [
+                        {
+                            "name": "Basic Anchoring Package",
+                            "price": "₹22,000",
+                            "features": [
+                                "4 hours anchoring",
+                                "Bilingual hosting",
+                                "Basic event flow management",
+                                "Pre-written scripts",
+                                "1 anchor"
+                            ]
+                        },
+                        {
+                            "name": "Standard Anchoring Package",
+                            "price": "₹32,500",
+                            "features": [
+                                "6 hours anchoring",
+                                "Multilingual hosting",
+                                "Complete event coordination",
+                                "Customized scripts",
+                                "1 anchor + assistant"
+                            ]
+                        },
+                        {
+                            "name": "Premium Anchoring Package",
+                            "price": "₹43,000",
+                            "features": [
+                                "8 hours complete hosting",
+                                "Expert multilingual anchoring",
+                                "Full event production",
+                                "Live script adaptation",
+                                "2 anchors team",
+                                "Pre-event coordination"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 168,
+                    "name": "Rajahmundry Magic Moments",
+                    "specialty": "Magic Show",
+                    "rating": 4.5,
+                    "price": "₹24,000 - ₹46,000",
+                    "image": "https://eventorganizers.in/wp-content/uploads/2022/10/magician-in-rajahmundry.webp",
+                    "experience": "11 years",
+                    "features": ["Close-up Magic", "Stage Magic", "Illusions", "Audience Participation"],
+                    "contact": {"phone": "+91 9876543217"},
+                    "packages": [
+                        {
+                            "name": "Basic Magic Package",
+                            "price": "₹24,000",
+                            "features": [
+                                "1 hour magic performance",
+                                "Close-up magic tricks",
+                                "Basic stage illusions",
+                                "Audience participation",
+                                "1 magician"
+                            ]
+                        },
+                        {
+                            "name": "Standard Magic Package",
+                            "price": "₹35,000",
+                            "features": [
+                                "2 hours magic show",
+                                "Close-up & stage magic",
+                                "Advanced illusions",
+                                "Enhanced audience interaction",
+                                "1 magician + assistant"
+                            ]
+                        },
+                        {
+                            "name": "Premium Magic Package",
+                            "price": "₹46,000",
+                            "features": [
+                                "3 hours magical experience",
+                                "All magic formats",
+                                "Grand illusions",
+                                "Full audience engagement",
+                                "2 magicians team",
+                                "Special effects"
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "Tamil Nadu": [
+                {
+                    "id": 169,
+                    "name": "Chennai Sound Surge",
+                    "specialty": "DJ",
+                    "rating": 4.3,
+                    "price": "₹10,000 - ₹25,000",
+                    "image": "https://image.wedmegood.com/resized/720X/uploads/member/785583/1732820246_InShot_20240425_205709855.jpg?crop=0,0,1920,1920",
+                    "experience": "4 years",
+                    "features": ["Tamil Music", "International Mix", "Lighting Effects", "Professional Equipment"],
+                    "contact": {"phone": "+91 9876543220"},
+                    "packages": [
+                        {
+                            "name": "Metro DJ Package",
+                            "price": "₹10,000",
+                            "features": [
+                                "3 hours performance",
+                                "Tamil & International music",
+                                "Basic lighting effects",
+                                "Standard sound system",
+                                "1 DJ"
+                            ]
+                        },
+                        {
+                            "name": "Urban DJ Package",
+                            "price": "₹17,500",
+                            "features": [
+                                "5 hours performance",
+                                "Extended music library",
+                                "Enhanced lighting effects",
+                                "Professional sound system",
+                                "2 DJs with MC"
+                            ]
+                        },
+                        {
+                            "name": "City DJ Package",
+                            "price": "₹25,000",
+                            "features": [
+                                "8 hours performance",
+                                "Complete music spectrum",
+                                "Advanced lighting & effects",
+                                "Premium sound system",
+                                "2 DJs + MC + Assistant",
+                                "Special effects"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 170,
+                    "name": "Coimbatore Groovers",
+                    "specialty": "Dance Group",
+                    "rating": 4.4,
+                    "price": "₹12,000 - ₹28,000",
+                    "image": "https://content.jdmagicbox.com/comp/coimbatore/s7/0422px422.x422.150217004528.q6s7/catalogue/the-steppers-dance-n-fitness-studio-singanallur-coimbatore-dance-classes-19zslmv.jpg",
+                    "experience": "5 years",
+                    "features": ["Tamil Dance", "Western Dance", "Fusion", "Costume Variety"],
+                    "contact": {"phone": "+91 9876543221"},
+                    "packages": [
+                        {
+                            "name": "City Dance Package",
+                            "price": "₹12,000",
+                            "features": [
+                                "2 dance performances",
+                                "4 dancers",
+                                "Traditional Tamil costumes",
+                                "Basic choreography",
+                                "Music provided"
+                            ]
+                        },
+                        {
+                            "name": "Metro Dance Package",
+                            "price": "₹20,000",
+                            "features": [
+                                "3 dance performances",
+                                "6 dancers",
+                                "Traditional & Western costumes",
+                                "Advanced choreography",
+                                "Live music coordination"
+                            ]
+                        },
+                        {
+                            "name": "Urban Dance Package",
+                            "price": "₹28,000",
+                            "features": [
+                                "4 dance performances",
+                                "8 dancers",
+                                "Multiple costume changes",
+                                "Professional choreography",
+                                "Live musicians included",
+                                "Audience interaction"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 171,
+                    "name": "Madurai Melody Makers",
+                    "specialty": "Live Band",
+                    "rating": 4.5,
+                    "price": "₹14,000 - ₹31,000",
+                    "image": "https://content.jdmagicbox.com/comp/madurai/g7/0452px452.x452.230120143020.p1g7/catalogue/madura-makka-madurai-city-madurai-rock-bands-chbwa8bn9c.jpg",
+                    "experience": "6 years",
+                    "features": ["Tamil Songs", "Live Vocals", "Multiple Instruments", "Custom Arrangements"],
+                    "contact": {"phone": "+91 9876543222"},
+                    "packages": [
+                        {
+                            "name": "Heritage Band Package",
+                            "price": "₹14,000",
+                            "features": [
+                                "3 hours performance",
+                                "3-piece band",
+                                "Tamil film songs",
+                                "Basic sound system",
+                                "1 set list"
+                            ]
+                        },
+                        {
+                            "name": "Classic Band Package",
+                            "price": "₹22,500",
+                            "features": [
+                                "5 hours performance",
+                                "5-piece band",
+                                "Extended Tamil repertoire",
+                                "Professional sound system",
+                                "Custom song requests"
+                            ]
+                        },
+                        {
+                            "name": "Royal Band Package",
+                            "price": "₹31,000",
+                            "features": [
+                                "8 hours performance",
+                                "7-piece band with backup",
+                                "Unlimited song requests",
+                                "Premium sound system",
+                                "Original Tamil compositions",
+                                "Audience participation"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 172,
+                    "name": "Salem Folk Beats",
+                    "specialty": "Folk Music",
+                    "rating": 4.6,
+                    "price": "₹16,000 - ₹34,000",
+                    "image": "https://cdn-cms.orchidsinternationalschool.com/blog/Tamilnadu%20Folk%20Songs.jpg",
+                    "experience": "7 years",
+                    "features": ["Tamil Folk", "Traditional Instruments", "Cultural Performance", "Regional Songs"],
+                    "contact": {"phone": "+91 9876543223"},
+                    "packages": [
+                        {
+                            "name": "Traditional Folk Package",
+                            "price": "₹16,000",
+                            "features": [
+                                "2 hours performance",
+                                "3 folk artists",
+                                "Tamil folk instruments",
+                                "Regional folk songs",
+                                "Basic sound setup"
+                            ]
+                        },
+                        {
+                            "name": "Cultural Folk Package",
+                            "price": "₹25,000",
+                            "features": [
+                                "4 hours performance",
+                                "5 folk artists",
+                                "Multiple traditional instruments",
+                                "Extended folk repertoire",
+                                "Professional sound system"
+                            ]
+                        },
+                        {
+                            "name": "Heritage Folk Package",
+                            "price": "₹34,000",
+                            "features": [
+                                "6 hours performance",
+                                "7 folk artists with dancers",
+                                "Complete traditional ensemble",
+                                "Custom folk arrangements",
+                                "Premium sound system",
+                                "Cultural narration"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 173,
+                    "name": "Trichy Classical Ensemble",
+                    "specialty": "Classical Music",
+                    "rating": 4.7,
+                    "price": "₹18,000 - ₹37,000",
+                    "image": "https://bridgeacademy.in/uploads/gradesyllabus/wuidm6mDfwpaSTjANy76gIQmCD5i8OQoTPlSGYKf230418123845.jpg",
+                    "experience": "8 years",
+                    "features": ["Carnatic Music", "Traditional Instruments", "Vocal Performance", "Raga Exploration"],
+                    "contact": {"phone": "+91 9876543224"},
+                    "packages": [
+                        {
+                            "name": "Classical Basic Package",
+                            "price": "₹18,000",
+                            "features": [
+                                "2 hours performance",
+                                "2 classical artists",
+                                "Vocal & instrumental",
+                                "Traditional ragas",
+                                "Basic sound system"
+                            ]
+                        },
+                        {
+                            "name": "Classical Standard Package",
+                            "price": "₹27,500",
+                            "features": [
+                                "4 hours performance",
+                                "4 classical artists",
+                                "Multiple instruments",
+                                "Extended classical repertoire",
+                                "Professional sound system"
+                            ]
+                        },
+                        {
+                            "name": "Classical Premium Package",
+                            "price": "₹37,000",
+                            "features": [
+                                "6 hours performance",
+                                "6 classical artists ensemble",
+                                "Complete classical experience",
+                                "Custom classical arrangements",
+                                "Premium acoustic system",
+                                "Musical narration"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 174,
+                    "name": "Erode Laugh Lounge",
+                    "specialty": "Comedian",
+                    "rating": 4.3,
+                    "price": "₹20,000 - ₹40,000",
+                    "image": "https://engage4more.com/blog/wp-content/uploads/2022/09/Stand-up-Comedian-Aravind-SA-1-1024x683.jpg",
+                    "experience": "9 years",
+                    "features": ["Tamil Comedy", "Stand-up", "Audience Interaction", "Family Humor"],
+                    "contact": {"phone": "+91 9876543225"},
+                    "packages": [
+                        {
+                            "name": "Comedy Basic Package",
+                            "price": "₹20,000",
+                            "features": [
+                                "1 hour stand-up performance",
+                                "Tamil comedy content",
+                                "Clean family humor",
+                                "Basic audience interaction",
+                                "1 comedian"
+                            ]
+                        },
+                        {
+                            "name": "Comedy Standard Package",
+                            "price": "₹30,000",
+                            "features": [
+                                "2 hours comedy performance",
+                                "Interactive Tamil comedy",
+                                "Customized jokes for event",
+                                "Roast sessions available",
+                                "1 comedian + assistant"
+                            ]
+                        },
+                        {
+                            "name": "Comedy Premium Package",
+                            "price": "₹40,000",
+                            "features": [
+                                "3 hours comedy extravaganza",
+                                "Multiple comedy formats",
+                                "Fully customized content",
+                                "Interactive games & roasts",
+                                "2 comedians + host",
+                                "Post-event meet & greet"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 175,
+                    "name": "Vellore Event Anchors",
+                    "specialty": "Anchor",
+                    "rating": 4.4,
+                    "price": "₹22,000 - ₹43,000",
+                    "image": "https://tamil-nadu.theartistplanet.in/assets/images/anchor-female-tamil-nadu-5a.jpg",
+                    "experience": "10 years",
+                    "features": ["Tamil Anchoring", "Event Management", "Audience Engagement", "Script Writing"],
+                    "contact": {"phone": "+91 9876543226"},
+                    "packages": [
+                        {
+                            "name": "Basic Anchoring Package",
+                            "price": "₹22,000",
+                            "features": [
+                                "4 hours anchoring",
+                                "Tamil & English hosting",
+                                "Basic event flow management",
+                                "Pre-written scripts",
+                                "1 anchor"
+                            ]
+                        },
+                        {
+                            "name": "Standard Anchoring Package",
+                            "price": "₹32,500",
+                            "features": [
+                                "6 hours anchoring",
+                                "Multilingual hosting",
+                                "Complete event coordination",
+                                "Customized scripts",
+                                "1 anchor + assistant"
+                            ]
+                        },
+                        {
+                            "name": "Premium Anchoring Package",
+                            "price": "₹43,000",
+                            "features": [
+                                "8 hours complete hosting",
+                                "Expert multilingual anchoring",
+                                "Full event production",
+                                "Live script adaptation",
+                                "2 anchors team",
+                                "Pre-event coordination"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 176,
+                    "name": "Ooty Magic Circle",
+                    "specialty": "Magic Show",
+                    "rating": 4.5,
+                    "price": "₹24,000 - ₹46,000",
+                    "image": "https://artistsimages.b-cdn.net/magician-prabhu/magician-prabhu-1.jpg?width=3840&quality=100&format=webp&flop=false",
+                    "experience": "11 years",
+                    "features": ["Close-up Magic", "Stage Magic", "Illusions", "Audience Participation"],
+                    "contact": {"phone": "+91 9876543227"},
+                    "packages": [
+                        {
+                            "name": "Basic Magic Package",
+                            "price": "₹24,000",
+                            "features": [
+                                "1 hour magic performance",
+                                "Close-up magic tricks",
+                                "Basic stage illusions",
+                                "Audience participation",
+                                "1 magician"
+                            ]
+                        },
+                        {
+                            "name": "Standard Magic Package",
+                            "price": "₹35,000",
+                            "features": [
+                                "2 hours magic show",
+                                "Close-up & stage magic",
+                                "Advanced illusions",
+                                "Enhanced audience interaction",
+                                "1 magician + assistant"
+                            ]
+                        },
+                        {
+                            "name": "Premium Magic Package",
+                            "price": "₹46,000",
+                            "features": [
+                                "3 hours magical experience",
+                                "All magic formats",
+                                "Grand illusions",
+                                "Full audience engagement",
+                                "2 magicians team",
+                                "Special effects"
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "Karnataka": [
+                {
+                    "id": 177,
+                    "name": "Bangalore Beat Box",
+                    "specialty": "DJ",
+                    "rating": 4.3,
+                    "price": "₹10,000 - ₹25,000",
+                    "image": "https://images.unsplash.com/photo-1586083702768-190b0532daed?w=800",
+                    "experience": "4 years",
+                    "features": ["Kannada Music", "International Hits", "Lighting Effects", "Sound System"],
+                    "contact": {"phone": "+91 9876543230"},
+                    "packages": [
+                        {
+                            "name": "Basic DJ Package",
+                            "price": "₹10,000",
+                            "features": [
+                                "3 hours performance",
+                                "Basic sound system",
+                                "Standard lighting",
+                                "Kannada & International music",
+                                "1 DJ"
+                            ]
+                        },
+                        {
+                            "name": "Standard DJ Package",
+                            "price": "₹17,500",
+                            "features": [
+                                "5 hours performance",
+                                "Professional sound system",
+                                "Enhanced lighting effects",
+                                "Custom playlist creation",
+                                "2 DJs with MC support"
+                            ]
+                        },
+                        {
+                            "name": "Premium DJ Package",
+                            "price": "₹25,000",
+                            "features": [
+                                "8 hours performance",
+                                "Premium sound system",
+                                "Advanced lighting & laser effects",
+                                "Personalized music consultation",
+                                "2 DJs + MC + Assistant",
+                                "Special effects (smoke/fog)"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 178,
+                    "name": "Mysuru Moves",
+                    "specialty": "Dance Group",
+                    "rating": 4.4,
+                    "price": "₹12,000 - ₹28,000",
+                    "image": "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=800",
+                    "experience": "5 years",
+                    "features": ["Traditional Dance", "Bollywood Dance", "Folk Dance", "Costume Changes"],
+                    "contact": {"phone": "+91 9876543231"},
+                    "packages": [
+                        {
+                            "name": "Basic Dance Package",
+                            "price": "₹12,000",
+                            "features": [
+                                "2 dance performances (15 mins each)",
+                                "4 dancers",
+                                "Traditional costumes",
+                                "Basic choreography",
+                                "Soundtrack provided"
+                            ]
+                        },
+                        {
+                            "name": "Standard Dance Package",
+                            "price": "₹20,000",
+                            "features": [
+                                "3 dance performances (20 mins each)",
+                                "6 dancers",
+                                "Traditional & Bollywood costumes",
+                                "Advanced choreography",
+                                "Live music coordination"
+                            ]
+                        },
+                        {
+                            "name": "Premium Dance Package",
+                            "price": "₹28,000",
+                            "features": [
+                                "4 dance performances (25 mins each)",
+                                "8 dancers",
+                                "Multiple costume changes",
+                                "Professional choreography",
+                                "Live musicians included",
+                                "Audience interaction"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 179,
+                    "name": "Hubli Harmony Band",
+                    "specialty": "Live Band",
+                    "rating": 4.5,
+                    "price": "₹14,000 - ₹31,000",
+                    "image": "https://images.unsplash.com/photo-1554048612-b6a482bc67e5?w=800",
+                    "experience": "6 years",
+                    "features": ["Live Vocals", "Multiple Instruments", "Bilingual Performance", "Custom Songs"],
+                    "contact": {"phone": "+91 9876543232"},
+                    "packages": [
+                        {
+                            "name": "Basic Band Package",
+                            "price": "₹14,000",
+                            "features": [
+                                "3 hours performance",
+                                "3-piece band (vocals, guitar, drums)",
+                                "Popular covers",
+                                "Basic sound system",
+                                "1 set list"
+                            ]
+                        },
+                        {
+                            "name": "Standard Band Package",
+                            "price": "₹22,500",
+                            "features": [
+                                "5 hours performance",
+                                "5-piece band (vocals, guitar, drums, keyboard, bass)",
+                                "Extended song list",
+                                "Professional sound system",
+                                "Custom song requests"
+                            ]
+                        },
+                        {
+                            "name": "Premium Band Package",
+                            "price": "₹31,000",
+                            "features": [
+                                "8 hours performance",
+                                "7-piece band with backup vocals",
+                                "Unlimited song requests",
+                                "Premium sound system",
+                                "Original compositions",
+                                "Audience participation"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 180,
+                    "name": "Mangalore Folk Beats",
+                    "specialty": "Folk Music",
+                    "rating": 4.6,
+                    "price": "₹16,000 - ₹34,000",
+                    "image": "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=800",
+                    "experience": "7 years",
+                    "features": ["Traditional Instruments", "Folk Songs", "Cultural Performance", "Regional Music"],
+                    "contact": {"phone": "+91 9876543233"},
+                    "packages": [
+                        {
+                            "name": "Basic Folk Package",
+                            "price": "₹16,000",
+                            "features": [
+                                "2 hours performance",
+                                "3 folk artists",
+                                "Traditional instruments",
+                                "Regional folk songs",
+                                "Basic sound setup"
+                            ]
+                        },
+                        {
+                            "name": "Standard Folk Package",
+                            "price": "₹25,000",
+                            "features": [
+                                "4 hours performance",
+                                "5 folk artists",
+                                "Multiple traditional instruments",
+                                "Extended folk repertoire",
+                                "Professional sound system"
+                            ]
+                        },
+                        {
+                            "name": "Premium Folk Package",
+                            "price": "₹34,000",
+                            "features": [
+                                "6 hours performance",
+                                "7 folk artists with dancers",
+                                "Complete traditional ensemble",
+                                "Custom folk arrangements",
+                                "Premium sound system",
+                                "Cultural narration"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 181,
+                    "name": "Udupi Classical Strings",
+                    "specialty": "Classical Music",
+                    "rating": 4.7,
+                    "price": "₹18,000 - ₹37,000",
+                    "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800",
+                    "experience": "8 years",
+                    "features": ["Carnatic Music", "Hindustani Music", "Traditional Instruments", "Vocal Performance"],
+                    "contact": {"phone": "+91 9876543234"},
+                    "packages": [
+                        {
+                            "name": "Basic Classical Package",
+                            "price": "₹18,000",
+                            "features": [
+                                "2 hours performance",
+                                "2 classical artists",
+                                "Vocal & instrumental",
+                                "Traditional ragas",
+                                "Basic sound system"
+                            ]
+                        },
+                        {
+                            "name": "Standard Classical Package",
+                            "price": "₹27,500",
+                            "features": [
+                                "4 hours performance",
+                                "4 classical artists",
+                                "Multiple instruments",
+                                "Extended classical repertoire",
+                                "Professional sound system"
+                            ]
+                        },
+                        {
+                            "name": "Premium Classical Package",
+                            "price": "₹37,000",
+                            "features": [
+                                "6 hours performance",
+                                "6 classical artists ensemble",
+                                "Complete classical experience",
+                                "Custom classical arrangements",
+                                "Premium acoustic system",
+                                "Musical narration"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 182,
+                    "name": "Belgaum Comedy Crew",
+                    "specialty": "Comedian",
+                    "rating": 4.3,
+                    "price": "₹20,000 - ₹40,000",
+                    "image": "https://images.unsplash.com/photo-1524250502761-1ac6f2e30d43?w=800",
+                    "experience": "9 years",
+                    "features": ["Stand-up Comedy", "Roast Sessions", "Audience Interaction", "Clean Humor"],
+                    "contact": {"phone": "+91 9876543235"},
+                    "packages": [
+                        {
+                            "name": "Basic Comedy Package",
+                            "price": "₹20,000",
+                            "features": [
+                                "1 hour stand-up performance",
+                                "Clean family humor",
+                                "Basic audience interaction",
+                                "Pre-written material",
+                                "1 comedian"
+                            ]
+                        },
+                        {
+                            "name": "Standard Comedy Package",
+                            "price": "₹30,000",
+                            "features": [
+                                "2 hours comedy performance",
+                                "Interactive comedy",
+                                "Customized jokes for event",
+                                "Roast sessions available",
+                                "1 comedian + assistant"
+                            ]
+                        },
+                        {
+                            "name": "Premium Comedy Package",
+                            "price": "₹40,000",
+                            "features": [
+                                "3 hours comedy extravaganza",
+                                "Multiple comedy formats",
+                                "Fully customized content",
+                                "Interactive games & roasts",
+                                "2 comedians + host",
+                                "Post-event meet & greet"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 183,
+                    "name": "Davangere Anchors Hub",
+                    "specialty": "Anchor",
+                    "rating": 4.4,
+                    "price": "₹22,000 - ₹43,000",
+                    "image": "https://images.unsplash.com/photo-1493863641943-9b68992a8d07?w=800",
+                    "experience": "10 years",
+                    "features": ["Bilingual Anchoring", "Event Management", "Audience Engagement", "Script Writing"],
+                    "contact": {"phone": "+91 9876543236"},
+                    "packages": [
+                        {
+                            "name": "Basic Anchoring Package",
+                            "price": "₹22,000",
+                            "features": [
+                                "4 hours anchoring",
+                                "Bilingual hosting",
+                                "Basic event flow management",
+                                "Pre-written scripts",
+                                "1 anchor"
+                            ]
+                        },
+                        {
+                            "name": "Standard Anchoring Package",
+                            "price": "₹32,500",
+                            "features": [
+                                "6 hours anchoring",
+                                "Multilingual hosting",
+                                "Complete event coordination",
+                                "Customized scripts",
+                                "1 anchor + assistant"
+                            ]
+                        },
+                        {
+                            "name": "Premium Anchoring Package",
+                            "price": "₹43,000",
+                            "features": [
+                                "8 hours complete hosting",
+                                "Expert multilingual anchoring",
+                                "Full event production",
+                                "Live script adaptation",
+                                "2 anchors team",
+                                "Pre-event coordination"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 184,
+                    "name": "Shivamogga Magic Troupe",
+                    "specialty": "Magic Show",
+                    "rating": 4.5,
+                    "price": "₹24,000 - ₹46,000",
+                    "image": "https://images.unsplash.com/photo-1551830319-45095980c7c7?w=800",
+                    "experience": "11 years",
+                    "features": ["Close-up Magic", "Stage Magic", "Illusions", "Audience Participation"],
+                    "contact": {"phone": "+91 9876543237"},
+                    "packages": [
+                        {
+                            "name": "Basic Magic Package",
+                            "price": "₹24,000",
+                            "features": [
+                                "1 hour magic performance",
+                                "Close-up magic tricks",
+                                "Basic stage illusions",
+                                "Audience participation",
+                                "1 magician"
+                            ]
+                        },
+                        {
+                            "name": "Standard Magic Package",
+                            "price": "₹35,000",
+                            "features": [
+                                "2 hours magic show",
+                                "Close-up & stage magic",
+                                "Advanced illusions",
+                                "Enhanced audience interaction",
+                                "1 magician + assistant"
+                            ]
+                        },
+                        {
+                            "name": "Premium Magic Package",
+                            "price": "₹46,000",
+                            "features": [
+                                "3 hours magical experience",
+                                "All magic formats",
+                                "Grand illusions",
+                                "Full audience engagement",
+                                "2 magicians team",
+                                "Special effects"
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "Kerala": [
+                {
+                    "id": 185,
+                    "name": "Kochi Sound Vibes",
+                    "specialty": "DJ",
+                    "rating": 4.3,
+                    "price": "₹10,000 - ₹25,000",
+                    "image": "https://images.unsplash.com/photo-1586083702768-190b0532daed?w=800",
+                    "experience": "4 years",
+                    "features": ["Malayalam Music", "International Hits", "Lighting Effects", "Sound System"],
+                    "contact": {"phone": "+91 9876543240"},
+                    "packages": [
+                        {
+                            "name": "Basic DJ Package",
+                            "price": "₹10,000",
+                            "features": [
+                                "3 hours performance",
+                                "Basic sound system",
+                                "Standard lighting",
+                                "Malayalam & International music",
+                                "1 DJ"
+                            ]
+                        },
+                        {
+                            "name": "Standard DJ Package",
+                            "price": "₹17,500",
+                            "features": [
+                                "5 hours performance",
+                                "Professional sound system",
+                                "Enhanced lighting effects",
+                                "Custom playlist creation",
+                                "2 DJs with MC support"
+                            ]
+                        },
+                        {
+                            "name": "Premium DJ Package",
+                            "price": "₹25,000",
+                            "features": [
+                                "8 hours performance",
+                                "Premium sound system",
+                                "Advanced lighting & laser effects",
+                                "Personalized music consultation",
+                                "2 DJs + MC + Assistant",
+                                "Special effects (smoke/fog)"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 186,
+                    "name": "Trivandrum Groove Crew",
+                    "specialty": "Dance Group",
+                    "rating": 4.4,
+                    "price": "₹12,000 - ₹28,000",
+                    "image": "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=800",
+                    "experience": "5 years",
+                    "features": ["Traditional Dance", "Bollywood Dance", "Folk Dance", "Costume Changes"],
+                    "contact": {"phone": "+91 9876543241"},
+                    "packages": [
+                        {
+                            "name": "Basic Dance Package",
+                            "price": "₹12,000",
+                            "features": [
+                                "2 dance performances (15 mins each)",
+                                "4 dancers",
+                                "Traditional costumes",
+                                "Basic choreography",
+                                "Soundtrack provided"
+                            ]
+                        },
+                        {
+                            "name": "Standard Dance Package",
+                            "price": "₹20,000",
+                            "features": [
+                                "3 dance performances (20 mins each)",
+                                "6 dancers",
+                                "Traditional & Bollywood costumes",
+                                "Advanced choreography",
+                                "Live music coordination"
+                            ]
+                        },
+                        {
+                            "name": "Premium Dance Package",
+                            "price": "₹28,000",
+                            "features": [
+                                "4 dance performances (25 mins each)",
+                                "8 dancers",
+                                "Multiple costume changes",
+                                "Professional choreography",
+                                "Live musicians included",
+                                "Audience interaction"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 187,
+                    "name": "Kozhikode Melody Band",
+                    "specialty": "Live Band",
+                    "rating": 4.5,
+                    "price": "₹14,000 - ₹31,000",
+                    "image": "https://images.unsplash.com/photo-1554048612-b6a482bc67e5?w=800",
+                    "experience": "6 years",
+                    "features": ["Live Vocals", "Multiple Instruments", "Bilingual Performance", "Custom Songs"],
+                    "contact": {"phone": "+91 9876543242"},
+                    "packages": [
+                        {
+                            "name": "Basic Band Package",
+                            "price": "₹14,000",
+                            "features": [
+                                "3 hours performance",
+                                "3-piece band (vocals, guitar, drums)",
+                                "Popular covers",
+                                "Basic sound system",
+                                "1 set list"
+                            ]
+                        },
+                        {
+                            "name": "Standard Band Package",
+                            "price": "₹22,500",
+                            "features": [
+                                "5 hours performance",
+                                "5-piece band (vocals, guitar, drums, keyboard, bass)",
+                                "Extended song list",
+                                "Professional sound system",
+                                "Custom song requests"
+                            ]
+                        },
+                        {
+                            "name": "Premium Band Package",
+                            "price": "₹31,000",
+                            "features": [
+                                "8 hours performance",
+                                "7-piece band with backup vocals",
+                                "Unlimited song requests",
+                                "Premium sound system",
+                                "Original compositions",
+                                "Audience participation"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 188,
+                    "name": "Thrissur Folk Beats",
+                    "specialty": "Folk Music",
+                    "rating": 4.6,
+                    "price": "₹16,000 - ₹34,000",
+                    "image": "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=800",
+                    "experience": "7 years",
+                    "features": ["Traditional Instruments", "Folk Songs", "Cultural Performance", "Regional Music"],
+                    "contact": {"phone": "+91 9876543243"},
+                    "packages": [
+                        {
+                            "name": "Basic Folk Package",
+                            "price": "₹16,000",
+                            "features": [
+                                "2 hours performance",
+                                "3 folk artists",
+                                "Traditional instruments",
+                                "Regional folk songs",
+                                "Basic sound setup"
+                            ]
+                        },
+                        {
+                            "name": "Standard Folk Package",
+                            "price": "₹25,000",
+                            "features": [
+                                "4 hours performance",
+                                "5 folk artists",
+                                "Multiple traditional instruments",
+                                "Extended folk repertoire",
+                                "Professional sound system"
+                            ]
+                        },
+                        {
+                            "name": "Premium Folk Package",
+                            "price": "₹34,000",
+                            "features": [
+                                "6 hours performance",
+                                "7 folk artists with dancers",
+                                "Complete traditional ensemble",
+                                "Custom folk arrangements",
+                                "Premium sound system",
+                                "Cultural narration"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 189,
+                    "name": "Alappuzha Classical Waves",
+                    "specialty": "Classical Music",
+                    "rating": 4.7,
+                    "price": "₹18,000 - ₹37,000",
+                    "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800",
+                    "experience": "8 years",
+                    "features": ["Carnatic Music", "Hindustani Music", "Traditional Instruments", "Vocal Performance"],
+                    "contact": {"phone": "+91 9876543244"},
+                    "packages": [
+                        {
+                            "name": "Basic Classical Package",
+                            "price": "₹18,000",
+                            "features": [
+                                "2 hours performance",
+                                "2 classical artists",
+                                "Vocal & instrumental",
+                                "Traditional ragas",
+                                "Basic sound system"
+                            ]
+                        },
+                        {
+                            "name": "Standard Classical Package",
+                            "price": "₹27,500",
+                            "features": [
+                                "4 hours performance",
+                                "4 classical artists",
+                                "Multiple instruments",
+                                "Extended classical repertoire",
+                                "Professional sound system"
+                            ]
+                        },
+                        {
+                            "name": "Premium Classical Package",
+                            "price": "₹37,000",
+                            "features": [
+                                "6 hours performance",
+                                "6 classical artists ensemble",
+                                "Complete classical experience",
+                                "Custom classical arrangements",
+                                "Premium acoustic system",
+                                "Musical narration"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 190,
+                    "name": "Kollam Laugh Riot",
+                    "specialty": "Comedian",
+                    "rating": 4.3,
+                    "price": "₹20,000 - ₹40,000",
+                    "image": "https://images.unsplash.com/photo-1524250502761-1ac6f2e30d43?w=800",
+                    "experience": "9 years",
+                    "features": ["Stand-up Comedy", "Roast Sessions", "Audience Interaction", "Clean Humor"],
+                    "contact": {"phone": "+91 9876543245"},
+                    "packages": [
+                        {
+                            "name": "Basic Comedy Package",
+                            "price": "₹20,000",
+                            "features": [
+                                "1 hour stand-up performance",
+                                "Clean family humor",
+                                "Basic audience interaction",
+                                "Pre-written material",
+                                "1 comedian"
+                            ]
+                        },
+                        {
+                            "name": "Standard Comedy Package",
+                            "price": "₹30,000",
+                            "features": [
+                                "2 hours comedy performance",
+                                "Interactive comedy",
+                                "Customized jokes for event",
+                                "Roast sessions available",
+                                "1 comedian + assistant"
+                            ]
+                        },
+                        {
+                            "name": "Premium Comedy Package",
+                            "price": "₹40,000",
+                            "features": [
+                                "3 hours comedy extravaganza",
+                                "Multiple comedy formats",
+                                "Fully customized content",
+                                "Interactive games & roasts",
+                                "2 comedians + host",
+                                "Post-event meet & greet"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 191,
+                    "name": "Kannur Anchor Connect",
+                    "specialty": "Anchor",
+                    "rating": 4.4,
+                    "price": "₹22,000 - ₹43,000",
+                    "image": "https://images.unsplash.com/photo-1493863641943-9b68992a8d07?w=800",
+                    "experience": "10 years",
+                    "features": ["Bilingual Anchoring", "Event Management", "Audience Engagement", "Script Writing"],
+                    "contact": {"phone": "+91 9876543246"},
+                    "packages": [
+                        {
+                            "name": "Basic Anchoring Package",
+                            "price": "₹22,000",
+                            "features": [
+                                "4 hours anchoring",
+                                "Bilingual hosting",
+                                "Basic event flow management",
+                                "Pre-written scripts",
+                                "1 anchor"
+                            ]
+                        },
+                        {
+                            "name": "Standard Anchoring Package",
+                            "price": "₹32,500",
+                            "features": [
+                                "6 hours anchoring",
+                                "Multilingual hosting",
+                                "Complete event coordination",
+                                "Customized scripts",
+                                "1 anchor + assistant"
+                            ]
+                        },
+                        {
+                            "name": "Premium Anchoring Package",
+                            "price": "₹43,000",
+                            "features": [
+                                "8 hours complete hosting",
+                                "Expert multilingual anchoring",
+                                "Full event production",
+                                "Live script adaptation",
+                                "2 anchors team",
+                                "Pre-event coordination"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 192,
+                    "name": "Palakkad Magic Minds",
+                    "specialty": "Magic Show",
+                    "rating": 4.5,
+                    "price": "₹24,000 - ₹46,000",
+                    "image": "https://images.unsplash.com/photo-1551830319-45095980c7c7?w=800",
+                    "experience": "11 years",
+                    "features": ["Close-up Magic", "Stage Magic", "Illusions", "Audience Participation"],
+                    "contact": {"phone": "+91 9876543247"},
+                    "packages": [
+                        {
+                            "name": "Basic Magic Package",
+                            "price": "₹24,000",
+                            "features": [
+                                "1 hour magic performance",
+                                "Close-up magic tricks",
+                                "Basic stage illusions",
+                                "Audience participation",
+                                "1 magician"
+                            ]
+                        },
+                        {
+                            "name": "Standard Magic Package",
+                            "price": "₹35,000",
+                            "features": [
+                                "2 hours magic show",
+                                "Close-up & stage magic",
+                                "Advanced illusions",
+                                "Enhanced audience interaction",
+                                "1 magician + assistant"
+                            ]
+                        },
+                        {
+                            "name": "Premium Magic Package",
+                            "price": "₹46,000",
+                            "features": [
+                                "3 hours magical experience",
+                                "All magic formats",
+                                "Grand illusions",
+                                "Full audience engagement",
+                                "2 magicians team",
+                                "Special effects"
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "Telangana": [
+                {
+                    "id": 193,
+                    "name": "Hyderabad Sound Storm",
+                    "specialty": "DJ",
+                    "rating": 4.3,
+                    "price": "₹10,000 - ₹25,000",
+                    "image": "https://images.unsplash.com/photo-1586083702768-190b0532daed?w=800",
+                    "experience": "4 years",
+                    "features": ["Telugu Music", "International Hits", "Lighting Effects", "Sound System"],
+                    "contact": {"phone": "+91 9876543250"},
+                    "packages": [
+                        {
+                            "name": "Basic DJ Package",
+                            "price": "₹10,000",
+                            "features": [
+                                "3 hours performance",
+                                "Basic sound system",
+                                "Standard lighting",
+                                "Telugu & International music",
+                                "1 DJ"
+                            ]
+                        },
+                        {
+                            "name": "Standard DJ Package",
+                            "price": "₹17,500",
+                            "features": [
+                                "5 hours performance",
+                                "Professional sound system",
+                                "Enhanced lighting effects",
+                                "Custom playlist creation",
+                                "2 DJs with MC support"
+                            ]
+                        },
+                        {
+                            "name": "Premium DJ Package",
+                            "price": "₹25,000",
+                            "features": [
+                                "8 hours performance",
+                                "Premium sound system",
+                                "Advanced lighting & laser effects",
+                                "Personalized music consultation",
+                                "2 DJs + MC + Assistant",
+                                "Special effects (smoke/fog)"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 194,
+                    "name": "Warangal Dance Force",
+                    "specialty": "Dance Group",
+                    "rating": 4.4,
+                    "price": "₹12,000 - ₹28,000",
+                    "image": "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=800",
+                    "experience": "5 years",
+                    "features": ["Traditional Dance", "Bollywood Dance", "Folk Dance", "Costume Changes"],
+                    "contact": {"phone": "+91 9876543251"},
+                    "packages": [
+                        {
+                            "name": "Basic Dance Package",
+                            "price": "₹12,000",
+                            "features": [
+                                "2 dance performances (15 mins each)",
+                                "4 dancers",
+                                "Traditional costumes",
+                                "Basic choreography",
+                                "Soundtrack provided"
+                            ]
+                        },
+                        {
+                            "name": "Standard Dance Package",
+                            "price": "₹20,000",
+                            "features": [
+                                "3 dance performances (20 mins each)",
+                                "6 dancers",
+                                "Traditional & Bollywood costumes",
+                                "Advanced choreography",
+                                "Live music coordination"
+                            ]
+                        },
+                        {
+                            "name": "Premium Dance Package",
+                            "price": "₹28,000",
+                            "features": [
+                                "4 dance performances (25 mins each)",
+                                "8 dancers",
+                                "Multiple costume changes",
+                                "Professional choreography",
+                                "Live musicians included",
+                                "Audience interaction"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 195,
+                    "name": "Khammam Live Beats",
+                    "specialty": "Live Band",
+                    "rating": 4.5,
+                    "price": "₹14,000 - ₹31,000",
+                    "image": "https://images.unsplash.com/photo-1554048612-b6a482bc67e5?w=800",
+                    "experience": "6 years",
+                    "features": ["Live Vocals", "Multiple Instruments", "Bilingual Performance", "Custom Songs"],
+                    "contact": {"phone": "+91 9876543252"},
+                    "packages": [
+                        {
+                            "name": "Basic Band Package",
+                            "price": "₹14,000",
+                            "features": [
+                                "3 hours performance",
+                                "3-piece band (vocals, guitar, drums)",
+                                "Popular covers",
+                                "Basic sound system",
+                                "1 set list"
+                            ]
+                        },
+                        {
+                            "name": "Standard Band Package",
+                            "price": "₹22,500",
+                            "features": [
+                                "5 hours performance",
+                                "5-piece band (vocals, guitar, drums, keyboard, bass)",
+                                "Extended song list",
+                                "Professional sound system",
+                                "Custom song requests"
+                            ]
+                        },
+                        {
+                            "name": "Premium Band Package",
+                            "price": "₹31,000",
+                            "features": [
+                                "8 hours performance",
+                                "7-piece band with backup vocals",
+                                "Unlimited song requests",
+                                "Premium sound system",
+                                "Original compositions",
+                                "Audience participation"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 196,
+                    "name": "Nizamabad Folk Troupe",
+                    "specialty": "Folk Music",
+                    "rating": 4.6,
+                    "price": "₹16,000 - ₹34,000",
+                    "image": "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=800",
+                    "experience": "7 years",
+                    "features": ["Traditional Instruments", "Folk Songs", "Cultural Performance", "Regional Music"],
+                    "contact": {"phone": "+91 9876543253"},
+                    "packages": [
+                        {
+                            "name": "Basic Folk Package",
+                            "price": "₹16,000",
+                            "features": [
+                                "2 hours performance",
+                                "3 folk artists",
+                                "Traditional instruments",
+                                "Regional folk songs",
+                                "Basic sound setup"
+                            ]
+                        },
+                        {
+                            "name": "Standard Folk Package",
+                            "price": "₹25,000",
+                            "features": [
+                                "4 hours performance",
+                                "5 folk artists",
+                                "Multiple traditional instruments",
+                                "Extended folk repertoire",
+                                "Professional sound system"
+                            ]
+                        },
+                        {
+                            "name": "Premium Folk Package",
+                            "price": "₹34,000",
+                            "features": [
+                                "6 hours performance",
+                                "7 folk artists with dancers",
+                                "Complete traditional ensemble",
+                                "Custom folk arrangements",
+                                "Premium sound system",
+                                "Cultural narration"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 197,
+                    "name": "Karimnagar Classical Notes",
+                    "specialty": "Classical Music",
+                    "rating": 4.7,
+                    "price": "₹18,000 - ₹37,000",
+                    "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800",
+                    "experience": "8 years",
+                    "features": ["Carnatic Music", "Hindustani Music", "Traditional Instruments", "Vocal Performance"],
+                    "contact": {"phone": "+91 9876543254"},
+                    "packages": [
+                        {
+                            "name": "Basic Classical Package",
+                            "price": "₹18,000",
+                            "features": [
+                                "2 hours performance",
+                                "2 classical artists",
+                                "Vocal & instrumental",
+                                "Traditional ragas",
+                                "Basic sound system"
+                            ]
+                        },
+                        {
+                            "name": "Standard Classical Package",
+                            "price": "₹27,500",
+                            "features": [
+                                "4 hours performance",
+                                "4 classical artists",
+                                "Multiple instruments",
+                                "Extended classical repertoire",
+                                "Professional sound system"
+                            ]
+                        },
+                        {
+                            "name": "Premium Classical Package",
+                            "price": "₹37,000",
+                            "features": [
+                                "6 hours performance",
+                                "6 classical artists ensemble",
+                                "Complete classical experience",
+                                "Custom classical arrangements",
+                                "Premium acoustic system",
+                                "Musical narration"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 198,
+                    "name": "Adilabad Laugh Lounge",
+                    "specialty": "Comedian",
+                    "rating": 4.3,
+                    "price": "₹20,000 - ₹40,000",
+                    "image": "https://images.unsplash.com/photo-1524250502761-1ac6f2e30d43?w=800",
+                    "experience": "9 years",
+                    "features": ["Stand-up Comedy", "Roast Sessions", "Audience Interaction", "Clean Humor"],
+                    "contact": {"phone": "+91 9876543255"},
+                    "packages": [
+                        {
+                            "name": "Basic Comedy Package",
+                            "price": "₹20,000",
+                            "features": [
+                                "1 hour stand-up performance",
+                                "Clean family humor",
+                                "Basic audience interaction",
+                                "Pre-written material",
+                                "1 comedian"
+                            ]
+                        },
+                        {
+                            "name": "Standard Comedy Package",
+                            "price": "₹30,000",
+                            "features": [
+                                "2 hours comedy performance",
+                                "Interactive comedy",
+                                "Customized jokes for event",
+                                "Roast sessions available",
+                                "1 comedian + assistant"
+                            ]
+                        },
+                        {
+                            "name": "Premium Comedy Package",
+                            "price": "₹40,000",
+                            "features": [
+                                "3 hours comedy extravaganza",
+                                "Multiple comedy formats",
+                                "Fully customized content",
+                                "Interactive games & roasts",
+                                "2 comedians + host",
+                                "Post-event meet & greet"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 199,
+                    "name": "Mahbubnagar Event Anchors",
+                    "specialty": "Anchor",
+                    "rating": 4.4,
+                    "price": "₹22,000 - ₹43,000",
+                    "image": "https://images.unsplash.com/photo-1493863641943-9b68992a8d07?w=800",
+                    "experience": "10 years",
+                    "features": ["Bilingual Anchoring", "Event Management", "Audience Engagement", "Script Writing"],
+                    "contact": {"phone": "+91 9876543256"},
+                    "packages": [
+                        {
+                            "name": "Basic Anchoring Package",
+                            "price": "₹22,000",
+                            "features": [
+                                "4 hours anchoring",
+                                "Bilingual hosting",
+                                "Basic event flow management",
+                                "Pre-written scripts",
+                                "1 anchor"
+                            ]
+                        },
+                        {
+                            "name": "Standard Anchoring Package",
+                            "price": "₹32,500",
+                            "features": [
+                                "6 hours anchoring",
+                                "Multilingual hosting",
+                                "Complete event coordination",
+                                "Customized scripts",
+                                "1 anchor + assistant"
+                            ]
+                        },
+                        {
+                            "name": "Premium Anchoring Package",
+                            "price": "₹43,000",
+                            "features": [
+                                "8 hours complete hosting",
+                                "Expert multilingual anchoring",
+                                "Full event production",
+                                "Live script adaptation",
+                                "2 anchors team",
+                                "Pre-event coordination"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 200,
+                    "name": "Ramagundam Magic Circle",
+                    "specialty": "Magic Show",
+                    "rating": 4.5,
+                    "price": "₹24,000 - ₹46,000",
+                    "image": "https://images.unsplash.com/photo-1551830319-45095980c7c7?w=800",
+                    "experience": "11 years",
+                    "features": ["Close-up Magic", "Stage Magic", "Illusions", "Audience Participation"],
+                    "contact": {"phone": "+91 9876543257"},
+                    "packages": [
+                        {
+                            "name": "Basic Magic Package",
+                            "price": "₹24,000",
+                            "features": [
+                                "1 hour magic performance",
+                                "Close-up magic tricks",
+                                "Basic stage illusions",
+                                "Audience participation",
+                                "1 magician"
+                            ]
+                        },
+                        {
+                            "name": "Standard Magic Package",
+                            "price": "₹35,000",
+                            "features": [
+                                "2 hours magic show",
+                                "Close-up & stage magic",
+                                "Advanced illusions",
+                                "Enhanced audience interaction",
+                                "1 magician + assistant"
+                            ]
+                        },
+                        {
+                            "name": "Premium Magic Package",
+                            "price": "₹46,000",
+                            "features": [
+                                "3 hours magical experience",
+                                "All magic formats",
+                                "Grand illusions",
+                                "Full audience engagement",
+                                "2 magicians team",
+                                "Special effects"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        };
+
+// DOM Elements
+const entertainmentGrid = document.getElementById('entertainmentGrid');
+const stateFilter = document.getElementById('stateFilter');
+const entertainmentTypeFilter = document.getElementById('entertainmentTypeFilter');
+const searchInput = document.getElementById('searchInput');
+const minDuration = document.getElementById('minDuration');
+const maxDuration = document.getElementById('maxDuration');
+const resetFilters = document.getElementById('resetFilters');
+const totalEntertainment = document.getElementById('totalEntertainment');
+const avgRating = document.getElementById('avgRating');
+const statesCovered = document.getElementById('statesCovered');
+const topRated = document.getElementById('topRated');
+const shortlistToast = document.getElementById('shortlistToast');
+
+// Current filters and shortlist
+let currentState = 'all';
+let currentEntertainmentType = 'all';
+let currentSearch = '';
+let currentMinDuration = '';
+let currentMaxDuration = '';
+let shortlistedEntertainment = JSON.parse(localStorage.getItem('shortlistedEntertainment')) || [];
+let bookings = JSON.parse(localStorage.getItem('entertainmentBookings')) || [];
+
+// Initialize the page
+function init() {
+    updateStats();
+    displayEntertainment();
+    setupEventListeners();
+    checkPendingBookings();
+}
+
+// Update statistics
+function updateStats() {
+    let allEntertainment = [];
+    let totalRating = 0;
+    let topRatedCount = 0;
+    
+    for (const state in entertainmentData) {
+        entertainmentData[state].forEach(entertainment => {
+            allEntertainment.push(entertainment);
+            totalRating += entertainment.rating;
+            if (entertainment.rating >= 4.5) topRatedCount++;
+        });
+    }
+    
+    totalEntertainment.textContent = allEntertainment.length;
+    avgRating.textContent = (totalRating / allEntertainment.length).toFixed(1);
+    statesCovered.textContent = Object.keys(entertainmentData).length;
+    topRated.textContent = topRatedCount;
+}
+
+
+// Set up event listeners
+function setupEventListeners() {
+    // State filter
+    stateFilter.addEventListener('change', () => {
+        currentState = stateFilter.value;
+        displayEntertainment();
+    });
+
+    // Entertainment type filter
+    entertainmentTypeFilter.addEventListener('change', () => {
+        currentEntertainmentType = entertainmentTypeFilter.value;
+        displayEntertainment();
+    });
+
+    // Search
+    searchInput.addEventListener('input', () => {
+        currentSearch = searchInput.value.toLowerCase();
+        displayEntertainment();
+    });
+
+    // Duration filters
+    minDuration.addEventListener('input', () => {
+        currentMinDuration = minDuration.value;
+        displayEntertainment();
+    });
+
+    maxDuration.addEventListener('input', () => {
+        currentMaxDuration = maxDuration.value;
+        displayEntertainment();
+    });
+
+    // Reset filters
+    resetFilters.addEventListener('click', () => {
+        stateFilter.value = 'all';
+        entertainmentTypeFilter.value = 'all';
+        searchInput.value = '';
+        minDuration.value = '';
+        maxDuration.value = '';
+        
+        currentState = 'all';
+        currentEntertainmentType = 'all';
+        currentSearch = '';
+        currentMinDuration = '';
+        currentMaxDuration = '';
+        
+        displayEntertainment();
+    });
+      const bookingModal = document.getElementById('bookingModal');
+    const bookingForm = document.getElementById('bookingForm');
+    const closeBookingForm = document.getElementById('closeBookingForm');
+    const cancelBooking = document.getElementById('cancelBooking');
+    
+    // Close modal when clicking X
+    closeBookingForm.addEventListener('click', closeBookingModal);
+    
+    // Close modal when clicking cancel
+    cancelBooking.addEventListener('click', closeBookingModal);
+    
+    // Close modal when clicking outside
+    bookingModal.addEventListener('click', (e) => {
+        if (e.target === bookingModal) {
+            closeBookingModal();
+        }
+    });
+    
+    // Handle form submission
+    bookingForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        const formData = {
+            customerName: document.getElementById('customerName').value,
+            customerPhone: document.getElementById('customerPhone').value,
+            customerEmail: document.getElementById('customerEmail').value,
+            eventType: document.getElementById('eventType').value,
+            eventDate: document.getElementById('eventDate').value,
+            eventTime: document.getElementById('eventTime').value,
+            performanceDuration: document.getElementById('performanceDuration').value,
+            venueType: document.getElementById('venueType').value,
+            eventAddress: document.getElementById('eventAddress').value,
+            musicPreference: document.getElementById('musicPreference').value,
+            performanceStyle: document.getElementById('performanceStyle').value,
+            specialRequirements: document.getElementById('specialRequirements').value,
+            audienceSize: document.getElementById('audienceSize').value
+        };
+        
+        submitBookingForm(formData);
+    });
+}
+
+// Display entertainment based on current filters
+function displayEntertainment() {
+    entertainmentGrid.innerHTML = '';
+    
+    let entertainmentToShow = [];
+    
+    // Collect entertainment based on state filter
+    if (currentState === 'all') {
+        // Show entertainment from all states
+        for (const state in entertainmentData) {
+            entertainmentData[state].forEach(entertainment => {
+                entertainment.state = state;
+                entertainmentToShow.push(entertainment);
+            });
+        }
+    } else {
+        // Show entertainment from specific state
+        if (entertainmentData[currentState]) {
+            entertainmentData[currentState].forEach(entertainment => {
+                entertainment.state = currentState;
+                entertainmentToShow.push(entertainment);
+            });
+        }
+    }
+    
+    // Apply entertainment type filter
+    if (currentEntertainmentType !== 'all') {
+        entertainmentToShow = entertainmentToShow.filter(entertainment => 
+            entertainment.specialty === currentEntertainmentType
+        );
+    }
+    
+    // Apply search filter
+    if (currentSearch) {
+        entertainmentToShow = entertainmentToShow.filter(entertainment => {
+            const searchTerm = currentSearch;
+            const searchableText = (
+                entertainment.name + ' ' + 
+                entertainment.specialty + ' ' + 
+                entertainment.state + ' ' +
+                entertainment.features.join(' ')
+            ).toLowerCase();
+            
+            return searchableText.includes(searchTerm);
+        });
+    }
+    
+    // Display entertainment or show no results message
+    if (entertainmentToShow.length === 0) {
+        entertainmentGrid.innerHTML = `
+            <div class="no-results">
+                <h3>No entertainment services found matching your criteria</h3>
+                <p>Try adjusting your filters or search terms</p>
+            </div>
+        `;
+    } else {
+        entertainmentToShow.forEach(entertainment => {
+            const entertainmentCard = createEntertainmentCard(entertainment);
+            entertainmentGrid.appendChild(entertainmentCard);
+        });
+    }
+}
+
+// Create entertainment card element
+function createEntertainmentCard(entertainment) {
+    const card = document.createElement('div');
+    card.className = 'catering-card';
+    
+    // Create feature tags
+    const featureTags = entertainment.features.map(feature => 
+        `<span class="catering-feature-tag">${feature}</span>`
+    ).join('');
+    
+    // Create packages HTML
+    let packagesHTML = '';
+    if (entertainment.packages && entertainment.packages.length > 0) {
+        packagesHTML = `
+            <div class="packages-section">
+                <div class="packages-title">
+                    Performance Packages
+                    <button class="packages-toggle">Show Packages</button>
+                </div>
+                <div class="packages-list">
+                    ${entertainment.packages.map(pkg => `
+                        <div class="package-item">
+                            <div class="package-name">${pkg.name}</div>
+                            <div class="package-price">${pkg.price}</div>
+                            <div class="package-features">
+                                <ul>
+                                    ${pkg.features.map(feature => `<li>${feature}</li>`).join('')}
+                                </ul>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        `;
+    }
+    
+    // Check if entertainment is already shortlisted
+    const isShortlisted = shortlistedEntertainment.some(item => item.id === entertainment.id);
+    
+    // Check if already booked
+    const existingBooking = bookings.find(booking => booking.id === entertainment.id);
+    const isBooked = existingBooking && existingBooking.status !== 'cancelled';
+    
+    card.innerHTML = `
+        <div class="catering-image" style="background-image: url('${entertainment.image}')">
+            <div class="state-badge">${entertainment.state}</div>
+            <div class="catering-rating">⭐ ${entertainment.rating}</div>
+            ${isBooked ? `<div class="booking-badge">${existingBooking.status.toUpperCase()}</div>` : ''}
+        </div>
+        <div class="catering-content">
+            <h3 class="catering-name">${entertainment.name}</h3>
+            <p class="catering-specialty">${entertainment.specialty}</p>
+            <div class="catering-details">
+                <span class="catering-price">${entertainment.price}</span>
+                <span class="catering-capacity">${entertainment.experience}</span>
+            </div>
+            <div class="catering-features">
+                ${featureTags}
+            </div>
+            ${packagesHTML}
+            <div class="action-buttons">
+                <button class="btn ${isBooked ? 'btn-success' : 'btn-primary'} book-now-btn" 
+                        data-entertainment-id="${entertainment.id}"
+                        ${isBooked ? 'disabled' : ''}>
+                    ${isBooked ? '✓ ' + existingBooking.status.charAt(0).toUpperCase() + existingBooking.status.slice(1) : 'Book Now'}
+                </button>
+                <button class="btn btn-secondary shortlist-btn ${isShortlisted ? 'added' : ''}" data-entertainment-id="${entertainment.id}">
+                    ${isShortlisted ? '✓ Shortlisted' : 'Add to Shortlist'}
+                </button>
+            </div>
+            <div class="catering-contact">
+                <div class="catering-phone">${entertainment.contact.phone}</div>
+                <small>Contact for bookings and performances</small>
+            </div>
+        </div>
+    `;
+    
+    // Add click event to toggle packages
+    const packagesToggle = card.querySelector('.packages-toggle');
+    const packagesList = card.querySelector('.packages-list');
+    
+    if (packagesToggle && packagesList) {
+        packagesToggle.addEventListener('click', () => {
+            packagesList.classList.toggle('show');
+            packagesToggle.textContent = packagesList.classList.contains('show') ? 
+                'Hide Packages' : 'Show Packages';
+        });
+    }
+    
+    // Add click event to Book Now button
+    const bookNowBtn = card.querySelector('.book-now-btn');
+    if (!isBooked) {
+        bookNowBtn.addEventListener('click', () => {
+            bookEntertainment(entertainment, bookNowBtn);
+        });
+    }
+    
+    // Add click event to Shortlist button
+    const shortlistBtn = card.querySelector('.shortlist-btn');
+    shortlistBtn.addEventListener('click', () => {
+        toggleShortlist(entertainment, shortlistBtn);
+    });
+    
+    return card;
+}
+
+// Global variables for booking
+let currentBookingEntertainment = null;
+let currentBookingButton = null;
+
+// Modified bookEntertainment function
+function bookEntertainment(entertainment, button) {
+    currentBookingEntertainment = entertainment;
+    currentBookingButton = button;
+    
+    // Show booking form modal
+    const bookingModal = document.getElementById('bookingModal');
+    bookingModal.classList.add('show');
+    
+    // Set minimum date to today
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('eventDate').min = today;
+    
+    // Pre-fill music preference based on entertainment specialty
+    const musicPreferenceSelect = document.getElementById('musicPreference');
+    const specialty = entertainment.specialty.toLowerCase();
+    
+    // Map specialties to music preferences
+    const preferenceMap = {
+        'dj': 'mix',
+        'dance': 'bollywood',
+        'band': 'regional',
+        'folk': 'folk',
+        'classical': 'classical',
+        'comedy': 'regional',
+        'anchor': 'mix',
+        'magic': 'mix'
+    };
+    
+    for (let key in preferenceMap) {
+        if (specialty.includes(key)) {
+            musicPreferenceSelect.value = preferenceMap[key];
+            break;
+        }
+    }
+}
+
+// New function to handle booking form submission
+function submitBookingForm(formData) {
+    console.log('Submitting booking for entertainment:', currentBookingEntertainment);
+    
+    // Create comprehensive booking object
+    const booking = {
+        id: currentBookingEntertainment.id,
+        serviceId: currentBookingEntertainment.id,
+        name: currentBookingEntertainment.name,
+        serviceType: 'entertainment',
+        specialty: currentBookingEntertainment.specialty,
+        price: currentBookingEntertainment.price,
+        image: currentBookingEntertainment.image,
+        contact: currentBookingEntertainment.contact,
+        state: currentBookingEntertainment.state,
+        
+        // Customer details
+        customerName: formData.customerName,
+        customerPhone: formData.customerPhone,
+        customerEmail: formData.customerEmail,
+        
+        // Event details
+        eventType: formData.eventType,
+        eventDate: formData.eventDate,
+        eventTime: formData.eventTime,
+        venueType: formData.venueType,
+        eventAddress: formData.eventAddress,
+        audienceSize: formData.audienceSize,
+        
+        // Entertainment specific details
+        performanceDuration: formData.performanceDuration,
+        musicPreference: formData.musicPreference,
+        performanceStyle: formData.performanceStyle,
+        specialRequirements: formData.specialRequirements,
+        
+        // Booking metadata
+        bookingDate: new Date().toISOString().split('T')[0],
+        bookingTime: new Date().toLocaleTimeString(),
+        status: 'pending',
+        vendor: currentBookingEntertainment.name,
+        acceptedAt: null
+    };
+    
+    // Add to bookings
+    bookings.push(booking);
+    localStorage.setItem('entertainmentBookings', JSON.stringify(bookings));
+    
+    // Update button
+    if (currentBookingButton) {
+        currentBookingButton.textContent = '✓ Pending';
+        currentBookingButton.classList.remove('btn-primary');
+        currentBookingButton.classList.add('btn-success');
+        currentBookingButton.disabled = true;
+    }
+    
+    // Show confirmation
+    showShortlistToast(`Booking request sent to ${currentBookingEntertainment.name}! Vendor will review your event details.`);
+    
+    // Simulate vendor response after 1 minute
+    setTimeout(() => {
+        updateBookingStatus(currentBookingEntertainment.id, 'accepted');
+    }, 60000);
+    
+    // Close modal
+    closeBookingModal();
+    
+    // Reset current booking variables
+    currentBookingEntertainment = null;
+    currentBookingButton = null;
+}
+
+// Function to close booking modal
+function closeBookingModal() {
+    const bookingModal = document.getElementById('bookingModal');
+    bookingModal.classList.remove('show');
+    document.getElementById('bookingForm').reset();
+}
+
+// Enhanced updateBookingStatus function
+function updateBookingStatus(entertainmentId, status) {
+    const bookingIndex = bookings.findIndex(booking => booking.id === entertainmentId);
+    
+    if (bookingIndex !== -1) {
+        bookings[bookingIndex].status = status;
+        bookings[bookingIndex].acceptedAt = new Date().toISOString();
+        localStorage.setItem('entertainmentBookings', JSON.stringify(bookings));
+        
+        // Update UI if the card is visible
+        const bookButton = document.querySelector(`.book-now-btn[data-entertainment-id="${entertainmentId}"]`);
+        if (bookButton) {
+            bookButton.textContent = '✓ ' + status.charAt(0).toUpperCase() + status.slice(1);
+            bookButton.classList.remove('btn-primary');
+            bookButton.classList.add('btn-success');
+            
+            // Update badge if exists
+            const badge = bookButton.closest('.catering-card')?.querySelector('.booking-badge');
+            if (badge) {
+                badge.textContent = status.toUpperCase();
+            }
+        }
+        
+        const statusMessage = status === 'accepted' ? 'accepted' : 'rejected';
+        showShortlistToast(`Booking ${statusMessage} for ${bookings[bookingIndex].name}!`);
+        
+        // Add notification
+        if (typeof addNotification === 'function') {
+            addNotification(
+                'Booking ' + statusMessage.charAt(0).toUpperCase() + statusMessage.slice(1), 
+                `Your entertainment booking with ${bookings[bookingIndex].name} has been ${statusMessage}!`, 
+                status === 'accepted' ? 'success' : 'warning'
+            );
+        }
+    }
+}
+
+// Check for pending bookings that need to be auto-accepted
+function checkPendingBookings() {
+    const now = new Date();
+    bookings.forEach(booking => {
+        if (booking.status === 'pending') {
+            const bookingDate = new Date(booking.bookingDate);
+            const timeDiff = now - bookingDate;
+            
+            // If more than 1 minute has passed, auto-accept
+            if (timeDiff > 60000) {
+                updateBookingStatus(booking.id, 'accepted');
+            } else {
+                // Set timeout for remaining time
+                const remainingTime = 60000 - timeDiff;
+                setTimeout(() => {
+                    updateBookingStatus(booking.id, 'accepted');
+                }, remainingTime);
+            }
+        }
+    });
+}
+
+// Toggle shortlist function
+function toggleShortlist(entertainment, button) {
+    const index = shortlistedEntertainment.findIndex(item => item.id === entertainment.id);
+    
+    if (index === -1) {
+        // Add to shortlist
+        shortlistedEntertainment.push(entertainment);
+        button.textContent = '✓ Shortlisted';
+        button.classList.add('added');
+        showShortlistToast('Entertainment service added to shortlist!');
+        
+        // Also add to main dashboard shortlist
+        if (typeof addToShortlist === 'function') {
+            addToShortlist({
+                id: entertainment.id,
+                name: entertainment.name,
+                type: 'Entertainment',
+                price: entertainment.price,
+                vendor: entertainment.name,
+                addedDate: new Date().toISOString().split('T')[0]
+            });
+        }
+    } else {
+        // Remove from shortlist
+        shortlistedEntertainment.splice(index, 1);
+        button.textContent = 'Add to Shortlist';
+        button.classList.remove('added');
+        showShortlistToast('Entertainment service removed from shortlist!');
+        
+        // Also remove from main dashboard shortlist if function exists
+        if (typeof removeFromShortlist === 'function') {
+            removeFromShortlist(entertainment.id);
+        }
+    }
+    
+    // Save to localStorage
+    localStorage.setItem('shortlistedEntertainment', JSON.stringify(shortlistedEntertainment));
+}
+
+// Show shortlist toast notification
+function showShortlistToast(message) {
+    shortlistToast.textContent = message;
+    shortlistToast.classList.add('show');
+    
+    setTimeout(() => {
+        shortlistToast.classList.remove('show');
+    }, 3000);
+}
+// Add to each service page
+document.addEventListener('DOMContentLoaded', function() {
+  // Add event listeners to all "Book Now" buttons
+  document.querySelectorAll('.book-now-btn').forEach(button => {
+    button.addEventListener('click', function() {
+      const serviceCard = this.closest('.service-card');
+      const serviceName = serviceCard.querySelector('.service-title').textContent;
+      const serviceCategory = document.querySelector('h1').textContent.toLowerCase();
+      const servicePrice = serviceCard.querySelector('.service-price')?.textContent || 'Not specified';
+      const serviceVendor = serviceCard.querySelector('.vendor-name')?.textContent || 'Not specified';
+      
+      // Add to bookings
+      if (typeof addBooking === 'function') {
+        addBooking({
+          name: serviceName,
+          category: serviceCategory,
+          price: servicePrice,
+          vendor: serviceVendor
+        });
+      } else {
+        // If not on dashboard, redirect to dashboard
+        window.location.href = 'customer-dashboard.html';
+      }
+    });
+  });
+  
+  // Add event listeners to all "Add to Shortlist" buttons
+  document.querySelectorAll('.add-to-shortlist-btn').forEach(button => {
+    button.addEventListener('click', function() {
+      const serviceCard = this.closest('.service-card');
+      const serviceName = serviceCard.querySelector('.service-title').textContent;
+      const serviceCategory = document.querySelector('h1').textContent.toLowerCase();
+      const servicePrice = serviceCard.querySelector('.service-price')?.textContent || 'Not specified';
+      const serviceVendor = serviceCard.querySelector('.vendor-name')?.textContent || 'Not specified';
+      const serviceRating = serviceCard.querySelector('.service-rating')?.textContent || 'Not rated';
+      
+      // Add to shortlist
+      if (typeof addToShortlist === 'function') {
+        addToShortlist({
+          name: serviceName,
+          category: serviceCategory,
+          price: servicePrice,
+          vendor: serviceVendor,
+          rating: serviceRating
+        });
+      } else {
+        // If not on dashboard, redirect to dashboard
+        window.location.href = 'customer-dashboard.html';
+      }
+    });
+  });
+});
+
+// Add these functions for dashboard integration
+function addToShortlist(itemData) {
+    const shortlist = JSON.parse(localStorage.getItem('shortlist')) || [];
+    
+    // Check if already in shortlist
+    const exists = shortlist.some(item => item.id === itemData.id);
+    if (exists) {
+        showShortlistToast('This item is already in your shortlist!');
+        return;
+    }
+    
+    // Add to shortlist
+    shortlist.push({
+        id: itemData.id,
+        name: itemData.name,
+        type: 'Entertainment',
+        price: itemData.price,
+        vendor: itemData.name,
+        addedDate: new Date().toISOString().split('T')[0]
+    });
+    
+    localStorage.setItem('shortlist', JSON.stringify(shortlist));
+    showShortlistToast('Added to shortlist successfully!');
+}
+
+function addBooking(bookingData) {
+    const booking = {
+        id: bookingData.id,
+        name: bookingData.name,
+        serviceType: 'entertainment',
+        price: bookingData.price,
+        vendor: bookingData.name,
+        date: new Date().toISOString().split('T')[0],
+        time: '12:00',
+        status: 'pending',
+        bookingDate: new Date().toISOString().split('T')[0]
+    };
+    
+    const existingBookings = JSON.parse(localStorage.getItem('entertainmentBookings')) || [];
+    existingBookings.push(booking);
+    localStorage.setItem('entertainmentBookings', JSON.stringify(existingBookings));
+    
+    showShortlistToast(`Booking request sent for ${bookingData.name}!`);
+}
+
+// ========== DASHBOARD INTEGRATION FUNCTIONS ==========
+
+// Generate unique ID function
+function generateId() {
+    return Date.now().toString(36) + Math.random().toString(36).substr(2);
+}
+
+// Add to shortlist function for dashboard integration
+function addToShortlist(itemData) {
+    const shortlist = JSON.parse(localStorage.getItem('shortlist')) || [];
+    
+    // Check if already in shortlist
+    const exists = shortlist.some(item => item.id === itemData.id);
+    if (exists) {
+        showShortlistToast('This item is already in your shortlist!');
+        return;
+    }
+    
+    // Add to shortlist
+    shortlist.push({
+        id: itemData.id,
+        name: itemData.name,
+        type: itemData.type,
+        price: itemData.price,
+        vendor: itemData.vendor,
+        addedDate: new Date().toISOString().split('T')[0],
+        image: itemData.image,
+        specialty: itemData.specialty
+    });
+    
+    localStorage.setItem('shortlist', JSON.stringify(shortlist));
+    showShortlistToast('Added to shortlist successfully!');
+    
+    // Update dashboard badge count
+    updateDashboardShortlistCount();
+}
+
+// Remove from shortlist function
+function removeFromShortlist(itemId) {
+    const shortlist = JSON.parse(localStorage.getItem('shortlist')) || [];
+    const updatedShortlist = shortlist.filter(item => item.id !== itemId);
+    localStorage.setItem('shortlist', JSON.stringify(updatedShortlist));
+    showShortlistToast('Item removed from shortlist');
+    updateDashboardShortlistCount();
+}
+
+// Update dashboard shortlist count
+function updateDashboardShortlistCount() {
+    const shortlist = JSON.parse(localStorage.getItem('shortlist')) || [];
+    // This will update the badge when user returns to dashboard
+    console.log('Shortlist updated. Total items:', shortlist.length);
+}
+
+// Add booking function for dashboard integration
+function addBooking(bookingData) {
+    const booking = {
+        id: bookingData.id,
+        name: bookingData.name,
+        serviceType: bookingData.serviceType,
+        price: bookingData.price,
+        vendor: bookingData.vendor,
+        date: bookingData.date,
+        time: bookingData.time,
+        status: 'pending',
+        bookingDate: new Date().toISOString().split('T')[0]
+    };
+    
+    const existingBookings = JSON.parse(localStorage.getItem('bookings')) || [];
+    existingBookings.push(booking);
+    localStorage.setItem('bookings', JSON.stringify(existingBookings));
+    
+    showShortlistToast(`Booking request sent for ${bookingData.name}!`);
+}
+
+// Notification function for compatibility
+function addNotification(title, message, type = 'info') {
+    const notifications = JSON.parse(localStorage.getItem('notifications')) || [];
+    const icons = {
+        info: '🔔',
+        success: '✅',
+        warning: '⚠️'
+    };
+    
+    notifications.unshift({
+        id: generateId(),
+        title,
+        message,
+        type,
+        icon: icons[type] || '🔔',
+        timestamp: new Date().toISOString(),
+        read: false
+    });
+    
+    localStorage.setItem('notifications', JSON.stringify(notifications));
+    console.log(`Notification: ${title} - ${message}`);
+}
+
+// Initialize the application
+init();
+    </script>
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customer Feedback - Timeless Moments</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #dbeafe, #fce7f3, #ede9fe);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+    .form-container {
+      background: #fff;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      width: 90%;
+      max-width: 600px;
+    }
+    h2 {
+      text-align: center;
+      color: #7e22ce;
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      margin-top: 12px;
+      font-weight: 600;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 6px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      font-size: 15px;
+    }
+    textarea { resize: none; }
+    .submit-btn {
+      margin-top: 20px;
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(135deg, #93c5fd, #f9a8d4, #c4b5fd);
+      border: none;
+      border-radius: 10px;
+      color: #fff;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .submit-btn:hover { opacity: 0.85; }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h2>Customer Feedback</h2>
+    <form action="#" method="post">
+      <label>Your Name</label>
+      <input type="text" required>
+
+      <label>Email</label>
+      <input type="email" required>
+
+      <label>Phone</label>
+      <input type="tel" placeholder="+91 9876543210">
+
+      <label>Service Used</label>
+      <select required>
+        <option value="">-- Select Service --</option>
+        <option>Venue</option>
+        <option>Decoration</option>
+        <option>Catering</option>
+        <option>Photography</option>
+        <option>Entertainment</option>
+      </select>
+
+      <label>Event Date</label>
+      <input type="date" required>
+
+      <label>Overall Rating</label>
+      <select required>
+        <option value="">-- Select Rating --</option>
+        <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+      </select>
+
+      <label>Service Quality</label>
+      <select required>
+        <option>Excellent</option><option>Good</option><option>Average</option><option>Poor</option>
+      </select>
+
+      <label>Suggestions / Feedback</label>
+      <textarea rows="4" required></textarea>
+
+      <button type="submit" class="submit-btn">Submit</button>
+    </form>
+  </div>
+</body>
+</html>

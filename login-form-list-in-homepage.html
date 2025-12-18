@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Timeless Moments</title>
+    <style>
+        :root {
+            --light-blue: #e1f5fe;
+            --light-pink: #fce4ec;
+            --light-purple: #f3e5f5;
+            --medium-blue: #81d4fa;
+            --medium-pink: #f8bbd9;
+            --medium-purple: #e1bee7;
+            --dark-blue: #0288d1;
+            --dark-pink: #f06292;
+            --dark-purple: #8b5cf6;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--light-blue) 0%, var(--light-pink) 50%, var(--light-purple) 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            width: 100%;
+        }
+        
+        .header h1 {
+            color: var(--dark-purple);
+            font-size: 36px;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .header p {
+            color: #555;
+            font-size: 18px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .login-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        .login-btn {
+            background: linear-gradient(135deg, var(--medium-blue), var(--medium-pink), var(--medium-purple));
+            color: white;
+            border: none;
+            padding: 18px 30px;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: block;
+            text-align: center;
+            width: 100%;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .login-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .back-home {
+            margin-top: 30px;
+            text-align: center;
+        }
+        
+        .back-home a {
+            color: var(--dark-purple);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 10px 20px;
+            border: 2px solid var(--medium-purple);
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+        
+        .back-home a:hover {
+            background: var(--medium-purple);
+            color: white;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .login-btn {
+            animation: fadeIn 0.6s ease-out;
+        }
+        
+        .customer-btn { animation-delay: 0.1s; }
+        .vendor-btn { animation-delay: 0.2s; }
+        .admin-btn { animation-delay: 0.3s; }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 28px;
+            }
+            
+            .login-btn {
+                padding: 16px 25px;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Timeless Moments</h1>
+        <p>Select Login Type</p>
+    </div>
+    
+    <div class="login-container">
+        <a href="customer-login.html" class="login-btn customer-btn">Customer Login</a>
+        <a href="vendor-login.html" class="login-btn vendor-btn">Vendor Login</a>
+        <a href="admin-login.html" class="login-btn admin-btn">Admin Login</a>
+    </div>
+    
+    <div class="back-home">
+        <a href="index (2).html">← Back to Home</a>
+    </div>
+</body>
+</html>

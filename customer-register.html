@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customer Registration - Timeless Moments</title>
+  <link rel="stylesheet" href="css/customer-register.css">
+</head>
+<body>
+  <div class="form-container">
+    <h2>Customer Registration</h2>
+    <form id="registrationForm" action="#" method="post">
+      <label>Full Name</label>
+      <input type="text" id="fullName" required>
+
+      <label>Email</label>
+      <input type="email" id="email" required>
+
+      <label>Phone Number</label>
+      <input type="tel" id="phone" pattern="[0-9]{10}" placeholder="10-digit number" required>
+
+      <label>Address</label>
+      <input type="text" id="address" required>
+
+      <label>Password</label>
+      <input type="password" id="password" minlength="6" required>
+
+      <label>Confirm Password</label>
+      <input type="password" id="confirmPassword" minlength="6" required>
+      <div class="password-match">Passwords match!</div>
+      <div class="password-mismatch">Passwords do not match!</div>
+
+      <label>Govt. ID Proof (Aadhar / Driving License)</label>
+      <input type="text" id="govtId" placeholder="Enter ID number" required>
+
+      <button type="submit">Register</button>
+      
+      <div class="success-message" id="successMessage">
+        Registration successful! Redirecting to services...
+      </div>
+      
+      <div class="error-message" id="errorMessage">
+        Please fix the errors above before submitting.
+      </div>
+      
+      <div class="links">
+        <a href="customer-login.html">Already have an account? Login</a>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const form = document.getElementById('registrationForm');
+      const password = document.getElementById('password');
+      const confirmPassword = document.getElementById('confirmPassword');
+      const passwordMatch = document.querySelector('.password-match');
+      const passwordMismatch = document.querySelector('.password-mismatch');
+      const successMessage = document.getElementById('successMessage');
+      const errorMessage = document.getElementById('errorMessage');
+      
+      // Check password match in real-time
+      confirmPassword.addEventListener('input', function() {
+        if (password.value === confirmPassword.value && password.value !== '') {
+          passwordMatch.style.display = 'block';
+          passwordMismatch.style.display = 'none';
+        } else if (confirmPassword.value !== '') {
+          passwordMatch.style.display = 'none';
+          passwordMismatch.style.display = 'block';
+        } else {
+          passwordMatch.style.display = 'none';
+          passwordMismatch.style.display = 'none';
+        }
+      });
+      
+      // Form submission handler
+      form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        
+        // Hide previous messages
+        successMessage.style.display = 'none';
+        errorMessage.style.display = 'none';
+        
+        // Validate form
+        const fullName = document.getElementById('fullName').value;
+        const email = document.getElementById('email').value;
+        const phone = document.getElementById('phone').value;
+        const address = document.getElementById('address').value;
+        const govtId = document.getElementById('govtId').value;
+        
+        // Check if passwords match
+        if (password.value !== confirmPassword.value) {
+          errorMessage.textContent = 'Passwords do not match!';
+          errorMessage.style.display = 'block';
+          return;
+        }
+        
+        // Check if all fields are filled
+        if (!fullName || !email || !phone || !address || !password.value || !govtId) {
+          errorMessage.textContent = 'Please fill in all required fields!';
+          errorMessage.style.display = 'block';
+          return;
+        }
+        
+        // Validate phone number format
+        const phoneRegex = /^[0-9]{10}$/;
+        if (!phoneRegex.test(phone)) {
+          errorMessage.textContent = 'Please enter a valid 10-digit phone number!';
+          errorMessage.style.display = 'block';
+          return;
+        }
+        
+        // Validate email format
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+          errorMessage.textContent = 'Please enter a valid email address!';
+          errorMessage.style.display = 'block';
+          return;
+        }
+        
+                  // If all validations pass, show success message and redirect
+                // If all validations pass, show success message and redirect
+          successMessage.style.display = 'block';
+
+          // Store user data in localStorage for authentication
+          const userData = {
+              fullName: fullName,
+              email: email,
+              phone: phone,
+              address: address,
+              govtId: govtId,
+              password: password.value // Store password for login validation
+          };
+
+          // Get existing users or create empty array
+          const existingUsers = JSON.parse(localStorage.getItem('users')) || [];
+
+          // Check if user already exists
+          const userExists = existingUsers.find(user => user.email === email);
+          if (userExists) {
+              errorMessage.textContent = 'User with this email already exists!';
+              errorMessage.style.display = 'block';
+              successMessage.style.display = 'none';
+              return;
+          }
+
+          // Add new user and save to localStorage
+          existingUsers.push(userData);
+          localStorage.setItem('users', JSON.stringify(existingUsers));
+
+          // Redirect to login page after 2 seconds
+          setTimeout(function() {
+              window.location.href = 'customer-login.html';
+          }, 2000);
+      });
+    });
+  </script>
+</body>
+</html>

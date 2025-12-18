@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Logout - Timeless Moments</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #dbeafe, #fce7f3, #ede9fe);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .logout-box {
+      background: #fff;
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      text-align: center;
+      width: 350px;
+      animation: fadeIn 0.8s ease-in-out;
+    }
+    .logout-box h2 {
+      color: #7c3aed;
+      margin-bottom: 20px;
+    }
+    .logout-box p {
+      margin-bottom: 25px;
+      color: #333;
+    }
+    .btn {
+      padding: 12px 20px;
+      margin: 8px;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      cursor: pointer;
+      font-weight: bold;
+      color: #fff;
+    }
+    .btn-yes {
+      background: linear-gradient(135deg, #93c5fd, #f9a8d4, #c4b5fd);
+    }
+    .btn-no {
+      background: #7c3aed;
+    }
+    .btn:hover { opacity: 0.85; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="logout-box">
+    <h2>Confirm Logout</h2>
+    <p>Are you sure you want to logout from <b>Timeless Moments</b>?</p>
+    <button class="btn btn-yes" onclick="logout()">Yes, Logout</button>
+    <button class="btn btn-no" onclick="cancelLogout()">Cancel</button>
+  </div>
+
+  <script>
+    function logout() {
+      alert("✅ You have been logged out successfully.");
+      window.location.href = "customer login.html"; // redirect to login page
+    }
+    function cancelLogout() {
+      window.location.href = "customer-dashboard.html"; // go back to dashboard
+    }
+  </script>
+</body>
+</html>

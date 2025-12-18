@@ -1,0 +1,2956 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decoration Services - Timeless Moments</title>
+    <link rel="stylesheet" href="common.css">
+    <style>
+        /* Additional specific styles for decoration service if needed */
+        .shortlist-btn.added {
+            background: var(--success-green);
+            color: white;
+        }
+        
+        .shortlist-btn.added:hover {
+            background: #45a049;
+        }
+        /* Booking Modal Styles */
+.booking-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.booking-modal.show {
+    display: flex;
+}
+
+.booking-form-container {
+    background: white;
+    border-radius: 12px;
+    padding: 0;
+    width: 90%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.booking-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 25px;
+    border-bottom: 1px solid #eee;
+    background: var(--primary-color);
+    color: white;
+    border-radius: 12px 12px 0 0;
+}
+
+.booking-header h3 {
+    margin: 0;
+    font-size: 1.3rem;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#bookingForm {
+    padding: 25px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #333;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #e1e1e1;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: border-color 0.3s;
+    box-sizing: border-box;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+.form-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.form-actions .btn {
+    flex: 1;
+    padding: 12px;
+}
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Timeless Moments</h1>
+        <p>Find the Perfect Decoration Service for Your Special Day</p>
+    </div>
+    
+    <div class="controls-container">
+        <div class="search-box">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="searchInput" placeholder="Search decoration services by name, style, or location...">
+        </div>
+        
+        <div class="filters">
+            <div class="filter-group">
+                <label for="stateFilter">State</label>
+                <select id="stateFilter">
+                    <option value="all">All States</option>
+                    <option value="Andhra Pradesh">Andhra Pradesh</option>
+                    <option value="Telangana">Telangana</option>
+                    <option value="Karnataka">Karnataka</option>
+                    <option value="Kerala">Kerala</option>
+                    <option value="Tamil Nadu">Tamil Nadu</option>
+                </select>
+            </div>
+            
+            <div class="filter-group">
+                <label for="decorationTypeFilter">Decoration Style</label>
+                <select id="decorationTypeFilter">
+                    <option value="all">All Styles</option>
+                    <option value="Floral Decor">Floral Decor</option>
+                    <option value="Theme Decor">Theme Decor</option>
+                    <option value="Traditional Decor">Traditional Decor</option>
+                    <option value="Modern Decor">Modern Decor</option>
+                    <option value="Luxury Decor">Luxury Decor</option>
+                    <option value="Budget Decor">Budget Decor</option>
+                    <option value="Fusion Decor">Fusion Decor</option>
+                    <option value="Stage Decor">Stage Decor</option>
+                </select>
+            </div>
+            
+            <div class="filter-group price-filter">
+                <label for="minBudget">Budget Range (₹)</label>
+                <div class="price-inputs">
+                    <input type="number" id="minBudget" placeholder="Min" min="0">
+                    <input type="number" id="maxBudget" placeholder="Max" min="0">
+                </div>
+            </div>
+        </div>
+        
+        <button class="reset-filters" id="resetFilters">Reset All Filters</button>
+        
+        <div class="catering-stats">
+            <div class="stat-card">
+                <div class="stat-number" id="totalDecorations">0</div>
+                <div class="stat-label">Total Decorators</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="avgRating">0.0</div>
+                <div class="stat-label">Average Rating</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="statesCovered">0</div>
+                <div class="stat-label">States Covered</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="topRated">0</div>
+                <div class="stat-label">Top Rated (4.5+)</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="catering-container">
+        <div class="catering-grid" id="decorationsGrid">
+            <!-- Decoration cards will be dynamically inserted here -->
+        </div>
+    </div>
+
+    <div class="shortlist-toast" id="shortlistToast">
+        Service added to shortlist!
+    </div>
+    <!-- Booking Form Modal -->
+<div class="booking-modal" id="bookingModal">
+    <div class="booking-form-container">
+        <div class="booking-header">
+            <h3>Book Decoration Service</h3>
+            <button class="close-btn" id="closeBookingForm">&times;</button>
+        </div>
+        <form id="bookingForm">
+            <div class="form-group">
+                <label for="customerName">Your Name *</label>
+                <input type="text" id="customerName" name="customerName" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="customerPhone">Phone Number *</label>
+                <input type="tel" id="customerPhone" name="customerPhone" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="customerEmail">Email Address</label>
+                <input type="email" id="customerEmail" name="customerEmail">
+            </div>
+            
+            <div class="form-group">
+                <label for="eventType">Event Type *</label>
+                <select id="eventType" name="eventType" required>
+                    <option value="">Select Event Type</option>
+                    <option value="wedding">Wedding</option>
+                    <option value="engagement">Engagement</option>
+                    <option value="birthday">Birthday</option>
+                    <option value="corporate">Corporate Event</option>
+                    <option value="anniversary">Anniversary</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="eventDate">Event Date *</label>
+                <input type="date" id="eventDate" name="eventDate" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="eventTime">Event Time *</label>
+                <input type="time" id="eventTime" name="eventTime" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="venueType">Venue Type *</label>
+                <select id="venueType" name="venueType" required>
+                    <option value="">Select Venue Type</option>
+                    <option value="indoor">Indoor Hall</option>
+                    <option value="outdoor">Outdoor Garden</option>
+                    <option value="hotel">Hotel Ballroom</option>
+                    <option value="home">Home/Residence</option>
+                    <option value="community">Community Hall</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="venueSize">Venue Size (approx. sq. ft.)</label>
+                <input type="number" id="venueSize" name="venueSize" placeholder="e.g., 1000">
+            </div>
+            
+            <div class="form-group">
+                <label for="eventAddress">Event Venue Address *</label>
+                <textarea id="eventAddress" name="eventAddress" rows="3" required></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="decorationStyle">Preferred Decoration Style *</label>
+                <select id="decorationStyle" name="decorationStyle" required>
+                    <option value="">Select Style</option>
+                    <option value="floral">Floral Decor</option>
+                    <option value="theme">Theme Decor</option>
+                    <option value="traditional">Traditional Decor</option>
+                    <option value="modern">Modern Decor</option>
+                    <option value="luxury">Luxury Decor</option>
+                    <option value="budget">Budget Decor</option>
+                    <option value="fusion">Fusion Decor</option>
+                    <option value="stage">Stage Decor</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="colorScheme">Preferred Color Scheme</label>
+                <input type="text" id="colorScheme" name="colorScheme" placeholder="e.g., Pastel colors, Red & Gold, etc.">
+            </div>
+            
+            <div class="form-group">
+                <label for="specialRequirements">Special Requirements</label>
+                <textarea id="specialRequirements" name="specialRequirements" rows="3" placeholder="Any specific themes, cultural elements, budget constraints, or special arrangements..."></textarea>
+            </div>
+            
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" id="cancelBooking">Cancel</button>
+                <button type="submit" class="btn btn-primary">Submit Booking Request</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+    <script>
+        // Decoration data with packages for all 40 decorators
+        const decorationsData = {
+            "Andhra Pradesh": [
+                {
+                    "id": 121,
+                    "name": "Bloom Decorators",
+                    "specialty": "Floral Decor",
+                    "rating": 4.3,
+                    "price": "₹10,000 - ₹25,000",
+                    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmJvrRRgLLARDlYzHOZxteByYQ7U7J-yJL-Q&s",
+                    "experience": "4 years",
+                    "features": ["Fresh Flowers", "Floral Arrangements", "Venue Decoration", "Entryway Decor"],
+                    "contact": {"phone": "+91 9876543210"},
+                    "packages": [
+                        {
+                            "name": "Basic Floral Package",
+                            "price": "₹10,000",
+                            "features": [
+                                "Basic floral arrangements",
+                                "Entryway decoration",
+                                "Stage backdrop flowers",
+                                "Fresh seasonal flowers",
+                                "Setup & teardown included"
+                            ]
+                        },
+                        {
+                            "name": "Standard Floral Package",
+                            "price": "₹17,500",
+                            "features": [
+                                "Premium floral arrangements",
+                                "Complete venue decoration",
+                                "Custom floral centerpieces",
+                                "Mixed flower varieties",
+                                "Setup & teardown included",
+                                "Floral arch design"
+                            ]
+                        },
+                        {
+                            "name": "Premium Floral Package",
+                            "price": "₹25,000",
+                            "features": [
+                                "Luxury floral arrangements",
+                                "Complete venue transformation",
+                                "Exotic flower varieties",
+                                "Custom floral installations",
+                                "Setup & teardown included",
+                                "Floral arch + hanging installations"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 122,
+                    "name": "Theme Masters",
+                    "specialty": "Theme Decor",
+                    "rating": 4.4,
+                    "price": "₹12,000 - ₹28,000",
+                    "image": "https://content.jdmagicbox.com/comp/nellore/a8/9999px861.x861.161007145230.d5a8/catalogue/aaha-weddings-and-events-stonehousepet-nellore-flower-decorators-ol26hgv9ij.jpg",
+                    "experience": "5 years",
+                    "features": ["Theme Design", "Custom Props", "Color Coordination", "Venue Transformation"],
+                    "contact": {"phone": "+91 9876543211"},
+                    "packages": [
+                        {
+                            "name": "Basic Theme Package",
+                            "price": "₹12,000",
+                            "features": [
+                                "Basic theme implementation",
+                                "Color scheme coordination",
+                                "Simple props & backdrops",
+                                "Stage decoration",
+                                "Setup assistance"
+                            ]
+                        },
+                        {
+                            "name": "Standard Theme Package",
+                            "price": "₹20,000",
+                            "features": [
+                                "Complete theme design",
+                                "Custom props & installations",
+                                "Venue transformation",
+                                "Lighting coordination",
+                                "Setup & teardown included",
+                                "Theme-appropriate decor elements"
+                            ]
+                        },
+                        {
+                            "name": "Premium Theme Package",
+                            "price": "₹28,000",
+                            "features": [
+                                "Luxury theme execution",
+                                "Custom-designed props",
+                                "Complete venue makeover",
+                                "Professional lighting design",
+                                "Setup & teardown included",
+                                "Interactive theme elements"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 123,
+                    "name": "Traditional Elegance",
+                    "specialty": "Traditional Decor",
+                    "rating": 4.5,
+                    "price": "₹14,000 - ₹31,000",
+                    "image": "https://content.jdmagicbox.com/v2/comp/hyderabad/q3/040pxx40.xx40.181203143534.f2q3/catalogue/taj-flower-decoration-as-rao-nagar-hyderabad-decorators-4zs42a3y0n-250.jpg",
+                    "experience": "6 years",
+                    "features": ["Traditional Elements", "Cultural Motifs", "Classic Designs", "Heritage Style"],
+                    "contact": {"phone": "+91 9876543212"},
+                    "packages": [
+                        {
+                            "name": "Basic Traditional Package",
+                            "price": "₹14,000",
+                            "features": [
+                                "Traditional stage decoration",
+                                "Classic floral arrangements",
+                                "Cultural motif backdrops",
+                                "Basic traditional elements",
+                                "Setup assistance"
+                            ]
+                        },
+                        {
+                            "name": "Standard Traditional Package",
+                            "price": "₹22,500",
+                            "features": [
+                                "Complete traditional decor",
+                                "Custom cultural motifs",
+                                "Traditional prop installations",
+                                "Classic lighting design",
+                                "Setup & teardown included",
+                                "Heritage-style arrangements"
+                            ]
+                        },
+                        {
+                            "name": "Premium Traditional Package",
+                            "price": "₹31,000",
+                            "features": [
+                                "Luxury traditional execution",
+                                "Authentic cultural elements",
+                                "Complete venue transformation",
+                                "Professional traditional lighting",
+                                "Setup & teardown included",
+                                "Royal traditional aesthetics"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 124,
+                    "name": "Modern Touch",
+                    "specialty": "Modern Decor",
+                    "rating": 4.6,
+                    "price": "₹16,000 - ₹34,000",
+                    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSM_ul3Yrsw1isNgsV3VDyXjONaO0PbnzeP7g&s",
+                    "experience": "7 years",
+                    "features": ["Contemporary Design", "Minimalist Style", "Modern Elements", "Clean Aesthetics"],
+                    "contact": {"phone": "+91 9876543213"},
+                    "packages": [
+                        {
+                            "name": "Basic Modern Package",
+                            "price": "₹16,000",
+                            "features": [
+                                "Modern stage design",
+                                "Contemporary elements",
+                                "Clean aesthetic arrangements",
+                                "Basic lighting effects",
+                                "Setup assistance"
+                            ]
+                        },
+                        {
+                            "name": "Standard Modern Package",
+                            "price": "₹25,000",
+                            "features": [
+                                "Complete modern decor",
+                                "Contemporary installations",
+                                "Minimalist design elements",
+                                "Modern lighting design",
+                                "Setup & teardown included",
+                                "Sleek aesthetic arrangements"
+                            ]
+                        },
+                        {
+                            "name": "Premium Modern Package",
+                            "price": "₹34,000",
+                            "features": [
+                                "Luxury modern execution",
+                                "Cutting-edge installations",
+                                "Complete venue transformation",
+                                "Professional lighting design",
+                                "Setup & teardown included",
+                                "High-end contemporary elements"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 125,
+                    "name": "Luxury Designs",
+                    "specialty": "Luxury Decor",
+                    "rating": 4.7,
+                    "price": "₹18,000 - ₹37,000",
+                    "image": "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=800",
+                    "experience": "8 years",
+                    "features": ["Premium Materials", "Luxury Elements", "Elegant Designs", "High-End Style"],
+                    "contact": {"phone": "+91 9876543214"},
+                    "packages": [
+                        {
+                            "name": "Basic Luxury Package",
+                            "price": "₹18,000",
+                            "features": [
+                                "Premium stage decoration",
+                                "Quality material usage",
+                                "Elegant design elements",
+                                "Basic luxury touches",
+                                "Setup assistance"
+                            ]
+                        },
+                        {
+                            "name": "Standard Luxury Package",
+                            "price": "₹27,500",
+                            "features": [
+                                "Complete luxury decor",
+                                "High-end materials",
+                                "Elegant installations",
+                                "Premium lighting design",
+                                "Setup & teardown included",
+                                "Luxury floral arrangements"
+                            ]
+                        },
+                        {
+                            "name": "Premium Luxury Package",
+                            "price": "₹37,000",
+                            "features": [
+                                "Ultimate luxury execution",
+                                "Exclusive materials",
+                                "Complete venue transformation",
+                                "Professional luxury lighting",
+                                "Setup & teardown included",
+                                "Bespoke luxury elements"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 126,
+                    "name": "Budget Beautifiers",
+                    "specialty": "Budget Decor",
+                    "rating": 4.3,
+                    "price": "₹20,000 - ₹40,000",
+                    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFH3ec2zKbcOsJJRcooXlQ97P2VUhmEXPgKQ&s",
+                    "experience": "9 years",
+                    "features": ["Cost-Effective", "Creative Solutions", "Quality Materials", "Budget-Friendly"],
+                    "contact": {"phone": "+91 9876543215"},
+                    "packages": [
+                        {
+                            "name": "Essential Budget Package",
+                            "price": "₹20,000",
+                            "features": [
+                                "Essential stage decoration",
+                                "Cost-effective materials",
+                                "Basic venue decor",
+                                "Simple arrangements",
+                                "Setup assistance"
+                            ]
+                        },
+                        {
+                            "name": "Value Budget Package",
+                            "price": "₹30,000",
+                            "features": [
+                                "Complete budget decor",
+                                "Creative design solutions",
+                                "Quality cost-effective materials",
+                                "Enhanced arrangements",
+                                "Setup & teardown included",
+                                "Budget-friendly enhancements"
+                            ]
+                        },
+                        {
+                            "name": "Premium Budget Package",
+                            "price": "₹40,000",
+                            "features": [
+                                "Maximum value execution",
+                                "Creative budget solutions",
+                                "Complete venue decoration",
+                                "Quality material usage",
+                                "Setup & teardown included",
+                                "Budget luxury touches"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 127,
+                    "name": "Fusion Creations",
+                    "specialty": "Fusion Decor",
+                    "rating": 4.4,
+                    "price": "₹22,000 - ₹43,000",
+                    "image": "https://content.jdmagicbox.com/v2/comp/visakhapatnam/d3/0891px891.x891.240322125204.a6d3/catalogue/ivr-suppliers-and-events-railway-new-colony-visakhapatnam-event-organisers-sd8u6s19ft.jpg",
+                    "experience": "10 years",
+                    "features": ["Mixed Styles", "Cultural Fusion", "Creative Blends", "Unique Designs"],
+                    "contact": {"phone": "+91 9876543216"},
+                    "packages": [
+                        {
+                            "name": "Basic Fusion Package",
+                            "price": "₹22,000",
+                            "features": [
+                                "Fusion stage decoration",
+                                "Mixed style elements",
+                                "Creative design blends",
+                                "Basic fusion arrangements",
+                                "Setup assistance"
+                            ]
+                        },
+                        {
+                            "name": "Standard Fusion Package",
+                            "price": "₹32,500",
+                            "features": [
+                                "Complete fusion decor",
+                                "Creative style mixing",
+                                "Cultural fusion elements",
+                                "Enhanced arrangements",
+                                "Setup & teardown included",
+                                "Unique design concepts"
+                            ]
+                        },
+                        {
+                            "name": "Premium Fusion Package",
+                            "price": "₹43,000",
+                            "features": [
+                                "Ultimate fusion execution",
+                                "Expert style blending",
+                                "Complete venue transformation",
+                                "Professional fusion design",
+                                "Setup & teardown included",
+                                "Bespoke fusion elements"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 128,
+                    "name": "Stage Specialists",
+                    "specialty": "Stage Decor",
+                    "rating": 4.5,
+                    "price": "₹24,000 - ₹46,000",
+                    "image": "https://cdn0.weddingwire.in/vendor/2067/3_2/640/jpg/69658-341864395918753-371847871-n_15_182067.jpeg",
+                    "experience": "11 years",
+                    "features": ["Stage Design", "Backdrop Creation", "Lighting Setup", "Professional Stage"],
+                    "contact": {"phone": "+91 9876543217"},
+                    "packages": [
+                        {
+                            "name": "Basic Stage Package",
+                            "price": "₹24,000",
+                            "features": [
+                                "Professional stage setup",
+                                "Basic backdrop design",
+                                "Stage lighting setup",
+                                "Simple stage elements",
+                                "Setup assistance"
+                            ]
+                        },
+                        {
+                            "name": "Standard Stage Package",
+                            "price": "₹35,000",
+                            "features": [
+                                "Complete stage design",
+                                "Custom backdrop creation",
+                                "Professional lighting design",
+                                "Enhanced stage elements",
+                                "Setup & teardown included",
+                                "Stage coordination"
+                            ]
+                        },
+                        {
+                            "name": "Premium Stage Package",
+                            "price": "₹46,000",
+                            "features": [
+                                "Luxury stage execution",
+                                "Bespoke backdrop design",
+                                "Advanced lighting systems",
+                                "Complete stage transformation",
+                                "Setup & teardown included",
+                                "Professional stage management"
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "Tamil Nadu": [
+                {
+                    "id": 129,
+                    "name": "Chennai Floral Arts",
+                    "specialty": "Floral Decor",
+                    "rating": 4.3,
+                    "price": "₹10,000 - ₹25,000",
+                    "image": "https://content.jdmagicbox.com/v2/comp/chennai/j2/044pxx44.xx44.150312194905.d6j2/catalogue/creative-eventz-alandur-st-thomas-mount-chennai-balloon-decorators-6lbuwxnmkj.jpg",
+                    "experience": "4 years",
+                    "features": ["Fresh Flowers", "Floral Arrangements", "Venue Decoration", "Entryway Decor"],
+                    "contact": {"phone": "+91 9876543220"},
+                    "packages": [
+                        {
+                            "name": "Basic Floral Package",
+                            "price": "₹10,000",
+                            "features": [
+                                "Basic floral arrangements",
+                                "Entryway decoration",
+                                "Stage backdrop flowers",
+                                "Fresh seasonal flowers",
+                                "Setup & teardown included"
+                            ]
+                        },
+                        {
+                            "name": "Standard Floral Package",
+                            "price": "₹17,500",
+                            "features": [
+                                "Premium floral arrangements",
+                                "Complete venue decoration",
+                                "Custom floral centerpieces",
+                                "Mixed flower varieties",
+                                "Setup & teardown included",
+                                "Floral arch design"
+                            ]
+                        },
+                        {
+                            "name": "Premium Floral Package",
+                            "price": "₹25,000",
+                            "features": [
+                                "Luxury floral arrangements",
+                                "Complete venue transformation",
+                                "Exotic flower varieties",
+                                "Custom floral installations",
+                                "Setup & teardown included",
+                                "Floral arch + hanging installations"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 130,
+                    "name": "Madurai Theme Experts",
+                    "specialty": "Theme Decor",
+                    "rating": 4.4,
+                    "price": "₹12,000 - ₹28,000",
+                    "image": "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=800",
+                    "experience": "5 years",
+                    "features": ["Theme Design", "Custom Props", "Color Coordination", "Venue Transformation"],
+                    "contact": {"phone": "+91 9876543221"},
+                    "packages": [
+                        {
+                            "name": "Basic Theme Package",
+                            "price": "₹12,000",
+                            "features": [
+                                "Basic theme implementation",
+                                "Color scheme coordination",
+                                "Simple props & backdrops",
+                                "Stage decoration",
+                                "Setup assistance"
+                            ]
+                        },
+                        {
+                            "name": "Standard Theme Package",
+                            "price": "₹20,000",
+                            "features": [
+                                "Complete theme design",
+                                "Custom props & installations",
+                                "Venue transformation",
+                                "Lighting coordination",
+                                "Setup & teardown included",
+                                "Theme-appropriate decor elements"
+                            ]
+                        },
+                        {
+                            "name": "Premium Theme Package",
+                            "price": "₹28,000",
+                            "features": [
+                                "Luxury theme execution",
+                                "Custom-designed props",
+                                "Complete venue makeover",
+                                "Professional lighting design",
+                                "Setup & teardown included",
+                                "Interactive theme elements"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 131,
+                    "name": "Coimbatore Traditional",
+                    "specialty": "Traditional Decor",
+                    "rating": 4.5,
+                    "price": "₹14,000 - ₹31,000",
+                    "image": "https://marriedlyevents.com/wp-content/uploads/2024/08/for-baby-1024x576.jpg",
+                    "experience": "6 years",
+                    "features": ["Traditional Elements", "Cultural Motifs", "Classic Designs", "Heritage Style"],
+                    "contact": {"phone": "+91 9876543222"},
+                    "packages": [
+                        {
+                            "name": "Basic Traditional Package",
+                            "price": "₹14,000",
+                            "features": [
+                                "Traditional stage decoration",
+                                "Classic floral arrangements",
+                                "Cultural motif backdrops",
+                                "Basic traditional elements",
+                                "Setup assistance"
+                            ]
+                        },
+                        {
+                            "name": "Standard Traditional Package",
+                            "price": "₹22,500",
+                            "features": [
+                                "Complete traditional decor",
+                                "Custom cultural motifs",
+                                "Traditional prop installations",
+                                "Classic lighting design",
+                                "Setup & teardown included",
+                                "Heritage-style arrangements"
+                            ]
+                        },
+                        {
+                            "name": "Premium Traditional Package",
+                            "price": "₹31,000",
+                            "features": [
+                                "Luxury traditional execution",
+                                "Authentic cultural elements",
+                                "Complete venue transformation",
+                                "Professional traditional lighting",
+                                "Setup & teardown included",
+                                "Royal traditional aesthetics"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 132,
+                    "name": "Salem Modern Designs",
+                    "specialty": "Modern Decor",
+                    "rating": 4.6,
+                    "price": "₹16,000 - ₹34,000",
+                    "image": "https://content.jdmagicbox.com/v2/comp/salem/j9/0427px427.x427.190517151835.x3j9/catalogue/real-rich-decorations-suramangalam-salem-flower-decorators-41vywq1pu8.jpg",
+                    "experience": "7 years",
+                    "features": ["Contemporary Design", "Minimalist Style", "Modern Elements", "Clean Aesthetics"],
+                    "contact": {"phone": "+91 9876543223"},
+                    "packages": [
+                        {
+                            "name": "Basic Modern Package",
+                            "price": "₹16,000",
+                            "features": [
+                                "Modern stage design",
+                                "Contemporary elements",
+                                "Clean aesthetic arrangements",
+                                "Basic lighting effects",
+                                "Setup assistance"
+                            ]
+                        },
+                        {
+                            "name": "Standard Modern Package",
+                            "price": "₹25,000",
+                            "features": [
+                                "Complete modern decor",
+                                "Contemporary installations",
+                                "Minimalist design elements",
+                                "Modern lighting design",
+                                "Setup & teardown included",
+                                "Sleek aesthetic arrangements"
+                            ]
+                        },
+                        {
+                            "name": "Premium Modern Package",
+                            "price": "₹34,000",
+                            "features": [
+                                "Luxury modern execution",
+                                "Cutting-edge installations",
+                                "Complete venue transformation",
+                                "Professional lighting design",
+                                "Setup & teardown included",
+                                "High-end contemporary elements"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 133,
+                    "name": "Trichy Luxury Decor",
+                    "specialty": "Luxury Decor",
+                    "rating": 4.7,
+                    "price": "₹18,000 - ₹37,000",
+                    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQoXEifbbbHiY-sXSLon6y99s4xBEuN-sHYig&s",
+                    "experience": "8 years",
+                    "features": ["Premium Materials", "Luxury Elements", "Elegant Designs", "High-End Style"],
+                    "contact": {"phone": "+91 9876543224"},
+                    "packages": [
+                        {
+                            "name": "Basic Luxury Package",
+                            "price": "₹18,000",
+                            "features": [
+                                "Premium stage decoration",
+                                "Quality material usage",
+                                "Elegant design elements",
+                                "Basic luxury touches",
+                                "Setup assistance"
+                            ]
+                        },
+                        {
+                            "name": "Standard Luxury Package",
+                            "price": "₹27,500",
+                            "features": [
+                                "Complete luxury decor",
+                                "High-end materials",
+                                "Elegant installations",
+                                "Premium lighting design",
+                                "Setup & teardown included",
+                                "Luxury floral arrangements"
+                            ]
+                        },
+                        {
+                            "name": "Premium Luxury Package",
+                            "price": "₹37,000",
+                            "features": [
+                                "Ultimate luxury execution",
+                                "Exclusive materials",
+                                "Complete venue transformation",
+                                "Professional luxury lighting",
+                                "Setup & teardown included",
+                                "Bespoke luxury elements"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 134,
+                    "name": "Erode Budget Decorators",
+                    "specialty": "Budget Decor",
+                    "rating": 4.3,
+                    "price": "₹20,000 - ₹40,000",
+                    "image": "https://cdn0.weddingwire.in/vendor/6171/3_2/960/jpg/36759573-938481429691878-7201195970976022528-n_15_16171.jpeg",
+                    "experience": "9 years",
+                    "features": ["Cost-Effective", "Creative Solutions", "Quality Materials", "Budget-Friendly"],
+                    "contact": {"phone": "+91 9876543225"},
+                    "packages": [
+                        {
+                            "name": "Essential Budget Package",
+                            "price": "₹20,000",
+                            "features": [
+                                "Essential stage decoration",
+                                "Cost-effective materials",
+                                "Basic venue decor",
+                                "Simple arrangements",
+                                "Setup assistance"
+                            ]
+                        },
+                        {
+                            "name": "Value Budget Package",
+                            "price": "₹30,000",
+                            "features": [
+                                "Complete budget decor",
+                                "Creative design solutions",
+                                "Quality cost-effective materials",
+                                "Enhanced arrangements",
+                                "Setup & teardown included",
+                                "Budget-friendly enhancements"
+                            ]
+                        },
+                        {
+                            "name": "Premium Budget Package",
+                            "price": "₹40,000",
+                            "features": [
+                                "Maximum value execution",
+                                "Creative budget solutions",
+                                "Complete venue decoration",
+                                "Quality material usage",
+                                "Setup & teardown included",
+                                "Budget luxury touches"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 135,
+                    "name": "Tirunelveli Fusion Arts",
+                    "specialty": "Fusion Decor",
+                    "rating": 4.4,
+                    "price": "₹22,000 - ₹43,000",
+                    "image": "https://content.jdmagicbox.com/comp/dindigul/32/9999pmulchnstd1401632/catalogue/pv-shamiyana-and-decorations-dindigul-bazaar-dindigul-shamiana-on-rent-yw1olp6c01.jpg",
+                    "experience": "10 years",
+                    "features": ["Mixed Styles", "Cultural Fusion", "Creative Blends", "Unique Designs"],
+                    "contact": {"phone": "+91 9876543226"},
+                    "packages": [
+                        {
+                            "name": "Basic Fusion Package",
+                            "price": "₹22,000",
+                            "features": [
+                                "Fusion stage decoration",
+                                "Mixed style elements",
+                                "Creative design blends",
+                                "Basic fusion arrangements",
+                                "Setup assistance"
+                            ]
+                        },
+                        {
+                            "name": "Standard Fusion Package",
+                            "price": "₹32,500",
+                            "features": [
+                                "Complete fusion decor",
+                                "Creative style mixing",
+                                "Cultural fusion elements",
+                                "Enhanced arrangements",
+                                "Setup & teardown included",
+                                "Unique design concepts"
+                            ]
+                        },
+                        {
+                            "name": "Premium Fusion Package",
+                            "price": "₹43,000",
+                            "features": [
+                                "Ultimate fusion execution",
+                                "Expert style blending",
+                                "Complete venue transformation",
+                                "Professional fusion design",
+                                "Setup & teardown included",
+                                "Bespoke fusion elements"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 136,
+                    "name": "Vellore Stage Masters",
+                    "specialty": "Stage Decor",
+                    "rating": 4.5,
+                    "price": "₹24,000 - ₹46,000",
+                    "image": "https://content.jdmagicbox.com/comp/vellore/b5/9999px416.x416.180908174613.z4b5/catalogue/thamboolam-events-cmc-vellore-event-organisers-olxkl5wleu.jpg",
+                    "experience": "11 years",
+                    "features": ["Stage Design", "Backdrop Creation", "Lighting Setup", "Professional Stage"],
+                    "contact": {"phone": "+91 9876543227"},
+                    "packages": [
+                        {
+                            "name": "Basic Stage Package",
+                            "price": "₹24,000",
+                            "features": [
+                                "Professional stage setup",
+                                "Basic backdrop design",
+                                "Stage lighting setup",
+                                "Simple stage elements",
+                                "Setup assistance"
+                            ]
+                        },
+                        {
+                            "name": "Standard Stage Package",
+                            "price": "₹35,000",
+                            "features": [
+                                "Complete stage design",
+                                "Custom backdrop creation",
+                                "Professional lighting design",
+                                "Enhanced stage elements",
+                                "Setup & teardown included",
+                                "Stage coordination"
+                            ]
+                        },
+                        {
+                            "name": "Premium Stage Package",
+                            "price": "₹46,000",
+                            "features": [
+                                "Luxury stage execution",
+                                "Bespoke backdrop design",
+                                "Advanced lighting systems",
+                                "Complete stage transformation",
+                                "Setup & teardown included",
+                                "Professional stage management"
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "Karnataka": [
+                {
+                    "id": 137,
+                    "name": "Bangalore Floral Magic",
+                    "specialty": "Floral Decor",
+                    "rating": 4.3,
+                    "price": "₹10,000 - ₹25,000",
+                    "image": "https://www.partyone.in/suploads/2024/Dec/21/39157/1734779053image-146.webp",
+                    "experience": "4 years",
+                    "features": ["Fresh Flowers", "Floral Arrangements", "Venue Decoration", "Entryway Decor"],
+                    "contact": {"phone": "+91 9876543230"},
+                    "packages": [
+                        {
+                            "name": "Basic Floral Package",
+                            "price": "₹10,000",
+                            "features": [
+                                "Basic floral arrangements",
+                                "Entryway decoration",
+                                "Stage backdrop flowers",
+                                "Fresh seasonal flowers",
+                                "Setup & teardown included"
+                            ]
+                        },
+                        {
+                            "name": "Standard Floral Package",
+                            "price": "₹17,500",
+                            "features": [
+                                "Premium floral arrangements",
+                                "Complete venue decoration",
+                                "Custom floral centerpieces",
+                                "Mixed flower varieties",
+                                "Setup & teardown included",
+                                "Floral arch design"
+                            ]
+                        },
+                        {
+                            "name": "Premium Floral Package",
+                            "price": "₹25,000",
+                            "features": [
+                                "Luxury floral arrangements",
+                                "Complete venue transformation",
+                                "Exotic flower varieties",
+                                "Custom floral installations",
+                                "Setup & teardown included",
+                                "Floral arch + hanging installations"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 138,
+                    "name": "Mysore Theme Wizards",
+                    "specialty": "Theme Decor",
+                    "rating": 4.4,
+                    "price": "₹12,000 - ₹28,000",
+                    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSh_n4BDxOPsBLPWZe0hOgOgnqijl1StSE0Pg&s",
+                    "experience": "5 years",
+                    "features": ["Theme Design", "Custom Props", "Color Coordination", "Venue Transformation"],
+                    "contact": {"phone": "+91 9876543231"},
+                    "packages": [
+                        {
+                            "name": "Basic Theme Package",
+                            "price": "₹12,000",
+                            "features": [
+                                "Basic theme implementation",
+                                "Color scheme coordination",
+                                "Simple props & backdrops",
+                                "Stage decoration",
+                                "Setup assistance"
+                            ]
+                        },
+                        {
+                            "name": "Standard Theme Package",
+                            "price": "₹20,000",
+                            "features": [
+                                "Complete theme design",
+                                "Custom props & installations",
+                                "Venue transformation",
+                                "Lighting coordination",
+                                "Setup & teardown included",
+                                "Theme-appropriate decor elements"
+                            ]
+                        },
+                        {
+                            "name": "Premium Theme Package",
+                            "price": "₹28,000",
+                            "features": [
+                                "Luxury theme execution",
+                                "Custom-designed props",
+                                "Complete venue makeover",
+                                "Professional lighting design",
+                                "Setup & teardown included",
+                                "Interactive theme elements"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 139,
+                    "name": "Mangalore Traditional Arts",
+                    "specialty": "Traditional Decor",
+                    "rating": 4.5,
+                    "price": "₹14,000 - ₹31,000",
+                    "image": "https://cdn0.weddingwire.in/vendor/0453/3_2/960/jpg/03_15_270453-173831743359752.jpeg",
+                    "experience": "6 years",
+                    "features": ["Traditional Elements", "Cultural Motifs", "Classic Designs", "Heritage Style"],
+                    "contact": {"phone": "+91 9876543232"},
+                    "packages": [
+                        {
+                            "name": "Basic Traditional Package",
+                            "price": "₹14,000",
+                            "features": [
+                                "Traditional stage decoration",
+                                "Classic floral arrangements",
+                                "Cultural motif backdrops",
+                                "Basic traditional elements",
+                                "Setup assistance"
+                            ]
+                        },
+                        {
+                            "name": "Standard Traditional Package",
+                            "price": "₹22,500",
+                            "features": [
+                                "Complete traditional decor",
+                                "Custom cultural motifs",
+                                "Traditional prop installations",
+                                "Classic lighting design",
+                                "Setup & teardown included",
+                                "Heritage-style arrangements"
+                            ]
+                        },
+                        {
+                            "name": "Premium Traditional Package",
+                            "price": "₹31,000",
+                            "features": [
+                                "Luxury traditional execution",
+                                "Authentic cultural elements",
+                                "Complete venue transformation",
+                                "Professional traditional lighting",
+                                "Setup & teardown included",
+                                "Royal traditional aesthetics"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 140,
+                    "name": "Hubli Modern Creations",
+                    "specialty": "Modern Decor",
+                    "rating": 4.6,
+                    "price": "₹16,000 - ₹34,000",
+                    "image": "https://content.jdmagicbox.com/comp/hubli/e7/0836px836.x836.221230233859.s6e7/catalogue/bloom-events-hubli-event-organisers-09ds23wo1a.jpg",
+                    "experience": "7 years",
+                    "features": ["Contemporary Design", "Minimalist Style", "Modern Elements", "Clean Aesthetics"],
+                    "contact": {"phone": "+91 9876543233"},
+                    "packages": [
+                        {
+                            "name": "Basic Modern Package",
+                            "price": "₹16,000",
+                            "features": [
+                                "Modern stage design",
+                                "Contemporary elements",
+                                "Clean aesthetic arrangements",
+                                "Basic lighting effects",
+                                "Setup assistance"
+                            ]
+                        },
+                        {
+                            "name": "Standard Modern Package",
+                            "price": "₹25,000",
+                            "features": [
+                                "Complete modern decor",
+                                "Contemporary installations",
+                                "Minimalist design elements",
+                                "Modern lighting design",
+                                "Setup & teardown included",
+                                "Sleek aesthetic arrangements"
+                            ]
+                        },
+                        {
+                            "name": "Premium Modern Package",
+                            "price": "₹34,000",
+                            "features": [
+                                "Luxury modern execution",
+                                "Cutting-edge installations",
+                                "Complete venue transformation",
+                                "Professional lighting design",
+                                "Setup & teardown included",
+                                "High-end contemporary elements"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 141,
+                    "name": "Belgaum Luxury Designs",
+                    "specialty": "Luxury Decor",
+                    "rating": 4.7,
+                    "price": "₹18,000 - ₹37,000",
+                    "image": "https://cdn0.weddingwire.in/vendor/7708/3_2/960/jpg/wedding-planners-innovation-events-event-decor1t_15_297708-158686235256977.jpeg",
+                    "experience": "8 years",
+                    "features": ["Premium Materials", "Luxury Elements", "Elegant Designs", "High-End Style"],
+                    "contact": {"phone": "+91 9876543234"},
+                    "packages": [
+                        {
+                            "name": "Basic Luxury Package",
+                            "price": "₹18,000",
+                            "features": [
+                                "Premium stage decoration",
+                                "Quality material usage",
+                                "Elegant design elements",
+                                "Basic luxury touches",
+                                "Setup assistance"
+                            ]
+                        },
+                        {
+                            "name": "Standard Luxury Package",
+                            "price": "₹27,500",
+                            "features": [
+                                "Complete luxury decor",
+                                "High-end materials",
+                                "Elegant installations",
+                                "Premium lighting design",
+                                "Setup & teardown included",
+                                "Luxury floral arrangements"
+                            ]
+                        },
+                        {
+                            "name": "Premium Luxury Package",
+                            "price": "₹37,000",
+                            "features": [
+                                "Ultimate luxury execution",
+                                "Exclusive materials",
+                                "Complete venue transformation",
+                                "Professional luxury lighting",
+                                "Setup & teardown included",
+                                "Bespoke luxury elements"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 142,
+                    "name": "Davanagere Budget Experts",
+                    "specialty": "Budget Decor",
+                    "rating": 4.3,
+                    "price": "₹20,000 - ₹40,000",
+                    "image": "https://content.jdmagicbox.com/comp/davangere/c3/9999p8192.8192.140726143720.s7c3/catalogue/jai-karnataka-decoration-enterprises-hadadi-road-davangere-davangere-flower-decorators-xg12dql39r.jpg",
+                    "experience": "9 years",
+                    "features": ["Cost-Effective", "Creative Solutions", "Quality Materials", "Budget-Friendly"],
+                    "contact": {"phone": "+91 9876543235"},
+                    "packages": [
+                        {
+                            "name": "Essential Budget Package",
+                            "price": "₹20,000",
+                            "features": [
+                                "Essential stage decoration",
+                                "Cost-effective materials",
+                                "Basic venue decor",
+                                "Simple arrangements",
+                                "Setup assistance"
+                            ]
+                        },
+                        {
+                            "name": "Value Budget Package",
+                            "price": "₹30,000",
+                            "features": [
+                                "Complete budget decor",
+                                "Creative design solutions",
+                                "Quality cost-effective materials",
+                                "Enhanced arrangements",
+                                "Setup & teardown included",
+                                "Budget-friendly enhancements"
+                            ]
+                        },
+                        {
+                            "name": "Premium Budget Package",
+                            "price": "₹40,000",
+                            "features": [
+                                "Maximum value execution",
+                                "Creative budget solutions",
+                                "Complete venue decoration",
+                                "Quality material usage",
+                                "Setup & teardown included",
+                                "Budget luxury touches"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 143,
+                    "name": "Gulbarga Fusion Magic",
+                    "specialty": "Fusion Decor",
+                    "rating": 4.4,
+                    "price": "₹22,000 - ₹43,000",
+                    "image": "https://ind.5bestincity.com/profileimages/india/shubhamasthm-event-desingner-event-management-companies-gulbarga-kalaburagi-karnataka/52333-aeshu-1.jpg",
+                    "experience": "10 years",
+                    "features": ["Mixed Styles", "Cultural Fusion", "Creative Blends", "Unique Designs"],
+                    "contact": {"phone": "+91 9876543236"},
+                    "packages": [
+                        {
+                            "name": "Basic Fusion Package",
+                            "price": "₹22,000",
+                            "features": [
+                                "Fusion stage decoration",
+                                "Mixed style elements",
+                                "Creative design blends",
+                                "Basic fusion arrangements",
+                                "Setup assistance"
+                            ]
+                        },
+                        {
+                            "name": "Standard Fusion Package",
+                            "price": "₹32,500",
+                            "features": [
+                                "Complete fusion decor",
+                                "Creative style mixing",
+                                "Cultural fusion elements",
+                                "Enhanced arrangements",
+                                "Setup & teardown included",
+                                "Unique design concepts"
+                            ]
+                        },
+                        {
+                            "name": "Premium Fusion Package",
+                            "price": "₹43,000",
+                            "features": [
+                                "Ultimate fusion execution",
+                                "Expert style blending",
+                                "Complete venue transformation",
+                                "Professional fusion design",
+                                "Setup & teardown included",
+                                "Bespoke fusion elements"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 144,
+                    "name": "Shivamogga Stage Arts",
+                    "specialty": "Stage Decor",
+                    "rating": 4.5,
+                    "price": "₹24,000 - ₹46,000",
+                    "image": "https://content.jdmagicbox.com/comp/shimoga/c2/9999p8182.8182.181129141524.e4c2/catalogue/swasthik-wedding-planner-shimoga-event-organisers-pp70zisuws.jpg",
+                    "experience": "11 years",
+                    "features": ["Stage Design", "Backdrop Creation", "Lighting Setup", "Professional Stage"],
+                    "contact": {"phone": "+91 9876543237"},
+                    "packages": [
+                        {
+                            "name": "Basic Stage Package",
+                            "price": "₹24,000",
+                            "features": [
+                                "Professional stage setup",
+                                "Basic backdrop design",
+                                "Stage lighting setup",
+                                "Simple stage elements",
+                                "Setup assistance"
+                            ]
+                        },
+                        {
+                            "name": "Standard Stage Package",
+                            "price": "₹35,000",
+                            "features": [
+                                "Complete stage design",
+                                "Custom backdrop creation",
+                                "Professional lighting design",
+                                "Enhanced stage elements",
+                                "Setup & teardown included",
+                                "Stage coordination"
+                            ]
+                        },
+                        {
+                            "name": "Premium Stage Package",
+                            "price": "₹46,000",
+                            "features": [
+                                "Luxury stage execution",
+                                "Bespoke backdrop design",
+                                "Advanced lighting systems",
+                                "Complete stage transformation",
+                                "Setup & teardown included",
+                                "Professional stage management"
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "Kerala": [
+                {
+                    "id": 145,
+                    "name": "Kochi Floral Elegance",
+                    "specialty": "Floral Decor",
+                    "rating": 4.3,
+                    "price": "₹10,000 - ₹25,000",
+                    "image": "https://content.jdmagicbox.com/v2/comp/ernakulam/n7/0484px484.x484.240816193004.q9n7/catalogue/vrj-events-and-wedding-palarivattom-ernakulam-event-organisers-mdfvglfclu.jpg",
+                    "experience": "4 years",
+                    "features": ["Fresh Flowers", "Floral Arrangements", "Venue Decoration", "Entryway Decor"],
+                    "contact": {"phone": "+91 9876543240"},
+                    "packages": [
+                        {
+                            "name": "Basic Floral Package",
+                            "price": "₹10,000",
+                            "features": [
+                                "Basic floral arrangements",
+                                "Entryway decoration",
+                                "Stage backdrop flowers",
+                                "Fresh seasonal flowers",
+                                "Setup & teardown included"
+                            ]
+                        },
+                        {
+                            "name": "Standard Floral Package",
+                            "price": "₹17,500",
+                            "features": [
+                                "Premium floral arrangements",
+                                "Complete venue decoration",
+                                "Custom floral centerpieces",
+                                "Mixed flower varieties",
+                                "Setup & teardown included",
+                                "Floral arch design"
+                            ]
+                        },
+                        {
+                            "name": "Premium Floral Package",
+                            "price": "₹25,000",
+                            "features": [
+                                "Luxury floral arrangements",
+                                "Complete venue transformation",
+                                "Exotic flower varieties",
+                                "Custom floral installations",
+                                "Setup & teardown included",
+                                "Floral arch + hanging installations"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 146,
+                    "name": "Thiruvananthapuram Theme Experts",
+                    "specialty": "Theme Decor",
+                    "rating": 4.4,
+                    "price": "₹12,000 - ₹28,000",
+                    "image": "https://content.jdmagicbox.com/comp/thiruvananthapuram/a1/0471px471.x471.181025140559.x9a1/catalogue/varnam-sound-and-eventz-kulathoor-thiruvananthapuram-caterers-s11l9njc1z.jpg",
+                    "experience": "5 years",
+                    "features": ["Theme Design", "Custom Props", "Color Coordination", "Venue Transformation"],
+                    "contact": {"phone": "+91 9876543241"},
+                    "packages": [
+                        {
+                            "name": "Basic Theme Package",
+                            "price": "₹12,000",
+                            "features": [
+                                "Basic theme implementation",
+                                "Color scheme coordination",
+                                "Simple props & backdrops",
+                                "Stage decoration",
+                                "Setup assistance"
+                            ]
+                        },
+                        {
+                            "name": "Standard Theme Package",
+                            "price": "₹20,000",
+                            "features": [
+                                "Complete theme design",
+                                "Custom props & installations",
+                                "Venue transformation",
+                                "Lighting coordination",
+                                "Setup & teardown included",
+                                "Theme-appropriate decor elements"
+                            ]
+                        },
+                        {
+                            "name": "Premium Theme Package",
+                            "price": "₹28,000",
+                            "features": [
+                                "Luxury theme execution",
+                                "Custom-designed props",
+                                "Complete venue makeover",
+                                "Professional lighting design",
+                                "Setup & teardown included",
+                                "Interactive theme elements"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 147,
+                    "name": "Kozhikode Traditional Masters",
+                    "specialty": "Traditional Decor",
+                    "rating": 4.5,
+                    "price": "₹14,000 - ₹31,000",
+                    "image": "https://content.jdmagicbox.com/v2/comp/kozhikode/c9/0495px495.x495.250501224101.e8c9/catalogue/decor-delight-kozhikode-stage-decorators-cubls7da5m.jpg",
+                    "experience": "6 years",
+                    "features": ["Traditional Elements", "Cultural Motifs", "Classic Designs", "Heritage Style"],
+                    "contact": {"phone": "+91 9876543242"},
+                    "packages": [
+                        {
+                            "name": "Basic Traditional Package",
+                            "price": "₹14,000",
+                            "features": [
+                                "Traditional stage decoration",
+                                "Classic floral arrangements",
+                                "Cultural motif backdrops",
+                                "Basic traditional elements",
+                                "Setup assistance"
+                            ]
+                        },
+                        {
+                            "name": "Standard Traditional Package",
+                            "price": "₹22,500",
+                            "features": [
+                                "Complete traditional decor",
+                                "Custom cultural motifs",
+                                "Traditional prop installations",
+                                "Classic lighting design",
+                                "Setup & teardown included",
+                                "Heritage-style arrangements"
+                            ]
+                        },
+                        {
+                            "name": "Premium Traditional Package",
+                            "price": "₹31,000",
+                            "features": [
+                                "Luxury traditional execution",
+                                "Authentic cultural elements",
+                                "Complete venue transformation",
+                                "Professional traditional lighting",
+                                "Setup & teardown included",
+                                "Royal traditional aesthetics"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 148,
+                    "name": "Kollam Modern Touch",
+                    "specialty": "Modern Decor",
+                    "rating": 4.6,
+                    "price": "₹16,000 - ₹34,000",
+                    "image": "https://content.jdmagicbox.com/comp/kollam/s5/9999px474.x474.210513195157.c6s5/catalogue/dreammakers-event-company-and-wedding-planners-kollam-ho-kollam-caterers-8fv912pff0.jpg",
+                    "experience": "7 years",
+                    "features": ["Contemporary Design", "Minimalist Style", "Modern Elements", "Clean Aesthetics"],
+                    "contact": {"phone": "+91 9876543243"},
+                    "packages": [
+                        {
+                            "name": "Basic Modern Package",
+                            "price": "₹16,000",
+                            "features": [
+                                "Modern stage design",
+                                "Contemporary elements",
+                                "Clean aesthetic arrangements",
+                                "Basic lighting effects",
+                                "Setup assistance"
+                            ]
+                        },
+                        {
+                            "name": "Standard Modern Package",
+                            "price": "₹25,000",
+                            "features": [
+                                "Complete modern decor",
+                                "Contemporary installations",
+                                "Minimalist design elements",
+                                "Modern lighting design",
+                                "Setup & teardown included",
+                                "Sleek aesthetic arrangements"
+                            ]
+                        },
+                        {
+                            "name": "Premium Modern Package",
+                            "price": "₹34,000",
+                            "features": [
+                                "Luxury modern execution",
+                                "Cutting-edge installations",
+                                "Complete venue transformation",
+                                "Professional lighting design",
+                                "Setup & teardown included",
+                                "High-end contemporary elements"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 149,
+                    "name": "Thrissur Luxury Creations",
+                    "specialty": "Luxury Decor",
+                    "rating": 4.7,
+                    "price": "₹18,000 - ₹37,000",
+                    "image": "https://content.jdmagicbox.com/comp/thrissur/t8/9999px487.x487.190703164136.a6t8/catalogue/high-look-event-management-thrissur-1mrpcknc5c.jpg",
+                    "experience": "8 years",
+                    "features": ["Premium Materials", "Luxury Elements", "Elegant Designs", "High-End Style"],
+                    "contact": {"phone": "+91 9876543244"},
+                    "packages": [
+                        {
+                            "name": "Basic Luxury Package",
+                            "price": "₹18,000",
+                            "features": [
+                                "Premium stage decoration",
+                                "Quality material usage",
+                                "Elegant design elements",
+                                "Basic luxury touches",
+                                "Setup assistance"
+                            ]
+                        },
+                        {
+                            "name": "Standard Luxury Package",
+                            "price": "₹27,500",
+                            "features": [
+                                "Complete luxury decor",
+                                "High-end materials",
+                                "Elegant installations",
+                                "Premium lighting design",
+                                "Setup & teardown included",
+                                "Luxury floral arrangements"
+                            ]
+                        },
+                        {
+                            "name": "Premium Luxury Package",
+                            "price": "₹37,000",
+                            "features": [
+                                "Ultimate luxury execution",
+                                "Exclusive materials",
+                                "Complete venue transformation",
+                                "Professional luxury lighting",
+                                "Setup & teardown included",
+                                "Bespoke luxury elements"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 150,
+                    "name": "Kannur Budget Specialists",
+                    "specialty": "Budget Decor",
+                    "rating": 4.3,
+                    "price": "₹20,000 - ₹40,000",
+                    "image": "https://content.jdmagicbox.com/comp/kannur/q9/9999px497.x497.180320140556.m4q9/catalogue/alankar-decoration-payyanur-kannur-caterers-x05ohjrqiw.jpg",
+                    "experience": "9 years",
+                    "features": ["Cost-Effective", "Creative Solutions", "Quality Materials", "Budget-Friendly"],
+                    "contact": {"phone": "+91 9876543245"},
+                    "packages": [
+                        {
+                            "name": "Essential Budget Package",
+                            "price": "₹20,000",
+                            "features": [
+                                "Essential stage decoration",
+                                "Cost-effective materials",
+                                "Basic venue decor",
+                                "Simple arrangements",
+                                "Setup assistance"
+                            ]
+                        },
+                        {
+                            "name": "Value Budget Package",
+                            "price": "₹30,000",
+                            "features": [
+                                "Complete budget decor",
+                                "Creative design solutions",
+                                "Quality cost-effective materials",
+                                "Enhanced arrangements",
+                                "Setup & teardown included",
+                                "Budget-friendly enhancements"
+                            ]
+                        },
+                        {
+                            "name": "Premium Budget Package",
+                            "price": "₹40,000",
+                            "features": [
+                                "Maximum value execution",
+                                "Creative budget solutions",
+                                "Complete venue decoration",
+                                "Quality material usage",
+                                "Setup & teardown included",
+                                "Budget luxury touches"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 151,
+                    "name": "Alappuzha Fusion Designs",
+                    "specialty": "Fusion Decor",
+                    "rating": 4.4,
+                    "price": "₹22,000 - ₹43,000",
+                    "image": "https://content.jdmagicbox.com/comp/alappuzha/n3/0477px477.x477.190426120818.m2n3/catalogue/hilltop-events-and-caterers-cherthala-alappuzha-photographers-e1gsgqdunm-250.jpg",
+                    "experience": "10 years",
+                    "features": ["Mixed Styles", "Cultural Fusion", "Creative Blends", "Unique Designs"],
+                    "contact": {"phone": "+91 9876543246"},
+                    "packages": [
+                        {
+                            "name": "Basic Fusion Package",
+                            "price": "₹22,000",
+                            "features": [
+                                "Fusion stage decoration",
+                                "Mixed style elements",
+                                "Creative design blends",
+                                "Basic fusion arrangements",
+                                "Setup assistance"
+                            ]
+                        },
+                        {
+                            "name": "Standard Fusion Package",
+                            "price": "₹32,500",
+                            "features": [
+                                "Complete fusion decor",
+                                "Creative style mixing",
+                                "Cultural fusion elements",
+                                "Enhanced arrangements",
+                                "Setup & teardown included",
+                                "Unique design concepts"
+                            ]
+                        },
+                        {
+                            "name": "Premium Fusion Package",
+                            "price": "₹43,000",
+                            "features": [
+                                "Ultimate fusion execution",
+                                "Expert style blending",
+                                "Complete venue transformation",
+                                "Professional fusion design",
+                                "Setup & teardown included",
+                                "Bespoke fusion elements"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 152,
+                    "name": "Palakkad Stage Wizards",
+                    "specialty": "Stage Decor",
+                    "rating": 4.5,
+                    "price": "₹24,000 - ₹46,000",
+                    "image": "https://content3.jdmagicbox.com/comp/palakkad/p5/9999px491.x491.151120141907.y4p5/catalogue/design-stage-decorations-palakkad-balloon-decorators-hj7aq40vrs.jpg",
+                    "experience": "11 years",
+                    "features": ["Stage Design", "Backdrop Creation", "Lighting Setup", "Professional Stage"],
+                    "contact": {"phone": "+91 9876543247"},
+                    "packages": [
+                        {
+                            "name": "Basic Stage Package",
+                            "price": "₹24,000",
+                            "features": [
+                                "Professional stage setup",
+                                "Basic backdrop design",
+                                "Stage lighting setup",
+                                "Simple stage elements",
+                                "Setup assistance"
+                            ]
+                        },
+                        {
+                            "name": "Standard Stage Package",
+                            "price": "₹35,000",
+                            "features": [
+                                "Complete stage design",
+                                "Custom backdrop creation",
+                                "Professional lighting design",
+                                "Enhanced stage elements",
+                                "Setup & teardown included",
+                                "Stage coordination"
+                            ]
+                        },
+                        {
+                            "name": "Premium Stage Package",
+                            "price": "₹46,000",
+                            "features": [
+                                "Luxury stage execution",
+                                "Bespoke backdrop design",
+                                "Advanced lighting systems",
+                                "Complete stage transformation",
+                                "Setup & teardown included",
+                                "Professional stage management"
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "Telangana": [
+                {
+                    "id": 153,
+                    "name": "Hyderabad Floral Arts",
+                    "specialty": "Floral Decor",
+                    "rating": 4.3,
+                    "price": "₹10,000 - ₹25,000",
+                    "image": "https://cheetah.cherishx.com/uploads/49b21dd19939c30f9debb1669f833a45_original.jpg",
+                    "experience": "4 years",
+                    "features": ["Fresh Flowers", "Floral Arrangements", "Venue Decoration", "Entryway Decor"],
+                    "contact": {"phone": "+91 9876543250"},
+                    "packages": [
+                        {
+                            "name": "Basic Floral Package",
+                            "price": "₹10,000",
+                            "features": [
+                                "Basic floral arrangements",
+                                "Entryway decoration",
+                                "Stage backdrop flowers",
+                                "Fresh seasonal flowers",
+                                "Setup & teardown included"
+                            ]
+                        },
+                        {
+                            "name": "Standard Floral Package",
+                            "price": "₹17,500",
+                            "features": [
+                                "Premium floral arrangements",
+                                "Complete venue decoration",
+                                "Custom floral centerpieces",
+                                "Mixed flower varieties",
+                                "Setup & teardown included",
+                                "Floral arch design"
+                            ]
+                        },
+                        {
+                            "name": "Premium Floral Package",
+                            "price": "₹25,000",
+                            "features": [
+                                "Luxury floral arrangements",
+                                "Complete venue transformation",
+                                "Exotic flower varieties",
+                                "Custom floral installations",
+                                "Setup & teardown included",
+                                "Floral arch + hanging installations"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 154,
+                    "name": "Warangal Theme Masters",
+                    "specialty": "Theme Decor",
+                    "rating": 4.4,
+                    "price": "₹12,000 - ₹28,000",
+                    "image": "https://www.shutterstock.com/image-photo/warangal-telangana-india-june-12-260nw-1486554143.jpg",
+                    "experience": "5 years",
+                    "features": ["Theme Design", "Custom Props", "Color Coordination", "Venue Transformation"],
+                    "contact": {"phone": "+91 9876543251"},
+                    "packages": [
+                        {
+                            "name": "Basic Theme Package",
+                            "price": "₹12,000",
+                            "features": [
+                                "Basic theme implementation",
+                                "Color scheme coordination",
+                                "Simple props & backdrops",
+                                "Stage decoration",
+                                "Setup assistance"
+                            ]
+                        },
+                        {
+                            "name": "Standard Theme Package",
+                            "price": "₹20,000",
+                            "features": [
+                                "Complete theme design",
+                                "Custom props & installations",
+                                "Venue transformation",
+                                "Lighting coordination",
+                                "Setup & teardown included",
+                                "Theme-appropriate decor elements"
+                            ]
+                        },
+                        {
+                            "name": "Premium Theme Package",
+                            "price": "₹28,000",
+                            "features": [
+                                "Luxury theme execution",
+                                "Custom-designed props",
+                                "Complete venue makeover",
+                                "Professional lighting design",
+                                "Setup & teardown included",
+                                "Interactive theme elements"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 155,
+                    "name": "Nizamabad Traditional Elegance",
+                    "specialty": "Traditional Decor",
+                    "rating": 4.5,
+                    "price": "₹14,000 - ₹31,000",
+                    "image": "https://content.jdmagicbox.com/v2/comp/azamgarh/a3/9999p5252.5252.190402211622.y3a3/catalogue/anuj-flower-decoration-nizamabad-azamgarh-tent-house-dthxz7sm9y.jpg",
+                    "experience": "6 years",
+                    "features": ["Traditional Elements", "Cultural Motifs", "Classic Designs", "Heritage Style"],
+                    "contact": {"phone": "+91 9876543252"},
+                    "packages": [
+                        {
+                            "name": "Basic Traditional Package",
+                            "price": "₹14,000",
+                            "features": [
+                                "Traditional stage decoration",
+                                "Classic floral arrangements",
+                                "Cultural motif backdrops",
+                                "Basic traditional elements",
+                                "Setup assistance"
+                            ]
+                        },
+                        {
+                            "name": "Standard Traditional Package",
+                            "price": "₹22,500",
+                            "features": [
+                                "Complete traditional decor",
+                                "Custom cultural motifs",
+                                "Traditional prop installations",
+                                "Classic lighting design",
+                                "Setup & teardown included",
+                                "Heritage-style arrangements"
+                            ]
+                        },
+                        {
+                            "name": "Premium Traditional Package",
+                            "price": "₹31,000",
+                            "features": [
+                                "Luxury traditional execution",
+                                "Authentic cultural elements",
+                                "Complete venue transformation",
+                                "Professional traditional lighting",
+                                "Setup & teardown included",
+                                "Royal traditional aesthetics"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 156,
+                    "name": "Karimnagar Modern Designs",
+                    "specialty": "Modern Decor",
+                    "rating": 4.6,
+                    "price": "₹16,000 - ₹34,000",
+                    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTM0bN4OoNHs_xsN0Jl7OnbUkLzRv-ue9Rm1A&s",
+                    "experience": "7 years",
+                    "features": ["Contemporary Design", "Minimalist Style", "Modern Elements", "Clean Aesthetics"],
+                    "contact": {"phone": "+91 9876543253"},
+                    "packages": [
+                        {
+                            "name": "Basic Modern Package",
+                            "price": "₹16,000",
+                            "features": [
+                                "Modern stage design",
+                                "Contemporary elements",
+                                "Clean aesthetic arrangements",
+                                "Basic lighting effects",
+                                "Setup assistance"
+                            ]
+                        },
+                        {
+                            "name": "Standard Modern Package",
+                            "price": "₹25,000",
+                            "features": [
+                                "Complete modern decor",
+                                "Contemporary installations",
+                                "Minimalist design elements",
+                                "Modern lighting design",
+                                "Setup & teardown included",
+                                "Sleek aesthetic arrangements"
+                            ]
+                        },
+                        {
+                            "name": "Premium Modern Package",
+                            "price": "₹34,000",
+                            "features": [
+                                "Luxury modern execution",
+                                "Cutting-edge installations",
+                                "Complete venue transformation",
+                                "Professional lighting design",
+                                "Setup & teardown included",
+                                "High-end contemporary elements"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 157,
+                    "name": "Khammam Luxury Decor",
+                    "specialty": "Luxury Decor",
+                    "rating": 4.7,
+                    "price": "₹18,000 - ₹37,000",
+                    "image": "https://content.jdmagicbox.com/comp/khammam/j8/9999p8742.8742.230811142643.v9j8/catalogue/swathi-events-psr-function-hall-road-khammam-event-organisers-2h6ut0hvd4.jpg",
+                    "experience": "8 years",
+                    "features": ["Premium Materials", "Luxury Elements", "Elegant Designs", "High-End Style"],
+                    "contact": {"phone": "+91 9876543254"},
+                    "packages": [
+                        {
+                            "name": "Basic Luxury Package",
+                            "price": "₹18,000",
+                            "features": [
+                                "Premium stage decoration",
+                                "Quality material usage",
+                                "Elegant design elements",
+                                "Basic luxury touches",
+                                "Setup assistance"
+                            ]
+                        },
+                        {
+                            "name": "Standard Luxury Package",
+                            "price": "₹27,500",
+                            "features": [
+                                "Complete luxury decor",
+                                "High-end materials",
+                                "Elegant installations",
+                                "Premium lighting design",
+                                "Setup & teardown included",
+                                "Luxury floral arrangements"
+                            ]
+                        },
+                        {
+                            "name": "Premium Luxury Package",
+                            "price": "₹37,000",
+                            "features": [
+                                "Ultimate luxury execution",
+                                "Exclusive materials",
+                                "Complete venue transformation",
+                                "Professional luxury lighting",
+                                "Setup & teardown included",
+                                "Bespoke luxury elements"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 158,
+                    "name": "Medak Budget Beautifiers",
+                    "specialty": "Budget Decor",
+                    "rating": 4.3,
+                    "price": "₹20,000 - ₹40,000",
+                    "image": "https://content.jdmagicbox.com/v2/comp/hyderabad/g5/040pxx40.xx40.160820154922.j8g5/catalogue/sg-events-hyderabad-event-organisers-1fwrmke.jpg",
+                    "experience": "9 years",
+                    "features": ["Cost-Effective", "Creative Solutions", "Quality Materials", "Budget-Friendly"],
+                    "contact": {"phone": "+91 9876543255"},
+                    "packages": [
+                        {
+                            "name": "Essential Budget Package",
+                            "price": "₹20,000",
+                            "features": [
+                                "Essential stage decoration",
+                                "Cost-effective materials",
+                                "Basic venue decor",
+                                "Simple arrangements",
+                                "Setup assistance"
+                            ]
+                        },
+                        {
+                            "name": "Value Budget Package",
+                            "price": "₹30,000",
+                            "features": [
+                                "Complete budget decor",
+                                "Creative design solutions",
+                                "Quality cost-effective materials",
+                                "Enhanced arrangements",
+                                "Setup & teardown included",
+                                "Budget-friendly enhancements"
+                            ]
+                        },
+                        {
+                            "name": "Premium Budget Package",
+                            "price": "₹40,000",
+                            "features": [
+                                "Maximum value execution",
+                                "Creative budget solutions",
+                                "Complete venue decoration",
+                                "Quality material usage",
+                                "Setup & teardown included",
+                                "Budget luxury touches"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 159,
+                    "name": "Nalgonda Fusion Creations",
+                    "specialty": "Fusion Decor",
+                    "rating": 4.4,
+                    "price": "₹22,000 - ₹43,000",
+                    "image": "https://content.jdmagicbox.com/v2/comp/hyderabad/c7/040pxx40.xx40.181203201811.h7c7/catalogue/manogna-cabs-sainikpuri-hyderabad-24-hours-car-rental-mp6y7ob8xq.jpg",
+                    "experience": "10 years",
+                    "features": ["Mixed Styles", "Cultural Fusion", "Creative Blends", "Unique Designs"],
+                    "contact": {"phone": "+91 9876543256"},
+                    "packages": [
+                        {
+                            "name": "Basic Fusion Package",
+                            "price": "₹22,000",
+                            "features": [
+                                "Fusion stage decoration",
+                                "Mixed style elements",
+                                "Creative design blends",
+                                "Basic fusion arrangements",
+                                "Setup assistance"
+                            ]
+                        },
+                        {
+                            "name": "Standard Fusion Package",
+                            "price": "₹32,500",
+                            "features": [
+                                "Complete fusion decor",
+                                "Creative style mixing",
+                                "Cultural fusion elements",
+                                "Enhanced arrangements",
+                                "Setup & teardown included",
+                                "Unique design concepts"
+                            ]
+                        },
+                        {
+                            "name": "Premium Fusion Package",
+                            "price": "₹43,000",
+                            "features": [
+                                "Ultimate fusion execution",
+                                "Expert style blending",
+                                "Complete venue transformation",
+                                "Professional fusion design",
+                                "Setup & teardown included",
+                                "Bespoke fusion elements"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 160,
+                    "name": "Mahbubnagar Stage Specialists",
+                    "specialty": "Stage Decor",
+                    "rating": 4.5,
+                    "price": "₹24,000 - ₹46,000",
+                    "image": "https://content.jdmagicbox.com/v2/comp/hyderabad/z4/040pxx40.xx40.130816130007.n6z4/catalogue/sri-sai-flower-decorations-and-events-himayat-nagar-hyderabad-flower-decorators-37xfli25yz.jpg",
+                    "experience": "11 years",
+                    "features": ["Stage Design", "Backdrop Creation", "Lighting Setup", "Professional Stage"],
+                    "contact": {"phone": "+91 9876543257"},
+                    "packages": [
+                        {
+                            "name": "Basic Stage Package",
+                            "price": "₹24,000",
+                            "features": [
+                                "Professional stage setup",
+                                "Basic backdrop design",
+                                "Stage lighting setup",
+                                "Simple stage elements",
+                                "Setup assistance"
+                            ]
+                        },
+                        {
+                            "name": "Standard Stage Package",
+                            "price": "₹35,000",
+                            "features": [
+                                "Complete stage design",
+                                "Custom backdrop creation",
+                                "Professional lighting design",
+                                "Enhanced stage elements",
+                                "Setup & teardown included",
+                                "Stage coordination"
+                            ]
+                        },
+                        {
+                            "name": "Premium Stage Package",
+                            "price": "₹46,000",
+                            "features": [
+                                "Luxury stage execution",
+                                "Bespoke backdrop design",
+                                "Advanced lighting systems",
+                                "Complete stage transformation",
+                                "Setup & teardown included",
+                                "Professional stage management"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        };
+
+// DOM Elements
+const decorationsGrid = document.getElementById('decorationsGrid');
+const stateFilter = document.getElementById('stateFilter');
+const decorationTypeFilter = document.getElementById('decorationTypeFilter');
+const searchInput = document.getElementById('searchInput');
+const minBudget = document.getElementById('minBudget');
+const maxBudget = document.getElementById('maxBudget');
+const resetFilters = document.getElementById('resetFilters');
+const totalDecorations = document.getElementById('totalDecorations');
+const avgRating = document.getElementById('avgRating');
+const statesCovered = document.getElementById('statesCovered');
+const topRated = document.getElementById('topRated');
+const shortlistToast = document.getElementById('shortlistToast');
+
+// Current filters and shortlist
+let currentState = 'all';
+let currentDecorationType = 'all';
+let currentMinBudget = '';
+let currentMaxBudget = '';
+let currentSearch = '';
+let shortlistedDecorations = JSON.parse(localStorage.getItem('shortlistedDecorations')) || [];
+let bookings = JSON.parse(localStorage.getItem('decorationBookings')) || [];
+
+// Initialize the page
+function init() {
+    updateStats();
+    displayDecorations();
+    setupEventListeners();
+    checkPendingBookings();
+}
+
+// Update statistics
+function updateStats() {
+    let allDecorations = [];
+    let totalRating = 0;
+    let topRatedCount = 0;
+    
+    for (const state in decorationsData) {
+        decorationsData[state].forEach(decoration => {
+            allDecorations.push(decoration);
+            totalRating += decoration.rating;
+            if (decoration.rating >= 4.5) topRatedCount++;
+        });
+    }
+    
+    totalDecorations.textContent = allDecorations.length;
+    avgRating.textContent = (totalRating / allDecorations.length).toFixed(1);
+    statesCovered.textContent = Object.keys(decorationsData).length;
+    topRated.textContent = topRatedCount;
+}
+
+// Set up event listeners
+function setupEventListeners() {
+    // State filter
+    stateFilter.addEventListener('change', () => {
+        currentState = stateFilter.value;
+        displayDecorations();
+    });
+
+    // Decoration type filter
+    decorationTypeFilter.addEventListener('change', () => {
+        currentDecorationType = decorationTypeFilter.value;
+        displayDecorations();
+    });
+
+    // Search
+    searchInput.addEventListener('input', () => {
+        currentSearch = searchInput.value.toLowerCase();
+        displayDecorations();
+    });
+
+    // Budget filters
+    minBudget.addEventListener('input', () => {
+        currentMinBudget = minBudget.value;
+        displayDecorations();
+    });
+
+    maxBudget.addEventListener('input', () => {
+        currentMaxBudget = maxBudget.value;
+        displayDecorations();
+    });
+
+    // Reset filters
+    resetFilters.addEventListener('click', () => {
+        stateFilter.value = 'all';
+        decorationTypeFilter.value = 'all';
+        searchInput.value = '';
+        minBudget.value = '';
+        maxBudget.value = '';
+        
+        currentState = 'all';
+        currentDecorationType = 'all';
+        currentSearch = '';
+        currentMinBudget = '';
+        currentMaxBudget = '';
+        
+        displayDecorations();
+    });
+     const bookingModal = document.getElementById('bookingModal');
+    const bookingForm = document.getElementById('bookingForm');
+    const closeBookingForm = document.getElementById('closeBookingForm');
+    const cancelBooking = document.getElementById('cancelBooking');
+    
+    // Close modal when clicking X
+    closeBookingForm.addEventListener('click', closeBookingModal);
+    
+    // Close modal when clicking cancel
+    cancelBooking.addEventListener('click', closeBookingModal);
+    
+    // Close modal when clicking outside
+    bookingModal.addEventListener('click', (e) => {
+        if (e.target === bookingModal) {
+            closeBookingModal();
+        }
+    });
+    
+    // Handle form submission
+    bookingForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        const formData = {
+            customerName: document.getElementById('customerName').value,
+            customerPhone: document.getElementById('customerPhone').value,
+            customerEmail: document.getElementById('customerEmail').value,
+            eventType: document.getElementById('eventType').value,
+            eventDate: document.getElementById('eventDate').value,
+            eventTime: document.getElementById('eventTime').value,
+            venueType: document.getElementById('venueType').value,
+            venueSize: document.getElementById('venueSize').value,
+            eventAddress: document.getElementById('eventAddress').value,
+            decorationStyle: document.getElementById('decorationStyle').value,
+            colorScheme: document.getElementById('colorScheme').value,
+            specialRequirements: document.getElementById('specialRequirements').value
+        };
+        
+        submitBookingForm(formData);
+    });
+}
+
+// Display decorations based on current filters
+function displayDecorations() {
+    decorationsGrid.innerHTML = '';
+    
+    let decorationsToShow = [];
+    
+    // Collect decorations based on state filter
+    if (currentState === 'all') {
+        // Show decorations from all states
+        for (const state in decorationsData) {
+            decorationsData[state].forEach(decoration => {
+                decoration.state = state;
+                decorationsToShow.push(decoration);
+            });
+        }
+    } else {
+        // Show decorations from specific state
+        if (decorationsData[currentState]) {
+            decorationsData[currentState].forEach(decoration => {
+                decoration.state = currentState;
+                decorationsToShow.push(decoration);
+            });
+        }
+    }
+    
+    // Apply decoration type filter
+    if (currentDecorationType !== 'all') {
+        decorationsToShow = decorationsToShow.filter(decoration => 
+            decoration.specialty === currentDecorationType
+        );
+    }
+    
+    // Apply search filter
+    if (currentSearch) {
+        decorationsToShow = decorationsToShow.filter(decoration => {
+            const searchTerm = currentSearch;
+            const searchableText = (
+                decoration.name + ' ' + 
+                decoration.specialty + ' ' + 
+                decoration.state + ' ' +
+                decoration.features.join(' ')
+            ).toLowerCase();
+            
+            return searchableText.includes(searchTerm);
+        });
+    }
+    
+    // Apply budget filter
+    if (currentMinBudget || currentMaxBudget) {
+        decorationsToShow = decorationsToShow.filter(decoration => {
+            // Extract price range from string (e.g., "₹10,000 - ₹25,000")
+            const priceMatch = decoration.price.match(/₹(\d+(?:,\d+)*)\s*-\s*₹(\d+(?:,\d+)*)/);
+            if (!priceMatch) return true;
+            
+            const minDecorationPrice = parseInt(priceMatch[1].replace(/,/g, ''));
+            const maxDecorationPrice = parseInt(priceMatch[2].replace(/,/g, ''));
+            
+            let minFilter = currentMinBudget ? parseInt(currentMinBudget) : 0;
+            let maxFilter = currentMaxBudget ? parseInt(currentMaxBudget) : Infinity;
+            
+            return maxDecorationPrice >= minFilter && minDecorationPrice <= maxFilter;
+        });
+    }
+    
+    // Display decorations or show no results message
+    if (decorationsToShow.length === 0) {
+        decorationsGrid.innerHTML = `
+            <div class="no-results">
+                <h3>No decoration services found matching your criteria</h3>
+                <p>Try adjusting your filters or search terms</p>
+            </div>
+        `;
+    } else {
+        decorationsToShow.forEach(decoration => {
+            const decorationCard = createDecorationCard(decoration);
+            decorationsGrid.appendChild(decorationCard);
+        });
+    }
+}
+
+// Create decoration card element
+function createDecorationCard(decoration) {
+    const card = document.createElement('div');
+    card.className = 'catering-card';
+    
+    // Create feature tags
+    const featureTags = decoration.features.map(feature => 
+        `<span class="catering-feature-tag">${feature}</span>`
+    ).join('');
+    
+    // Create packages HTML
+    let packagesHTML = '';
+    if (decoration.packages && decoration.packages.length > 0) {
+        packagesHTML = `
+            <div class="packages-section">
+                <div class="packages-title">
+                    Decoration Packages
+                    <button class="packages-toggle">Show Packages</button>
+                </div>
+                <div class="packages-list">
+                    ${decoration.packages.map(pkg => `
+                        <div class="package-item">
+                            <div class="package-name">${pkg.name}</div>
+                            <div class="package-price">${pkg.price}</div>
+                            <div class="package-features">
+                                <ul>
+                                    ${pkg.features.map(feature => `<li>${feature}</li>`).join('')}
+                                </ul>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        `;
+    }
+    
+    // Check if decoration is already shortlisted
+    const isShortlisted = shortlistedDecorations.some(item => item.id === decoration.id);
+    
+    // Check if already booked
+    const existingBooking = bookings.find(booking => booking.id === decoration.id);
+    const isBooked = existingBooking && existingBooking.status !== 'cancelled';
+    
+    card.innerHTML = `
+        <div class="catering-image" style="background-image: url('${decoration.image}')">
+            <div class="state-badge">${decoration.state}</div>
+            <div class="catering-rating">⭐ ${decoration.rating}</div>
+            ${isBooked ? `<div class="booking-badge">${existingBooking.status.toUpperCase()}</div>` : ''}
+        </div>
+        <div class="catering-content">
+            <h3 class="catering-name">${decoration.name}</h3>
+            <p class="catering-specialty">${decoration.specialty}</p>
+            <div class="catering-details">
+                <span class="catering-price">${decoration.price}</span>
+                <span class="catering-capacity">${decoration.experience}</span>
+            </div>
+            <div class="catering-features">
+                ${featureTags}
+            </div>
+            ${packagesHTML}
+            <div class="action-buttons">
+                <button class="btn ${isBooked ? 'btn-success' : 'btn-primary'} book-now-btn" 
+                        data-decoration-id="${decoration.id}"
+                        ${isBooked ? 'disabled' : ''}>
+                    ${isBooked ? '✓ ' + existingBooking.status.charAt(0).toUpperCase() + existingBooking.status.slice(1) : 'Book Now'}
+                </button>
+                <button class="btn btn-secondary shortlist-btn ${isShortlisted ? 'added' : ''}" data-decoration-id="${decoration.id}">
+                    ${isShortlisted ? '✓ Shortlisted' : 'Add to Shortlist'}
+                </button>
+            </div>
+            <div class="catering-contact">
+                <div class="catering-phone">${decoration.contact.phone}</div>
+                <small>Contact for bookings and design consultations</small>
+            </div>
+        </div>
+    `;
+    
+    // Add click event to toggle packages
+    const packagesToggle = card.querySelector('.packages-toggle');
+    const packagesList = card.querySelector('.packages-list');
+    
+    if (packagesToggle && packagesList) {
+        packagesToggle.addEventListener('click', () => {
+            packagesList.classList.toggle('show');
+            packagesToggle.textContent = packagesList.classList.contains('show') ? 
+                'Hide Packages' : 'Show Packages';
+        });
+    }
+    
+    // Add click event to Book Now button
+    const bookNowBtn = card.querySelector('.book-now-btn');
+    if (!isBooked) {
+        bookNowBtn.addEventListener('click', () => {
+            bookDecoration(decoration, bookNowBtn);
+        });
+    }
+    
+    // Add click event to Shortlist button
+    const shortlistBtn = card.querySelector('.shortlist-btn');
+    shortlistBtn.addEventListener('click', () => {
+        toggleShortlist(decoration, shortlistBtn);
+    });
+    
+    return card;
+}
+
+// Global variables for booking
+let currentBookingDecoration = null;
+let currentBookingButton = null;
+
+// Modified bookDecoration function
+function bookDecoration(decoration, button) {
+    currentBookingDecoration = decoration;
+    currentBookingButton = button;
+    
+    // Show booking form modal
+    const bookingModal = document.getElementById('bookingModal');
+    bookingModal.classList.add('show');
+    
+    // Set minimum date to today
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('eventDate').min = today;
+    
+    // Pre-fill decoration style based on service specialty
+    const decorationStyleSelect = document.getElementById('decorationStyle');
+    const specialty = decoration.specialty.toLowerCase();
+    
+    // Map specialties to style options
+    const styleMap = {
+        'floral': 'floral',
+        'theme': 'theme',
+        'traditional': 'traditional',
+        'modern': 'modern',
+        'luxury': 'luxury',
+        'budget': 'budget',
+        'fusion': 'fusion',
+        'stage': 'stage'
+    };
+    
+    for (let key in styleMap) {
+        if (specialty.includes(key)) {
+            decorationStyleSelect.value = styleMap[key];
+            break;
+        }
+    }
+}
+
+// New function to handle booking form submission
+function submitBookingForm(formData) {
+    console.log('Submitting booking for decoration:', currentBookingDecoration);
+    
+    // Create comprehensive booking object
+    const booking = {
+        id: currentBookingDecoration.id,
+        serviceId: currentBookingDecoration.id,
+        name: currentBookingDecoration.name,
+        serviceType: 'decoration',
+        specialty: currentBookingDecoration.specialty,
+        price: currentBookingDecoration.price,
+        image: currentBookingDecoration.image,
+        contact: currentBookingDecoration.contact,
+        state: currentBookingDecoration.state,
+        
+        // Customer details
+        customerName: formData.customerName,
+        customerPhone: formData.customerPhone,
+        customerEmail: formData.customerEmail,
+        
+        // Event details
+        eventType: formData.eventType,
+        eventDate: formData.eventDate,
+        eventTime: formData.eventTime,
+        venueType: formData.venueType,
+        venueSize: formData.venueSize,
+        eventAddress: formData.eventAddress,
+        
+        // Decoration specific details
+        decorationStyle: formData.decorationStyle,
+        colorScheme: formData.colorScheme,
+        specialRequirements: formData.specialRequirements,
+        
+        // Booking metadata
+        bookingDate: new Date().toISOString().split('T')[0],
+        bookingTime: new Date().toLocaleTimeString(),
+        status: 'pending',
+        vendor: currentBookingDecoration.name,
+        acceptedAt: null
+    };
+    
+    // Add to bookings
+    bookings.push(booking);
+    localStorage.setItem('decorationBookings', JSON.stringify(bookings));
+    
+    // Update button
+    if (currentBookingButton) {
+        currentBookingButton.textContent = '✓ Pending';
+        currentBookingButton.classList.remove('btn-primary');
+        currentBookingButton.classList.add('btn-success');
+        currentBookingButton.disabled = true;
+    }
+    
+    // Show confirmation
+    showShortlistToast(`Booking request sent to ${currentBookingDecoration.name}! Vendor will review your event details.`);
+    
+    // Simulate vendor response after 1 minute
+    setTimeout(() => {
+        updateBookingStatus(currentBookingDecoration.id, 'accepted');
+    }, 60000);
+    
+    // Close modal
+    closeBookingModal();
+    
+    // Reset current booking variables
+    currentBookingDecoration = null;
+    currentBookingButton = null;
+}
+
+// Function to close booking modal
+function closeBookingModal() {
+    const bookingModal = document.getElementById('bookingModal');
+    bookingModal.classList.remove('show');
+    document.getElementById('bookingForm').reset();
+}
+// Update booking status
+// Enhanced updateBookingStatus function
+function updateBookingStatus(decorationId, status) {
+    const bookingIndex = bookings.findIndex(booking => booking.id === decorationId);
+    
+    if (bookingIndex !== -1) {
+        bookings[bookingIndex].status = status;
+        bookings[bookingIndex].acceptedAt = new Date().toISOString();
+        localStorage.setItem('decorationBookings', JSON.stringify(bookings));
+        
+        // Update UI if the card is visible
+        const bookButton = document.querySelector(`.book-now-btn[data-decoration-id="${decorationId}"]`);
+        if (bookButton) {
+            bookButton.textContent = '✓ ' + status.charAt(0).toUpperCase() + status.slice(1);
+            bookButton.classList.remove('btn-primary');
+            bookButton.classList.add('btn-success');
+            
+            // Update badge if exists
+            const badge = bookButton.closest('.catering-card')?.querySelector('.booking-badge');
+            if (badge) {
+                badge.textContent = status.toUpperCase();
+            }
+        }
+        
+        const statusMessage = status === 'accepted' ? 'accepted' : 'rejected';
+        showShortlistToast(`Booking ${statusMessage} for ${bookings[bookingIndex].name}!`);
+        
+        // Add notification
+        if (typeof addNotification === 'function') {
+            addNotification(
+                'Booking ' + statusMessage.charAt(0).toUpperCase() + statusMessage.slice(1), 
+                `Your decoration booking with ${bookings[bookingIndex].name} has been ${statusMessage}!`, 
+                status === 'accepted' ? 'success' : 'warning'
+            );
+        }
+    }
+}
+
+// Check for pending bookings that need to be auto-accepted
+function checkPendingBookings() {
+    const now = new Date();
+    bookings.forEach(booking => {
+        if (booking.status === 'pending') {
+            const bookingDate = new Date(booking.bookingDate);
+            const timeDiff = now - bookingDate;
+            
+            // If more than 1 minute has passed, auto-accept
+            if (timeDiff > 60000) {
+                updateBookingStatus(booking.id, 'accepted');
+            } else {
+                // Set timeout for remaining time
+                const remainingTime = 60000 - timeDiff;
+                setTimeout(() => {
+                    updateBookingStatus(booking.id, 'accepted');
+                }, remainingTime);
+            }
+        }
+    });
+}
+
+// Toggle shortlist function
+function toggleShortlist(decoration, button) {
+    const index = shortlistedDecorations.findIndex(item => item.id === decoration.id);
+    
+    if (index === -1) {
+        // Add to shortlist
+        shortlistedDecorations.push(decoration);
+        button.textContent = '✓ Shortlisted';
+        button.classList.add('added');
+        showShortlistToast('Decoration service added to shortlist!');
+        
+        // Also add to main dashboard shortlist
+        if (typeof addToShortlist === 'function') {
+            addToShortlist({
+                id: decoration.id,
+                name: decoration.name,
+                type: 'Decoration',
+                price: decoration.price,
+                vendor: decoration.name,
+                addedDate: new Date().toISOString().split('T')[0]
+            });
+        }
+    } else {
+        // Remove from shortlist
+        shortlistedDecorations.splice(index, 1);
+        button.textContent = 'Add to Shortlist';
+        button.classList.remove('added');
+        showShortlistToast('Decoration service removed from shortlist!');
+        
+        // Also remove from main dashboard shortlist if function exists
+        if (typeof removeFromShortlist === 'function') {
+            removeFromShortlist(decoration.id);
+        }
+    }
+    
+    // Save to localStorage
+    localStorage.setItem('shortlistedDecorations', JSON.stringify(shortlistedDecorations));
+}
+
+// Show shortlist toast notification
+function showShortlistToast(message) {
+    shortlistToast.textContent = message;
+    shortlistToast.classList.add('show');
+    
+    setTimeout(() => {
+        shortlistToast.classList.remove('show');
+    }, 3000);
+}
+// Add to each service page
+document.addEventListener('DOMContentLoaded', function() {
+  // Add event listeners to all "Book Now" buttons
+  document.querySelectorAll('.book-now-btn').forEach(button => {
+    button.addEventListener('click', function() {
+      const serviceCard = this.closest('.service-card');
+      const serviceName = serviceCard.querySelector('.service-title').textContent;
+      const serviceCategory = document.querySelector('h1').textContent.toLowerCase();
+      const servicePrice = serviceCard.querySelector('.service-price')?.textContent || 'Not specified';
+      const serviceVendor = serviceCard.querySelector('.vendor-name')?.textContent || 'Not specified';
+      
+      // Add to bookings
+      if (typeof addBooking === 'function') {
+        addBooking({
+          name: serviceName,
+          category: serviceCategory,
+          price: servicePrice,
+          vendor: serviceVendor
+        });
+      } else {
+        // If not on dashboard, redirect to dashboard
+        window.location.href = 'customer-dashboard.html';
+      }
+    });
+  });
+  
+  // Add event listeners to all "Add to Shortlist" buttons
+  document.querySelectorAll('.add-to-shortlist-btn').forEach(button => {
+    button.addEventListener('click', function() {
+      const serviceCard = this.closest('.service-card');
+      const serviceName = serviceCard.querySelector('.service-title').textContent;
+      const serviceCategory = document.querySelector('h1').textContent.toLowerCase();
+      const servicePrice = serviceCard.querySelector('.service-price')?.textContent || 'Not specified';
+      const serviceVendor = serviceCard.querySelector('.vendor-name')?.textContent || 'Not specified';
+      const serviceRating = serviceCard.querySelector('.service-rating')?.textContent || 'Not rated';
+      
+      // Add to shortlist
+      if (typeof addToShortlist === 'function') {
+        addToShortlist({
+          name: serviceName,
+          category: serviceCategory,
+          price: servicePrice,
+          vendor: serviceVendor,
+          rating: serviceRating
+        });
+      } else {
+        // If not on dashboard, redirect to dashboard
+        window.location.href = 'customer-dashboard.html';
+      }
+    });
+  });
+});
+
+
+// ========== DASHBOARD INTEGRATION FUNCTIONS ==========
+
+// Generate unique ID function
+function generateId() {
+    return Date.now().toString(36) + Math.random().toString(36).substr(2);
+}
+
+// Add to shortlist function for dashboard integration
+function addToShortlist(itemData) {
+    const shortlist = JSON.parse(localStorage.getItem('shortlist')) || [];
+    
+    // Check if already in shortlist
+    const exists = shortlist.some(item => item.id === itemData.id);
+    if (exists) {
+        showShortlistToast('This item is already in your shortlist!');
+        return;
+    }
+    
+    // Add to shortlist
+    shortlist.push({
+        id: itemData.id,
+        name: itemData.name,
+        type: itemData.type,
+        price: itemData.price,
+        vendor: itemData.vendor,
+        addedDate: new Date().toISOString().split('T')[0],
+        image: itemData.image,
+        specialty: itemData.specialty
+    });
+    
+    localStorage.setItem('shortlist', JSON.stringify(shortlist));
+    showShortlistToast('Added to shortlist successfully!');
+    
+    // Update dashboard badge count
+    updateDashboardShortlistCount();
+}
+
+// Remove from shortlist function
+function removeFromShortlist(itemId) {
+    const shortlist = JSON.parse(localStorage.getItem('shortlist')) || [];
+    const updatedShortlist = shortlist.filter(item => item.id !== itemId);
+    localStorage.setItem('shortlist', JSON.stringify(updatedShortlist));
+    showShortlistToast('Item removed from shortlist');
+    updateDashboardShortlistCount();
+}
+
+// Update dashboard shortlist count
+function updateDashboardShortlistCount() {
+    const shortlist = JSON.parse(localStorage.getItem('shortlist')) || [];
+    // This will update the badge when user returns to dashboard
+    console.log('Shortlist updated. Total items:', shortlist.length);
+}
+
+// Add booking function for dashboard integration
+function addBooking(bookingData) {
+    const booking = {
+        id: bookingData.id,
+        name: bookingData.name,
+        serviceType: bookingData.serviceType,
+        price: bookingData.price,
+        vendor: bookingData.vendor,
+        date: bookingData.date,
+        time: bookingData.time,
+        status: 'pending',
+        bookingDate: new Date().toISOString().split('T')[0]
+    };
+    
+    const existingBookings = JSON.parse(localStorage.getItem('bookings')) || [];
+    existingBookings.push(booking);
+    localStorage.setItem('bookings', JSON.stringify(existingBookings));
+    
+    showShortlistToast(`Booking request sent for ${bookingData.name}!`);
+}
+
+// Notification function for compatibility
+function addNotification(title, message, type = 'info') {
+    const notifications = JSON.parse(localStorage.getItem('notifications')) || [];
+    const icons = {
+        info: '🔔',
+        success: '✅',
+        warning: '⚠️'
+    };
+    
+    notifications.unshift({
+        id: generateId(),
+        title,
+        message,
+        type,
+        icon: icons[type] || '🔔',
+        timestamp: new Date().toISOString(),
+        read: false
+    });
+    
+    localStorage.setItem('notifications', JSON.stringify(notifications));
+    console.log(`Notification: ${title} - ${message}`);
+}
+// Initialize the application
+init();
+    </script>
+</body>
+</html>

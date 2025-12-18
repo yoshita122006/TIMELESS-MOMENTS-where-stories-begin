@@ -1,0 +1,2906 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photography Services - Timeless Moments</title>
+    <link rel="stylesheet" href="common.css">
+    <style>
+        .photography-type-tag {
+            display: inline-block;
+            background: var(--light-pink);
+            color: var(--dark-pink);
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+        
+        .shortlist-btn.added {
+            background: var(--success-green);
+            color: white;
+        }
+        
+        .shortlist-btn.added:hover {
+            background: #45a049;
+        }
+        /* Booking Modal Styles */
+.booking-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.booking-modal.show {
+    display: flex;
+}
+
+.booking-form-container {
+    background: white;
+    border-radius: 12px;
+    padding: 0;
+    width: 90%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.booking-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 25px;
+    border-bottom: 1px solid #eee;
+    background: var(--primary-color);
+    color: white;
+    border-radius: 12px 12px 0 0;
+}
+
+.booking-header h3 {
+    margin: 0;
+    font-size: 1.3rem;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#bookingForm {
+    padding: 25px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #333;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #e1e1e1;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: border-color 0.3s;
+    box-sizing: border-box;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+.form-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.form-actions .btn {
+    flex: 1;
+    padding: 12px;
+}
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Timeless Moments</h1>
+        <p>Find the Perfect Photography Service for Your Special Day</p>
+    </div>
+    
+    <div class="controls-container">
+        <div class="search-box">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="searchInput" placeholder="Search photography services by name, specialty, or location...">
+        </div>
+        
+        <div class="filters">
+            <div class="filter-group">
+                <label for="stateFilter">State</label>
+                <select id="stateFilter">
+                    <option value="all">All States</option>
+                    <option value="Andhra Pradesh">Andhra Pradesh</option>
+                    <option value="Telangana">Telangana</option>
+                    <option value="Karnataka">Karnataka</option>
+                    <option value="Kerala">Kerala</option>
+                    <option value="Tamil Nadu">Tamil Nadu</option>
+                </select>
+            </div>
+            
+            <div class="filter-group">
+                <label for="photographyTypeFilter">Photography Style</label>
+                <select id="photographyTypeFilter">
+                    <option value="all">All Styles</option>
+                    <option value="Wedding">Wedding</option>
+                    <option value="Candid">Candid</option>
+                    <option value="Outdoor">Outdoor</option>
+                    <option value="Pre-Wedding">Pre-Wedding</option>
+                    <option value="Traditional">Traditional</option>
+                    <option value="Corporate">Corporate</option>
+                    <option value="Fashion">Fashion</option>
+                    <option value="Event">Event</option>
+                </select>
+            </div>
+            
+            <div class="filter-group price-filter">
+                <label for="minPrice">Price Range (₹)</label>
+                <div class="price-inputs">
+                    <input type="number" id="minPrice" placeholder="Min" min="0">
+                    <input type="number" id="maxPrice" placeholder="Max" min="0">
+                </div>
+            </div>
+        </div>
+        
+        <button class="reset-filters" id="resetFilters">Reset All Filters</button>
+        
+        <div class="catering-stats">
+            <div class="stat-card">
+                <div class="stat-number" id="totalPhotography">0</div>
+                <div class="stat-label">Total Photographers</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="avgRating">0.0</div>
+                <div class="stat-label">Average Rating</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="statesCovered">0</div>
+                <div class="stat-label">States Covered</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="topRated">0</div>
+                <div class="stat-label">Top Rated (4.5+)</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="catering-container">
+        <div class="catering-grid" id="photographyGrid">
+            <!-- Photography cards will be dynamically inserted here -->
+        </div>
+    </div>
+
+    <div class="shortlist-toast" id="shortlistToast">
+        Service added to shortlist!
+    </div>
+    <!-- Booking Form Modal -->
+<div class="booking-modal" id="bookingModal">
+    <div class="booking-form-container">
+        <div class="booking-header">
+            <h3>Book Photography Service</h3>
+            <button class="close-btn" id="closeBookingForm">&times;</button>
+        </div>
+        <form id="bookingForm">
+            <div class="form-group">
+                <label for="customerName">Your Name *</label>
+                <input type="text" id="customerName" name="customerName" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="customerPhone">Phone Number *</label>
+                <input type="tel" id="customerPhone" name="customerPhone" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="customerEmail">Email Address</label>
+                <input type="email" id="customerEmail" name="customerEmail">
+            </div>
+            
+            <div class="form-group">
+                <label for="eventType">Event Type *</label>
+                <select id="eventType" name="eventType" required>
+                    <option value="">Select Event Type</option>
+                    <option value="wedding">Wedding</option>
+                    <option value="engagement">Engagement</option>
+                    <option value="birthday">Birthday</option>
+                    <option value="corporate">Corporate Event</option>
+                    <option value="anniversary">Anniversary</option>
+                    <option value="pre-wedding">Pre-Wedding Shoot</option>
+                    <option value="family">Family Photoshoot</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="eventDate">Event Date *</label>
+                <input type="date" id="eventDate" name="eventDate" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="eventTime">Event Time *</label>
+                <input type="time" id="eventTime" name="eventTime" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="photographyDuration">Photography Duration (hours) *</label>
+                <input type="number" id="photographyDuration" name="photographyDuration" min="1" max="12" required placeholder="e.g., 4">
+            </div>
+            
+            <div class="form-group">
+                <label for="venueType">Venue Type *</label>
+                <select id="venueType" name="venueType" required>
+                    <option value="">Select Venue Type</option>
+                    <option value="indoor">Indoor Hall</option>
+                    <option value="outdoor">Outdoor Garden</option>
+                    <option value="hotel">Hotel Ballroom</option>
+                    <option value="home">Home/Residence</option>
+                    <option value="studio">Photography Studio</option>
+                    <option value="beach">Beach</option>
+                    <option value="heritage">Heritage Site</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="eventAddress">Event Venue Address *</label>
+                <textarea id="eventAddress" name="eventAddress" rows="3" required></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="photographyStyle">Preferred Photography Style *</label>
+                <select id="photographyStyle" name="photographyStyle" required>
+                    <option value="">Select Style</option>
+                    <option value="candid">Candid</option>
+                    <option value="traditional">Traditional</option>
+                    <option value="portrait">Portrait</option>
+                    <option value="documentary">Documentary</option>
+                    <option value="fashion">Fashion</option>
+                    <option value="mix">Mix of Styles</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="numberOfPhotos">Expected Number of Photos</label>
+                <input type="number" id="numberOfPhotos" name="numberOfPhotos" min="50" placeholder="e.g., 200">
+            </div>
+            
+            <div class="form-group">
+                <label for="specialShots">Special Shots Required</label>
+                <textarea id="specialShots" name="specialShots" rows="2" placeholder="Any specific moments, group photos, or creative shots you want..."></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="specialRequirements">Special Requirements</label>
+                <textarea id="specialRequirements" name="specialRequirements" rows="3" placeholder="Any specific editing preferences, cultural elements, props, or special arrangements..."></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="guestCount">Expected Number of Guests</label>
+                <input type="number" id="guestCount" name="guestCount" min="1" placeholder="Approximate number of people to be photographed">
+            </div>
+            
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" id="cancelBooking">Cancel</button>
+                <button type="submit" class="btn btn-primary">Submit Booking Request</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+    <script>
+        // Photography data with packages for all 40 photographers
+        const photographyData = {
+            "Andhra Pradesh": [
+                {
+                    "id": 1,
+                    "name": "Vizag LensCraft",
+                    "specialty": "Wedding",
+                    "rating": 4.3,
+                    "price": "₹10,000 - ₹25,000",
+                    "image": "https://content.jdmagicbox.com/comp/visakhapatnam/j5/0891px891.x891.180408044024.x3j5/catalogue/suresh-bandaru-photography-gajuwaka-visakhapatnam-commercial-photographers-ssxp3jb5ke-250.jpg",
+                    "experience": "4 years",
+                    "contact": { "phone": "+91 9876543210" },
+                    "packages": [
+                        {
+                            "name": "Basic Package",
+                            "price": "₹10,000",
+                            "features": [
+                                "4 hours of coverage",
+                                "100 edited digital photos",
+                                "Online gallery",
+                                "1 photographer"
+                            ]
+                        },
+                        {
+                            "name": "Standard Package",
+                            "price": "₹17,500",
+                            "features": [
+                                "8 hours of coverage",
+                                "300 edited digital photos",
+                                "Online gallery + USB drive",
+                                "2 photographers",
+                                "10 printed photos (8x10)"
+                            ]
+                        },
+                        {
+                            "name": "Premium Package",
+                            "price": "₹25,000",
+                            "features": [
+                                "Full day coverage (12 hours)",
+                                "500+ edited digital photos",
+                                "Online gallery + USB drive + photo book",
+                                "2 photographers + 1 assistant",
+                                "20 printed photos (8x10)",
+                                "Engagement session included"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 2,
+                    "name": "Tirupati Frames",
+                    "specialty": "Candid",
+                    "rating": 4.4,
+                    "price": "₹12,000 - ₹28,000",
+                    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjzYv2wNVTiYI5GgtCr-8r9vFTu1xpQPGd-Q&s",
+                    "experience": "5 years",
+                    "contact": { "phone": "+91 9876543211" },
+                    "packages": [
+                        {
+                            "name": "Essentials",
+                            "price": "₹12,000",
+                            "features": [
+                                "3 hours of candid coverage",
+                                "80 edited digital photos",
+                                "Online gallery",
+                                "Natural light photography"
+                            ]
+                        },
+                        {
+                            "name": "Complete Candid",
+                            "price": "₹20,000",
+                            "features": [
+                                "6 hours of candid coverage",
+                                "250 edited digital photos",
+                                "Online gallery + USB drive",
+                                "Natural + artificial light",
+                                "5 artistic B&W conversions"
+                            ]
+                        },
+                        {
+                            "name": "Ultimate Candid",
+                            "price": "₹28,000",
+                            "features": [
+                                "Full day candid coverage",
+                                "400+ edited digital photos",
+                                "Online gallery + USB drive + slideshow",
+                                "Multiple lighting setups",
+                                "15 artistic B&W conversions",
+                                "Behind-the-scenes video"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 3,
+                    "name": "Amaravati Outdoor Studio",
+                    "specialty": "Outdoor",
+                    "rating": 4.5,
+                    "price": "₹14,000 - ₹31,000",
+                    "image": "https://images.squarespace-cdn.com/content/v1/5727974359827e5304ee8ddf/1593085283932-BNSFKV4KW6EITH2E4QQU/kids%2Bphotographers.jpg?format=2500w",
+                    "experience": "6 years",
+                    "contact": { "phone": "+91 9876543212" },
+                    "packages": [
+                        {
+                            "name": "Nature Basic",
+                            "price": "₹14,000",
+                            "features": [
+                                "3 hours outdoor session",
+                                "80 edited digital photos",
+                                "2 outdoor locations",
+                                "Natural light only"
+                            ]
+                        },
+                        {
+                            "name": "Adventure Standard",
+                            "price": "₹22,500",
+                            "features": [
+                                "5 hours outdoor session",
+                                "200 edited digital photos",
+                                "4 outdoor locations",
+                                "Natural + portable lighting",
+                                "Sunrise/sunset sessions"
+                            ]
+                        },
+                        {
+                            "name": "Explorer Premium",
+                            "price": "₹31,000",
+                            "features": [
+                                "Full day outdoor session",
+                                "400+ edited digital photos",
+                                "Unlimited locations",
+                                "Professional lighting equipment",
+                                "Sunrise + sunset sessions",
+                                "Drone footage (additional)"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 4,
+                    "name": "Guntur Pixel Portraits",
+                    "specialty": "Pre-Wedding",
+                    "rating": 4.6,
+                    "price": "₹16,000 - ₹34,000",
+                    "image": "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJlLXdlZGRpbmclMjBwaG90b2dyYXBoeXxlbnwwfHwwfHx8MA%3D%3D&w=1000&q=80",
+                    "experience": "7 years",
+                    "contact": { "phone": "+91 9876543213" },
+                    "packages": [
+                        {
+                            "name": "Couple Session",
+                            "price": "₹16,000",
+                            "features": [
+                                "2 hours pre-wedding shoot",
+                                "60 edited digital photos",
+                                "1 location",
+                                "2 outfit changes"
+                            ]
+                        },
+                        {
+                            "name": "Love Story",
+                            "price": "₹25,000",
+                            "features": [
+                                "4 hours pre-wedding shoot",
+                                "150 edited digital photos",
+                                "3 locations",
+                                "4 outfit changes",
+                                "Online gallery + USB"
+                            ]
+                        },
+                        {
+                            "name": "Epic Romance",
+                            "price": "₹34,000",
+                            "features": [
+                                "Full day pre-wedding shoot",
+                                "300+ edited digital photos",
+                                "5 locations",
+                                "6 outfit changes",
+                                "Online gallery + USB + album",
+                                "Same-day preview"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 5,
+                    "name": "Rajahmundry Traditions",
+                    "specialty": "Traditional",
+                    "rating": 4.7,
+                    "price": "₹18,000 - ₹37,000",
+                    "image": "https://images.unsplash.com/photo-1583939003579-730e3918a45a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dHJhZGl0aW9uYWwlMjB3ZWRkaW5nJTIwcGhvdG9ncmFwaHl8ZW58MHx8MHx8fDA%3D&w=1000&q=80",
+                    "experience": "8 years",
+                    "contact": { "phone": "+91 9876543214" },
+                    "packages": [
+                        {
+                            "name": "Traditional Basic",
+                            "price": "₹18,000",
+                            "features": [
+                                "4 hours traditional coverage",
+                                "100 edited digital photos",
+                                "Traditional poses only",
+                                "1 photographer"
+                            ]
+                        },
+                        {
+                            "name": "Heritage Standard",
+                            "price": "₹27,500",
+                            "features": [
+                                "8 hours traditional coverage",
+                                "250 edited digital photos",
+                                "Traditional + contemporary mix",
+                                "2 photographers",
+                                "10 printed photos"
+                            ]
+                        },
+                        {
+                            "name": "Cultural Premium",
+                            "price": "₹37,000",
+                            "features": [
+                                "Full day traditional coverage",
+                                "400+ edited digital photos",
+                                "Complete cultural documentation",
+                                "2 photographers + assistant",
+                                "20 printed photos + album",
+                                "Traditional costume guidance"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 6,
+                    "name": "Vijayawada Vision Studio",
+                    "specialty": "Corporate",
+                    "rating": 4.3,
+                    "price": "₹20,000 - ₹40,000",
+                    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbcozx73bu4XioZrECwoMa7pFckMH01Fe9Tg&s",
+                    "experience": "9 years",
+                    "contact": { "phone": "+91 9876543215" },
+                    "packages": [
+                        {
+                            "name": "Business Basic",
+                            "price": "₹20,000",
+                            "features": [
+                                "Half-day corporate event",
+                                "80 edited digital photos",
+                                "Online gallery",
+                                "Basic editing"
+                            ]
+                        },
+                        {
+                            "name": "Professional Standard",
+                            "price": "₹30,000",
+                            "features": [
+                                "Full-day corporate event",
+                                "200 edited digital photos",
+                                "Online gallery + USB",
+                                "Professional editing",
+                                "Company branding"
+                            ]
+                        },
+                        {
+                            "name": "Enterprise Premium",
+                            "price": "₹40,000",
+                            "features": [
+                                "Multi-day corporate event",
+                                "400+ edited digital photos",
+                                "Online gallery + USB + prints",
+                                "Advanced editing",
+                                "Company branding + logos",
+                                "Same-day social media images"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 7,
+                    "name": "Kakinada Vogue Studio",
+                    "specialty": "Fashion",
+                    "rating": 4.4,
+                    "price": "₹22,000 - ₹43,000",
+                    "image": "https://i.pinimg.com/736x/9d/7f/aa/9d7faa6dd8b9b0b8a7ab797710dac4f1.jpg",
+                    "experience": "10 years",
+                    "contact": { "phone": "+91 9876543216" },
+                    "packages": [
+                        {
+                            "name": "Portfolio Basic",
+                            "price": "₹22,000",
+                            "features": [
+                                "2 hours studio session",
+                                "40 edited digital photos",
+                                "2 backdrop options",
+                                "Basic retouching"
+                            ]
+                        },
+                        {
+                            "name": "Fashion Standard",
+                            "price": "₹32,500",
+                            "features": [
+                                "4 hours studio session",
+                                "100 edited digital photos",
+                                "5 backdrop options",
+                                "Professional retouching",
+                                "3 outfit changes"
+                            ]
+                        },
+                        {
+                            "name": "Runway Premium",
+                            "price": "₹43,000",
+                            "features": [
+                                "Full day studio session",
+                                "200+ edited digital photos",
+                                "Unlimited backdrops",
+                                "Advanced retouching",
+                                "6 outfit changes",
+                                "Makeup artist included"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 8,
+                    "name": "Nellore Event Capture",
+                    "specialty": "Event",
+                    "rating": 4.5,
+                    "price": "₹24,000 - ₹46,000",
+                    "image": "https://capephotography.biz/wp-content/uploads/elementor/thumbs/Event-Photography-of75xav2pgr5dygdiyhtuy62y9ivbpl8l6fhphf9y8.jpg",
+                    "experience": "11 years",
+                    "contact": { "phone": "+91 9876543217" },
+                    "packages": [
+                        {
+                            "name": "Event Basic",
+                            "price": "₹24,000",
+                            "features": [
+                                "4 hours event coverage",
+                                "100 edited digital photos",
+                                "Online gallery",
+                                "1 photographer"
+                            ]
+                        },
+                        {
+                            "name": "Celebration Standard",
+                            "price": "₹35,000",
+                            "features": [
+                                "8 hours event coverage",
+                                "250 edited digital photos",
+                                "Online gallery + USB",
+                                "2 photographers",
+                                "Same-day highlights"
+                            ]
+                        },
+                        {
+                            "name": "Grand Event Premium",
+                            "price": "₹46,000",
+                            "features": [
+                                "Full day event coverage",
+                                "400+ edited digital photos",
+                                "Online gallery + USB + album",
+                                "3 photographers",
+                                "Same-day highlights + social media",
+                                "Pre-event consultation"
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "Tamil Nadu": [
+                {
+                    "id": 9,
+                    "name": "Chennai Pixel Frames",
+                    "specialty": "Wedding",
+                    "rating": 4.3,
+                    "price": "₹10,000 - ₹25,000",
+                    "image": "https://www.akphotographyarun.com/wp-content/uploads/2024/06/Wedding-Photoshoot-in-Tirupati-Deepak-Nivedas-Magical-Moments-Captured-by-AK-Photography-12.jpg",
+                    "experience": "4 years",
+                    "contact": { "phone": "+91 9876543210" },
+                    "packages": [
+                        {
+                            "name": "City Wedding Basic",
+                            "price": "₹10,000",
+                            "features": [
+                                "4 hours coverage",
+                                "100 edited photos",
+                                "Online gallery",
+                                "Urban locations"
+                            ]
+                        },
+                        {
+                            "name": "Metro Wedding Standard",
+                            "price": "₹17,500",
+                            "features": [
+                                "8 hours coverage",
+                                "300 edited photos",
+                                "Online gallery + USB",
+                                "Multiple city locations"
+                            ]
+                        },
+                        {
+                            "name": "Urban Wedding Premium",
+                            "price": "₹25,000",
+                            "features": [
+                                "Full day coverage",
+                                "500+ edited photos",
+                                "Gallery + USB + Album",
+                                "All city locations",
+                                "Drone footage option"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 10,
+                    "name": "Coimbatore Candid Clicks",
+                    "specialty": "Candid",
+                    "rating": 4.4,
+                    "price": "₹12,000 - ₹28,000",
+                    "image": "https://image.wedmegood.com/resized/720X/uploads/member/4454924/1689160247_IMG_8724.JPG",
+                    "experience": "5 years",
+                    "contact": { "phone": "+91 9876543211" },
+                    "packages": [
+                        {
+                            "name": "Candid Moments",
+                            "price": "₹12,000",
+                            "features": [
+                                "3 hours candid coverage",
+                                "80 edited photos",
+                                "Online gallery",
+                                "Natural emotions focus"
+                            ]
+                        },
+                        {
+                            "name": "Storytelling Standard",
+                            "price": "₹20,000",
+                            "features": [
+                                "6 hours candid coverage",
+                                "200 edited photos",
+                                "Online gallery + USB",
+                                "Emotional storytelling",
+                                "10 artistic edits"
+                            ]
+                        },
+                        {
+                            "name": "Documentary Premium",
+                            "price": "₹28,000",
+                            "features": [
+                                "Full day coverage",
+                                "400+ edited photos",
+                                "Gallery + USB + Slideshow",
+                                "Complete story documentation",
+                                "25 artistic edits",
+                                "Behind-the-scenes"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 11,
+                    "name": "Madurai Outdoor Shots",
+                    "specialty": "Outdoor",
+                    "rating": 4.5,
+                    "price": "₹14,000 - ₹31,000",
+                    "image": "https://www.neonweddingsphotography.com/images/home/gallery/Best-Candid-Photography-In-Madurai-97.jpg",
+                    "experience": "6 years",
+                    "contact": { "phone": "+91 9876543212" },
+                    "packages": [
+                        {
+                            "name": "Temple Basic",
+                            "price": "₹14,000",
+                            "features": [
+                                "3 hours outdoor session",
+                                "80 edited photos",
+                                "2 temple locations",
+                                "Traditional poses"
+                            ]
+                        },
+                        {
+                            "name": "Heritage Standard",
+                            "price": "₹22,500",
+                            "features": [
+                                "5 hours outdoor session",
+                                "200 edited photos",
+                                "4 heritage locations",
+                                "Traditional + contemporary",
+                                "Golden hour sessions"
+                            ]
+                        },
+                        {
+                            "name": "Cultural Premium",
+                            "price": "₹31,000",
+                            "features": [
+                                "Full day outdoor session",
+                                "400+ edited photos",
+                                "All heritage locations",
+                                "Complete cultural coverage",
+                                "Sunrise + sunset sessions",
+                                "Traditional attire guidance"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 12,
+                    "name": "Salem Studio Portraits",
+                    "specialty": "Pre-Wedding",
+                    "rating": 4.6,
+                    "price": "₹16,000 - ₹34,000",
+                    "image": "https://iglowstudioz.com/wp-content/uploads/2024/04/1-1.jpg",
+                    "experience": "7 years",
+                    "contact": { "phone": "+91 9876543213" },
+                    "packages": [
+                        {
+                            "name": "Studio Romance",
+                            "price": "₹16,000",
+                            "features": [
+                                "2 hours studio session",
+                                "60 edited photos",
+                                "3 backdrop options",
+                                "2 outfit changes"
+                            ]
+                        },
+                        {
+                            "name": "Love Story Standard",
+                            "price": "₹25,000",
+                            "features": [
+                                "4 hours studio session",
+                                "150 edited photos",
+                                "6 backdrop options",
+                                "4 outfit changes",
+                                "Online gallery + USB"
+                            ]
+                        },
+                        {
+                            "name": "Epic Love Premium",
+                            "price": "₹34,000",
+                            "features": [
+                                "Full day studio session",
+                                "300+ edited photos",
+                                "Unlimited backdrops",
+                                "6 outfit changes",
+                                "Gallery + USB + Album",
+                                "Makeup artist included"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 13,
+                    "name": "Trichy Heritage Clicks",
+                    "specialty": "Traditional",
+                    "rating": 4.7,
+                    "price": "₹18,000 - ₹37,000",
+                    "image": "https://images.unsplash.com/photo-1583939003579-730e3918a45a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dHJhZGl0aW9uYWwlMjB3ZWRkaW5nJTIwcGhvdG9ncmFwaHl8ZW58MHx8MHx8fDA%3D&w=1000&q=80",
+                    "experience": "8 years",
+                    "contact": { "phone": "+91 9876543214" },
+                    "packages": [
+                        {
+                            "name": "Traditional Basic",
+                            "price": "₹18,000",
+                            "features": [
+                                "4 hours traditional coverage",
+                                "100 edited photos",
+                                "Traditional ceremonies",
+                                "1 photographer"
+                            ]
+                        },
+                        {
+                            "name": "Cultural Standard",
+                            "price": "₹27,500",
+                            "features": [
+                                "8 hours traditional coverage",
+                                "250 edited photos",
+                                "All traditional ceremonies",
+                                "2 photographers",
+                                "10 printed photos"
+                            ]
+                        },
+                        {
+                            "name": "Heritage Premium",
+                            "price": "₹37,000",
+                            "features": [
+                                "Full day coverage",
+                                "400+ edited photos",
+                                "Complete traditional documentation",
+                                "2 photographers + assistant",
+                                "20 printed photos + album",
+                                "Cultural guidance"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 14,
+                    "name": "Erode Enterprise Studio",
+                    "specialty": "Corporate",
+                    "rating": 4.3,
+                    "price": "₹20,000 - ₹40,000",
+                    "image": "https://images.squarespace-cdn.com/content/v1/517c0bd2e4b0d7e92bf143e9/b1d38dc4-cacc-426e-b385-5d931311443c/dynamite-studio-inc-corporate-event-photographer-9.jpg",
+                    "experience": "9 years",
+                    "contact": { "phone": "+91 9876543215" },
+                    "packages": [
+                        {
+                            "name": "Business Events",
+                            "price": "₹20,000",
+                            "features": [
+                                "Half-day corporate coverage",
+                                "80 edited photos",
+                                "Online gallery",
+                                "Professional editing"
+                            ]
+                        },
+                        {
+                            "name": "Corporate Standard",
+                            "price": "₹30,000",
+                            "features": [
+                                "Full-day corporate coverage",
+                                "200 edited photos",
+                                "Online gallery + USB",
+                                "Advanced editing",
+                                "Brand consistency"
+                            ]
+                        },
+                        {
+                            "name": "Enterprise Premium",
+                            "price": "₹40,000",
+                            "features": [
+                                "Multi-day coverage",
+                                "400+ edited photos",
+                                "Gallery + USB + Prints",
+                                "Premium editing",
+                                "Full brand alignment",
+                                "Rush delivery option"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 15,
+                    "name": "Vellore Vogue Frames",
+                    "specialty": "Fashion",
+                    "rating": 4.4,
+                    "price": "₹22,000 - ₹43,000",
+                    "image": "https://cococreativestudio.com/wp-content/uploads/2024/02/Eunice-photoshoot17131.jpg",
+                    "experience": "10 years",
+                    "contact": { "phone": "+91 9876543216" },
+                    "packages": [
+                        {
+                            "name": "Fashion Portfolio",
+                            "price": "₹22,000",
+                            "features": [
+                                "2 hours fashion shoot",
+                                "40 edited photos",
+                                "2 backdrop options",
+                                "Basic retouching"
+                            ]
+                        },
+                        {
+                            "name": "Style Standard",
+                            "price": "₹32,500",
+                            "features": [
+                                "4 hours fashion shoot",
+                                "100 edited photos",
+                                "5 backdrop options",
+                                "Professional retouching",
+                                "3 outfit changes"
+                            ]
+                        },
+                        {
+                            "name": "Runway Premium",
+                            "price": "₹43,000",
+                            "features": [
+                                "Full day fashion shoot",
+                                "200+ edited photos",
+                                "Unlimited backdrops",
+                                "Advanced retouching",
+                                "6 outfit changes",
+                                "Hair & makeup included"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 16,
+                    "name": "Kanchipuram Event Studio",
+                    "specialty": "Event",
+                    "rating": 4.5,
+                    "price": "₹24,000 - ₹46,000",
+                    "image": "https://orlandosydney.com/wp-content/uploads/2019/06/Creative-Event-Photography-by-Orlando-Sydney-DSC_1764-1200px.jpg",
+                    "experience": "11 years",
+                    "contact": { "phone": "+91 9876543217" },
+                    "packages": [
+                        {
+                            "name": "Event Coverage",
+                            "price": "₹24,000",
+                            "features": [
+                                "4 hours event photography",
+                                "100 edited photos",
+                                "Online gallery",
+                                "1 photographer"
+                            ]
+                        },
+                        {
+                            "name": "Celebration Standard",
+                            "price": "₹35,000",
+                            "features": [
+                                "8 hours event photography",
+                                "250 edited photos",
+                                "Online gallery + USB",
+                                "2 photographers",
+                                "Quick turnaround"
+                            ]
+                        },
+                        {
+                            "name": "Grand Celebration",
+                            "price": "₹46,000",
+                            "features": [
+                                "Full day event coverage",
+                                "400+ edited photos",
+                                "Gallery + USB + Album",
+                                "3 photographers",
+                                "Same-day delivery",
+                                "Pre-event planning"
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "Karnataka": [
+                {
+                    "id": 17,
+                    "name": "Bangalore Wedding Tales",
+                    "specialty": "Wedding",
+                    "rating": 4.3,
+                    "price": "₹10,000 - ₹25,000",
+                    "image": "https://i0.wp.com/onethousandtales.net/wp-content/uploads/2022/03/Best-candid-documentary-photojournalist-wedding-photographer-photography-chennai-bangalore-hyderabad-mumbai-delhi-2886.jpg?fit=1600%2C1067&ssl=1",
+                    "experience": "4 years",
+                    "contact": { "phone": "+91 9876543210" },
+                    "packages": [
+                        {
+                            "name": "City Wedding",
+                            "price": "₹10,000",
+                            "features": [
+                                "4 hours coverage",
+                                "100 edited photos",
+                                "Online gallery",
+                                "Urban venue options"
+                            ]
+                        },
+                        {
+                            "name": "Metro Standard",
+                            "price": "₹17,500",
+                            "features": [
+                                "8 hours coverage",
+                                "300 edited photos",
+                                "Online gallery + USB",
+                                "Multiple city venues",
+                                "2 photographers"
+                            ]
+                        },
+                        {
+                            "name": "Urban Premium",
+                            "price": "₹25,000",
+                            "features": [
+                                "Full day coverage",
+                                "500+ edited photos",
+                                "Gallery + USB + Album",
+                                "All city venues",
+                                "3 photographers",
+                                "Drone footage available"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 18,
+                    "name": "Mysuru Candid Creations",
+                    "specialty": "Candid",
+                    "rating": 4.4,
+                    "price": "₹12,000 - ₹28,000",
+                    "image": "https://editaphotography.in/wp-content/uploads/2024/04/Candid_child_photo_shoot_Pune_02.jpg",
+                    "experience": "5 years",
+                    "contact": { "phone": "+91 9876543211" },
+                    "packages": [
+                        {
+                            "name": "Royal Candid",
+                            "price": "₹12,000",
+                            "features": [
+                                "3 hours candid coverage",
+                                "80 edited photos",
+                                "Online gallery",
+                                "Palace/heritage locations"
+                            ]
+                        },
+                        {
+                            "name": "Heritage Standard",
+                            "price": "₹20,000",
+                            "features": [
+                                "6 hours candid coverage",
+                                "200 edited photos",
+                                "Online gallery + USB",
+                                "Multiple heritage sites",
+                                "15 artistic edits"
+                            ]
+                        },
+                        {
+                            "name": "Royal Premium",
+                            "price": "₹28,000",
+                            "features": [
+                                "Full day coverage",
+                                "400+ edited photos",
+                                "Gallery + USB + Slideshow",
+                                "All heritage locations",
+                                "30 artistic edits",
+                                "Traditional costume session"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 19,
+                    "name": "Udupi Outdoor Frames",
+                    "specialty": "Outdoor",
+                    "rating": 4.5,
+                    "price": "₹14,000 - ₹31,000",
+                    "image": "https://content.jdmagicbox.com/v2/comp/ratnagiri/m4/9999p2352.2352.191115172752.p2m4/catalogue/stc-mirrorless-photo-studio-chiplun-ratnagiri-photo-studios-o1on0c7cgj.jpg",
+                    "experience": "6 years",
+                    "contact": { "phone": "+91 9876543212" },
+                    "packages": [
+                        {
+                            "name": "Coastal Basic",
+                            "price": "₹14,000",
+                            "features": [
+                                "3 hours beach session",
+                                "80 edited photos",
+                                "2 beach locations",
+                                "Natural light only"
+                            ]
+                        },
+                        {
+                            "name": "Seaside Standard",
+                            "price": "₹22,500",
+                            "features": [
+                                "5 hours coastal session",
+                                "200 edited photos",
+                                "4 coastal locations",
+                                "Natural + portable light",
+                                "Sunset sessions"
+                            ]
+                        },
+                        {
+                            "name": "Ocean Premium",
+                            "price": "₹31,000",
+                            "features": [
+                                "Full day coastal session",
+                                "400+ edited photos",
+                                "All coastal locations",
+                                "Professional lighting",
+                                "Sunrise + sunset sessions",
+                                "Beach drone footage"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 20,
+                    "name": "Hubballi Studio Works",
+                    "specialty": "Pre-Wedding",
+                    "rating": 4.6,
+                    "price": "₹16,000 - ₹34,000",
+                    "image": "https://phometo.com/images/gallery/Temple_Pre_Wedding_Shoot1.jpg",
+                    "experience": "7 years",
+                    "contact": { "phone": "+91 9876543213" },
+                    "packages": [
+                        {
+                            "name": "Studio Love",
+                            "price": "₹16,000",
+                            "features": [
+                                "2 hours studio session",
+                                "60 edited photos",
+                                "3 backdrop options",
+                                "2 outfit changes"
+                            ]
+                        },
+                        {
+                            "name": "Romance Standard",
+                            "price": "₹25,000",
+                            "features": [
+                                "4 hours studio session",
+                                "150 edited photos",
+                                "6 backdrop options",
+                                "4 outfit changes",
+                                "Online gallery + USB"
+                            ]
+                        },
+                        {
+                            "name": "Epic Love Premium",
+                            "price": "₹34,000",
+                            "features": [
+                                "Full day studio session",
+                                "300+ edited photos",
+                                "Unlimited backdrops",
+                                "6 outfit changes",
+                                "Gallery + USB + Album",
+                                "Professional makeup included"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 21,
+                    "name": "Mangalore Heritage Shots",
+                    "specialty": "Traditional",
+                    "rating": 4.7,
+                    "price": "₹18,000 - ₹37,000",
+                    "image": "https://content.jdmagicbox.com/comp/kurnool/t4/9999p8518.8518.230607161206.w5t4/catalogue/brindavana-outdoor-studio-kurnool-photo-studios-ibq8mr91b1.jpg",
+                    "experience": "8 years",
+                    "contact": { "phone": "+91 9876543214" },
+                    "packages": [
+                        {
+                            "name": "Coastal Traditions",
+                            "price": "₹18,000",
+                            "features": [
+                                "4 hours traditional coverage",
+                                "100 edited photos",
+                                "Coastal rituals",
+                                "1 photographer"
+                            ]
+                        },
+                        {
+                            "name": "Heritage Standard",
+                            "price": "₹27,500",
+                            "features": [
+                                "8 hours traditional coverage",
+                                "250 edited photos",
+                                "All coastal traditions",
+                                "2 photographers",
+                                "10 printed photos"
+                            ]
+                        },
+                        {
+                            "name": "Cultural Premium",
+                            "price": "₹37,000",
+                            "features": [
+                                "Full day coverage",
+                                "400+ edited photos",
+                                "Complete cultural documentation",
+                                "2 photographers + assistant",
+                                "20 printed photos + album",
+                                "Traditional guidance"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 22,
+                    "name": "Belgaum BizClicks",
+                    "specialty": "Corporate",
+                    "rating": 4.3,
+                    "price": "₹20,000 - ₹40,000",
+                    "image": "https://photobangalore.com/wp-content/uploads/2021/05/corporate-event-photography-1024x676.jpg",
+                    "experience": "9 years",
+                    "contact": { "phone": "+91 9876543215" },
+                    "packages": [
+                        {
+                            "name": "Business Coverage",
+                            "price": "₹20,000",
+                            "features": [
+                                "Half-day corporate event",
+                                "80 edited photos",
+                                "Online gallery",
+                                "Professional editing"
+                            ]
+                        },
+                        {
+                            "name": "Corporate Standard",
+                            "price": "₹30,000",
+                            "features": [
+                                "Full-day corporate event",
+                                "200 edited photos",
+                                "Online gallery + USB",
+                                "Advanced editing",
+                                "Brand alignment"
+                            ]
+                        },
+                        {
+                            "name": "Enterprise Premium",
+                            "price": "₹40,000",
+                            "features": [
+                                "Multi-day coverage",
+                                "400+ edited photos",
+                                "Gallery + USB + Prints",
+                                "Premium editing",
+                                "Full brand integration",
+                                "Express delivery"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 23,
+                    "name": "Davangere Fashion Lens",
+                    "specialty": "Fashion",
+                    "rating": 4.4,
+                    "price": "₹22,000 - ₹43,000",
+                    "image": "https://content.jdmagicbox.com/comp/davangere/t2/9999p8192.8192.220728173345.d4t2/catalogue/photo-classic-davangere-city-davangere-photo-studios-9agfccwnru.jpg",
+                    "experience": "10 years",
+                    "contact": { "phone": "+91 9876543216" },
+                    "packages": [
+                        {
+                            "name": "Style Portfolio",
+                            "price": "₹22,000",
+                            "features": [
+                                "2 hours fashion shoot",
+                                "40 edited photos",
+                                "2 backdrop options",
+                                "Basic retouching"
+                            ]
+                        },
+                        {
+                            "name": "Fashion Standard",
+                            "price": "₹32,500",
+                            "features": [
+                                "4 hours fashion shoot",
+                                "100 edited photos",
+                                "5 backdrop options",
+                                "Professional retouching",
+                                "3 outfit changes"
+                            ]
+                        },
+                        {
+                            "name": "Runway Premium",
+                            "price": "₹43,000",
+                            "features": [
+                                "Full day fashion shoot",
+                                "200+ edited photos",
+                                "Unlimited backdrops",
+                                "Advanced retouching",
+                                "6 outfit changes",
+                                "Hair & makeup artist"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 24,
+                    "name": "Shivamogga Event Snaps",
+                    "specialty": "Event",
+                    "rating": 4.5,
+                    "price": "₹24,000 - ₹46,000",
+                    "image": "https://bangalorephotographers.in/images/gallery/Haldi-event.jpg",
+                    "experience": "11 years",
+                    "contact": { "phone": "+91 9876543217" },
+                    "packages": [
+                        {
+                            "name": "Event Basic",
+                            "price": "₹24,000",
+                            "features": [
+                                "4 hours event coverage",
+                                "100 edited photos",
+                                "Online gallery",
+                                "1 photographer"
+                            ]
+                        },
+                        {
+                            "name": "Celebration Standard",
+                            "price": "₹35,000",
+                            "features": [
+                                "8 hours event coverage",
+                                "250 edited photos",
+                                "Online gallery + USB",
+                                "2 photographers",
+                                "Quick delivery"
+                            ]
+                        },
+                        {
+                            "name": "Grand Event Premium",
+                            "price": "₹46,000",
+                            "features": [
+                                "Full day coverage",
+                                "400+ edited photos",
+                                "Gallery + USB + Album",
+                                "3 photographers",
+                                "Same-day highlights",
+                                "Pre-event consultation"
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "Kerala": [
+                {
+                    "id": 25,
+                    "name": "Kochi Wedding Frames",
+                    "specialty": "Wedding",
+                    "rating": 4.3,
+                    "price": "₹10,000 - ₹25,000",
+                    "image": "https://cdn0.weddingwire.in/vendor/7607/3_2/640/jpg/keralawedding-1705336119-3280919624598305741-2968811308_15_407607-172232832154315.jpeg",
+                    "experience": "4 years",
+                    "contact": { "phone": "+91 9876543210" },
+                    "packages": [
+                        {
+                            "name": "Backwater Basic",
+                            "price": "₹10,000",
+                            "features": [
+                                "4 hours coverage",
+                                "100 edited photos",
+                                "Online gallery",
+                                "1 backwater location"
+                            ]
+                        },
+                        {
+                            "name": "Kerala Standard",
+                            "price": "₹17,500",
+                            "features": [
+                                "8 hours coverage",
+                                "300 edited photos",
+                                "Online gallery + USB",
+                                "3 backwater locations",
+                                "2 photographers"
+                            ]
+                        },
+                        {
+                            "name": "Malabar Premium",
+                            "price": "₹25,000",
+                            "features": [
+                                "Full day coverage",
+                                "500+ edited photos",
+                                "Gallery + USB + Album",
+                                "All Kerala locations",
+                                "3 photographers",
+                                "Houseboat session included"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 26,
+                    "name": "Trivandrum Candid Studio",
+                    "specialty": "Candid",
+                    "rating": 4.4,
+                    "price": "₹12,000 - ₹28,000",
+                    "image": "https://image.wedmegood.com/resized/720X/uploads/member/1353285/1752135701_0__2_.jpg?crop=12,112,1822,1025",
+                    "experience": "5 years",
+                    "contact": { "phone": "+91 9876543211" },
+                    "packages": [
+                        {
+                            "name": "Coastal Candid",
+                            "price": "₹12,000",
+                            "features": [
+                                "3 hours candid coverage",
+                                "80 edited photos",
+                                "Online gallery",
+                                "Beach locations"
+                            ]
+                        },
+                        {
+                            "name": "Kerala Stories",
+                            "price": "₹20,000",
+                            "features": [
+                                "6 hours candid coverage",
+                                "200 edited photos",
+                                "Online gallery + USB",
+                                "Multiple coastal locations",
+                                "15 artistic edits"
+                            ]
+                        },
+                        {
+                            "name": "Malabar Premium",
+                            "price": "₹28,000",
+                            "features": [
+                                "Full day coverage",
+                                "400+ edited photos",
+                                "Gallery + USB + Slideshow",
+                                "All Kerala locations",
+                                "30 artistic edits",
+                                "Traditional Kerala moments"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 27,
+                    "name": "Alleppey Outdoor Clicks",
+                    "specialty": "Outdoor",
+                    "rating": 4.5,
+                    "price": "₹14,000 - ₹31,000",
+                    "image": "https://media.istockphoto.com/id/96168054/photo/woman-cruise-on-houeboat-tour-in-backwaters-kerala.jpg?s=612x612&w=0&k=20&c=LRu0vnuJAPN7F1XwAG08rCcXi_xZA466qqH5UjqP9n4=",
+                    "experience": "6 years",
+                    "contact": { "phone": "+91 9876543212" },
+                    "packages": [
+                        {
+                            "name": "Backwater Basic",
+                            "price": "₹14,000",
+                            "features": [
+                                "3 hours backwater session",
+                                "80 edited photos",
+                                "2 backwater locations",
+                                "Natural light only"
+                            ]
+                        },
+                        {
+                            "name": "Houseboat Standard",
+                            "price": "₹22,500",
+                            "features": [
+                                "5 hours backwater session",
+                                "200 edited photos",
+                                "4 backwater locations",
+                                "Natural + portable light",
+                                "Sunset backwater shots"
+                            ]
+                        },
+                        {
+                            "name": "Kerala Premium",
+                            "price": "₹31,000",
+                            "features": [
+                                "Full day backwater session",
+                                "400+ edited photos",
+                                "All backwater locations",
+                                "Professional lighting",
+                                "Sunrise + sunset sessions",
+                                "Houseboat photography included"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 28,
+                    "name": "Kollam Studio Vision",
+                    "specialty": "Pre-Wedding",
+                    "rating": 4.6,
+                    "price": "₹16,000 - ₹34,000",
+                    "image": "https://chitrageek.com/wp-content/uploads/2024/09/Pre-Wedding-Traditional-Couple-Pose-2.webp",
+                    "experience": "7 years",
+                    "contact": { "phone": "+91 9876543213" },
+                    "packages": [
+                        {
+                            "name": "Kerala Romance",
+                            "price": "₹16,000",
+                            "features": [
+                                "2 hours pre-wedding session",
+                                "60 edited photos",
+                                "2 Kerala locations",
+                                "2 outfit changes"
+                            ]
+                        },
+                        {
+                            "name": "Backwater Love",
+                            "price": "₹25,000",
+                            "features": [
+                                "4 hours pre-wedding session",
+                                "150 edited photos",
+                                "4 Kerala locations",
+                                "4 outfit changes",
+                                "Online gallery + USB"
+                            ]
+                        },
+                        {
+                            "name": "Malabar Epic",
+                            "price": "₹34,000",
+                            "features": [
+                                "Full day pre-wedding session",
+                                "300+ edited photos",
+                                "All Kerala locations",
+                                "6 outfit changes",
+                                "Gallery + USB + Album",
+                                "Traditional Kerala attire included"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 29,
+                    "name": "Thrissur Heritage Portraits",
+                    "specialty": "Traditional",
+                    "rating": 4.7,
+                    "price": "₹18,000 - ₹37,000",
+                    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzqvXy_SHf1hMw3rpNx63hTPoRMHhOAhDsvA&s",
+                    "experience": "8 years",
+                    "contact": { "phone": "+91 9876543214" },
+                    "packages": [
+                        {
+                            "name": "Kerala Traditions",
+                            "price": "₹18,000",
+                            "features": [
+                                "4 hours traditional coverage",
+                                "100 edited photos",
+                                "Kerala rituals",
+                                "1 photographer"
+                            ]
+                        },
+                        {
+                            "name": "Cultural Standard",
+                            "price": "₹27,500",
+                            "features": [
+                                "8 hours traditional coverage",
+                                "250 edited photos",
+                                "All Kerala traditions",
+                                "2 photographers",
+                                "10 printed photos"
+                            ]
+                        },
+                        {
+                            "name": "Heritage Premium",
+                            "price": "₹37,000",
+                            "features": [
+                                "Full day coverage",
+                                "400+ edited photos",
+                                "Complete Kerala documentation",
+                                "2 photographers + assistant",
+                                "20 printed photos + album",
+                                "Traditional guidance"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 30,
+                    "name": "Palakkad Corporate Lens",
+                    "specialty": "Corporate",
+                    "rating": 4.3,
+                    "price": "₹20,000 - ₹40,000",
+                    "image": "https://www.candidshutters.media/wp-content/uploads/2022/05/Hire-the-best-conference-photography-for-corporate-events-mumbai-business-conference-event-shoot-33.jpg.webp",
+                    "experience": "9 years",
+                    "contact": { "phone": "+91 9876543215" },
+                    "packages": [
+                        {
+                            "name": "Business Events",
+                            "price": "₹20,000",
+                            "features": [
+                                "Half-day corporate coverage",
+                                "80 edited photos",
+                                "Online gallery",
+                                "Professional editing"
+                            ]
+                        },
+                        {
+                            "name": "Corporate Standard",
+                            "price": "₹30,000",
+                            "features": [
+                                "Full-day corporate coverage",
+                                "200 edited photos",
+                                "Online gallery + USB",
+                                "Advanced editing",
+                                "Brand consistency"
+                            ]
+                        },
+                        {
+                            "name": "Enterprise Premium",
+                            "price": "₹40,000",
+                            "features": [
+                                "Multi-day coverage",
+                                "400+ edited photos",
+                                "Gallery + USB + Prints",
+                                "Premium editing",
+                                "Full brand alignment",
+                                "Priority delivery"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 31,
+                    "name": "Calicut Fashion Studio",
+                    "specialty": "Fashion",
+                    "rating": 4.4,
+                    "price": "₹22,000 - ₹43,000",
+                    "image": "https://www.nikon.co.in/media/wysiwyg/learn-explore/2024/runway-studio-s-line-lenses-portraits-fashion-photos/3-nikkor-z-portraits-fashion-photography-trinity-lenses-marie-barsch-nikon-camera-lenses-accessories.jpg",
+                    "experience": "10 years",
+                    "contact": { "phone": "+91 9876543216" },
+                    "packages": [
+                        {
+                            "name": "Malabar Style",
+                            "price": "₹22,000",
+                            "features": [
+                                "2 hours fashion shoot",
+                                "40 edited photos",
+                                "2 backdrop options",
+                                "Basic retouching"
+                            ]
+                        },
+                        {
+                            "name": "Fashion Standard",
+                            "price": "₹32,500",
+                            "features": [
+                                "4 hours fashion shoot",
+                                "100 edited photos",
+                                "5 backdrop options",
+                                "Professional retouching",
+                                "3 outfit changes"
+                            ]
+                        },
+                        {
+                            "name": "Runway Premium",
+                            "price": "₹43,000",
+                            "features": [
+                                "Full day fashion shoot",
+                                "200+ edited photos",
+                                "Unlimited backdrops",
+                                "Advanced retouching",
+                                "6 outfit changes",
+                                "Professional makeup included"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 32,
+                    "name": "Kannur Event Focus",
+                    "specialty": "Event",
+                    "rating": 4.5,
+                    "price": "₹24,000 - ₹46,000",
+                    "image": "https://static.wixstatic.com/media/da177e_4a83962e63764f529f7c43d46798cbf1~mv2.jpg/v1/fill/w_250,h_166,al_c,q_90,enc_auto/da177e_4a83962e63764f529f7c43d46798cbf1~mv2.jpg",
+                    "experience": "11 years",
+                    "contact": { "phone": "+91 9876543217" },
+                    "packages": [
+                        {
+                            "name": "Event Basic",
+                            "price": "₹24,000",
+                            "features": [
+                                "4 hours event coverage",
+                                "100 edited photos",
+                                "Online gallery",
+                                "1 photographer"
+                            ]
+                        },
+                        {
+                            "name": "Celebration Standard",
+                            "price": "₹35,000",
+                            "features": [
+                                "8 hours event coverage",
+                                "250 edited photos",
+                                "Online gallery + USB",
+                                "2 photographers",
+                                "Fast delivery"
+                            ]
+                        },
+                        {
+                            "name": "Grand Event Premium",
+                            "price": "₹46,000",
+                            "features": [
+                                "Full day coverage",
+                                "400+ edited photos",
+                                "Gallery + USB + Album",
+                                "3 photographers",
+                                "Same-day highlights",
+                                "Pre-event planning session"
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "Telangana": [
+                {
+                    "id": 33,
+                    "name": "Hyderabad Wedding Stories",
+                    "specialty": "Wedding",
+                    "rating": 4.3,
+                    "price": "₹10,000 - ₹25,000",
+                    "image": "https://content.jdmagicbox.com/v2/comp/hyderabad/k3/040pxx40.xx40.140112151116.f9k3/catalogue/sumuhurtham-wedding-photography-yellareddyguda-hyderabad-photo-studios-9npd9bmvxc.jpg",
+                    "experience": "4 years",
+                    "contact": { "phone": "+91 9876543210" },
+                    "packages": [
+                        {
+                            "name": "City Wedding",
+                            "price": "₹10,000",
+                            "features": [
+                                "4 hours coverage",
+                                "100 edited photos",
+                                "Online gallery",
+                                "Hyderabad locations"
+                            ]
+                        },
+                        {
+                            "name": "Pearl City Standard",
+                            "price": "₹17,500",
+                            "features": [
+                                "8 hours coverage",
+                                "300 edited photos",
+                                "Online gallery + USB",
+                                "Multiple city locations",
+                                "2 photographers"
+                            ]
+                        },
+                        {
+                            "name": "Hyderabad Premium",
+                            "price": "₹25,000",
+                            "features": [
+                                "Full day coverage",
+                                "500+ edited photos",
+                                "Gallery + USB + Album",
+                                "All Hyderabad locations",
+                                "3 photographers",
+                                "Historic site sessions"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 34,
+                    "name": "Warangal Candid Hub",
+                    "specialty": "Candid",
+                    "rating": 4.4,
+                    "price": "₹12,000 - ₹28,000",
+                    "image": "https://cdn0.weddingwire.in/vendor/4255/3_2/960/jpg/photographer-the-candid-hub-coupleshot-20_15_274255-164735424996753.jpeg",
+                    "experience": "5 years",
+                    "contact": { "phone": "+91 9876543211" },
+                    "packages": [
+                        {
+                            "name": "Heritage Candid",
+                            "price": "₹12,000",
+                            "features": [
+                                "3 hours candid coverage",
+                                "80 edited photos",
+                                "Online gallery",
+                                "Warangal Fort locations"
+                            ]
+                        },
+                        {
+                            "name": "Cultural Stories",
+                            "price": "₹20,000",
+                            "features": [
+                                "6 hours candid coverage",
+                                "200 edited photos",
+                                "Online gallery + USB",
+                                "Multiple heritage sites",
+                                "15 artistic edits"
+                            ]
+                        },
+                        {
+                            "name": "Historical Premium",
+                            "price": "₹28,000",
+                            "features": [
+                                "Full day coverage",
+                                "400+ edited photos",
+                                "Gallery + USB + Slideshow",
+                                "All historical locations",
+                                "30 artistic edits",
+                                "Traditional Telangana moments"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 35,
+                    "name": "Karimnagar Outdoor Vision",
+                    "specialty": "Outdoor",
+                    "rating": 4.5,
+                    "price": "₹14,000 - ₹31,000",
+                    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZqysy2QetKAEHrZxRoEPeN5LQwKVWJU3j1Q&s",
+                    "experience": "6 years",
+                    "contact": { "phone": "+91 9876543212" },
+                    "packages": [
+                        {
+                            "name": "Countryside Basic",
+                            "price": "₹14,000",
+                            "features": [
+                                "3 hours outdoor session",
+                                "80 edited photos",
+                                "2 rural locations",
+                                "Natural light only"
+                            ]
+                        },
+                        {
+                            "name": "Rural Standard",
+                            "price": "₹22,500",
+                            "features": [
+                                "5 hours outdoor session",
+                                "200 edited photos",
+                                "4 countryside locations",
+                                "Natural + portable light",
+                                "Golden hour sessions"
+                            ]
+                        },
+                        {
+                            "name": "Country Premium",
+                            "price": "₹31,000",
+                            "features": [
+                                "Full day outdoor session",
+                                "400+ edited photos",
+                                "All rural locations",
+                                "Professional lighting",
+                                "Sunrise + sunset sessions",
+                                "Agricultural theme options"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 36,
+                    "name": "Nizamabad Studio Frame",
+                    "specialty": "Pre-Wedding",
+                    "rating": 4.6,
+                    "price": "₹16,000 - ₹34,000",
+                    "image": "https://www.weddingsutra.com/wp-content/nabila_mustakeen_03.jpg",
+                    "experience": "7 years",
+                    "contact": { "phone": "+91 9876543213" },
+                    "packages": [
+                        {
+                            "name": "Studio Romance",
+                            "price": "₹16,000",
+                            "features": [
+                                "2 hours studio session",
+                                "60 edited photos",
+                                "3 backdrop options",
+                                "2 outfit changes"
+                            ]
+                        },
+                        {
+                            "name": "Love Story Standard",
+                            "price": "₹25,000",
+                            "features": [
+                                "4 hours studio session",
+                                "150 edited photos",
+                                "6 backdrop options",
+                                "4 outfit changes",
+                                "Online gallery + USB"
+                            ]
+                        },
+                        {
+                            "name": "Epic Love Premium",
+                            "price": "₹34,000",
+                            "features": [
+                                "Full day studio session",
+                                "300+ edited photos",
+                                "Unlimited backdrops",
+                                "6 outfit changes",
+                                "Gallery + USB + Album",
+                                "Professional makeup included"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 37,
+                    "name": "Khammam Heritage Lens",
+                    "specialty": "Traditional",
+                    "rating": 4.7,
+                    "price": "₹18,000 - ₹37,000",
+                    "image": "https://dstudios.in/wp-content/uploads/2024/08/south-indian-wedding-photography-poses-scaled.webp",
+                    "experience": "8 years",
+                    "contact": { "phone": "+91 9876543214" },
+                    "packages": [
+                        {
+                            "name": "Telangana Traditions",
+                            "price": "₹18,000",
+                            "features": [
+                                "4 hours traditional coverage",
+                                "100 edited photos",
+                                "Telangana rituals",
+                                "1 photographer"
+                            ]
+                        },
+                        {
+                            "name": "Cultural Standard",
+                            "price": "₹27,500",
+                            "features": [
+                                "8 hours traditional coverage",
+                                "250 edited photos",
+                                "All Telangana traditions",
+                                "2 photographers",
+                                "10 printed photos"
+                            ]
+                        },
+                        {
+                            "name": "Heritage Premium",
+                            "price": "₹37,000",
+                            "features": [
+                                "Full day coverage",
+                                "400+ edited photos",
+                                "Complete Telangana documentation",
+                                "2 photographers + assistant",
+                                "20 printed photos + album",
+                                "Cultural guidance"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 38,
+                    "name": "Adilabad Corporate Clicks",
+                    "specialty": "Corporate",
+                    "rating": 4.3,
+                    "price": "₹20,000 - ₹40,000",
+                    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTFOfwX-8bXeW9HjcK5aQUtefWG1MPFkvRyWA&s",
+                    "experience": "9 years",
+                    "contact": { "phone": "+91 9876543215" },
+                    "packages": [
+                        {
+                            "name": "Business Coverage",
+                            "price": "₹20,000",
+                            "features": [
+                                "Half-day corporate event",
+                                "80 edited photos",
+                                "Online gallery",
+                                "Professional editing"
+                            ]
+                        },
+                        {
+                            "name": "Corporate Standard",
+                            "price": "₹30,000",
+                            "features": [
+                                "Full-day corporate event",
+                                "200 edited photos",
+                                "Online gallery + USB",
+                                "Advanced editing",
+                                "Brand consistency"
+                            ]
+                        },
+                        {
+                            "name": "Enterprise Premium",
+                            "price": "₹40,000",
+                            "features": [
+                                "Multi-day coverage",
+                                "400+ edited photos",
+                                "Gallery + USB + Prints",
+                                "Premium editing",
+                                "Full brand integration",
+                                "Express delivery option"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 39,
+                    "name": "Siddipet Style Studio",
+                    "specialty": "Fashion",
+                    "rating": 4.4,
+                    "price": "₹22,000 - ₹43,000",
+                    "image": "https://mir-s3-cdn-cf.behance.net/projects/404/8a0359235160511.Y3JvcCwxMDgwLDg0NCwwLDM5Mg.jpg",
+                    "experience": "10 years",
+                    "contact": { "phone": "+91 9876543216" },
+                    "packages": [
+                        {
+                            "name": "Style Portfolio",
+                            "price": "₹22,000",
+                            "features": [
+                                "2 hours fashion shoot",
+                                "40 edited photos",
+                                "2 backdrop options",
+                                "Basic retouching"
+                            ]
+                        },
+                        {
+                            "name": "Fashion Standard",
+                            "price": "₹32,500",
+                            "features": [
+                                "4 hours fashion shoot",
+                                "100 edited photos",
+                                "5 backdrop options",
+                                "Professional retouching",
+                                "3 outfit changes"
+                            ]
+                        },
+                        {
+                            "name": "Runway Premium",
+                            "price": "₹43,000",
+                            "features": [
+                                "Full day fashion shoot",
+                                "200+ edited photos",
+                                "Unlimited backdrops",
+                                "Advanced retouching",
+                                "6 outfit changes",
+                                "Professional hair & makeup"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 40,
+                    "name": "Medak Event Zone",
+                    "specialty": "Event",
+                    "rating": 4.5,
+                    "price": "₹24,000 - ₹46,000",
+                    "image": "https://images.squarespace-cdn.com/content/v1/58c8da4b29687f4b3dc33ce2/1701087275376-AM3Q5PICDIQ1MGHXXDNV/FE-5.jpg?format=1500w",
+                    "experience": "11 years",
+                    "contact": { "phone": "+91 9876543217" },
+                    "packages": [
+                        {
+                            "name": "Event Basic",
+                            "price": "₹24,000",
+                            "features": [
+                                "4 hours event coverage",
+                                "100 edited photos",
+                                "Online gallery",
+                                "1 photographer"
+                            ]
+                        },
+                        {
+                            "name": "Celebration Standard",
+                            "price": "₹35,000",
+                            "features": [
+                                "8 hours event coverage",
+                                "250 edited photos",
+                                "Online gallery + USB",
+                                "2 photographers",
+                                "Quick turnaround"
+                            ]
+                        },
+                        {
+                            "name": "Grand Event Premium",
+                            "price": "₹46,000",
+                            "features": [
+                                "Full day coverage",
+                                "400+ edited photos",
+                                "Gallery + USB + Album",
+                                "3 photographers",
+                                "Same-day highlights",
+                                "Pre-event consultation"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        };
+
+        let bookings = JSON.parse(localStorage.getItem('photographyBookings')) || [];
+
+        // DOM Elements
+        const photographyGrid = document.getElementById('photographyGrid');
+        const stateFilter = document.getElementById('stateFilter');
+        const photographyTypeFilter = document.getElementById('photographyTypeFilter');
+        const searchInput = document.getElementById('searchInput');
+        const minPrice = document.getElementById('minPrice');
+        const maxPrice = document.getElementById('maxPrice');
+        const resetFilters = document.getElementById('resetFilters');
+        const totalPhotography = document.getElementById('totalPhotography');
+        const avgRating = document.getElementById('avgRating');
+        const statesCovered = document.getElementById('statesCovered');
+        const topRated = document.getElementById('topRated');
+        const shortlistToast = document.getElementById('shortlistToast');
+
+        // Current filters and shortlist
+        let currentState = 'all';
+        let currentPhotographyType = 'all';
+        let currentSearch = '';
+        let currentMinPrice = '';
+        let currentMaxPrice = '';
+        let shortlistedServices = JSON.parse(localStorage.getItem('shortlistedPhotography')) || [];
+
+        // Initialize the page
+        function init() {
+            updateStats();
+            displayPhotography();
+            setupEventListeners();
+            checkPendingBookings();
+        }
+
+        // Update statistics
+        function updateStats() {
+            let allPhotography = [];
+            let totalRating = 0;
+            let topRatedCount = 0;
+            
+            for (const state in photographyData) {
+                photographyData[state].forEach(photography => {
+                    allPhotography.push(photography);
+                    totalRating += photography.rating;
+                    if (photography.rating >= 4.5) topRatedCount++;
+                });
+            }
+            
+            totalPhotography.textContent = allPhotography.length;
+            avgRating.textContent = (totalRating / allPhotography.length).toFixed(1);
+            statesCovered.textContent = Object.keys(photographyData).length;
+            topRated.textContent = topRatedCount;
+        }
+
+        // Set up event listeners
+        function setupEventListeners() {
+            // State filter
+            stateFilter.addEventListener('change', () => {
+                currentState = stateFilter.value;
+                displayPhotography();
+            });
+
+            // Photography type filter
+            photographyTypeFilter.addEventListener('change', () => {
+                currentPhotographyType = photographyTypeFilter.value;
+                displayPhotography();
+            });
+
+            // Search
+            searchInput.addEventListener('input', () => {
+                currentSearch = searchInput.value.toLowerCase();
+                displayPhotography();
+            });
+
+            // Price filters
+            minPrice.addEventListener('input', () => {
+                currentMinPrice = minPrice.value;
+                displayPhotography();
+            });
+
+            maxPrice.addEventListener('input', () => {
+                currentMaxPrice = maxPrice.value;
+                displayPhotography();
+            });
+
+            // Reset filters
+            resetFilters.addEventListener('click', () => {
+                stateFilter.value = 'all';
+                photographyTypeFilter.value = 'all';
+                searchInput.value = '';
+                minPrice.value = '';
+                maxPrice.value = '';
+                
+                currentState = 'all';
+                currentPhotographyType = 'all';
+                currentSearch = '';
+                currentMinPrice = '';
+                currentMaxPrice = '';
+                
+                displayPhotography();
+            });
+            const bookingModal = document.getElementById('bookingModal');
+    const bookingForm = document.getElementById('bookingForm');
+    const closeBookingForm = document.getElementById('closeBookingForm');
+    const cancelBooking = document.getElementById('cancelBooking');
+    
+    // Close modal when clicking X
+    closeBookingForm.addEventListener('click', closeBookingModal);
+    
+    // Close modal when clicking cancel
+    cancelBooking.addEventListener('click', closeBookingModal);
+    
+    // Close modal when clicking outside
+    bookingModal.addEventListener('click', (e) => {
+        if (e.target === bookingModal) {
+            closeBookingModal();
+        }
+    });
+    
+    // Handle form submission
+    bookingForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        const formData = {
+            customerName: document.getElementById('customerName').value,
+            customerPhone: document.getElementById('customerPhone').value,
+            customerEmail: document.getElementById('customerEmail').value,
+            eventType: document.getElementById('eventType').value,
+            eventDate: document.getElementById('eventDate').value,
+            eventTime: document.getElementById('eventTime').value,
+            photographyDuration: document.getElementById('photographyDuration').value,
+            venueType: document.getElementById('venueType').value,
+            eventAddress: document.getElementById('eventAddress').value,
+            photographyStyle: document.getElementById('photographyStyle').value,
+            numberOfPhotos: document.getElementById('numberOfPhotos').value,
+            specialShots: document.getElementById('specialShots').value,
+            specialRequirements: document.getElementById('specialRequirements').value,
+            guestCount: document.getElementById('guestCount').value
+        };
+        
+        submitBookingForm(formData);
+    });
+}
+
+        // Display photography based on current filters
+        function displayPhotography() {
+            photographyGrid.innerHTML = '';
+            
+            let photographyToShow = [];
+            
+            // Collect photography based on state filter
+            if (currentState === 'all') {
+                // Show photography from all states
+                for (const state in photographyData) {
+                    photographyData[state].forEach(photography => {
+                        photography.state = state;
+                        photographyToShow.push(photography);
+                    });
+                }
+            } else {
+                // Show photography from specific state
+                if (photographyData[currentState]) {
+                    photographyData[currentState].forEach(photography => {
+                        photography.state = currentState;
+                        photographyToShow.push(photography);
+                    });
+                }
+            }
+            
+            // Apply photography type filter
+            if (currentPhotographyType !== 'all') {
+                photographyToShow = photographyToShow.filter(photography => 
+                    photography.specialty === currentPhotographyType
+                );
+            }
+            
+            // Apply search filter
+            if (currentSearch) {
+                photographyToShow = photographyToShow.filter(photography => {
+                    const searchTerm = currentSearch;
+                    const searchableText = (
+                        photography.name + ' ' + 
+                        photography.specialty + ' ' + 
+                        photography.state
+                    ).toLowerCase();
+                    
+                    return searchableText.includes(searchTerm);
+                });
+            }
+            
+            // Apply price filter
+            if (currentMinPrice || currentMaxPrice) {
+                photographyToShow = photographyToShow.filter(photography => {
+                    // Extract min price from price range string
+                    const priceRange = photography.price;
+                    const minPriceValue = parseInt(priceRange.split(' - ')[0].replace('₹', '').replace(',', ''));
+                    
+                    if (currentMinPrice && minPriceValue < parseInt(currentMinPrice)) {
+                        return false;
+                    }
+                    
+                    if (currentMaxPrice && minPriceValue > parseInt(currentMaxPrice)) {
+                        return false;
+                    }
+                    
+                    return true;
+                });
+            }
+            
+            // Display photography or show no results message
+            if (photographyToShow.length === 0) {
+                photographyGrid.innerHTML = `
+                    <div class="no-results">
+                        <h3>No photography services found matching your criteria</h3>
+                        <p>Try adjusting your filters or search terms</p>
+                    </div>
+                `;
+            } else {
+                photographyToShow.forEach(photography => {
+                    const photographyCard = createPhotographyCard(photography);
+                    photographyGrid.appendChild(photographyCard);
+                });
+            }
+        }
+
+        // Create photography card element
+function createPhotographyCard(photography) {
+    const card = document.createElement('div');
+    card.className = 'catering-card';
+    
+    // Create packages HTML
+    let packagesHTML = '';
+    if (photography.packages && photography.packages.length > 0) {
+        packagesHTML = `
+            <div class="packages-section">
+                <div class="packages-title">
+                    Packages Available
+                    <button class="packages-toggle">View Packages</button>
+                </div>
+                <div class="packages-list">
+                    ${photography.packages.map(pkg => `
+                        <div class="package-item">
+                            <div class="package-name">${pkg.name}</div>
+                            <div class="package-price">${pkg.price}</div>
+                            <div class="package-features">
+                                <ul>
+                                    ${pkg.features.map(feature => `<li>${feature}</li>`).join('')}
+                                </ul>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        `;
+    }
+    
+    // Check if service is already shortlisted
+    const isShortlisted = shortlistedServices.some(item => item.id === photography.id);
+    
+    // Check if already booked
+    const existingBooking = bookings.find(booking => booking.id === photography.id);
+    const isBooked = existingBooking && existingBooking.status !== 'cancelled';
+    
+    card.innerHTML = `
+        <div class="catering-image" style="background-image: url('${photography.image}')">
+            ${!photography.image ? 'Image Coming Soon' : ''}
+            <div class="state-badge">${photography.state}</div>
+            <div class="catering-rating">⭐ ${photography.rating}</div>
+            ${isBooked ? `<div class="booking-badge">${existingBooking.status.toUpperCase()}</div>` : ''}
+        </div>
+        <div class="catering-content">
+            <h3 class="catering-name">${photography.name}</h3>
+            <p class="catering-specialty">${photography.specialty}</p>
+            <div class="catering-features">
+                <span class="photography-type-tag">${photography.specialty}</span>
+            </div>
+            <div class="catering-details">
+                <span class="catering-price">${photography.price}</span>
+                <span class="catering-capacity">${photography.experience}</span>
+            </div>
+            ${packagesHTML}
+            <div class="action-buttons">
+                <button class="btn ${isBooked ? 'btn-success' : 'btn-primary'} book-now-btn" 
+                        data-service-id="${photography.id}"
+                        ${isBooked ? 'disabled' : ''}>
+                    ${isBooked ? '✓ ' + existingBooking.status.charAt(0).toUpperCase() + existingBooking.status.slice(1) : 'Book Now'}
+                </button>
+                <button class="btn btn-secondary shortlist-btn ${isShortlisted ? 'added' : ''}" data-service-id="${photography.id}">
+                    ${isShortlisted ? '✓ Shortlisted' : 'Add to Shortlist'}
+                </button>
+            </div>
+            <div class="catering-contact">
+                <div class="catering-phone">${photography.contact.phone}</div>
+                <small>Contact for bookings and portfolio viewing</small>
+            </div>
+        </div>
+    `;
+    
+    // Add toggle functionality for packages
+    const packagesToggle = card.querySelector('.packages-toggle');
+    const packagesList = card.querySelector('.packages-list');
+    
+    if (packagesToggle && packagesList) {
+        packagesToggle.addEventListener('click', () => {
+            packagesList.classList.toggle('show');
+            packagesToggle.textContent = packagesList.classList.contains('show') ? 'Hide Packages' : 'View Packages';
+        });
+    }
+    
+    // Add click event to Book Now button
+    const bookNowBtn = card.querySelector('.book-now-btn');
+    if (!isBooked) {
+        bookNowBtn.addEventListener('click', () => {
+            bookService(photography, bookNowBtn);
+        });
+    }
+    
+    // Add click event to Shortlist button
+    const shortlistBtn = card.querySelector('.shortlist-btn');
+    shortlistBtn.addEventListener('click', () => {
+        toggleShortlist(photography, shortlistBtn);
+    });
+    
+    return card;
+}
+
+        // Book service function
+// Global variables for booking
+let currentBookingPhotography = null;
+let currentBookingButton = null;
+
+// Modified bookService function
+function bookService(photography, button) {
+    currentBookingPhotography = photography;
+    currentBookingButton = button;
+    
+    // Show booking form modal
+    const bookingModal = document.getElementById('bookingModal');
+    bookingModal.classList.add('show');
+    
+    // Set minimum date to today
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('eventDate').min = today;
+    
+    // Pre-fill photography style based on service specialty
+    const photographyStyleSelect = document.getElementById('photographyStyle');
+    const specialty = photography.specialty.toLowerCase();
+    
+    // Map specialties to photography styles
+    const styleMap = {
+        'wedding': 'candid',
+        'candid': 'candid',
+        'outdoor': 'documentary',
+        'pre-wedding': 'portrait',
+        'traditional': 'traditional',
+        'corporate': 'portrait',
+        'fashion': 'fashion',
+        'event': 'documentary'
+    };
+    
+    for (let key in styleMap) {
+        if (specialty.includes(key)) {
+            photographyStyleSelect.value = styleMap[key];
+            break;
+        }
+    }
+    
+    // Pre-fill event type for pre-wedding
+    if (specialty.includes('pre-wedding')) {
+        document.getElementById('eventType').value = 'pre-wedding';
+    }
+}
+
+// New function to handle booking form submission
+function submitBookingForm(formData) {
+    console.log('Submitting booking for photography:', currentBookingPhotography);
+    
+    // Create comprehensive booking object
+    const booking = {
+        id: currentBookingPhotography.id,
+        serviceId: currentBookingPhotography.id,
+        name: currentBookingPhotography.name,
+        serviceType: 'photography',
+        specialty: currentBookingPhotography.specialty,
+        price: currentBookingPhotography.price,
+        image: currentBookingPhotography.image,
+        contact: currentBookingPhotography.contact,
+        state: currentBookingPhotography.state,
+        
+        // Customer details
+        customerName: formData.customerName,
+        customerPhone: formData.customerPhone,
+        customerEmail: formData.customerEmail,
+        
+        // Event details
+        eventType: formData.eventType,
+        eventDate: formData.eventDate,
+        eventTime: formData.eventTime,
+        venueType: formData.venueType,
+        eventAddress: formData.eventAddress,
+        guestCount: formData.guestCount,
+        
+        // Photography specific details
+        photographyDuration: formData.photographyDuration,
+        photographyStyle: formData.photographyStyle,
+        numberOfPhotos: formData.numberOfPhotos,
+        specialShots: formData.specialShots,
+        specialRequirements: formData.specialRequirements,
+        
+        // Booking metadata
+        bookingDate: new Date().toISOString().split('T')[0],
+        bookingTime: new Date().toLocaleTimeString(),
+        status: 'pending',
+        vendor: currentBookingPhotography.name,
+        acceptedAt: null
+    };
+    
+    // Add to bookings
+    bookings.push(booking);
+    localStorage.setItem('photographyBookings', JSON.stringify(bookings));
+    
+    // Update button
+    if (currentBookingButton) {
+        currentBookingButton.textContent = '✓ Pending';
+        currentBookingButton.classList.remove('btn-primary');
+        currentBookingButton.classList.add('btn-success');
+        currentBookingButton.disabled = true;
+    }
+    
+    // Show confirmation
+    showShortlistToast(`Booking request sent to ${currentBookingPhotography.name}! Photographer will review your requirements.`);
+    
+    // Simulate vendor response after 1 minute
+    setTimeout(() => {
+        updateBookingStatus(currentBookingPhotography.id, 'accepted');
+    }, 60000);
+    
+    // Close modal
+    closeBookingModal();
+    
+    // Reset current booking variables
+    currentBookingPhotography = null;
+    currentBookingButton = null;
+}
+
+// Function to close booking modal
+function closeBookingModal() {
+    const bookingModal = document.getElementById('bookingModal');
+    bookingModal.classList.remove('show');
+    document.getElementById('bookingForm').reset();
+}
+
+// Enhanced updateBookingStatus function
+function updateBookingStatus(photographyId, status) {
+    const bookingIndex = bookings.findIndex(booking => booking.id === photographyId);
+    
+    if (bookingIndex !== -1) {
+        bookings[bookingIndex].status = status;
+        bookings[bookingIndex].acceptedAt = new Date().toISOString();
+        localStorage.setItem('photographyBookings', JSON.stringify(bookings));
+        
+        // Update UI if the card is visible
+        const bookButton = document.querySelector(`.book-now-btn[data-service-id="${photographyId}"]`);
+        if (bookButton) {
+            bookButton.textContent = '✓ ' + status.charAt(0).toUpperCase() + status.slice(1);
+            bookButton.classList.remove('btn-primary');
+            bookButton.classList.add('btn-success');
+            
+            // Update badge if exists
+            const badge = bookButton.closest('.catering-card')?.querySelector('.booking-badge');
+            if (badge) {
+                badge.textContent = status.toUpperCase();
+            }
+        }
+        
+        const statusMessage = status === 'accepted' ? 'accepted' : 'rejected';
+        showShortlistToast(`Booking ${statusMessage} for ${bookings[bookingIndex].name}!`);
+        
+        // Add notification
+        if (typeof addNotification === 'function') {
+            addNotification(
+                'Booking ' + statusMessage.charAt(0).toUpperCase() + statusMessage.slice(1), 
+                `Your photography booking with ${bookings[bookingIndex].name} has been ${statusMessage}!`, 
+                status === 'accepted' ? 'success' : 'warning'
+            );
+        }
+    }
+}
+
+function checkPendingBookings() {
+    const now = new Date();
+    bookings.forEach(booking => {
+        if (booking.status === 'pending') {
+            const bookingDate = new Date(booking.bookingDate);
+            const timeDiff = now - bookingDate;
+            
+            // If more than 1 minute has passed, auto-accept
+            if (timeDiff > 60000) {
+                updateBookingStatus(booking.id, 'confirmed');
+            } else {
+                // Set timeout for remaining time
+                const remainingTime = 60000 - timeDiff;
+                setTimeout(() => {
+                    updateBookingStatus(booking.id, 'confirmed');
+                }, remainingTime);
+            }
+        }
+    });
+}
+
+        // Toggle shortlist function
+function toggleShortlist(photography, button) {
+    const index = shortlistedServices.findIndex(item => item.id === photography.id);
+    
+    if (index === -1) {
+        // Add to shortlist
+        shortlistedServices.push(photography);
+        button.textContent = '✓ Shortlisted';
+        button.classList.add('added');
+        showShortlistToast('Photographer added to shortlist!');
+        
+        // Also add to main dashboard shortlist
+        if (typeof addToShortlist === 'function') {
+            addToShortlist({
+                id: photography.id,
+                name: photography.name,
+                type: 'Photography',
+                price: photography.price,
+                vendor: photography.name,
+                addedDate: new Date().toISOString().split('T')[0]
+            });
+        }
+    } else {
+        // Remove from shortlist
+        shortlistedServices.splice(index, 1);
+        button.textContent = 'Add to Shortlist';
+        button.classList.remove('added');
+        showShortlistToast('Photographer removed from shortlist!');
+        
+        // Also remove from main dashboard shortlist if function exists
+        if (typeof removeFromShortlist === 'function') {
+            removeFromShortlist(photography.id);
+        }
+    }
+    
+    // Save to localStorage
+    localStorage.setItem('shortlistedPhotography', JSON.stringify(shortlistedServices));
+}
+
+        // Show shortlist toast notification
+        function showShortlistToast(message) {
+            shortlistToast.textContent = message;
+            shortlistToast.classList.add('show');
+            
+            setTimeout(() => {
+                shortlistToast.classList.remove('show');
+            }, 3000);
+        }
+        // Add to each service page
+document.addEventListener('DOMContentLoaded', function() {
+  // Add event listeners to all "Book Now" buttons
+  document.querySelectorAll('.book-now-btn').forEach(button => {
+    button.addEventListener('click', function() {
+      const serviceCard = this.closest('.service-card');
+      const serviceName = serviceCard.querySelector('.service-title').textContent;
+      const serviceCategory = document.querySelector('h1').textContent.toLowerCase();
+      const servicePrice = serviceCard.querySelector('.service-price')?.textContent || 'Not specified';
+      const serviceVendor = serviceCard.querySelector('.vendor-name')?.textContent || 'Not specified';
+      
+      // Add to bookings
+      if (typeof addBooking === 'function') {
+        addBooking({
+          name: serviceName,
+          category: serviceCategory,
+          price: servicePrice,
+          vendor: serviceVendor
+        });
+      } else {
+        // If not on dashboard, redirect to dashboard
+        window.location.href = 'customer-dashboard.html';
+      }
+    });
+  });
+  
+  // Add event listeners to all "Add to Shortlist" buttons
+  document.querySelectorAll('.add-to-shortlist-btn').forEach(button => {
+    button.addEventListener('click', function() {
+      const serviceCard = this.closest('.service-card');
+      const serviceName = serviceCard.querySelector('.service-title').textContent;
+      const serviceCategory = document.querySelector('h1').textContent.toLowerCase();
+      const servicePrice = serviceCard.querySelector('.service-price')?.textContent || 'Not specified';
+      const serviceVendor = serviceCard.querySelector('.vendor-name')?.textContent || 'Not specified';
+      const serviceRating = serviceCard.querySelector('.service-rating')?.textContent || 'Not rated';
+      
+      // Add to shortlist
+      if (typeof addToShortlist === 'function') {
+        addToShortlist({
+          name: serviceName,
+          category: serviceCategory,
+          price: servicePrice,
+          vendor: serviceVendor,
+          rating: serviceRating
+        });
+      } else {
+        // If not on dashboard, redirect to dashboard
+        window.location.href = 'customer-dashboard.html';
+      }
+    });
+  });
+});
+
+// Add these functions for dashboard integration
+function addToShortlist(itemData) {
+    const shortlist = JSON.parse(localStorage.getItem('shortlist')) || [];
+    
+    // Check if already in shortlist
+    const exists = shortlist.some(item => item.id === itemData.id);
+    if (exists) {
+        showShortlistToast('This item is already in your shortlist!');
+        return;
+    }
+    
+    // Add to shortlist
+    shortlist.push({
+        id: itemData.id,
+        name: itemData.name,
+        type: 'Photography',
+        price: itemData.price,
+        vendor: itemData.name,
+        addedDate: new Date().toISOString().split('T')[0]
+    });
+    
+    localStorage.setItem('shortlist', JSON.stringify(shortlist));
+    showShortlistToast('Added to shortlist successfully!');
+}
+
+function addBooking(bookingData) {
+    const booking = {
+        id: bookingData.id,
+        name: bookingData.name,
+        serviceType: 'photography',
+        price: bookingData.price,
+        vendor: bookingData.name,
+        date: new Date().toISOString().split('T')[0],
+        time: '12:00',
+        status: 'pending',
+        bookingDate: new Date().toISOString().split('T')[0]
+    };
+    
+    const existingBookings = JSON.parse(localStorage.getItem('photographyBookings')) || [];
+    existingBookings.push(booking);
+    localStorage.setItem('photographyBookings', JSON.stringify(existingBookings));
+    
+    showShortlistToast(`Booking request sent for ${bookingData.name}!`);
+}
+
+// ========== DASHBOARD INTEGRATION FUNCTIONS ==========
+
+// Generate unique ID function
+function generateId() {
+    return Date.now().toString(36) + Math.random().toString(36).substr(2);
+}
+
+// Add to shortlist function for dashboard integration
+function addToShortlist(itemData) {
+    const shortlist = JSON.parse(localStorage.getItem('shortlist')) || [];
+    
+    // Check if already in shortlist
+    const exists = shortlist.some(item => item.id === itemData.id);
+    if (exists) {
+        showShortlistToast('This item is already in your shortlist!');
+        return;
+    }
+    
+    // Add to shortlist
+    shortlist.push({
+        id: itemData.id,
+        name: itemData.name,
+        type: itemData.type,
+        price: itemData.price,
+        vendor: itemData.vendor,
+        addedDate: new Date().toISOString().split('T')[0],
+        image: itemData.image,
+        specialty: itemData.specialty
+    });
+    
+    localStorage.setItem('shortlist', JSON.stringify(shortlist));
+    showShortlistToast('Added to shortlist successfully!');
+    
+    // Update dashboard badge count
+    updateDashboardShortlistCount();
+}
+
+// Remove from shortlist function
+function removeFromShortlist(itemId) {
+    const shortlist = JSON.parse(localStorage.getItem('shortlist')) || [];
+    const updatedShortlist = shortlist.filter(item => item.id !== itemId);
+    localStorage.setItem('shortlist', JSON.stringify(updatedShortlist));
+    showShortlistToast('Item removed from shortlist');
+    updateDashboardShortlistCount();
+}
+
+// Update dashboard shortlist count
+function updateDashboardShortlistCount() {
+    const shortlist = JSON.parse(localStorage.getItem('shortlist')) || [];
+    // This will update the badge when user returns to dashboard
+    console.log('Shortlist updated. Total items:', shortlist.length);
+}
+
+// Add booking function for dashboard integration
+function addBooking(bookingData) {
+    const booking = {
+        id: bookingData.id,
+        name: bookingData.name,
+        serviceType: bookingData.serviceType,
+        price: bookingData.price,
+        vendor: bookingData.vendor,
+        date: bookingData.date,
+        time: bookingData.time,
+        status: 'pending',
+        bookingDate: new Date().toISOString().split('T')[0]
+    };
+    
+    const existingBookings = JSON.parse(localStorage.getItem('bookings')) || [];
+    existingBookings.push(booking);
+    localStorage.setItem('bookings', JSON.stringify(existingBookings));
+    
+    showShortlistToast(`Booking request sent for ${bookingData.name}!`);
+}
+
+// Notification function for compatibility
+function addNotification(title, message, type = 'info') {
+    const notifications = JSON.parse(localStorage.getItem('notifications')) || [];
+    const icons = {
+        info: '🔔',
+        success: '✅',
+        warning: '⚠️'
+    };
+    
+    notifications.unshift({
+        id: generateId(),
+        title,
+        message,
+        type,
+        icon: icons[type] || '🔔',
+        timestamp: new Date().toISOString(),
+        read: false
+    });
+    
+    localStorage.setItem('notifications', JSON.stringify(notifications));
+    console.log(`Notification: ${title} - ${message}`);
+}
+        // Initialize the application
+        init();
+    </script>
+</body>
+</html>

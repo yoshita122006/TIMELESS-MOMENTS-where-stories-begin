@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vendor Registration - Timeless Moments</title>
+    <link rel="stylesheet" href="css/vendor-register.css">
+    <style>
+        .services-selection {
+            margin-bottom: 20px;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 10px;
+        }
+        
+        .service-option {
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+        }
+        
+        .service-option:hover {
+            border-color: #4a90e2;
+            transform: translateY(-2px);
+        }
+        
+        .service-option.selected {
+            border-color: #4a90e2;
+            background-color: #f0f8ff;
+            box-shadow: 0 4px 8px rgba(74, 144, 226, 0.2);
+        }
+        
+        .service-icon {
+            font-size: 24px;
+            margin-bottom: 8px;
+            display: block;
+        }
+        
+        .service-name {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .service-description {
+            font-size: 12px;
+            color: #666;
+            line-height: 1.3;
+        }
+        
+        .selected-services {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #4a90e2;
+        }
+        
+        .selected-services h4 {
+            margin: 0 0 10px 0;
+            color: #333;
+        }
+        
+        .selected-services-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .selected-service-tag {
+            background: #4a90e2;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .no-services-selected {
+            color: #666;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Timeless Moments</h1>
+        <p>Vendor Registration</p>
+    </div>
+    
+    <div class="form-container">
+        <h2>Vendor Registration</h2>
+        <form id="vendorRegistrationForm">
+            <fieldset>
+                <legend>Basic Information</legend>
+                <div class="form-group">
+                    <label>Business / Vendor Name</label>
+                    <input type="text" id="businessName" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Phone</label>
+                    <input type="tel" id="phone" placeholder="+91 9876543210" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Business Address</label>
+                    <textarea id="address" rows="3" required></textarea>
+                </div>
+            </fieldset>
+            
+            <fieldset>
+                <legend>Services Offered</legend>
+                <div class="form-group">
+                    <label>Select the services you provide (Choose one or multiple)</label>
+                    <div class="services-selection">
+                        <div class="services-grid" id="servicesGrid">
+                            <!-- Services will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Selected Services Display -->
+                <div class="selected-services">
+                    <h4>Selected Services (<span id="selectedCount">0</span>)</h4>
+                    <div class="selected-services-list" id="selectedServicesList">
+                        <div class="no-services-selected">No services selected yet</div>
+                    </div>
+                </div>
+                
+                <!-- Hidden input to store selected services -->
+                <input type="hidden" id="selectedServices" name="selectedServices">
+            </fieldset>
+            
+            <fieldset>
+                <legend>Business Proofs</legend>
+                <div class="form-group">
+                    <label>Government ID Proof (PAN / Aadhaar)</label>
+                    <input type="text" id="govtId" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Upload Government ID Document</label>
+                    <input type="file" id="govtDocument" accept=".pdf,.jpg,.png" required>
+                </div>
+            </fieldset>
+            
+            <fieldset>
+                <legend>Account Security</legend>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="password" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Confirm Password</label>
+                    <input type="password" id="confirmPassword" required>
+                </div>
+                
+                <div class="password-match" style="display: none;">Passwords match!</div>
+                <div class="password-mismatch" style="display: none;">Passwords do not match!</div>
+                
+                <div class="checkbox-group">
+                    <input type="checkbox" id="agreement" required>
+                    <label>I agree to the Vendor Service Agreement (Quality, Refund & Cancellation Policy)</label>
+                </div>
+            </fieldset>
+            
+            <div class="error-message" id="errorMessage" style="display: none;"></div>
+            
+            <button type="submit" class="submit-btn">Register</button>
+            
+            <div class="links">
+                <a href="vendor-login.html">Already have an account? Login</a>
+            </div>
+        </form>
+    </div>
+    
+    <!-- Popup -->
+    <div class="popup" id="popup">
+        <div class="popup-content">
+            <h2>✅ Registration Successful!</h2>
+            <p>Your vendor account has been created successfully.</p>
+            <button onclick="closePopup()">Close</button>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('vendorRegistrationForm');
+            const password = document.getElementById('password');
+            const confirmPassword = document.getElementById('confirmPassword');
+            const passwordMatch = document.querySelector('.password-match');
+            const passwordMismatch = document.querySelector('.password-mismatch');
+            const errorMessage = document.getElementById('errorMessage');
+            
+            // Available services with icons and descriptions
+            const availableServices = [
+                {
+                    id: 'venue',
+                    name: 'Venue',
+                    icon: '🏛️',
+                    description: 'Event spaces, halls, outdoor venues'
+                },
+                {
+                    id: 'decoration',
+                    name: 'Decoration',
+                    icon: '🎨',
+                    description: 'Floral, theme-based, lighting decor'
+                },
+                {
+                    id: 'catering',
+                    name: 'Catering',
+                    icon: '🍽️',
+                    description: 'Food services, beverages, catering'
+                },
+                {
+                    id: 'photography',
+                    name: 'Photography',
+                    icon: '📷',
+                    description: 'Photo, video, cinematography'
+                },
+                {
+                    id: 'entertainment',
+                    name: 'Entertainment',
+                    icon: '🎵',
+                    description: 'DJ, music, performers, artists'
+                },
+                {
+                    id: 'makeup',
+                    name: 'Makeup & Styling',
+                    icon: '💄',
+                    description: 'Bridal makeup, hair styling'
+                },
+                {
+                    id: 'transportation',
+                    name: 'Transportation',
+                    icon: '🚗',
+                    description: 'Vehicle rentals, guest transport'
+                },
+                {
+                    id: 'planning',
+                    name: 'Event Planning',
+                    icon: '📋',
+                    description: 'Full event coordination'
+                },
+                {
+                    id: 'invitations',
+                    name: 'Invitations',
+                    icon: '✉️',
+                    description: 'Cards, digital invites'
+                },
+                {
+                    id: 'rentals',
+                    name: 'Equipment Rentals',
+                    icon: '🪑',
+                    description: 'Furniture, audio-visual equipment'
+                }
+            ];
+            
+            let selectedServices = [];
+            
+            // Populate services grid
+            function populateServicesGrid() {
+                const servicesGrid = document.getElementById('servicesGrid');
+                servicesGrid.innerHTML = '';
+                
+                availableServices.forEach(service => {
+                    const serviceElement = document.createElement('div');
+                    serviceElement.className = 'service-option';
+                    serviceElement.innerHTML = `
+                        <span class="service-icon">${service.icon}</span>
+                        <div class="service-name">${service.name}</div>
+                        <div class="service-description">${service.description}</div>
+                    `;
+                    
+                    serviceElement.addEventListener('click', () => {
+                        toggleServiceSelection(service);
+                    });
+                    
+                    servicesGrid.appendChild(serviceElement);
+                });
+            }
+            
+            // Toggle service selection
+            function toggleServiceSelection(service) {
+                const index = selectedServices.findIndex(s => s.id === service.id);
+                
+                if (index === -1) {
+                    // Add service
+                    selectedServices.push(service);
+                } else {
+                    // Remove service
+                    selectedServices.splice(index, 1);
+                }
+                
+                updateSelectedServicesDisplay();
+                updateServiceOptionsStyle();
+            }
+            
+            // Update selected services display
+            function updateSelectedServicesDisplay() {
+                const selectedCount = document.getElementById('selectedCount');
+                const selectedServicesList = document.getElementById('selectedServicesList');
+                const hiddenInput = document.getElementById('selectedServices');
+                
+                // Update count
+                selectedCount.textContent = selectedServices.length;
+                
+                // Update list display
+                if (selectedServices.length === 0) {
+                    selectedServicesList.innerHTML = '<div class="no-services-selected">No services selected yet</div>';
+                } else {
+                    selectedServicesList.innerHTML = selectedServices.map(service => 
+                        `<div class="selected-service-tag">
+                            ${service.icon} ${service.name}
+                        </div>`
+                    ).join('');
+                }
+                
+                // Update hidden input with comma-separated service IDs
+                hiddenInput.value = selectedServices.map(service => service.id).join(',');
+            }
+            
+            // Update service options visual style
+            function updateServiceOptionsStyle() {
+                const serviceOptions = document.querySelectorAll('.service-option');
+                
+                serviceOptions.forEach(option => {
+                    const serviceName = option.querySelector('.service-name').textContent;
+                    const service = availableServices.find(s => s.name === serviceName);
+                    
+                    if (service && selectedServices.find(s => s.id === service.id)) {
+                        option.classList.add('selected');
+                    } else {
+                        option.classList.remove('selected');
+                    }
+                });
+            }
+            
+            // Check password match in real-time
+            confirmPassword.addEventListener('input', function() {
+                if (password.value === confirmPassword.value && password.value !== '') {
+                    passwordMatch.style.display = 'block';
+                    passwordMismatch.style.display = 'none';
+                } else if (confirmPassword.value !== '') {
+                    passwordMatch.style.display = 'none';
+                    passwordMismatch.style.display = 'block';
+                } else {
+                    passwordMatch.style.display = 'none';
+                    passwordMismatch.style.display = 'none';
+                }
+            });
+            
+            // Form submission handler
+            form.addEventListener('submit', function(event) {
+                event.preventDefault();
+                
+                // Hide previous error message
+                errorMessage.style.display = 'none';
+                
+                // Get form values
+                const businessName = document.getElementById('businessName').value;
+                const email = document.getElementById('email').value;
+                const phone = document.getElementById('phone').value;
+                const address = document.getElementById('address').value;
+                const govtId = document.getElementById('govtId').value;
+                const passwordValue = document.getElementById('password').value;
+                const confirmPasswordValue = document.getElementById('confirmPassword').value;
+                
+                // Validate form
+                if (passwordValue !== confirmPasswordValue) {
+                    errorMessage.textContent = 'Passwords do not match!';
+                    errorMessage.style.display = 'block';
+                    return;
+                }
+                
+                // Check if at least one service is selected
+                if (selectedServices.length === 0) {
+                    errorMessage.textContent = 'Please select at least one service you provide!';
+                    errorMessage.style.display = 'block';
+                    return;
+                }
+                
+                // Check if all required fields are filled
+                if (!businessName || !email || !phone || !address || !govtId || !passwordValue) {
+                    errorMessage.textContent = 'Please fill in all required fields!';
+                    errorMessage.style.display = 'block';
+                    return;
+                }
+                
+                // Validate email format
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email)) {
+                    errorMessage.textContent = 'Please enter a valid email address!';
+                    errorMessage.style.display = 'block';
+                    return;
+                }
+                
+                // Get existing vendors or create empty array
+                const existingVendors = JSON.parse(localStorage.getItem('vendors')) || [];
+                
+                // Check if vendor already exists with this email
+                const vendorExists = existingVendors.find(vendor => vendor.email === email);
+                if (vendorExists) {
+                    errorMessage.textContent = 'Vendor with this email already exists!';
+                    errorMessage.style.display = 'block';
+                    return;
+                }
+                
+                // Create vendor data object
+                const vendorData = {
+                    id: generateVendorId(),
+                    businessName: businessName,
+                    email: email,
+                    phone: phone,
+                    address: address,
+                    services: selectedServices.map(service => ({
+                        id: service.id,
+                        name: service.name,
+                        icon: service.icon
+                    })),
+                    govtId: govtId,
+                    password: passwordValue,
+                    registrationDate: new Date().toISOString().split('T')[0],
+                    status: 'pending' // pending, approved, rejected
+                };
+                
+                // Add new vendor and save to localStorage
+                existingVendors.push(vendorData);
+                localStorage.setItem('vendors', JSON.stringify(existingVendors));
+                
+                // Set current vendor session
+                localStorage.setItem('currentVendor', JSON.stringify(vendorData));
+                
+                // Show success popup
+                document.getElementById('popup').style.display = 'flex';
+            });
+            
+            function generateVendorId() {
+                return 'V' + Date.now().toString(36) + Math.random().toString(36).substr(2);
+            }
+            
+            // Initialize the services grid
+            populateServicesGrid();
+        });
+        
+        function closePopup() {
+        document.getElementById('popup').style.display = 'none';
+        // Redirect to detailed business information form
+        window.location.href = 'vendor-business-details.html';
+    }
+    </script>
+</body>
+</html>

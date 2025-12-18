@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vendor Feedback Form</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+:root {
+    --pastel-pink: #ffd6e7;
+    --pastel-blue: #d6f0ff;
+    --pastel-purple: #e6d6ff;
+    --light-pink: #ffb6d9;
+    --light-blue: #a8d8ff;
+    --light-purple: #c9b6ff;
+    --medium-pink: #ff85c2;
+    --medium-blue: #7bc8ff;
+    --medium-purple: #a885ff;
+    --dark-text: #5a4a6a;
+    --medium-text: #7a6a8a;
+    --light-text: #9a8aaa;
+    --border-color: #e0d0e0;
+    --shadow: 0 4px 15px rgba(160, 140, 180, 0.15);
+    --card-bg: #ffffff;
+}
+
+body {
+    background: linear-gradient(135deg, var(--pastel-pink) 0%, var(--pastel-blue) 50%, var(--pastel-purple) 100%);
+    color: var(--dark-text);
+    line-height: 1.6;
+    padding: 20px;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 25px;
+    background: var(--card-bg);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    border-left: 5px solid var(--medium-purple);
+    background: linear-gradient(to right, var(--pastel-pink), var(--pastel-blue));
+}
+
+.logo {
+    font-size: 2.8rem;
+    color: var(--medium-purple);
+    margin-bottom: 15px;
+}
+
+h1 {
+    color: var(--dark-text);
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.subtitle {
+    color: var(--medium-text);
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.feedback-form {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: var(--shadow);
+    margin-bottom: 30px;
+    border-top: 1px solid rgba(168, 136, 255, 0.1);
+}
+
+.form-section {
+    margin-bottom: 30px;
+    padding-bottom: 25px;
+    border-bottom: 1px solid #f0e0f0;
+}
+
+.form-section:last-child {
+    border-bottom: none;
+}
+
+h2 {
+    color: var(--medium-purple);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+}
+
+h2 i {
+    font-size: 1.5rem;
+    background: var(--pastel-purple);
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.customer-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--medium-text);
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s;
+    background: #faf5ff;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--medium-purple);
+    box-shadow: 0 0 0 3px rgba(168, 136, 255, 0.2);
+    background: white;
+}
+
+textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.rating-container {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 10px;
+}
+
+.rating-item {
+    flex: 1;
+    text-align: center;
+    padding: 20px 15px;
+    background: #faf5ff;
+    border-radius: 10px;
+    transition: all 0.3s;
+    border: 1px solid #f0e0f0;
+}
+
+.rating-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(160, 140, 180, 0.1);
+}
+
+.rating-stars {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    margin: 15px 0;
+}
+
+.star {
+    color: #e0d0e0;
+    font-size: 1.8rem;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.star.active {
+    color: #ff6b9d;
+}
+
+.rating-label {
+    font-size: 0.95rem;
+    color: var(--medium-text);
+    font-weight: 500;
+}
+
+.checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #faf5ff;
+    padding: 10px 15px;
+    border-radius: 8px;
+    transition: all 0.2s;
+}
+
+.checkbox-item:hover {
+    background: var(--pastel-purple);
+}
+
+.checkbox-item input {
+    width: auto;
+}
+
+.recommendation {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.recommendation-option {
+    flex: 1;
+    text-align: center;
+    padding: 20px 15px;
+    border: 2px solid #f0e0f0;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s;
+    background: #faf5ff;
+}
+
+.recommendation-option:hover {
+    border-color: var(--medium-purple);
+    transform: translateY(-3px);
+}
+
+.recommendation-option.selected {
+    border-color: var(--medium-pink);
+    background-color: rgba(255, 182, 217, 0.1);
+    transform: translateY(-3px);
+}
+
+.recommendation-option i {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+
+.btn {
+    padding: 14px 30px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-primary {
+    background: var(--medium-purple);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: var(--light-purple);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(168, 136, 255, 0.3);
+}
+
+.btn-secondary {
+    background: var(--light-text);
+    color: white;
+}
+
+.btn-secondary:hover {
+    background: var(--medium-text);
+    transform: translateY(-2px);
+}
+
+.feedback-preview {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: var(--shadow);
+    display: none;
+}
+
+.preview-header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #f0e0f0;
+}
+
+.preview-section {
+    margin-bottom: 25px;
+}
+
+.preview-section h3 {
+    color: var(--medium-purple);
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+}
+
+.preview-section h3 i {
+    font-size: 1.3rem;
+    background: var(--pastel-purple);
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.preview-rating {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+    padding: 8px 0;
+}
+
+.rating-value {
+    color: #ff6b9d;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.success-message {
+    text-align: center;
+    padding: 25px;
+    background: var(--medium-pink);
+    color: white;
+    border-radius: 10px;
+    margin-top: 20px;
+    display: none;
+    box-shadow: var(--shadow);
+}
+
+.success-message i {
+    font-size: 3rem;
+    margin-bottom: 15px;
+}
+
+@media (max-width: 768px) {
+    .customer-info {
+        grid-template-columns: 1fr;
+    }
+    
+    .rating-container {
+        flex-direction: column;
+    }
+    
+    .recommendation {
+        flex-direction: column;
+    }
+    
+    .form-actions {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .checkbox-group {
+        flex-direction: column;
+    }
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-comment-dots"></i>
+            </div>
+            <h1>Vendor Feedback Form</h1>
+            <p class="subtitle">Share your experience working with customers to help improve our community</p>
+        </header>
+
+        <div class="feedback-form" id="feedbackForm">
+            <form id="vendorFeedbackForm">
+                <div class="form-section">
+                    <h2><i class="fas fa-user-tie"></i> Customer Information</h2>
+                    <div class="customer-info">
+                        <div class="form-group">
+                            <label for="customerName">Customer Name</label>
+                            <input type="text" id="customerName" name="customerName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="eventDate">Event Date</label>
+                            <input type="date" id="eventDate" name="eventDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="serviceType">Service Type</label>
+                            <select id="serviceType" name="serviceType" required>
+                                <option value="">Select a service</option>
+                                <option value="venue">Venue</option>
+                                <option value="catering">Catering</option>
+                                <option value="photography">Photography</option>
+                                <option value="entertainment">Entertainment</option>
+                                <option value="decoration">Decoration</option>
+                                <option value="makeup">Makeup & Styling</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="bookingId">Booking ID</label>
+                            <input type="text" id="bookingId" name="bookingId" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2><i class="fas fa-star"></i> Customer Rating</h2>
+                    <div class="rating-container">
+                        <div class="rating-item">
+                            <div class="rating-label">Communication</div>
+                            <div class="rating-stars" id="communicationRating">
+                                <span class="star" data-value="1">★</span>
+                                <span class="star" data-value="2">★</span>
+                                <span class="star" data-value="3">★</span>
+                                <span class="star" data-value="4">★</span>
+                                <span class="star" data-value="5">★</span>
+                            </div>
+                            <input type="hidden" id="communicationScore" name="communicationScore" value="0">
+                        </div>
+                        <div class="rating-item">
+                            <div class="rating-label">Punctuality</div>
+                            <div class="rating-stars" id="punctualityRating">
+                                <span class="star" data-value="1">★</span>
+                                <span class="star" data-value="2">★</span>
+                                <span class="star" data-value="3">★</span>
+                                <span class="star" data-value="4">★</span>
+                                <span class="star" data-value="5">★</span>
+                            </div>
+                            <input type="hidden" id="punctualityScore" name="punctualityScore" value="0">
+                        </div>
+                        <div class="rating-item">
+                            <div class="rating-label">Cooperation</div>
+                            <div class="rating-stars" id="cooperationRating">
+                                <span class="star" data-value="1">★</span>
+                                <span class="star" data-value="2">★</span>
+                                <span class="star" data-value="3">★</span>
+                                <span class="star" data-value="4">★</span>
+                                <span class="star" data-value="5">★</span>
+                            </div>
+                            <input type="hidden" id="cooperationScore" name="cooperationScore" value="0">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2><i class="fas fa-edit"></i> Detailed Feedback</h2>
+                    <div class="form-group">
+                        <label for="positiveComments">What did the customer do well?</label>
+                        <textarea id="positiveComments" name="positiveComments" placeholder="Please mention specific positive aspects of working with this customer..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="improvementComments">Areas for improvement</label>
+                        <textarea id="improvementComments" name="improvementComments" placeholder="Any suggestions for how the customer could improve their collaboration with vendors..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Customer Strengths (select all that apply)</label>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="strength1" name="strengths" value="clear_communication">
+                                <label for="strength1">Clear Communication</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="strength2" name="strengths" value="well_organized">
+                                <label for="strength2">Well Organized</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="strength3" name="strengths" value="flexible">
+                                <label for="strength3">Flexible</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="strength4" name="strengths" value="respectful">
+                                <label for="strength4">Respectful</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="strength5" name="strengths" value="prompt_payment">
+                                <label for="strength5">Prompt Payment</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2><i class="fas fa-thumbs-up"></i> Recommendation</h2>
+                    <div class="form-group">
+                        <label>Would you recommend this customer to other vendors?</label>
+                        <div class="recommendation">
+                            <div class="recommendation-option" data-value="highly">
+                                <i class="fas fa-star"></i>
+                                <div>Highly Recommend</div>
+                            </div>
+                            <div class="recommendation-option" data-value="recommend">
+                                <i class="fas fa-thumbs-up"></i>
+                                <div>Recommend</div>
+                            </div>
+                            <div class="recommendation-option" data-value="neutral">
+                                <i class="fas fa-meh"></i>
+                                <div>Neutral</div>
+                            </div>
+                            <div class="recommendation-option" data-value="not_recommend">
+                                <i class="fas fa-thumbs-down"></i>
+                                <div>Not Recommend</div>
+                            </div>
+                        </div>
+                        <input type="hidden" id="recommendationValue" name="recommendationValue" value="">
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="previewBtn">
+                        <i class="fas fa-eye"></i> Preview Feedback
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-paper-plane"></i> Submit Feedback
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div class="feedback-preview" id="feedbackPreview">
+            <div class="preview-header">
+                <h2>Feedback Preview</h2>
+                <p>Review your feedback before submitting</p>
+            </div>
+            
+            <div class="preview-section">
+                <h3><i class="fas fa-user-tie"></i> Customer Information</h3>
+                <p><strong>Name:</strong> <span id="previewCustomerName"></span></p>
+                <p><strong>Event Date:</strong> <span id="previewEventDate"></span></p>
+                <p><strong>Service Type:</strong> <span id="previewServiceType"></span></p>
+                <p><strong>Booking ID:</strong> <span id="previewBookingId"></span></p>
+            </div>
+            
+            <div class="preview-section">
+                <h3><i class="fas fa-star"></i> Customer Rating</h3>
+                <div class="preview-rating">
+                    <span>Communication:</span>
+                    <span class="rating-value" id="previewCommunication"></span>
+                </div>
+                <div class="preview-rating">
+                    <span>Punctuality:</span>
+                    <span class="rating-value" id="previewPunctuality"></span>
+                </div>
+                <div class="preview-rating">
+                    <span>Cooperation:</span>
+                    <span class="rating-value" id="previewCooperation"></span>
+                </div>
+            </div>
+            
+            <div class="preview-section">
+                <h3><i class="fas fa-edit"></i> Detailed Feedback</h3>
+                <p><strong>Positive Aspects:</strong></p>
+                <p id="previewPositive"></p>
+                <p><strong>Areas for Improvement:</strong></p>
+                <p id="previewImprovement"></p>
+                <p><strong>Customer Strengths:</strong></p>
+                <p id="previewStrengths"></p>
+            </div>
+            
+            <div class="preview-section">
+                <h3><i class="fas fa-thumbs-up"></i> Recommendation</h3>
+                <p id="previewRecommendation"></p>
+            </div>
+            
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" id="backToFormBtn">
+                    <i class="fas fa-arrow-left"></i> Back to Form
+                </button>
+                <button type="button" class="btn btn-primary" id="submitFinalBtn">
+                    <i class="fas fa-paper-plane"></i> Submit Feedback
+                </button>
+            </div>
+        </div>
+
+        <div class="success-message" id="successMessage">
+            <i class="fas fa-check-circle"></i>
+            <h3>Feedback Submitted Successfully!</h3>
+            <p>Thank you for sharing your valuable feedback.</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set today's date as default for event date
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('eventDate').value = today;
+            
+            // Initialize star ratings
+            initializeStarRatings();
+            
+            // Initialize recommendation options
+            initializeRecommendationOptions();
+            
+            // Form submission handler
+            document.getElementById('vendorFeedbackForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                showPreview();
+            });
+            
+            // Preview button handler
+            document.getElementById('previewBtn').addEventListener('click', showPreview);
+            
+            // Back to form button handler
+            document.getElementById('backToFormBtn').addEventListener('click', function() {
+                document.getElementById('feedbackForm').style.display = 'block';
+                document.getElementById('feedbackPreview').style.display = 'none';
+            });
+            
+            // Final submit button handler
+            document.getElementById('submitFinalBtn').addEventListener('click', submitFeedback);
+        });
+
+        function initializeStarRatings() {
+            const ratingContainers = document.querySelectorAll('.rating-stars');
+            
+            ratingContainers.forEach(container => {
+                const stars = container.querySelectorAll('.star');
+                const hiddenInput = container.parentElement.querySelector('input[type="hidden"]');
+                
+                stars.forEach(star => {
+                    star.addEventListener('click', function() {
+                        const value = parseInt(this.getAttribute('data-value'));
+                        hiddenInput.value = value;
+                        
+                        // Update star appearance
+                        stars.forEach(s => {
+                            if (parseInt(s.getAttribute('data-value')) <= value) {
+                                s.classList.add('active');
+                            } else {
+                                s.classList.remove('active');
+                            }
+                        });
+                    });
+                });
+            });
+        }
+
+        function initializeRecommendationOptions() {
+            const options = document.querySelectorAll('.recommendation-option');
+            const hiddenInput = document.getElementById('recommendationValue');
+            
+            options.forEach(option => {
+                option.addEventListener('click', function() {
+                    // Remove selected class from all options
+                    options.forEach(opt => opt.classList.remove('selected'));
+                    
+                    // Add selected class to clicked option
+                    this.classList.add('selected');
+                    
+                    // Update hidden input value
+                    hiddenInput.value = this.getAttribute('data-value');
+                });
+            });
+        }
+
+        function showPreview() {
+            // Validate form
+            if (!validateForm()) {
+                alert('Please fill in all required fields and provide ratings.');
+                return;
+            }
+            
+            // Populate preview with form data
+            document.getElementById('previewCustomerName').textContent = 
+                document.getElementById('customerName').value;
+            document.getElementById('previewEventDate').textContent = 
+                formatDate(document.getElementById('eventDate').value);
+            document.getElementById('previewServiceType').textContent = 
+                document.getElementById('serviceType').options[document.getElementById('serviceType').selectedIndex].text;
+            document.getElementById('previewBookingId').textContent = 
+                document.getElementById('bookingId').value;
+            
+            // Ratings
+            document.getElementById('previewCommunication').textContent = 
+                document.getElementById('communicationScore').value + '/5';
+            document.getElementById('previewPunctuality').textContent = 
+                document.getElementById('punctualityScore').value + '/5';
+            document.getElementById('previewCooperation').textContent = 
+                document.getElementById('cooperationScore').value + '/5';
+            
+            // Feedback comments
+            document.getElementById('previewPositive').textContent = 
+                document.getElementById('positiveComments').value || 'Not provided';
+            document.getElementById('previewImprovement').textContent = 
+                document.getElementById('improvementComments').value || 'Not provided';
+            
+            // Strengths
+            const strengthCheckboxes = document.querySelectorAll('input[name="strengths"]:checked');
+            const strengths = Array.from(strengthCheckboxes).map(cb => {
+                const label = document.querySelector(`label[for="${cb.id}"]`);
+                return label.textContent;
+            });
+            document.getElementById('previewStrengths').textContent = 
+                strengths.length > 0 ? strengths.join(', ') : 'Not specified';
+            
+            // Recommendation
+            const recommendationValue = document.getElementById('recommendationValue').value;
+            let recommendationText = '';
+            switch(recommendationValue) {
+                case 'highly':
+                    recommendationText = 'Highly Recommend';
+                    break;
+                case 'recommend':
+                    recommendationText = 'Recommend';
+                    break;
+                case 'neutral':
+                    recommendationText = 'Neutral';
+                    break;
+                case 'not_recommend':
+                    recommendationText = 'Not Recommend';
+                    break;
+                default:
+                    recommendationText = 'Not specified';
+            }
+            document.getElementById('previewRecommendation').textContent = recommendationText;
+            
+            // Show preview and hide form
+            document.getElementById('feedbackForm').style.display = 'none';
+            document.getElementById('feedbackPreview').style.display = 'block';
+        }
+
+        function validateForm() {
+            const customerName = document.getElementById('customerName').value;
+            const eventDate = document.getElementById('eventDate').value;
+            const serviceType = document.getElementById('serviceType').value;
+            const bookingId = document.getElementById('bookingId').value;
+            const communicationScore = document.getElementById('communicationScore').value;
+            const punctualityScore = document.getElementById('punctualityScore').value;
+            const cooperationScore = document.getElementById('cooperationScore').value;
+            const recommendationValue = document.getElementById('recommendationValue').value;
+            
+            if (!customerName || !eventDate || !serviceType || !bookingId) {
+                return false;
+            }
+            
+            if (communicationScore === '0' || punctualityScore === '0' || cooperationScore === '0') {
+                return false;
+            }
+            
+            if (!recommendationValue) {
+                return false;
+            }
+            
+            return true;
+        }
+
+        function formatDate(dateString) {
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            return new Date(dateString).toLocaleDateString(undefined, options);
+        }
+
+        function submitFeedback() {
+            // In a real application, you would send the data to a server here
+            // For this example, we'll just show a success message
+            
+            // Hide preview and show success message
+            document.getElementById('feedbackPreview').style.display = 'none';
+            document.getElementById('successMessage').style.display = 'block';
+            
+            // Reset form after 3 seconds
+            setTimeout(function() {
+                document.getElementById('vendorFeedbackForm').reset();
+                document.getElementById('successMessage').style.display = 'none';
+                document.getElementById('feedbackForm').style.display = 'block';
+                
+                // Reset star ratings
+                document.querySelectorAll('.star').forEach(star => {
+                    star.classList.remove('active');
+                });
+                
+                // Reset recommendation options
+                document.querySelectorAll('.recommendation-option').forEach(option => {
+                    option.classList.remove('selected');
+                });
+                
+                // Reset hidden inputs
+                document.getElementById('communicationScore').value = '0';
+                document.getElementById('punctualityScore').value = '0';
+                document.getElementById('cooperationScore').value = '0';
+                document.getElementById('recommendationValue').value = '';
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Timeless Moments</title>
+    <style>
+        :root {
+            --light-blue: #e1f5fe;
+            --light-pink: #fce4ec;
+            --light-purple: #f3e5f5;
+            --medium-blue: #81d4fa;
+            --medium-pink: #f8bbd9;
+            --medium-purple: #e1bee7;
+            --dark-blue: #0288d1;
+            --dark-pink: #f06292;
+            --dark-purple: #8b5cf6;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--light-blue) 0%, var(--light-pink) 50%, var(--light-purple) 100%);
+            min-height: 100vh;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--medium-blue), var(--medium-pink), var(--medium-purple));
+            padding: 20px 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo h1 {
+            color: white;
+            font-size: 32px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .logo p {
+            color: white;
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 25px;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 15px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        nav ul li a:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 80px 0;
+            background: rgba(255,255,255,0.7);
+            margin: 30px 0;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .hero h2 {
+            font-size: 42px;
+            color: var(--dark-purple);
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 20px;
+            color: #555;
+            max-width: 800px;
+            margin: 0 auto 30px;
+        }
+        
+        /* About Content */
+        .about-content {
+            padding: 60px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            color: var(--dark-purple);
+            font-size: 32px;
+        }
+        
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+        
+        .about-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        
+        .about-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.12);
+        }
+        
+        .about-card h3 {
+            color: var(--dark-blue);
+            margin-bottom: 15px;
+            font-size: 22px;
+        }
+        
+        .about-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        /* Story Section */
+        .story-section {
+            background: white;
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            margin-bottom: 60px;
+        }
+        
+        .story-section h2 {
+            color: var(--dark-purple);
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 28px;
+        }
+        
+        .story-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+        
+        .story-text p {
+            margin-bottom: 20px;
+            color: #555;
+            font-size: 16px;
+        }
+        
+        .story-image {
+            height: 300px;
+            border-radius: 15px;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            position: relative;
+        }
+        
+        .story-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.4);
+            border-radius: 15px;
+        }
+        
+        .story-image span {
+            position: relative;
+            z-index: 1;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        /* Admin Section */
+        .admin-section {
+            background: white;
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            margin-bottom: 60px;
+        }
+        
+        .admin-section h2 {
+            color: var(--dark-purple);
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 28px;
+        }
+        
+        .admin-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+        
+        .admin-text p {
+            margin-bottom: 20px;
+            color: #555;
+            font-size: 16px;
+        }
+        
+        .admin-image {
+            height: 300px;
+            border-radius: 15px;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            position: relative;
+        }
+        
+        .admin-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.4);
+            border-radius: 15px;
+        }
+        
+        .admin-image span {
+            position: relative;
+            z-index: 1;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        /* Customer Experience Section */
+        .customer-section {
+            background: white;
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            margin-bottom: 60px;
+        }
+        
+        .customer-section h2 {
+            color: var(--dark-purple);
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 28px;
+        }
+        
+        .customer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .customer-card {
+            background: var(--light-blue);
+            border-radius: 15px;
+            padding: 25px;
+            transition: all 0.3s ease;
+        }
+        
+        .customer-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .customer-card h3 {
+            color: var(--dark-blue);
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+        
+        .customer-card p {
+            color: #555;
+            line-height: 1.6;
+        }
+        
+        /* Feedback Section */
+        .feedback-section {
+            margin-bottom: 60px;
+        }
+        
+        .feedback-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .feedback-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+        
+        .feedback-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .customer-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .customer-avatar {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--medium-blue), var(--medium-pink));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            margin-right: 15px;
+            font-size: 24px;
+        }
+        
+        .customer-details h4 {
+            color: var(--dark-blue);
+            margin-bottom: 5px;
+        }
+        
+        .customer-details .event {
+            color: var(--dark-purple);
+            font-size: 14px;
+        }
+        
+        .rating {
+            color: #FFD700;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+        
+        .feedback-text {
+            color: #555;
+            font-style: italic;
+            line-height: 1.6;
+        }
+        
+        /* Team Section */
+        .team-section {
+            margin-bottom: 60px;
+        }
+        
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .team-member {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+        
+        .team-member:hover {
+            transform: translateY(-5px);
+        }
+        
+        .member-avatar {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--medium-blue), var(--medium-pink));
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+        }
+        
+        .team-member h3 {
+            color: var(--dark-blue);
+            margin-bottom: 10px;
+        }
+        
+        .team-member .role {
+            color: var(--dark-purple);
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+        
+        /* Stats Section */
+        .stats-section {
+            background: linear-gradient(135deg, var(--medium-blue), var(--medium-pink), var(--medium-purple));
+            padding: 60px 0;
+            border-radius: 20px;
+            color: white;
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+        }
+        
+        .stat-item h3 {
+            font-size: 42px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        
+        .stat-item p {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+        
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, var(--medium-blue), var(--medium-pink), var(--medium-purple));
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            margin-top: 60px;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 20px 0;
+        }
+        
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            opacity: 0.8;
+        }
+        
+        .copyright {
+            margin-top: 20px;
+            opacity: 0.8;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 20px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 5px 10px;
+            }
+            
+            .hero h2 {
+                font-size: 32px;
+            }
+            
+            .story-content, .admin-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .story-image, .admin-image {
+                height: 200px;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <h1>Timeless Moments</h1>
+                    <p>Where Stories Begin – Book All Event Services in One Place</p>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="index (2).html">Home</a></li>
+                        <li><a href="login-form-list-in-homepage.html">Login</a></li>
+                        <li><a href="feedback-form.html">Feedback</a></li>
+                        <li><a href="#about" style="background: rgba(255,255,255,0.2);">About</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <div class="container">
+        <section class="hero">
+            <h2>About Timeless Moments</h2>
+            <p>Discover the story behind our passion for creating unforgettable events and bringing your special moments to life</p>
+        </section>
+    </div>
+
+    <!-- About Content -->
+    <div class="container">
+        <section class="about-content" id="about">
+            <h2 class="section-title">Why Choose Timeless Moments?</h2>
+            <div class="about-grid">
+                <div class="about-card">
+                    <h3>Our Mission</h3>
+                    <p>To simplify event planning by providing a seamless platform that connects customers with the best service providers, ensuring every event becomes a cherished memory.</p>
+                </div>
+                <div class="about-card">
+                    <h3>Our Vision</h3>
+                    <p>To become the most trusted event services platform globally, where every celebration finds its perfect match with quality-assured vendors and services.</p>
+                </div>
+                <div class="about-card">
+                    <h3>Our Values</h3>
+                    <p>Quality, reliability, transparency, and customer satisfaction are at the core of everything we do. We believe in creating partnerships, not just transactions.</p>
+                </div>
+            </div>
+
+            <!-- Story Section -->
+            <div class="story-section">
+                <h2>Our Story</h2>
+                <div class="story-content">
+                    <div class="story-text">
+                        <p>Founded in 2020, Timeless Moments began as a simple idea: to make event planning stress-free and accessible to everyone. Our founders, experienced event planners themselves, recognized the challenges people face when organizing events - from finding reliable vendors to managing multiple service providers.</p>
+                        <p>What started as a small platform connecting local vendors with customers has grown into a comprehensive event services ecosystem. Today, we serve thousands of customers and work with hundreds of verified vendors across multiple cities.</p>
+                        <p>Our journey has been guided by one simple principle: every event, whether big or small, deserves to be perfect. We're committed to making that happen for you.</p>
+                    </div>
+                    <div class="story-image" style="background-image: url('https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80')">
+                        <span>Creating Memorable Events Since 2020</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Admin Section -->
+            <div class="admin-section">
+                <h2>Our Administrative Team</h2>
+                <div class="admin-content">
+                    <div class="admin-text">
+                        <p>Our dedicated administrative team works tirelessly behind the scenes to ensure every aspect of your event planning experience is seamless. From vendor verification to customer support, our admin professionals maintain the highest standards of service quality.</p>
+                        <p>Our admin team is responsible for:</p>
+                        <ul style="margin-left: 20px; margin-bottom: 20px; color: #555;">
+                            <li>Vetting and verifying all service providers</li>
+                            <li>Managing customer inquiries and support</li>
+                            <li>Quality control and service standards</li>
+                            <li>Platform maintenance and improvements</li>
+                            <li>Customer feedback analysis</li>
+                        </ul>
+                        <p>With a 24/7 support system and dedicated account managers, we ensure that your event planning journey is smooth from start to finish.</p>
+                    </div>
+                    <div class="admin-image" style="background-image: url('https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80')">
+                        <span>Professional Admin Support Team</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Customer Experience Section -->
+            <div class="customer-section">
+                <h2>Customer Experience</h2>
+                <div class="customer-grid">
+                    <div class="customer-card">
+                        <h3>Easy Booking Process</h3>
+                        <p>Our user-friendly platform makes booking event services simple and straightforward. Browse, compare, and book with just a few clicks.</p>
+                    </div>
+                    <div class="customer-card">
+                        <h3>Verified Service Providers</h3>
+                        <p>All our vendors undergo a rigorous verification process to ensure quality, reliability, and professional service delivery.</p>
+                    </div>
+                    <div class="customer-card">
+                        <h3>Transparent Pricing</h3>
+                        <p>No hidden costs or surprises. We believe in complete transparency with our pricing and service details.</p>
+                    </div>
+                    <div class="customer-card">
+                        <h3>Dedicated Support</h3>
+                        <p>Our customer support team is available round the clock to assist you with any queries or concerns.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Feedback Section -->
+            <div class="feedback-section">
+                <h2 class="section-title">What Our Customers Say</h2>
+                <div class="feedback-grid">
+                    <div class="feedback-card">
+                        <div class="customer-info">
+                            <div class="customer-avatar">👨‍💼</div>
+                            <div class="customer-details">
+                                <h4>Rajesh Patel</h4>
+                                <div class="event">Wedding Ceremony</div>
+                            </div>
+                        </div>
+                        <div class="rating">★★★★★</div>
+                        <p class="feedback-text">"Timeless Moments made our wedding planning so effortless! The venue and catering services were exceptional. Highly recommended!"</p>
+                    </div>
+                    <div class="feedback-card">
+                        <div class="customer-info">
+                            <div class="customer-avatar">👩‍💼</div>
+                            <div class="customer-details">
+                                <h4>Priya Sharma</h4>
+                                <div class="event">Corporate Event</div>
+                            </div>
+                        </div>
+                        <div class="rating">★★★★★</div>
+                        <p class="feedback-text">"Our company's annual event was a huge success thanks to Timeless Moments. The entertainment and decoration teams were outstanding."</p>
+                    </div>
+                    <div class="feedback-card">
+                        <div class="customer-info">
+                            <div class="customer-avatar">👩‍🎓</div>
+                            <div class="customer-details">
+                                <h4>Anjali Kumar</h4>
+                                <div class="event">Birthday Party</div>
+                            </div>
+                        </div>
+                        <div class="rating">★★★★☆</div>
+                        <p class="feedback-text">"Great platform for event planning! The photography services were amazing, capturing all the special moments perfectly."</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Team Section -->
+            <div class="team-section">
+                <h2 class="section-title">Meet Our Team</h2>
+                <div class="team-grid">
+                    <div class="team-member">
+                        <div class="member-avatar">👩‍💼</div>
+                        <h3>Sarah Davis</h3>
+                        <div class="role">Founder & CEO</div>
+                        <p>15+ years in event management</p>
+                    </div>
+                    <div class="team-member">
+                        <div class="member-avatar">👨‍💼</div>
+                        <h3>Michael Johnson</h3>
+                        <div class="role">Operations Director</div>
+                        <p>Expert in vendor management</p>
+                    </div>
+                    <div class="team-member">
+                        <div class="member-avatar">👩‍💻</div>
+                        <h3>Emily Parker</h3>
+                        <div class="role">Customer Success</div>
+                        <p>Ensuring your satisfaction</p>
+                    </div>
+                    <div class="team-member">
+                        <div class="member-avatar">👨‍💻</div>
+                        <h3>David Rodriguez</h3>
+                        <div class="role">Technology Head</div>
+                        <p>Building seamless experiences</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats Section -->
+            <div class="stats-section">
+                <h2 class="section-title" style="color: white;">Our Impact</h2>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <h3>5000+</h3>
+                        <p>Events Organized</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>200+</h3>
+                        <p>Verified Vendors</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>15+</h3>
+                        <p>Cities Served</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>98%</h3>
+                        <p>Customer Satisfaction</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="logo">
+                <h1>Timeless Moments</h1>
+                <p>Where Stories Begin – Book All Event Services in One Place</p>
+            </div>
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="login form list in homepage.html">Login</a>
+                <a href="feedback form.html">Feedback</a>
+                <a href="#about">About Us</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <div class="copyright">
+                &copy; 2025 Timeless Moments. All rights reserved.
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

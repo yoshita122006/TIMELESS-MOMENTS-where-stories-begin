@@ -1,0 +1,2462 @@
+{
+  "photography": {
+    "Andhra Pradesh": [
+      {
+        "id": 1,
+        "name": "Andhra Pradesh Photography Studio 1",
+        "specialty": "Wedding",
+        "rating": 4.3,
+        "price": "\u20b910000 - \u20b925000",
+        "image": "https://images.unsplash.com/photo-1586083702768-190b0532daed?w=800",
+        "experience": "4 years",
+        "contact": {
+          "phone": "+91 9876543210"
+        }
+      },
+      {
+        "id": 2,
+        "name": "Andhra Pradesh Photography Studio 2",
+        "specialty": "Candid",
+        "rating": 4.4,
+        "price": "\u20b912000 - \u20b928000",
+        "image": "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=800",
+        "experience": "5 years",
+        "contact": {
+          "phone": "+91 9876543211"
+        }
+      },
+      {
+        "id": 3,
+        "name": "Andhra Pradesh Photography Studio 3",
+        "specialty": "Outdoor",
+        "rating": 4.5,
+        "price": "\u20b914000 - \u20b931000",
+        "image": "https://images.unsplash.com/photo-1554048612-b6a482bc67e5?w=800",
+        "experience": "6 years",
+        "contact": {
+          "phone": "+91 9876543212"
+        }
+      },
+      {
+        "id": 4,
+        "name": "Andhra Pradesh Photography Studio 4",
+        "specialty": "Studio",
+        "rating": 4.6,
+        "price": "\u20b916000 - \u20b934000",
+        "image": "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=800",
+        "experience": "7 years",
+        "contact": {
+          "phone": "+91 9876543213"
+        }
+      },
+      {
+        "id": 5,
+        "name": "Andhra Pradesh Photography Studio 5",
+        "specialty": "Traditional",
+        "rating": 4.7,
+        "price": "\u20b918000 - \u20b937000",
+        "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800",
+        "experience": "8 years",
+        "contact": {
+          "phone": "+91 9876543214"
+        }
+      },
+      {
+        "id": 6,
+        "name": "Andhra Pradesh Photography Studio 6",
+        "specialty": "Corporate",
+        "rating": 4.3,
+        "price": "\u20b920000 - \u20b940000",
+        "image": "https://images.unsplash.com/photo-1524250502761-1ac6f2e30d43?w=800",
+        "experience": "9 years",
+        "contact": {
+          "phone": "+91 9876543215"
+        }
+      },
+      {
+        "id": 7,
+        "name": "Andhra Pradesh Photography Studio 7",
+        "specialty": "Fashion",
+        "rating": 4.4,
+        "price": "\u20b922000 - \u20b943000",
+        "image": "https://images.unsplash.com/photo-1493863641943-9b68992a8d07?w=800",
+        "experience": "10 years",
+        "contact": {
+          "phone": "+91 9876543216"
+        }
+      },
+      {
+        "id": 8,
+        "name": "Andhra Pradesh Photography Studio 8",
+        "specialty": "Event",
+        "rating": 4.5,
+        "price": "\u20b924000 - \u20b946000",
+        "image": "https://images.unsplash.com/photo-1551830319-45095980c7c7?w=800",
+        "experience": "11 years",
+        "contact": {
+          "phone": "+91 9876543217"
+        }
+      }
+    ],
+    "Tamil Nadu": [
+      {
+        "id": 9,
+        "name": "Tamil Nadu Photography Studio 1",
+        "specialty": "Wedding",
+        "rating": 4.3,
+        "price": "\u20b910000 - \u20b925000",
+        "image": "https://images.unsplash.com/photo-1586083702768-190b0532daed?w=800",
+        "experience": "4 years",
+        "contact": {
+          "phone": "+91 9876543210"
+        }
+      },
+      {
+        "id": 10,
+        "name": "Tamil Nadu Photography Studio 2",
+        "specialty": "Candid",
+        "rating": 4.4,
+        "price": "\u20b912000 - \u20b928000",
+        "image": "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=800",
+        "experience": "5 years",
+        "contact": {
+          "phone": "+91 9876543211"
+        }
+      },
+      {
+        "id": 11,
+        "name": "Tamil Nadu Photography Studio 3",
+        "specialty": "Outdoor",
+        "rating": 4.5,
+        "price": "\u20b914000 - \u20b931000",
+        "image": "https://images.unsplash.com/photo-1554048612-b6a482bc67e5?w=800",
+        "experience": "6 years",
+        "contact": {
+          "phone": "+91 9876543212"
+        }
+      },
+      {
+        "id": 12,
+        "name": "Tamil Nadu Photography Studio 4",
+        "specialty": "Studio",
+        "rating": 4.6,
+        "price": "\u20b916000 - \u20b934000",
+        "image": "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=800",
+        "experience": "7 years",
+        "contact": {
+          "phone": "+91 9876543213"
+        }
+      },
+      {
+        "id": 13,
+        "name": "Tamil Nadu Photography Studio 5",
+        "specialty": "Traditional",
+        "rating": 4.7,
+        "price": "\u20b918000 - \u20b937000",
+        "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800",
+        "experience": "8 years",
+        "contact": {
+          "phone": "+91 9876543214"
+        }
+      },
+      {
+        "id": 14,
+        "name": "Tamil Nadu Photography Studio 6",
+        "specialty": "Corporate",
+        "rating": 4.3,
+        "price": "\u20b920000 - \u20b940000",
+        "image": "https://images.unsplash.com/photo-1524250502761-1ac6f2e30d43?w=800",
+        "experience": "9 years",
+        "contact": {
+          "phone": "+91 9876543215"
+        }
+      },
+      {
+        "id": 15,
+        "name": "Tamil Nadu Photography Studio 7",
+        "specialty": "Fashion",
+        "rating": 4.4,
+        "price": "\u20b922000 - \u20b943000",
+        "image": "https://images.unsplash.com/photo-1493863641943-9b68992a8d07?w=800",
+        "experience": "10 years",
+        "contact": {
+          "phone": "+91 9876543216"
+        }
+      },
+      {
+        "id": 16,
+        "name": "Tamil Nadu Photography Studio 8",
+        "specialty": "Event",
+        "rating": 4.5,
+        "price": "\u20b924000 - \u20b946000",
+        "image": "https://images.unsplash.com/photo-1551830319-45095980c7c7?w=800",
+        "experience": "11 years",
+        "contact": {
+          "phone": "+91 9876543217"
+        }
+      }
+    ],
+    "Karnataka": [
+      {
+        "id": 17,
+        "name": "Karnataka Photography Studio 1",
+        "specialty": "Wedding",
+        "rating": 4.3,
+        "price": "\u20b910000 - \u20b925000",
+        "image": "https://images.unsplash.com/photo-1586083702768-190b0532daed?w=800",
+        "experience": "4 years",
+        "contact": {
+          "phone": "+91 9876543210"
+        }
+      },
+      {
+        "id": 18,
+        "name": "Karnataka Photography Studio 2",
+        "specialty": "Candid",
+        "rating": 4.4,
+        "price": "\u20b912000 - \u20b928000",
+        "image": "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=800",
+        "experience": "5 years",
+        "contact": {
+          "phone": "+91 9876543211"
+        }
+      },
+      {
+        "id": 19,
+        "name": "Karnataka Photography Studio 3",
+        "specialty": "Outdoor",
+        "rating": 4.5,
+        "price": "\u20b914000 - \u20b931000",
+        "image": "https://images.unsplash.com/photo-1554048612-b6a482bc67e5?w=800",
+        "experience": "6 years",
+        "contact": {
+          "phone": "+91 9876543212"
+        }
+      },
+      {
+        "id": 20,
+        "name": "Karnataka Photography Studio 4",
+        "specialty": "Studio",
+        "rating": 4.6,
+        "price": "\u20b916000 - \u20b934000",
+        "image": "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=800",
+        "experience": "7 years",
+        "contact": {
+          "phone": "+91 9876543213"
+        }
+      },
+      {
+        "id": 21,
+        "name": "Karnataka Photography Studio 5",
+        "specialty": "Traditional",
+        "rating": 4.7,
+        "price": "\u20b918000 - \u20b937000",
+        "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800",
+        "experience": "8 years",
+        "contact": {
+          "phone": "+91 9876543214"
+        }
+      },
+      {
+        "id": 22,
+        "name": "Karnataka Photography Studio 6",
+        "specialty": "Corporate",
+        "rating": 4.3,
+        "price": "\u20b920000 - \u20b940000",
+        "image": "https://images.unsplash.com/photo-1524250502761-1ac6f2e30d43?w=800",
+        "experience": "9 years",
+        "contact": {
+          "phone": "+91 9876543215"
+        }
+      },
+      {
+        "id": 23,
+        "name": "Karnataka Photography Studio 7",
+        "specialty": "Fashion",
+        "rating": 4.4,
+        "price": "\u20b922000 - \u20b943000",
+        "image": "https://images.unsplash.com/photo-1493863641943-9b68992a8d07?w=800",
+        "experience": "10 years",
+        "contact": {
+          "phone": "+91 9876543216"
+        }
+      },
+      {
+        "id": 24,
+        "name": "Karnataka Photography Studio 8",
+        "specialty": "Event",
+        "rating": 4.5,
+        "price": "\u20b924000 - \u20b946000",
+        "image": "https://images.unsplash.com/photo-1551830319-45095980c7c7?w=800",
+        "experience": "11 years",
+        "contact": {
+          "phone": "+91 9876543217"
+        }
+      }
+    ],
+    "Kerala": [
+      {
+        "id": 25,
+        "name": "Kerala Photography Studio 1",
+        "specialty": "Wedding",
+        "rating": 4.3,
+        "price": "\u20b910000 - \u20b925000",
+        "image": "https://images.unsplash.com/photo-1586083702768-190b0532daed?w=800",
+        "experience": "4 years",
+        "contact": {
+          "phone": "+91 9876543210"
+        }
+      },
+      {
+        "id": 26,
+        "name": "Kerala Photography Studio 2",
+        "specialty": "Candid",
+        "rating": 4.4,
+        "price": "\u20b912000 - \u20b928000",
+        "image": "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=800",
+        "experience": "5 years",
+        "contact": {
+          "phone": "+91 9876543211"
+        }
+      },
+      {
+        "id": 27,
+        "name": "Kerala Photography Studio 3",
+        "specialty": "Outdoor",
+        "rating": 4.5,
+        "price": "\u20b914000 - \u20b931000",
+        "image": "https://images.unsplash.com/photo-1554048612-b6a482bc67e5?w=800",
+        "experience": "6 years",
+        "contact": {
+          "phone": "+91 9876543212"
+        }
+      },
+      {
+        "id": 28,
+        "name": "Kerala Photography Studio 4",
+        "specialty": "Studio",
+        "rating": 4.6,
+        "price": "\u20b916000 - \u20b934000",
+        "image": "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=800",
+        "experience": "7 years",
+        "contact": {
+          "phone": "+91 9876543213"
+        }
+      },
+      {
+        "id": 29,
+        "name": "Kerala Photography Studio 5",
+        "specialty": "Traditional",
+        "rating": 4.7,
+        "price": "\u20b918000 - \u20b937000",
+        "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800",
+        "experience": "8 years",
+        "contact": {
+          "phone": "+91 9876543214"
+        }
+      },
+      {
+        "id": 30,
+        "name": "Kerala Photography Studio 6",
+        "specialty": "Corporate",
+        "rating": 4.3,
+        "price": "\u20b920000 - \u20b940000",
+        "image": "https://images.unsplash.com/photo-1524250502761-1ac6f2e30d43?w=800",
+        "experience": "9 years",
+        "contact": {
+          "phone": "+91 9876543215"
+        }
+      },
+      {
+        "id": 31,
+        "name": "Kerala Photography Studio 7",
+        "specialty": "Fashion",
+        "rating": 4.4,
+        "price": "\u20b922000 - \u20b943000",
+        "image": "https://images.unsplash.com/photo-1493863641943-9b68992a8d07?w=800",
+        "experience": "10 years",
+        "contact": {
+          "phone": "+91 9876543216"
+        }
+      },
+      {
+        "id": 32,
+        "name": "Kerala Photography Studio 8",
+        "specialty": "Event",
+        "rating": 4.5,
+        "price": "\u20b924000 - \u20b946000",
+        "image": "https://images.unsplash.com/photo-1551830319-45095980c7c7?w=800",
+        "experience": "11 years",
+        "contact": {
+          "phone": "+91 9876543217"
+        }
+      }
+    ],
+    "Telangana": [
+      {
+        "id": 33,
+        "name": "Telangana Photography Studio 1",
+        "specialty": "Wedding",
+        "rating": 4.3,
+        "price": "\u20b910000 - \u20b925000",
+        "image": "https://images.unsplash.com/photo-1586083702768-190b0532daed?w=800",
+        "experience": "4 years",
+        "contact": {
+          "phone": "+91 9876543210"
+        }
+      },
+      {
+        "id": 34,
+        "name": "Telangana Photography Studio 2",
+        "specialty": "Candid",
+        "rating": 4.4,
+        "price": "\u20b912000 - \u20b928000",
+        "image": "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=800",
+        "experience": "5 years",
+        "contact": {
+          "phone": "+91 9876543211"
+        }
+      },
+      {
+        "id": 35,
+        "name": "Telangana Photography Studio 3",
+        "specialty": "Outdoor",
+        "rating": 4.5,
+        "price": "\u20b914000 - \u20b931000",
+        "image": "https://images.unsplash.com/photo-1554048612-b6a482bc67e5?w=800",
+        "experience": "6 years",
+        "contact": {
+          "phone": "+91 9876543212"
+        }
+      },
+      {
+        "id": 36,
+        "name": "Telangana Photography Studio 4",
+        "specialty": "Studio",
+        "rating": 4.6,
+        "price": "\u20b916000 - \u20b934000",
+        "image": "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=800",
+        "experience": "7 years",
+        "contact": {
+          "phone": "+91 9876543213"
+        }
+      },
+      {
+        "id": 37,
+        "name": "Telangana Photography Studio 5",
+        "specialty": "Traditional",
+        "rating": 4.7,
+        "price": "\u20b918000 - \u20b937000",
+        "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800",
+        "experience": "8 years",
+        "contact": {
+          "phone": "+91 9876543214"
+        }
+      },
+      {
+        "id": 38,
+        "name": "Telangana Photography Studio 6",
+        "specialty": "Corporate",
+        "rating": 4.3,
+        "price": "\u20b920000 - \u20b940000",
+        "image": "https://images.unsplash.com/photo-1524250502761-1ac6f2e30d43?w=800",
+        "experience": "9 years",
+        "contact": {
+          "phone": "+91 9876543215"
+        }
+      },
+      {
+        "id": 39,
+        "name": "Telangana Photography Studio 7",
+        "specialty": "Fashion",
+        "rating": 4.4,
+        "price": "\u20b922000 - \u20b943000",
+        "image": "https://images.unsplash.com/photo-1493863641943-9b68992a8d07?w=800",
+        "experience": "10 years",
+        "contact": {
+          "phone": "+91 9876543216"
+        }
+      },
+      {
+        "id": 40,
+        "name": "Telangana Photography Studio 8",
+        "specialty": "Event",
+        "rating": 4.5,
+        "price": "\u20b924000 - \u20b946000",
+        "image": "https://images.unsplash.com/photo-1551830319-45095980c7c7?w=800",
+        "experience": "11 years",
+        "contact": {
+          "phone": "+91 9876543217"
+        }
+      }
+    ]
+  },
+  "catering": {
+    "Andhra Pradesh": [
+      {
+        "id": 41,
+        "name": "Andhra Pradesh Catering Studio 1",
+        "specialty": "Andhra Meals",
+        "rating": 4.3,
+        "price": "\u20b910000 - \u20b925000",
+        "image": "https://images.unsplash.com/photo-1586083702768-190b0532daed?w=800",
+        "experience": "4 years",
+        "contact": {
+          "phone": "+91 9876543210"
+        }
+      },
+      {
+        "id": 42,
+        "name": "Andhra Pradesh Catering Studio 2",
+        "specialty": "Tamil Cuisine",
+        "rating": 4.4,
+        "price": "\u20b912000 - \u20b928000",
+        "image": "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=800",
+        "experience": "5 years",
+        "contact": {
+          "phone": "+91 9876543211"
+        }
+      },
+      {
+        "id": 43,
+        "name": "Andhra Pradesh Catering Studio 3",
+        "specialty": "Kerala Sadhya",
+        "rating": 4.5,
+        "price": "\u20b914000 - \u20b931000",
+        "image": "https://images.unsplash.com/photo-1554048612-b6a482bc67e5?w=800",
+        "experience": "6 years",
+        "contact": {
+          "phone": "+91 9876543212"
+        }
+      },
+      {
+        "id": 44,
+        "name": "Andhra Pradesh Catering Studio 4",
+        "specialty": "Hyderabadi Biryani",
+        "rating": 4.6,
+        "price": "\u20b916000 - \u20b934000",
+        "image": "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=800",
+        "experience": "7 years",
+        "contact": {
+          "phone": "+91 9876543213"
+        }
+      },
+      {
+        "id": 45,
+        "name": "Andhra Pradesh Catering Studio 5",
+        "specialty": "South Indian Veg",
+        "rating": 4.7,
+        "price": "\u20b918000 - \u20b937000",
+        "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800",
+        "experience": "8 years",
+        "contact": {
+          "phone": "+91 9876543214"
+        }
+      },
+      {
+        "id": 46,
+        "name": "Andhra Pradesh Catering Studio 6",
+        "specialty": "Non-Veg Buffet",
+        "rating": 4.3,
+        "price": "\u20b920000 - \u20b940000",
+        "image": "https://images.unsplash.com/photo-1524250502761-1ac6f2e30d43?w=800",
+        "experience": "9 years",
+        "contact": {
+          "phone": "+91 9876543215"
+        }
+      },
+      {
+        "id": 47,
+        "name": "Andhra Pradesh Catering Studio 7",
+        "specialty": "Seafood",
+        "rating": 4.4,
+        "price": "\u20b922000 - \u20b943000",
+        "image": "https://images.unsplash.com/photo-1493863641943-9b68992a8d07?w=800",
+        "experience": "10 years",
+        "contact": {
+          "phone": "+91 9876543216"
+        }
+      },
+      {
+        "id": 48,
+        "name": "Andhra Pradesh Catering Studio 8",
+        "specialty": "Fusion",
+        "rating": 4.5,
+        "price": "\u20b924000 - \u20b946000",
+        "image": "https://images.unsplash.com/photo-1551830319-45095980c7c7?w=800",
+        "experience": "11 years",
+        "contact": {
+          "phone": "+91 9876543217"
+        }
+      }
+    ],
+    "Tamil Nadu": [
+      {
+        "id": 49,
+        "name": "Tamil Nadu Catering Studio 1",
+        "specialty": "Andhra Meals",
+        "rating": 4.3,
+        "price": "\u20b910000 - \u20b925000",
+        "image": "https://images.unsplash.com/photo-1586083702768-190b0532daed?w=800",
+        "experience": "4 years",
+        "contact": {
+          "phone": "+91 9876543210"
+        }
+      },
+      {
+        "id": 50,
+        "name": "Tamil Nadu Catering Studio 2",
+        "specialty": "Tamil Cuisine",
+        "rating": 4.4,
+        "price": "\u20b912000 - \u20b928000",
+        "image": "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=800",
+        "experience": "5 years",
+        "contact": {
+          "phone": "+91 9876543211"
+        }
+      },
+      {
+        "id": 51,
+        "name": "Tamil Nadu Catering Studio 3",
+        "specialty": "Kerala Sadhya",
+        "rating": 4.5,
+        "price": "\u20b914000 - \u20b931000",
+        "image": "https://images.unsplash.com/photo-1554048612-b6a482bc67e5?w=800",
+        "experience": "6 years",
+        "contact": {
+          "phone": "+91 9876543212"
+        }
+      },
+      {
+        "id": 52,
+        "name": "Tamil Nadu Catering Studio 4",
+        "specialty": "Hyderabadi Biryani",
+        "rating": 4.6,
+        "price": "\u20b916000 - \u20b934000",
+        "image": "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=800",
+        "experience": "7 years",
+        "contact": {
+          "phone": "+91 9876543213"
+        }
+      },
+      {
+        "id": 53,
+        "name": "Tamil Nadu Catering Studio 5",
+        "specialty": "South Indian Veg",
+        "rating": 4.7,
+        "price": "\u20b918000 - \u20b937000",
+        "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800",
+        "experience": "8 years",
+        "contact": {
+          "phone": "+91 9876543214"
+        }
+      },
+      {
+        "id": 54,
+        "name": "Tamil Nadu Catering Studio 6",
+        "specialty": "Non-Veg Buffet",
+        "rating": 4.3,
+        "price": "\u20b920000 - \u20b940000",
+        "image": "https://images.unsplash.com/photo-1524250502761-1ac6f2e30d43?w=800",
+        "experience": "9 years",
+        "contact": {
+          "phone": "+91 9876543215"
+        }
+      },
+      {
+        "id": 55,
+        "name": "Tamil Nadu Catering Studio 7",
+        "specialty": "Seafood",
+        "rating": 4.4,
+        "price": "\u20b922000 - \u20b943000",
+        "image": "https://images.unsplash.com/photo-1493863641943-9b68992a8d07?w=800",
+        "experience": "10 years",
+        "contact": {
+          "phone": "+91 9876543216"
+        }
+      },
+      {
+        "id": 56,
+        "name": "Tamil Nadu Catering Studio 8",
+        "specialty": "Fusion",
+        "rating": 4.5,
+        "price": "\u20b924000 - \u20b946000",
+        "image": "https://images.unsplash.com/photo-1551830319-45095980c7c7?w=800",
+        "experience": "11 years",
+        "contact": {
+          "phone": "+91 9876543217"
+        }
+      }
+    ],
+    "Karnataka": [
+      {
+        "id": 57,
+        "name": "Karnataka Catering Studio 1",
+        "specialty": "Andhra Meals",
+        "rating": 4.3,
+        "price": "\u20b910000 - \u20b925000",
+        "image": "https://images.unsplash.com/photo-1586083702768-190b0532daed?w=800",
+        "experience": "4 years",
+        "contact": {
+          "phone": "+91 9876543210"
+        }
+      },
+      {
+        "id": 58,
+        "name": "Karnataka Catering Studio 2",
+        "specialty": "Tamil Cuisine",
+        "rating": 4.4,
+        "price": "\u20b912000 - \u20b928000",
+        "image": "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=800",
+        "experience": "5 years",
+        "contact": {
+          "phone": "+91 9876543211"
+        }
+      },
+      {
+        "id": 59,
+        "name": "Karnataka Catering Studio 3",
+        "specialty": "Kerala Sadhya",
+        "rating": 4.5,
+        "price": "\u20b914000 - \u20b931000",
+        "image": "https://images.unsplash.com/photo-1554048612-b6a482bc67e5?w=800",
+        "experience": "6 years",
+        "contact": {
+          "phone": "+91 9876543212"
+        }
+      },
+      {
+        "id": 60,
+        "name": "Karnataka Catering Studio 4",
+        "specialty": "Hyderabadi Biryani",
+        "rating": 4.6,
+        "price": "\u20b916000 - \u20b934000",
+        "image": "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=800",
+        "experience": "7 years",
+        "contact": {
+          "phone": "+91 9876543213"
+        }
+      },
+      {
+        "id": 61,
+        "name": "Karnataka Catering Studio 5",
+        "specialty": "South Indian Veg",
+        "rating": 4.7,
+        "price": "\u20b918000 - \u20b937000",
+        "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800",
+        "experience": "8 years",
+        "contact": {
+          "phone": "+91 9876543214"
+        }
+      },
+      {
+        "id": 62,
+        "name": "Karnataka Catering Studio 6",
+        "specialty": "Non-Veg Buffet",
+        "rating": 4.3,
+        "price": "\u20b920000 - \u20b940000",
+        "image": "https://images.unsplash.com/photo-1524250502761-1ac6f2e30d43?w=800",
+        "experience": "9 years",
+        "contact": {
+          "phone": "+91 9876543215"
+        }
+      },
+      {
+        "id": 63,
+        "name": "Karnataka Catering Studio 7",
+        "specialty": "Seafood",
+        "rating": 4.4,
+        "price": "\u20b922000 - \u20b943000",
+        "image": "https://images.unsplash.com/photo-1493863641943-9b68992a8d07?w=800",
+        "experience": "10 years",
+        "contact": {
+          "phone": "+91 9876543216"
+        }
+      },
+      {
+        "id": 64,
+        "name": "Karnataka Catering Studio 8",
+        "specialty": "Fusion",
+        "rating": 4.5,
+        "price": "\u20b924000 - \u20b946000",
+        "image": "https://images.unsplash.com/photo-1551830319-45095980c7c7?w=800",
+        "experience": "11 years",
+        "contact": {
+          "phone": "+91 9876543217"
+        }
+      }
+    ],
+    "Kerala": [
+      {
+        "id": 65,
+        "name": "Kerala Catering Studio 1",
+        "specialty": "Andhra Meals",
+        "rating": 4.3,
+        "price": "\u20b910000 - \u20b925000",
+        "image": "https://images.unsplash.com/photo-1586083702768-190b0532daed?w=800",
+        "experience": "4 years",
+        "contact": {
+          "phone": "+91 9876543210"
+        }
+      },
+      {
+        "id": 66,
+        "name": "Kerala Catering Studio 2",
+        "specialty": "Tamil Cuisine",
+        "rating": 4.4,
+        "price": "\u20b912000 - \u20b928000",
+        "image": "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=800",
+        "experience": "5 years",
+        "contact": {
+          "phone": "+91 9876543211"
+        }
+      },
+      {
+        "id": 67,
+        "name": "Kerala Catering Studio 3",
+        "specialty": "Kerala Sadhya",
+        "rating": 4.5,
+        "price": "\u20b914000 - \u20b931000",
+        "image": "https://images.unsplash.com/photo-1554048612-b6a482bc67e5?w=800",
+        "experience": "6 years",
+        "contact": {
+          "phone": "+91 9876543212"
+        }
+      },
+      {
+        "id": 68,
+        "name": "Kerala Catering Studio 4",
+        "specialty": "Hyderabadi Biryani",
+        "rating": 4.6,
+        "price": "\u20b916000 - \u20b934000",
+        "image": "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=800",
+        "experience": "7 years",
+        "contact": {
+          "phone": "+91 9876543213"
+        }
+      },
+      {
+        "id": 69,
+        "name": "Kerala Catering Studio 5",
+        "specialty": "South Indian Veg",
+        "rating": 4.7,
+        "price": "\u20b918000 - \u20b937000",
+        "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800",
+        "experience": "8 years",
+        "contact": {
+          "phone": "+91 9876543214"
+        }
+      },
+      {
+        "id": 70,
+        "name": "Kerala Catering Studio 6",
+        "specialty": "Non-Veg Buffet",
+        "rating": 4.3,
+        "price": "\u20b920000 - \u20b940000",
+        "image": "https://images.unsplash.com/photo-1524250502761-1ac6f2e30d43?w=800",
+        "experience": "9 years",
+        "contact": {
+          "phone": "+91 9876543215"
+        }
+      },
+      {
+        "id": 71,
+        "name": "Kerala Catering Studio 7",
+        "specialty": "Seafood",
+        "rating": 4.4,
+        "price": "\u20b922000 - \u20b943000",
+        "image": "https://images.unsplash.com/photo-1493863641943-9b68992a8d07?w=800",
+        "experience": "10 years",
+        "contact": {
+          "phone": "+91 9876543216"
+        }
+      },
+      {
+        "id": 72,
+        "name": "Kerala Catering Studio 8",
+        "specialty": "Fusion",
+        "rating": 4.5,
+        "price": "\u20b924000 - \u20b946000",
+        "image": "https://images.unsplash.com/photo-1551830319-45095980c7c7?w=800",
+        "experience": "11 years",
+        "contact": {
+          "phone": "+91 9876543217"
+        }
+      }
+    ],
+    "Telangana": [
+      {
+        "id": 73,
+        "name": "Telangana Catering Studio 1",
+        "specialty": "Andhra Meals",
+        "rating": 4.3,
+        "price": "\u20b910000 - \u20b925000",
+        "image": "https://images.unsplash.com/photo-1586083702768-190b0532daed?w=800",
+        "experience": "4 years",
+        "contact": {
+          "phone": "+91 9876543210"
+        }
+      },
+      {
+        "id": 74,
+        "name": "Telangana Catering Studio 2",
+        "specialty": "Tamil Cuisine",
+        "rating": 4.4,
+        "price": "\u20b912000 - \u20b928000",
+        "image": "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=800",
+        "experience": "5 years",
+        "contact": {
+          "phone": "+91 9876543211"
+        }
+      },
+      {
+        "id": 75,
+        "name": "Telangana Catering Studio 3",
+        "specialty": "Kerala Sadhya",
+        "rating": 4.5,
+        "price": "\u20b914000 - \u20b931000",
+        "image": "https://images.unsplash.com/photo-1554048612-b6a482bc67e5?w=800",
+        "experience": "6 years",
+        "contact": {
+          "phone": "+91 9876543212"
+        }
+      },
+      {
+        "id": 76,
+        "name": "Telangana Catering Studio 4",
+        "specialty": "Hyderabadi Biryani",
+        "rating": 4.6,
+        "price": "\u20b916000 - \u20b934000",
+        "image": "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=800",
+        "experience": "7 years",
+        "contact": {
+          "phone": "+91 9876543213"
+        }
+      },
+      {
+        "id": 77,
+        "name": "Telangana Catering Studio 5",
+        "specialty": "South Indian Veg",
+        "rating": 4.7,
+        "price": "\u20b918000 - \u20b937000",
+        "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800",
+        "experience": "8 years",
+        "contact": {
+          "phone": "+91 9876543214"
+        }
+      },
+      {
+        "id": 78,
+        "name": "Telangana Catering Studio 6",
+        "specialty": "Non-Veg Buffet",
+        "rating": 4.3,
+        "price": "\u20b920000 - \u20b940000",
+        "image": "https://images.unsplash.com/photo-1524250502761-1ac6f2e30d43?w=800",
+        "experience": "9 years",
+        "contact": {
+          "phone": "+91 9876543215"
+        }
+      },
+      {
+        "id": 79,
+        "name": "Telangana Catering Studio 7",
+        "specialty": "Seafood",
+        "rating": 4.4,
+        "price": "\u20b922000 - \u20b943000",
+        "image": "https://images.unsplash.com/photo-1493863641943-9b68992a8d07?w=800",
+        "experience": "10 years",
+        "contact": {
+          "phone": "+91 9876543216"
+        }
+      },
+      {
+        "id": 80,
+        "name": "Telangana Catering Studio 8",
+        "specialty": "Fusion",
+        "rating": 4.5,
+        "price": "\u20b924000 - \u20b946000",
+        "image": "https://images.unsplash.com/photo-1551830319-45095980c7c7?w=800",
+        "experience": "11 years",
+        "contact": {
+          "phone": "+91 9876543217"
+        }
+      }
+    ]
+  },
+  "venues": {
+    "Andhra Pradesh": [
+      {
+        "id": 81,
+        "name": "Andhra Pradesh Venues Studio 1",
+        "specialty": "Convention Hall",
+        "rating": 4.3,
+        "price": "\u20b910000 - \u20b925000",
+        "image": "https://images.unsplash.com/photo-1586083702768-190b0532daed?w=800",
+        "experience": "4 years",
+        "contact": {
+          "phone": "+91 9876543210"
+        }
+      },
+      {
+        "id": 82,
+        "name": "Andhra Pradesh Venues Studio 2",
+        "specialty": "Beach Resort",
+        "rating": 4.4,
+        "price": "\u20b912000 - \u20b928000",
+        "image": "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=800",
+        "experience": "5 years",
+        "contact": {
+          "phone": "+91 9876543211"
+        }
+      },
+      {
+        "id": 83,
+        "name": "Andhra Pradesh Venues Studio 3",
+        "specialty": "Luxury Hotel",
+        "rating": 4.5,
+        "price": "\u20b914000 - \u20b931000",
+        "image": "https://images.unsplash.com/photo-1554048612-b6a482bc67e5?w=800",
+        "experience": "6 years",
+        "contact": {
+          "phone": "+91 9876543212"
+        }
+      },
+      {
+        "id": 84,
+        "name": "Andhra Pradesh Venues Studio 4",
+        "specialty": "Garden Venue",
+        "rating": 4.6,
+        "price": "\u20b916000 - \u20b934000",
+        "image": "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=800",
+        "experience": "7 years",
+        "contact": {
+          "phone": "+91 9876543213"
+        }
+      },
+      {
+        "id": 85,
+        "name": "Andhra Pradesh Venues Studio 5",
+        "specialty": "Temple Hall",
+        "rating": 4.7,
+        "price": "\u20b918000 - \u20b937000",
+        "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800",
+        "experience": "8 years",
+        "contact": {
+          "phone": "+91 9876543214"
+        }
+      },
+      {
+        "id": 86,
+        "name": "Andhra Pradesh Venues Studio 6",
+        "specialty": "Community Hall",
+        "rating": 4.3,
+        "price": "\u20b920000 - \u20b940000",
+        "image": "https://images.unsplash.com/photo-1524250502761-1ac6f2e30d43?w=800",
+        "experience": "9 years",
+        "contact": {
+          "phone": "+91 9876543215"
+        }
+      },
+      {
+        "id": 87,
+        "name": "Andhra Pradesh Venues Studio 7",
+        "specialty": "Outdoor Lawn",
+        "rating": 4.4,
+        "price": "\u20b922000 - \u20b943000",
+        "image": "https://images.unsplash.com/photo-1493863641943-9b68992a8d07?w=800",
+        "experience": "10 years",
+        "contact": {
+          "phone": "+91 9876543216"
+        }
+      },
+      {
+        "id": 88,
+        "name": "Andhra Pradesh Venues Studio 8",
+        "specialty": "Banquet Hall",
+        "rating": 4.5,
+        "price": "\u20b924000 - \u20b946000",
+        "image": "https://images.unsplash.com/photo-1551830319-45095980c7c7?w=800",
+        "experience": "11 years",
+        "contact": {
+          "phone": "+91 9876543217"
+        }
+      }
+    ],
+    "Tamil Nadu": [
+      {
+        "id": 89,
+        "name": "Tamil Nadu Venues Studio 1",
+        "specialty": "Convention Hall",
+        "rating": 4.3,
+        "price": "\u20b910000 - \u20b925000",
+        "image": "https://images.unsplash.com/photo-1586083702768-190b0532daed?w=800",
+        "experience": "4 years",
+        "contact": {
+          "phone": "+91 9876543210"
+        }
+      },
+      {
+        "id": 90,
+        "name": "Tamil Nadu Venues Studio 2",
+        "specialty": "Beach Resort",
+        "rating": 4.4,
+        "price": "\u20b912000 - \u20b928000",
+        "image": "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=800",
+        "experience": "5 years",
+        "contact": {
+          "phone": "+91 9876543211"
+        }
+      },
+      {
+        "id": 91,
+        "name": "Tamil Nadu Venues Studio 3",
+        "specialty": "Luxury Hotel",
+        "rating": 4.5,
+        "price": "\u20b914000 - \u20b931000",
+        "image": "https://images.unsplash.com/photo-1554048612-b6a482bc67e5?w=800",
+        "experience": "6 years",
+        "contact": {
+          "phone": "+91 9876543212"
+        }
+      },
+      {
+        "id": 92,
+        "name": "Tamil Nadu Venues Studio 4",
+        "specialty": "Garden Venue",
+        "rating": 4.6,
+        "price": "\u20b916000 - \u20b934000",
+        "image": "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=800",
+        "experience": "7 years",
+        "contact": {
+          "phone": "+91 9876543213"
+        }
+      },
+      {
+        "id": 93,
+        "name": "Tamil Nadu Venues Studio 5",
+        "specialty": "Temple Hall",
+        "rating": 4.7,
+        "price": "\u20b918000 - \u20b937000",
+        "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800",
+        "experience": "8 years",
+        "contact": {
+          "phone": "+91 9876543214"
+        }
+      },
+      {
+        "id": 94,
+        "name": "Tamil Nadu Venues Studio 6",
+        "specialty": "Community Hall",
+        "rating": 4.3,
+        "price": "\u20b920000 - \u20b940000",
+        "image": "https://images.unsplash.com/photo-1524250502761-1ac6f2e30d43?w=800",
+        "experience": "9 years",
+        "contact": {
+          "phone": "+91 9876543215"
+        }
+      },
+      {
+        "id": 95,
+        "name": "Tamil Nadu Venues Studio 7",
+        "specialty": "Outdoor Lawn",
+        "rating": 4.4,
+        "price": "\u20b922000 - \u20b943000",
+        "image": "https://images.unsplash.com/photo-1493863641943-9b68992a8d07?w=800",
+        "experience": "10 years",
+        "contact": {
+          "phone": "+91 9876543216"
+        }
+      },
+      {
+        "id": 96,
+        "name": "Tamil Nadu Venues Studio 8",
+        "specialty": "Banquet Hall",
+        "rating": 4.5,
+        "price": "\u20b924000 - \u20b946000",
+        "image": "https://images.unsplash.com/photo-1551830319-45095980c7c7?w=800",
+        "experience": "11 years",
+        "contact": {
+          "phone": "+91 9876543217"
+        }
+      }
+    ],
+    "Karnataka": [
+      {
+        "id": 97,
+        "name": "Karnataka Venues Studio 1",
+        "specialty": "Convention Hall",
+        "rating": 4.3,
+        "price": "\u20b910000 - \u20b925000",
+        "image": "https://images.unsplash.com/photo-1586083702768-190b0532daed?w=800",
+        "experience": "4 years",
+        "contact": {
+          "phone": "+91 9876543210"
+        }
+      },
+      {
+        "id": 98,
+        "name": "Karnataka Venues Studio 2",
+        "specialty": "Beach Resort",
+        "rating": 4.4,
+        "price": "\u20b912000 - \u20b928000",
+        "image": "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=800",
+        "experience": "5 years",
+        "contact": {
+          "phone": "+91 9876543211"
+        }
+      },
+      {
+        "id": 99,
+        "name": "Karnataka Venues Studio 3",
+        "specialty": "Luxury Hotel",
+        "rating": 4.5,
+        "price": "\u20b914000 - \u20b931000",
+        "image": "https://images.unsplash.com/photo-1554048612-b6a482bc67e5?w=800",
+        "experience": "6 years",
+        "contact": {
+          "phone": "+91 9876543212"
+        }
+      },
+      {
+        "id": 100,
+        "name": "Karnataka Venues Studio 4",
+        "specialty": "Garden Venue",
+        "rating": 4.6,
+        "price": "\u20b916000 - \u20b934000",
+        "image": "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=800",
+        "experience": "7 years",
+        "contact": {
+          "phone": "+91 9876543213"
+        }
+      },
+      {
+        "id": 101,
+        "name": "Karnataka Venues Studio 5",
+        "specialty": "Temple Hall",
+        "rating": 4.7,
+        "price": "\u20b918000 - \u20b937000",
+        "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800",
+        "experience": "8 years",
+        "contact": {
+          "phone": "+91 9876543214"
+        }
+      },
+      {
+        "id": 102,
+        "name": "Karnataka Venues Studio 6",
+        "specialty": "Community Hall",
+        "rating": 4.3,
+        "price": "\u20b920000 - \u20b940000",
+        "image": "https://images.unsplash.com/photo-1524250502761-1ac6f2e30d43?w=800",
+        "experience": "9 years",
+        "contact": {
+          "phone": "+91 9876543215"
+        }
+      },
+      {
+        "id": 103,
+        "name": "Karnataka Venues Studio 7",
+        "specialty": "Outdoor Lawn",
+        "rating": 4.4,
+        "price": "\u20b922000 - \u20b943000",
+        "image": "https://images.unsplash.com/photo-1493863641943-9b68992a8d07?w=800",
+        "experience": "10 years",
+        "contact": {
+          "phone": "+91 9876543216"
+        }
+      },
+      {
+        "id": 104,
+        "name": "Karnataka Venues Studio 8",
+        "specialty": "Banquet Hall",
+        "rating": 4.5,
+        "price": "\u20b924000 - \u20b946000",
+        "image": "https://images.unsplash.com/photo-1551830319-45095980c7c7?w=800",
+        "experience": "11 years",
+        "contact": {
+          "phone": "+91 9876543217"
+        }
+      }
+    ],
+    "Kerala": [
+      {
+        "id": 105,
+        "name": "Kerala Venues Studio 1",
+        "specialty": "Convention Hall",
+        "rating": 4.3,
+        "price": "\u20b910000 - \u20b925000",
+        "image": "https://images.unsplash.com/photo-1586083702768-190b0532daed?w=800",
+        "experience": "4 years",
+        "contact": {
+          "phone": "+91 9876543210"
+        }
+      },
+      {
+        "id": 106,
+        "name": "Kerala Venues Studio 2",
+        "specialty": "Beach Resort",
+        "rating": 4.4,
+        "price": "\u20b912000 - \u20b928000",
+        "image": "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=800",
+        "experience": "5 years",
+        "contact": {
+          "phone": "+91 9876543211"
+        }
+      },
+      {
+        "id": 107,
+        "name": "Kerala Venues Studio 3",
+        "specialty": "Luxury Hotel",
+        "rating": 4.5,
+        "price": "\u20b914000 - \u20b931000",
+        "image": "https://images.unsplash.com/photo-1554048612-b6a482bc67e5?w=800",
+        "experience": "6 years",
+        "contact": {
+          "phone": "+91 9876543212"
+        }
+      },
+      {
+        "id": 108,
+        "name": "Kerala Venues Studio 4",
+        "specialty": "Garden Venue",
+        "rating": 4.6,
+        "price": "\u20b916000 - \u20b934000",
+        "image": "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=800",
+        "experience": "7 years",
+        "contact": {
+          "phone": "+91 9876543213"
+        }
+      },
+      {
+        "id": 109,
+        "name": "Kerala Venues Studio 5",
+        "specialty": "Temple Hall",
+        "rating": 4.7,
+        "price": "\u20b918000 - \u20b937000",
+        "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800",
+        "experience": "8 years",
+        "contact": {
+          "phone": "+91 9876543214"
+        }
+      },
+      {
+        "id": 110,
+        "name": "Kerala Venues Studio 6",
+        "specialty": "Community Hall",
+        "rating": 4.3,
+        "price": "\u20b920000 - \u20b940000",
+        "image": "https://images.unsplash.com/photo-1524250502761-1ac6f2e30d43?w=800",
+        "experience": "9 years",
+        "contact": {
+          "phone": "+91 9876543215"
+        }
+      },
+      {
+        "id": 111,
+        "name": "Kerala Venues Studio 7",
+        "specialty": "Outdoor Lawn",
+        "rating": 4.4,
+        "price": "\u20b922000 - \u20b943000",
+        "image": "https://images.unsplash.com/photo-1493863641943-9b68992a8d07?w=800",
+        "experience": "10 years",
+        "contact": {
+          "phone": "+91 9876543216"
+        }
+      },
+      {
+        "id": 112,
+        "name": "Kerala Venues Studio 8",
+        "specialty": "Banquet Hall",
+        "rating": 4.5,
+        "price": "\u20b924000 - \u20b946000",
+        "image": "https://images.unsplash.com/photo-1551830319-45095980c7c7?w=800",
+        "experience": "11 years",
+        "contact": {
+          "phone": "+91 9876543217"
+        }
+      }
+    ],
+    "Telangana": [
+      {
+        "id": 113,
+        "name": "Telangana Venues Studio 1",
+        "specialty": "Convention Hall",
+        "rating": 4.3,
+        "price": "\u20b910000 - \u20b925000",
+        "image": "https://images.unsplash.com/photo-1586083702768-190b0532daed?w=800",
+        "experience": "4 years",
+        "contact": {
+          "phone": "+91 9876543210"
+        }
+      },
+      {
+        "id": 114,
+        "name": "Telangana Venues Studio 2",
+        "specialty": "Beach Resort",
+        "rating": 4.4,
+        "price": "\u20b912000 - \u20b928000",
+        "image": "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=800",
+        "experience": "5 years",
+        "contact": {
+          "phone": "+91 9876543211"
+        }
+      },
+      {
+        "id": 115,
+        "name": "Telangana Venues Studio 3",
+        "specialty": "Luxury Hotel",
+        "rating": 4.5,
+        "price": "\u20b914000 - \u20b931000",
+        "image": "https://images.unsplash.com/photo-1554048612-b6a482bc67e5?w=800",
+        "experience": "6 years",
+        "contact": {
+          "phone": "+91 9876543212"
+        }
+      },
+      {
+        "id": 116,
+        "name": "Telangana Venues Studio 4",
+        "specialty": "Garden Venue",
+        "rating": 4.6,
+        "price": "\u20b916000 - \u20b934000",
+        "image": "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=800",
+        "experience": "7 years",
+        "contact": {
+          "phone": "+91 9876543213"
+        }
+      },
+      {
+        "id": 117,
+        "name": "Telangana Venues Studio 5",
+        "specialty": "Temple Hall",
+        "rating": 4.7,
+        "price": "\u20b918000 - \u20b937000",
+        "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800",
+        "experience": "8 years",
+        "contact": {
+          "phone": "+91 9876543214"
+        }
+      },
+      {
+        "id": 118,
+        "name": "Telangana Venues Studio 6",
+        "specialty": "Community Hall",
+        "rating": 4.3,
+        "price": "\u20b920000 - \u20b940000",
+        "image": "https://images.unsplash.com/photo-1524250502761-1ac6f2e30d43?w=800",
+        "experience": "9 years",
+        "contact": {
+          "phone": "+91 9876543215"
+        }
+      },
+      {
+        "id": 119,
+        "name": "Telangana Venues Studio 7",
+        "specialty": "Outdoor Lawn",
+        "rating": 4.4,
+        "price": "\u20b922000 - \u20b943000",
+        "image": "https://images.unsplash.com/photo-1493863641943-9b68992a8d07?w=800",
+        "experience": "10 years",
+        "contact": {
+          "phone": "+91 9876543216"
+        }
+      },
+      {
+        "id": 120,
+        "name": "Telangana Venues Studio 8",
+        "specialty": "Banquet Hall",
+        "rating": 4.5,
+        "price": "\u20b924000 - \u20b946000",
+        "image": "https://images.unsplash.com/photo-1551830319-45095980c7c7?w=800",
+        "experience": "11 years",
+        "contact": {
+          "phone": "+91 9876543217"
+        }
+      }
+    ]
+  },
+  "decoration": {
+    "Andhra Pradesh": [
+      {
+        "id": 121,
+        "name": "Andhra Pradesh Decoration Studio 1",
+        "specialty": "Floral Decor",
+        "rating": 4.3,
+        "price": "\u20b910000 - \u20b925000",
+        "image": "https://images.unsplash.com/photo-1586083702768-190b0532daed?w=800",
+        "experience": "4 years",
+        "contact": {
+          "phone": "+91 9876543210"
+        }
+      },
+      {
+        "id": 122,
+        "name": "Andhra Pradesh Decoration Studio 2",
+        "specialty": "Theme Decor",
+        "rating": 4.4,
+        "price": "\u20b912000 - \u20b928000",
+        "image": "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=800",
+        "experience": "5 years",
+        "contact": {
+          "phone": "+91 9876543211"
+        }
+      },
+      {
+        "id": 123,
+        "name": "Andhra Pradesh Decoration Studio 3",
+        "specialty": "Traditional Decor",
+        "rating": 4.5,
+        "price": "\u20b914000 - \u20b931000",
+        "image": "https://images.unsplash.com/photo-1554048612-b6a482bc67e5?w=800",
+        "experience": "6 years",
+        "contact": {
+          "phone": "+91 9876543212"
+        }
+      },
+      {
+        "id": 124,
+        "name": "Andhra Pradesh Decoration Studio 4",
+        "specialty": "Modern Decor",
+        "rating": 4.6,
+        "price": "\u20b916000 - \u20b934000",
+        "image": "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=800",
+        "experience": "7 years",
+        "contact": {
+          "phone": "+91 9876543213"
+        }
+      },
+      {
+        "id": 125,
+        "name": "Andhra Pradesh Decoration Studio 5",
+        "specialty": "Luxury Decor",
+        "rating": 4.7,
+        "price": "\u20b918000 - \u20b937000",
+        "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800",
+        "experience": "8 years",
+        "contact": {
+          "phone": "+91 9876543214"
+        }
+      },
+      {
+        "id": 126,
+        "name": "Andhra Pradesh Decoration Studio 6",
+        "specialty": "Budget Decor",
+        "rating": 4.3,
+        "price": "\u20b920000 - \u20b940000",
+        "image": "https://images.unsplash.com/photo-1524250502761-1ac6f2e30d43?w=800",
+        "experience": "9 years",
+        "contact": {
+          "phone": "+91 9876543215"
+        }
+      },
+      {
+        "id": 127,
+        "name": "Andhra Pradesh Decoration Studio 7",
+        "specialty": "Fusion Decor",
+        "rating": 4.4,
+        "price": "\u20b922000 - \u20b943000",
+        "image": "https://images.unsplash.com/photo-1493863641943-9b68992a8d07?w=800",
+        "experience": "10 years",
+        "contact": {
+          "phone": "+91 9876543216"
+        }
+      },
+      {
+        "id": 128,
+        "name": "Andhra Pradesh Decoration Studio 8",
+        "specialty": "Stage Decor",
+        "rating": 4.5,
+        "price": "\u20b924000 - \u20b946000",
+        "image": "https://images.unsplash.com/photo-1551830319-45095980c7c7?w=800",
+        "experience": "11 years",
+        "contact": {
+          "phone": "+91 9876543217"
+        }
+      }
+    ],
+    "Tamil Nadu": [
+      {
+        "id": 129,
+        "name": "Tamil Nadu Decoration Studio 1",
+        "specialty": "Floral Decor",
+        "rating": 4.3,
+        "price": "\u20b910000 - \u20b925000",
+        "image": "https://images.unsplash.com/photo-1586083702768-190b0532daed?w=800",
+        "experience": "4 years",
+        "contact": {
+          "phone": "+91 9876543210"
+        }
+      },
+      {
+        "id": 130,
+        "name": "Tamil Nadu Decoration Studio 2",
+        "specialty": "Theme Decor",
+        "rating": 4.4,
+        "price": "\u20b912000 - \u20b928000",
+        "image": "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=800",
+        "experience": "5 years",
+        "contact": {
+          "phone": "+91 9876543211"
+        }
+      },
+      {
+        "id": 131,
+        "name": "Tamil Nadu Decoration Studio 3",
+        "specialty": "Traditional Decor",
+        "rating": 4.5,
+        "price": "\u20b914000 - \u20b931000",
+        "image": "https://images.unsplash.com/photo-1554048612-b6a482bc67e5?w=800",
+        "experience": "6 years",
+        "contact": {
+          "phone": "+91 9876543212"
+        }
+      },
+      {
+        "id": 132,
+        "name": "Tamil Nadu Decoration Studio 4",
+        "specialty": "Modern Decor",
+        "rating": 4.6,
+        "price": "\u20b916000 - \u20b934000",
+        "image": "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=800",
+        "experience": "7 years",
+        "contact": {
+          "phone": "+91 9876543213"
+        }
+      },
+      {
+        "id": 133,
+        "name": "Tamil Nadu Decoration Studio 5",
+        "specialty": "Luxury Decor",
+        "rating": 4.7,
+        "price": "\u20b918000 - \u20b937000",
+        "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800",
+        "experience": "8 years",
+        "contact": {
+          "phone": "+91 9876543214"
+        }
+      },
+      {
+        "id": 134,
+        "name": "Tamil Nadu Decoration Studio 6",
+        "specialty": "Budget Decor",
+        "rating": 4.3,
+        "price": "\u20b920000 - \u20b940000",
+        "image": "https://images.unsplash.com/photo-1524250502761-1ac6f2e30d43?w=800",
+        "experience": "9 years",
+        "contact": {
+          "phone": "+91 9876543215"
+        }
+      },
+      {
+        "id": 135,
+        "name": "Tamil Nadu Decoration Studio 7",
+        "specialty": "Fusion Decor",
+        "rating": 4.4,
+        "price": "\u20b922000 - \u20b943000",
+        "image": "https://images.unsplash.com/photo-1493863641943-9b68992a8d07?w=800",
+        "experience": "10 years",
+        "contact": {
+          "phone": "+91 9876543216"
+        }
+      },
+      {
+        "id": 136,
+        "name": "Tamil Nadu Decoration Studio 8",
+        "specialty": "Stage Decor",
+        "rating": 4.5,
+        "price": "\u20b924000 - \u20b946000",
+        "image": "https://images.unsplash.com/photo-1551830319-45095980c7c7?w=800",
+        "experience": "11 years",
+        "contact": {
+          "phone": "+91 9876543217"
+        }
+      }
+    ],
+    "Karnataka": [
+      {
+        "id": 137,
+        "name": "Karnataka Decoration Studio 1",
+        "specialty": "Floral Decor",
+        "rating": 4.3,
+        "price": "\u20b910000 - \u20b925000",
+        "image": "https://images.unsplash.com/photo-1586083702768-190b0532daed?w=800",
+        "experience": "4 years",
+        "contact": {
+          "phone": "+91 9876543210"
+        }
+      },
+      {
+        "id": 138,
+        "name": "Karnataka Decoration Studio 2",
+        "specialty": "Theme Decor",
+        "rating": 4.4,
+        "price": "\u20b912000 - \u20b928000",
+        "image": "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=800",
+        "experience": "5 years",
+        "contact": {
+          "phone": "+91 9876543211"
+        }
+      },
+      {
+        "id": 139,
+        "name": "Karnataka Decoration Studio 3",
+        "specialty": "Traditional Decor",
+        "rating": 4.5,
+        "price": "\u20b914000 - \u20b931000",
+        "image": "https://images.unsplash.com/photo-1554048612-b6a482bc67e5?w=800",
+        "experience": "6 years",
+        "contact": {
+          "phone": "+91 9876543212"
+        }
+      },
+      {
+        "id": 140,
+        "name": "Karnataka Decoration Studio 4",
+        "specialty": "Modern Decor",
+        "rating": 4.6,
+        "price": "\u20b916000 - \u20b934000",
+        "image": "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=800",
+        "experience": "7 years",
+        "contact": {
+          "phone": "+91 9876543213"
+        }
+      },
+      {
+        "id": 141,
+        "name": "Karnataka Decoration Studio 5",
+        "specialty": "Luxury Decor",
+        "rating": 4.7,
+        "price": "\u20b918000 - \u20b937000",
+        "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800",
+        "experience": "8 years",
+        "contact": {
+          "phone": "+91 9876543214"
+        }
+      },
+      {
+        "id": 142,
+        "name": "Karnataka Decoration Studio 6",
+        "specialty": "Budget Decor",
+        "rating": 4.3,
+        "price": "\u20b920000 - \u20b940000",
+        "image": "https://images.unsplash.com/photo-1524250502761-1ac6f2e30d43?w=800",
+        "experience": "9 years",
+        "contact": {
+          "phone": "+91 9876543215"
+        }
+      },
+      {
+        "id": 143,
+        "name": "Karnataka Decoration Studio 7",
+        "specialty": "Fusion Decor",
+        "rating": 4.4,
+        "price": "\u20b922000 - \u20b943000",
+        "image": "https://images.unsplash.com/photo-1493863641943-9b68992a8d07?w=800",
+        "experience": "10 years",
+        "contact": {
+          "phone": "+91 9876543216"
+        }
+      },
+      {
+        "id": 144,
+        "name": "Karnataka Decoration Studio 8",
+        "specialty": "Stage Decor",
+        "rating": 4.5,
+        "price": "\u20b924000 - \u20b946000",
+        "image": "https://images.unsplash.com/photo-1551830319-45095980c7c7?w=800",
+        "experience": "11 years",
+        "contact": {
+          "phone": "+91 9876543217"
+        }
+      }
+    ],
+    "Kerala": [
+      {
+        "id": 145,
+        "name": "Kerala Decoration Studio 1",
+        "specialty": "Floral Decor",
+        "rating": 4.3,
+        "price": "\u20b910000 - \u20b925000",
+        "image": "https://images.unsplash.com/photo-1586083702768-190b0532daed?w=800",
+        "experience": "4 years",
+        "contact": {
+          "phone": "+91 9876543210"
+        }
+      },
+      {
+        "id": 146,
+        "name": "Kerala Decoration Studio 2",
+        "specialty": "Theme Decor",
+        "rating": 4.4,
+        "price": "\u20b912000 - \u20b928000",
+        "image": "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=800",
+        "experience": "5 years",
+        "contact": {
+          "phone": "+91 9876543211"
+        }
+      },
+      {
+        "id": 147,
+        "name": "Kerala Decoration Studio 3",
+        "specialty": "Traditional Decor",
+        "rating": 4.5,
+        "price": "\u20b914000 - \u20b931000",
+        "image": "https://images.unsplash.com/photo-1554048612-b6a482bc67e5?w=800",
+        "experience": "6 years",
+        "contact": {
+          "phone": "+91 9876543212"
+        }
+      },
+      {
+        "id": 148,
+        "name": "Kerala Decoration Studio 4",
+        "specialty": "Modern Decor",
+        "rating": 4.6,
+        "price": "\u20b916000 - \u20b934000",
+        "image": "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=800",
+        "experience": "7 years",
+        "contact": {
+          "phone": "+91 9876543213"
+        }
+      },
+      {
+        "id": 149,
+        "name": "Kerala Decoration Studio 5",
+        "specialty": "Luxury Decor",
+        "rating": 4.7,
+        "price": "\u20b918000 - \u20b937000",
+        "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800",
+        "experience": "8 years",
+        "contact": {
+          "phone": "+91 9876543214"
+        }
+      },
+      {
+        "id": 150,
+        "name": "Kerala Decoration Studio 6",
+        "specialty": "Budget Decor",
+        "rating": 4.3,
+        "price": "\u20b920000 - \u20b940000",
+        "image": "https://images.unsplash.com/photo-1524250502761-1ac6f2e30d43?w=800",
+        "experience": "9 years",
+        "contact": {
+          "phone": "+91 9876543215"
+        }
+      },
+      {
+        "id": 151,
+        "name": "Kerala Decoration Studio 7",
+        "specialty": "Fusion Decor",
+        "rating": 4.4,
+        "price": "\u20b922000 - \u20b943000",
+        "image": "https://images.unsplash.com/photo-1493863641943-9b68992a8d07?w=800",
+        "experience": "10 years",
+        "contact": {
+          "phone": "+91 9876543216"
+        }
+      },
+      {
+        "id": 152,
+        "name": "Kerala Decoration Studio 8",
+        "specialty": "Stage Decor",
+        "rating": 4.5,
+        "price": "\u20b924000 - \u20b946000",
+        "image": "https://images.unsplash.com/photo-1551830319-45095980c7c7?w=800",
+        "experience": "11 years",
+        "contact": {
+          "phone": "+91 9876543217"
+        }
+      }
+    ],
+    "Telangana": [
+      {
+        "id": 153,
+        "name": "Telangana Decoration Studio 1",
+        "specialty": "Floral Decor",
+        "rating": 4.3,
+        "price": "\u20b910000 - \u20b925000",
+        "image": "https://images.unsplash.com/photo-1586083702768-190b0532daed?w=800",
+        "experience": "4 years",
+        "contact": {
+          "phone": "+91 9876543210"
+        }
+      },
+      {
+        "id": 154,
+        "name": "Telangana Decoration Studio 2",
+        "specialty": "Theme Decor",
+        "rating": 4.4,
+        "price": "\u20b912000 - \u20b928000",
+        "image": "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=800",
+        "experience": "5 years",
+        "contact": {
+          "phone": "+91 9876543211"
+        }
+      },
+      {
+        "id": 155,
+        "name": "Telangana Decoration Studio 3",
+        "specialty": "Traditional Decor",
+        "rating": 4.5,
+        "price": "\u20b914000 - \u20b931000",
+        "image": "https://images.unsplash.com/photo-1554048612-b6a482bc67e5?w=800",
+        "experience": "6 years",
+        "contact": {
+          "phone": "+91 9876543212"
+        }
+      },
+      {
+        "id": 156,
+        "name": "Telangana Decoration Studio 4",
+        "specialty": "Modern Decor",
+        "rating": 4.6,
+        "price": "\u20b916000 - \u20b934000",
+        "image": "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=800",
+        "experience": "7 years",
+        "contact": {
+          "phone": "+91 9876543213"
+        }
+      },
+      {
+        "id": 157,
+        "name": "Telangana Decoration Studio 5",
+        "specialty": "Luxury Decor",
+        "rating": 4.7,
+        "price": "\u20b918000 - \u20b937000",
+        "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800",
+        "experience": "8 years",
+        "contact": {
+          "phone": "+91 9876543214"
+        }
+      },
+      {
+        "id": 158,
+        "name": "Telangana Decoration Studio 6",
+        "specialty": "Budget Decor",
+        "rating": 4.3,
+        "price": "\u20b920000 - \u20b940000",
+        "image": "https://images.unsplash.com/photo-1524250502761-1ac6f2e30d43?w=800",
+        "experience": "9 years",
+        "contact": {
+          "phone": "+91 9876543215"
+        }
+      },
+      {
+        "id": 159,
+        "name": "Telangana Decoration Studio 7",
+        "specialty": "Fusion Decor",
+        "rating": 4.4,
+        "price": "\u20b922000 - \u20b943000",
+        "image": "https://images.unsplash.com/photo-1493863641943-9b68992a8d07?w=800",
+        "experience": "10 years",
+        "contact": {
+          "phone": "+91 9876543216"
+        }
+      },
+      {
+        "id": 160,
+        "name": "Telangana Decoration Studio 8",
+        "specialty": "Stage Decor",
+        "rating": 4.5,
+        "price": "\u20b924000 - \u20b946000",
+        "image": "https://images.unsplash.com/photo-1551830319-45095980c7c7?w=800",
+        "experience": "11 years",
+        "contact": {
+          "phone": "+91 9876543217"
+        }
+      }
+    ]
+  },
+  "entertainment": {
+    "Andhra Pradesh": [
+      {
+        "id": 161,
+        "name": "Andhra Pradesh Entertainment Studio 1",
+        "specialty": "DJ",
+        "rating": 4.3,
+        "price": "\u20b910000 - \u20b925000",
+        "image": "https://images.unsplash.com/photo-1586083702768-190b0532daed?w=800",
+        "experience": "4 years",
+        "contact": {
+          "phone": "+91 9876543210"
+        }
+      },
+      {
+        "id": 162,
+        "name": "Andhra Pradesh Entertainment Studio 2",
+        "specialty": "Dance Group",
+        "rating": 4.4,
+        "price": "\u20b912000 - \u20b928000",
+        "image": "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=800",
+        "experience": "5 years",
+        "contact": {
+          "phone": "+91 9876543211"
+        }
+      },
+      {
+        "id": 163,
+        "name": "Andhra Pradesh Entertainment Studio 3",
+        "specialty": "Live Band",
+        "rating": 4.5,
+        "price": "\u20b914000 - \u20b931000",
+        "image": "https://images.unsplash.com/photo-1554048612-b6a482bc67e5?w=800",
+        "experience": "6 years",
+        "contact": {
+          "phone": "+91 9876543212"
+        }
+      },
+      {
+        "id": 164,
+        "name": "Andhra Pradesh Entertainment Studio 4",
+        "specialty": "Folk Music",
+        "rating": 4.6,
+        "price": "\u20b916000 - \u20b934000",
+        "image": "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=800",
+        "experience": "7 years",
+        "contact": {
+          "phone": "+91 9876543213"
+        }
+      },
+      {
+        "id": 165,
+        "name": "Andhra Pradesh Entertainment Studio 5",
+        "specialty": "Classical Music",
+        "rating": 4.7,
+        "price": "\u20b918000 - \u20b937000",
+        "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800",
+        "experience": "8 years",
+        "contact": {
+          "phone": "+91 9876543214"
+        }
+      },
+      {
+        "id": 166,
+        "name": "Andhra Pradesh Entertainment Studio 6",
+        "specialty": "Comedian",
+        "rating": 4.3,
+        "price": "\u20b920000 - \u20b940000",
+        "image": "https://images.unsplash.com/photo-1524250502761-1ac6f2e30d43?w=800",
+        "experience": "9 years",
+        "contact": {
+          "phone": "+91 9876543215"
+        }
+      },
+      {
+        "id": 167,
+        "name": "Andhra Pradesh Entertainment Studio 7",
+        "specialty": "Anchor",
+        "rating": 4.4,
+        "price": "\u20b922000 - \u20b943000",
+        "image": "https://images.unsplash.com/photo-1493863641943-9b68992a8d07?w=800",
+        "experience": "10 years",
+        "contact": {
+          "phone": "+91 9876543216"
+        }
+      },
+      {
+        "id": 168,
+        "name": "Andhra Pradesh Entertainment Studio 8",
+        "specialty": "Magic Show",
+        "rating": 4.5,
+        "price": "\u20b924000 - \u20b946000",
+        "image": "https://images.unsplash.com/photo-1551830319-45095980c7c7?w=800",
+        "experience": "11 years",
+        "contact": {
+          "phone": "+91 9876543217"
+        }
+      }
+    ],
+    "Tamil Nadu": [
+      {
+        "id": 169,
+        "name": "Tamil Nadu Entertainment Studio 1",
+        "specialty": "DJ",
+        "rating": 4.3,
+        "price": "\u20b910000 - \u20b925000",
+        "image": "https://images.unsplash.com/photo-1586083702768-190b0532daed?w=800",
+        "experience": "4 years",
+        "contact": {
+          "phone": "+91 9876543210"
+        }
+      },
+      {
+        "id": 170,
+        "name": "Tamil Nadu Entertainment Studio 2",
+        "specialty": "Dance Group",
+        "rating": 4.4,
+        "price": "\u20b912000 - \u20b928000",
+        "image": "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=800",
+        "experience": "5 years",
+        "contact": {
+          "phone": "+91 9876543211"
+        }
+      },
+      {
+        "id": 171,
+        "name": "Tamil Nadu Entertainment Studio 3",
+        "specialty": "Live Band",
+        "rating": 4.5,
+        "price": "\u20b914000 - \u20b931000",
+        "image": "https://images.unsplash.com/photo-1554048612-b6a482bc67e5?w=800",
+        "experience": "6 years",
+        "contact": {
+          "phone": "+91 9876543212"
+        }
+      },
+      {
+        "id": 172,
+        "name": "Tamil Nadu Entertainment Studio 4",
+        "specialty": "Folk Music",
+        "rating": 4.6,
+        "price": "\u20b916000 - \u20b934000",
+        "image": "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=800",
+        "experience": "7 years",
+        "contact": {
+          "phone": "+91 9876543213"
+        }
+      },
+      {
+        "id": 173,
+        "name": "Tamil Nadu Entertainment Studio 5",
+        "specialty": "Classical Music",
+        "rating": 4.7,
+        "price": "\u20b918000 - \u20b937000",
+        "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800",
+        "experience": "8 years",
+        "contact": {
+          "phone": "+91 9876543214"
+        }
+      },
+      {
+        "id": 174,
+        "name": "Tamil Nadu Entertainment Studio 6",
+        "specialty": "Comedian",
+        "rating": 4.3,
+        "price": "\u20b920000 - \u20b940000",
+        "image": "https://images.unsplash.com/photo-1524250502761-1ac6f2e30d43?w=800",
+        "experience": "9 years",
+        "contact": {
+          "phone": "+91 9876543215"
+        }
+      },
+      {
+        "id": 175,
+        "name": "Tamil Nadu Entertainment Studio 7",
+        "specialty": "Anchor",
+        "rating": 4.4,
+        "price": "\u20b922000 - \u20b943000",
+        "image": "https://images.unsplash.com/photo-1493863641943-9b68992a8d07?w=800",
+        "experience": "10 years",
+        "contact": {
+          "phone": "+91 9876543216"
+        }
+      },
+      {
+        "id": 176,
+        "name": "Tamil Nadu Entertainment Studio 8",
+        "specialty": "Magic Show",
+        "rating": 4.5,
+        "price": "\u20b924000 - \u20b946000",
+        "image": "https://images.unsplash.com/photo-1551830319-45095980c7c7?w=800",
+        "experience": "11 years",
+        "contact": {
+          "phone": "+91 9876543217"
+        }
+      }
+    ],
+    "Karnataka": [
+      {
+        "id": 177,
+        "name": "Karnataka Entertainment Studio 1",
+        "specialty": "DJ",
+        "rating": 4.3,
+        "price": "\u20b910000 - \u20b925000",
+        "image": "https://images.unsplash.com/photo-1586083702768-190b0532daed?w=800",
+        "experience": "4 years",
+        "contact": {
+          "phone": "+91 9876543210"
+        }
+      },
+      {
+        "id": 178,
+        "name": "Karnataka Entertainment Studio 2",
+        "specialty": "Dance Group",
+        "rating": 4.4,
+        "price": "\u20b912000 - \u20b928000",
+        "image": "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=800",
+        "experience": "5 years",
+        "contact": {
+          "phone": "+91 9876543211"
+        }
+      },
+      {
+        "id": 179,
+        "name": "Karnataka Entertainment Studio 3",
+        "specialty": "Live Band",
+        "rating": 4.5,
+        "price": "\u20b914000 - \u20b931000",
+        "image": "https://images.unsplash.com/photo-1554048612-b6a482bc67e5?w=800",
+        "experience": "6 years",
+        "contact": {
+          "phone": "+91 9876543212"
+        }
+      },
+      {
+        "id": 180,
+        "name": "Karnataka Entertainment Studio 4",
+        "specialty": "Folk Music",
+        "rating": 4.6,
+        "price": "\u20b916000 - \u20b934000",
+        "image": "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=800",
+        "experience": "7 years",
+        "contact": {
+          "phone": "+91 9876543213"
+        }
+      },
+      {
+        "id": 181,
+        "name": "Karnataka Entertainment Studio 5",
+        "specialty": "Classical Music",
+        "rating": 4.7,
+        "price": "\u20b918000 - \u20b937000",
+        "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800",
+        "experience": "8 years",
+        "contact": {
+          "phone": "+91 9876543214"
+        }
+      },
+      {
+        "id": 182,
+        "name": "Karnataka Entertainment Studio 6",
+        "specialty": "Comedian",
+        "rating": 4.3,
+        "price": "\u20b920000 - \u20b940000",
+        "image": "https://images.unsplash.com/photo-1524250502761-1ac6f2e30d43?w=800",
+        "experience": "9 years",
+        "contact": {
+          "phone": "+91 9876543215"
+        }
+      },
+      {
+        "id": 183,
+        "name": "Karnataka Entertainment Studio 7",
+        "specialty": "Anchor",
+        "rating": 4.4,
+        "price": "\u20b922000 - \u20b943000",
+        "image": "https://images.unsplash.com/photo-1493863641943-9b68992a8d07?w=800",
+        "experience": "10 years",
+        "contact": {
+          "phone": "+91 9876543216"
+        }
+      },
+      {
+        "id": 184,
+        "name": "Karnataka Entertainment Studio 8",
+        "specialty": "Magic Show",
+        "rating": 4.5,
+        "price": "\u20b924000 - \u20b946000",
+        "image": "https://images.unsplash.com/photo-1551830319-45095980c7c7?w=800",
+        "experience": "11 years",
+        "contact": {
+          "phone": "+91 9876543217"
+        }
+      }
+    ],
+    "Kerala": [
+      {
+        "id": 185,
+        "name": "Kerala Entertainment Studio 1",
+        "specialty": "DJ",
+        "rating": 4.3,
+        "price": "\u20b910000 - \u20b925000",
+        "image": "https://images.unsplash.com/photo-1586083702768-190b0532daed?w=800",
+        "experience": "4 years",
+        "contact": {
+          "phone": "+91 9876543210"
+        }
+      },
+      {
+        "id": 186,
+        "name": "Kerala Entertainment Studio 2",
+        "specialty": "Dance Group",
+        "rating": 4.4,
+        "price": "\u20b912000 - \u20b928000",
+        "image": "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=800",
+        "experience": "5 years",
+        "contact": {
+          "phone": "+91 9876543211"
+        }
+      },
+      {
+        "id": 187,
+        "name": "Kerala Entertainment Studio 3",
+        "specialty": "Live Band",
+        "rating": 4.5,
+        "price": "\u20b914000 - \u20b931000",
+        "image": "https://images.unsplash.com/photo-1554048612-b6a482bc67e5?w=800",
+        "experience": "6 years",
+        "contact": {
+          "phone": "+91 9876543212"
+        }
+      },
+      {
+        "id": 188,
+        "name": "Kerala Entertainment Studio 4",
+        "specialty": "Folk Music",
+        "rating": 4.6,
+        "price": "\u20b916000 - \u20b934000",
+        "image": "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=800",
+        "experience": "7 years",
+        "contact": {
+          "phone": "+91 9876543213"
+        }
+      },
+      {
+        "id": 189,
+        "name": "Kerala Entertainment Studio 5",
+        "specialty": "Classical Music",
+        "rating": 4.7,
+        "price": "\u20b918000 - \u20b937000",
+        "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800",
+        "experience": "8 years",
+        "contact": {
+          "phone": "+91 9876543214"
+        }
+      },
+      {
+        "id": 190,
+        "name": "Kerala Entertainment Studio 6",
+        "specialty": "Comedian",
+        "rating": 4.3,
+        "price": "\u20b920000 - \u20b940000",
+        "image": "https://images.unsplash.com/photo-1524250502761-1ac6f2e30d43?w=800",
+        "experience": "9 years",
+        "contact": {
+          "phone": "+91 9876543215"
+        }
+      },
+      {
+        "id": 191,
+        "name": "Kerala Entertainment Studio 7",
+        "specialty": "Anchor",
+        "rating": 4.4,
+        "price": "\u20b922000 - \u20b943000",
+        "image": "https://images.unsplash.com/photo-1493863641943-9b68992a8d07?w=800",
+        "experience": "10 years",
+        "contact": {
+          "phone": "+91 9876543216"
+        }
+      },
+      {
+        "id": 192,
+        "name": "Kerala Entertainment Studio 8",
+        "specialty": "Magic Show",
+        "rating": 4.5,
+        "price": "\u20b924000 - \u20b946000",
+        "image": "https://images.unsplash.com/photo-1551830319-45095980c7c7?w=800",
+        "experience": "11 years",
+        "contact": {
+          "phone": "+91 9876543217"
+        }
+      }
+    ],
+    "Telangana": [
+      {
+        "id": 193,
+        "name": "Telangana Entertainment Studio 1",
+        "specialty": "DJ",
+        "rating": 4.3,
+        "price": "\u20b910000 - \u20b925000",
+        "image": "https://images.unsplash.com/photo-1586083702768-190b0532daed?w=800",
+        "experience": "4 years",
+        "contact": {
+          "phone": "+91 9876543210"
+        }
+      },
+      {
+        "id": 194,
+        "name": "Telangana Entertainment Studio 2",
+        "specialty": "Dance Group",
+        "rating": 4.4,
+        "price": "\u20b912000 - \u20b928000",
+        "image": "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=800",
+        "experience": "5 years",
+        "contact": {
+          "phone": "+91 9876543211"
+        }
+      },
+      {
+        "id": 195,
+        "name": "Telangana Entertainment Studio 3",
+        "specialty": "Live Band",
+        "rating": 4.5,
+        "price": "\u20b914000 - \u20b931000",
+        "image": "https://images.unsplash.com/photo-1554048612-b6a482bc67e5?w=800",
+        "experience": "6 years",
+        "contact": {
+          "phone": "+91 9876543212"
+        }
+      },
+      {
+        "id": 196,
+        "name": "Telangana Entertainment Studio 4",
+        "specialty": "Folk Music",
+        "rating": 4.6,
+        "price": "\u20b916000 - \u20b934000",
+        "image": "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=800",
+        "experience": "7 years",
+        "contact": {
+          "phone": "+91 9876543213"
+        }
+      },
+      {
+        "id": 197,
+        "name": "Telangana Entertainment Studio 5",
+        "specialty": "Classical Music",
+        "rating": 4.7,
+        "price": "\u20b918000 - \u20b937000",
+        "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800",
+        "experience": "8 years",
+        "contact": {
+          "phone": "+91 9876543214"
+        }
+      },
+      {
+        "id": 198,
+        "name": "Telangana Entertainment Studio 6",
+        "specialty": "Comedian",
+        "rating": 4.3,
+        "price": "\u20b920000 - \u20b940000",
+        "image": "https://images.unsplash.com/photo-1524250502761-1ac6f2e30d43?w=800",
+        "experience": "9 years",
+        "contact": {
+          "phone": "+91 9876543215"
+        }
+      },
+      {
+        "id": 199,
+        "name": "Telangana Entertainment Studio 7",
+        "specialty": "Anchor",
+        "rating": 4.4,
+        "price": "\u20b922000 - \u20b943000",
+        "image": "https://images.unsplash.com/photo-1493863641943-9b68992a8d07?w=800",
+        "experience": "10 years",
+        "contact": {
+          "phone": "+91 9876543216"
+        }
+      },
+      {
+        "id": 200,
+        "name": "Telangana Entertainment Studio 8",
+        "specialty": "Magic Show",
+        "rating": 4.5,
+        "price": "\u20b924000 - \u20b946000",
+        "image": "https://images.unsplash.com/photo-1551830319-45095980c7c7?w=800",
+        "experience": "11 years",
+        "contact": {
+          "phone": "+91 9876543217"
+        }
+      }
+    ]
+  }
+}

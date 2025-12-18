@@ -1,0 +1,3234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catering Services - Timeless Moments</title>
+    <link rel="stylesheet" href="common.css">
+    <style>
+        /* Additional specific styles for catering service if needed */
+        .shortlist-btn.added {
+            background: var(--success-green);
+            color: white;
+        }
+        
+        .shortlist-btn.added:hover {
+            background: #45a049;
+        }
+        /* Booking Modal Styles */
+.booking-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.booking-modal.show {
+    display: flex;
+}
+
+.booking-form-container {
+    background: white;
+    border-radius: 12px;
+    padding: 0;
+    width: 90%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.booking-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 25px;
+    border-bottom: 1px solid #eee;
+    background: var(--primary-color);
+    color: white;
+    border-radius: 12px 12px 0 0;
+}
+
+.booking-header h3 {
+    margin: 0;
+    font-size: 1.3rem;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#bookingForm {
+    padding: 25px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #333;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #e1e1e1;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: border-color 0.3s;
+    box-sizing: border-box;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+.form-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.form-actions .btn {
+    flex: 1;
+    padding: 12px;
+}
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Timeless Moments</h1>
+        <p>Find the Perfect Catering Service for Your Special Day</p>
+    </div>
+    
+    <div class="controls-container">
+        <div class="search-box">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="searchInput" placeholder="Search catering services by name, cuisine, or location...">
+        </div>
+        
+        <div class="filters">
+            <div class="filter-group">
+                <label for="stateFilter">State</label>
+                <select id="stateFilter">
+                    <option value="all">All States</option>
+                    <option value="Andhra Pradesh">Andhra Pradesh</option>
+                    <option value="Telangana">Telangana</option>
+                    <option value="Karnataka">Karnataka</option>
+                    <option value="Kerala">Kerala</option>
+                    <option value="Tamil Nadu">Tamil Nadu</option>
+                </select>
+            </div>
+            
+            <div class="filter-group">
+                <label for="cuisineTypeFilter">Cuisine Type</label>
+                <select id="cuisineTypeFilter">
+                    <option value="all">All Types</option>
+                    <option value="Traditional Andhra Cuisine">Traditional Andhra</option>
+                    <option value="Seafood & Coastal Cuisine">Seafood & Coastal</option>
+                    <option value="Luxury Andhra Meals">Luxury Andhra</option>
+                    <option value="Pure Vegetarian Andhra Food">Vegetarian Andhra</option>
+                    <option value="Authentic Chettinad Cuisine">Chettinad</option>
+                    <option value="Traditional Tamil Cuisine">Traditional Tamil</option>
+                    <option value="Coastal Karnataka Cuisine">Coastal Karnataka</option>
+                    <option value="Traditional Kerala Sadhya">Kerala Sadhya</option>
+                    <option value="Authentic Hyderabadi Biryani">Hyderabadi</option>
+                </select>
+            </div>
+            
+            <div class="filter-group price-filter">
+                <label for="minPrice">Price Range (₹ per plate)</label>
+                <div class="price-inputs">
+                    <input type="number" id="minPrice" placeholder="Min" min="0">
+                    <input type="number" id="maxPrice" placeholder="Max" min="0">
+                </div>
+            </div>
+        </div>
+        
+        <button class="reset-filters" id="resetFilters">Reset All Filters</button>
+        
+        <div class="catering-stats">
+            <div class="stat-card">
+                <div class="stat-number" id="totalCatering">0</div>
+                <div class="stat-label">Total Caterers</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="avgRating">0.0</div>
+                <div class="stat-label">Average Rating</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="statesCovered">0</div>
+                <div class="stat-label">States Covered</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="topRated">0</div>
+                <div class="stat-label">Top Rated (4.5+)</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="catering-container">
+        <div class="catering-grid" id="cateringGrid">
+            <!-- Catering cards will be dynamically inserted here -->
+        </div>
+    </div>
+
+    <div class="shortlist-toast" id="shortlistToast">
+        Service added to shortlist!
+    </div>
+    <!-- Booking Form Modal -->
+<div class="booking-modal" id="bookingModal">
+    <div class="booking-form-container">
+        <div class="booking-header">
+            <h3>Book Catering Service</h3>
+            <button class="close-btn" id="closeBookingForm">&times;</button>
+        </div>
+        <form id="bookingForm">
+            <div class="form-group">
+                <label for="customerName">Your Name *</label>
+                <input type="text" id="customerName" name="customerName" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="customerPhone">Phone Number *</label>
+                <input type="tel" id="customerPhone" name="customerPhone" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="customerEmail">Email Address</label>
+                <input type="email" id="customerEmail" name="customerEmail">
+            </div>
+            
+            <div class="form-group">
+                <label for="eventType">Event Type *</label>
+                <select id="eventType" name="eventType" required>
+                    <option value="">Select Event Type</option>
+                    <option value="wedding">Wedding</option>
+                    <option value="engagement">Engagement</option>
+                    <option value="birthday">Birthday</option>
+                    <option value="corporate">Corporate Event</option>
+                    <option value="anniversary">Anniversary</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="eventDate">Event Date *</label>
+                <input type="date" id="eventDate" name="eventDate" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="eventTime">Event Time *</label>
+                <input type="time" id="eventTime" name="eventTime" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="guestCount">Number of Guests *</label>
+                <input type="number" id="guestCount" name="guestCount" min="1" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="eventAddress">Event Venue Address *</label>
+                <textarea id="eventAddress" name="eventAddress" rows="3" required></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="specialRequirements">Special Requirements</label>
+                <textarea id="specialRequirements" name="specialRequirements" rows="3" placeholder="Any dietary restrictions, specific dishes, or special arrangements..."></textarea>
+            </div>
+            
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" id="cancelBooking">Cancel</button>
+                <button type="submit" class="btn btn-primary">Submit Booking Request</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+    <script>
+        // Complete Catering data for all 40 services
+        const cateringData = {
+    "Andhra Pradesh": [
+        {
+            "id": 41,
+            "name": "Andhra Spice Kitchen",
+            "specialty": "Traditional Andhra Cuisine",
+            "rating": 4.7,
+            "price": "₹500 - ₹1,200 per plate",
+            "capacity": "50-500 guests",
+            "image": "https://content.jdmagicbox.com/comp/chittoor/t3/9999p8572.8572.210604125529.l5t3/catalogue/andhra-spice-chittoor-k73zo6qdra.jpg",
+            "experience": "12 years",
+            "features": ["Traditional Andhra Meals", "Spicy Curries", "Authentic Recipes", "Fresh Ingredients"],
+            "contact": {"phone": "+91 9876543220"},
+            "packages": [
+                {
+                    "name": "Basic Andhra Meal",
+                    "price": "₹500 per plate",
+                    "features": [
+                        "Steamed Rice",
+                        "Andhra Sambar", 
+                        "Vegetable Curry",
+                        "Rasam",
+                        "Curd/Yogurt",
+                        "Pickle & Papad"
+                    ]
+                },
+                {
+                    "name": "Premium Andhra Thali",
+                    "price": "₹850 per plate",
+                    "features": [
+                        "Steamed Rice & Biryani",
+                        "Andhra Chicken Curry",
+                        "Gongura Mutton", 
+                        "Two Vegetable Curries",
+                        "Sambar & Rasam",
+                        "Curd/Yogurt",
+                        "Three Types of Pickles",
+                        "Dessert (Payasam)"
+                    ]
+                },
+                {
+                    "name": "Royal Andhra Feast",
+                    "price": "₹1,200 per plate",
+                    "features": [
+                        "Andhra Special Biryani",
+                        "Chicken, Mutton & Fish Curries",
+                        "Four Vegetable Dishes",
+                        "Gutti Vankaya (Stuffed Brinjal)",
+                        "Sambar, Rasam & Chaaru",
+                        "Three Types of Rice",
+                        "Four Types of Pickles & Chutneys",
+                        "Two Desserts",
+                        "Buttermilk & Traditional Drinks"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 42,
+            "name": "Coastal Flavors Catering",
+            "specialty": "Seafood & Coastal Cuisine",
+            "rating": 4.6,
+            "price": "₹600 - ₹1,500 per plate",
+            "capacity": "50-300 guests",
+            "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQztXhifa9ymQZmJZpDZVQxxzcGUZyYaBUeyw&s",
+            "experience": "8 years",
+            "features": ["Fresh Seafood", "Coastal Specialties", "Traditional Recipes", "Quality Ingredients"],
+            "contact": {"phone": "+91 9876543221"},
+            "packages": [
+                {
+                    "name": "Coastal Delight",
+                    "price": "₹600 per plate",
+                    "features": [
+                        "Steamed Rice",
+                        "Fish Curry (Andhra Style)",
+                        "Prawn Fry",
+                        "Vegetable Curry",
+                        "Rasam",
+                        "Curd/Yogurt",
+                        "Pickle & Appadam"
+                    ]
+                },
+                {
+                    "name": "Seafood Special",
+                    "price": "₹950 per plate",
+                    "features": [
+                        "Andhra Fish Biryani",
+                        "Chepala Pulusu (Fish Curry)",
+                        "Royyala Iguru (Prawn Curry)",
+                        "Crab Masala",
+                        "Two Coastal Vegetable Dishes",
+                        "Rasam & Chaaru",
+                        "Curd/Yogurt",
+                        "Coastal Pickles & Chutneys"
+                    ]
+                },
+                {
+                    "name": "Coastal Grand Feast",
+                    "price": "₹1,500 per plate",
+                    "features": [
+                        "Andhra Fish Biryani & Prawn Pulav",
+                        "Three Types of Fish Curries",
+                        "Prawn, Crab & Lobster Dishes",
+                        "Chicken & Mutton Coastal Style",
+                        "Four Vegetable Dishes",
+                        "Multiple Rice Varieties",
+                        "Traditional Coastal Soups",
+                        "Assorted Pickles & Papads",
+                        "Coastal Desserts (2 types)",
+                        "Traditional Coastal Drinks"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 43,
+            "name": "Royal Andhra Caterers",
+            "specialty": "Luxury Andhra Meals",
+            "rating": 4.8,
+            "price": "₹800 - ₹2,000 per plate",
+            "capacity": "100-1000 guests",
+            "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbutUF7oxEkjxDbNzGLqX-xkS6kEvrJdxOMg&s",
+            "experience": "15 years",
+            "features": ["Premium Ingredients", "Royal Recipes", "Professional Service", "Custom Menus"],
+            "contact": {"phone": "+91 9876543222"},
+            "packages": [
+                {
+                    "name": "Royal Classic",
+                    "price": "₹800 per plate",
+                    "features": [
+                        "Steamed Rice & Jeera Rice",
+                        "Andhra Chicken Curry",
+                        "Dal Tadka",
+                        "Two Seasonal Vegetables",
+                        "Sambar & Rasam",
+                        "Curd/Yogurt",
+                        "Pickle, Papad & Chutney",
+                        "Dessert (One Type)"
+                    ]
+                },
+                {
+                    "name": "Royal Signature",
+                    "price": "₹1,300 per plate",
+                    "features": [
+                        "Andhra Special Biryani",
+                        "Three Non-Veg Curries",
+                        "Three Veg Curries",
+                        "Gutti Vankaya & Bagara Baingan",
+                        "Sambar, Rasam & Chaaru",
+                        "Multiple Rice Varieties",
+                        "Assorted Pickles & Chutneys",
+                        "Two Desserts",
+                        "Buttermilk & Traditional Drinks"
+                    ]
+                },
+                {
+                    "name": "Royal Grandeur",
+                    "price": "₹2,000 per plate",
+                    "features": [
+                        "Hyderabadi & Andhra Biryanis",
+                        "Five Non-Veg Specialties",
+                        "Five Veg Delicacies",
+                        "Traditional Andhra Specialties",
+                        "Multi-cuisine Appetizers",
+                        "Four Types of Rice",
+                        "Traditional Soups & Rasams",
+                        "Assorted Breads",
+                        "Five Types of Pickles & Chutneys",
+                        "Three Premium Desserts",
+                        "Traditional & Modern Beverages",
+                        "Live Counter (Optional)"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 44,
+            "name": "Vijayawada Vegetarian Delight",
+            "specialty": "Pure Vegetarian Andhra Food",
+            "rating": 4.5,
+            "price": "₹400 - ₹1,000 per plate",
+            "capacity": "50-400 guests",
+            "image": "https://content.jdmagicbox.com/comp/vijayawada/v9/0866px866.x866.231211075522.i8v9/catalogue/catering-veg-only-vidyadharapuram-vijayawada-food-delivery-in-trains-5orayy3q7n.jpg",
+            "experience": "10 years",
+            "features": ["Pure Vegetarian", "Traditional Recipes", "Healthy Options", "Fresh Produce"],
+            "contact": {"phone": "+91 9876543223"},
+            "packages": [
+                {
+                    "name": "Vegetarian Basic",
+                    "price": "₹400 per plate",
+                    "features": [
+                        "Steamed Rice",
+                        "Sambar",
+                        "Two Vegetable Curries",
+                        "Rasam",
+                        "Curd/Yogurt",
+                        "Pickle & Papad"
+                    ]
+                },
+                {
+                    "name": "Vegetarian Special",
+                    "price": "₹700 per plate",
+                    "features": [
+                        "Steamed Rice & Pulihora",
+                        "Three Vegetable Curries",
+                        "Gutti Vankaya",
+                        "Sambar, Rasam & Chaaru",
+                        "Curd/Yogurt",
+                        "Three Types of Pickles",
+                        "Dessert (Payasam)"
+                    ]
+                },
+                {
+                    "name": "Vegetarian Feast",
+                    "price": "₹1,000 per plate",
+                    "features": [
+                        "Multiple Rice Varieties",
+                        "Five Vegetable Specialties",
+                        "Traditional Andhra Curries",
+                        "Sambar, Rasam & Chaaru",
+                        "Assorted Pickles & Chutneys",
+                        "Two Desserts",
+                        "Buttermilk & Traditional Drinks"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 45,
+            "name": "Guntur Spice Masters",
+            "specialty": "Authentic Guntur Cuisine",
+            "rating": 4.7,
+            "price": "₹550 - ₹1,300 per plate",
+            "capacity": "50-600 guests",
+            "image": "https://content.jdmagicbox.com/comp/guntur/u2/9999px863.x863.200203122705.b5u2/catalogue/supraja-food-catering-at-agraharam-guntur-caterers-06lyygm2hf.jpg",
+            "experience": "9 years",
+            "features": ["Authentic Guntur Style", "Spicy Specialties", "Traditional Recipes", "Fresh Ingredients"],
+            "contact": {"phone": "+91 9876543224"},
+            "packages": [
+                {
+                    "name": "Guntur Basic",
+                    "price": "₹550 per plate",
+                    "features": [
+                        "Steamed Rice",
+                        "Guntur Sambar",
+                        "Spicy Vegetable Curry",
+                        "Rasam",
+                        "Curd/Yogurt",
+                        "Pickle & Papad"
+                    ]
+                },
+                {
+                    "name": "Guntur Special",
+                    "price": "₹900 per plate",
+                    "features": [
+                        "Steamed Rice & Biryani",
+                        "Guntur Chicken Curry",
+                        "Spicy Mutton Curry",
+                        "Two Vegetable Curries",
+                        "Sambar & Rasam",
+                        "Curd/Yogurt",
+                        "Three Types of Pickles",
+                        "Dessert"
+                    ]
+                },
+                {
+                    "name": "Guntur Grand",
+                    "price": "₹1,300 per plate",
+                    "features": [
+                        "Guntur Special Biryani",
+                        "Three Spicy Non-Veg Curries",
+                        "Four Vegetable Dishes",
+                        "Traditional Guntur Specialties",
+                        "Sambar, Rasam & Chaaru",
+                        "Multiple Rice Varieties",
+                        "Assorted Pickles & Chutneys",
+                        "Two Desserts",
+                        "Buttermilk & Traditional Drinks"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 46,
+            "name": "Visakhapatnam Seafood Special",
+            "specialty": "Fresh Seafood & Coastal Dishes",
+            "rating": 4.6,
+            "price": "₹700 - ₹1,800 per plate",
+            "capacity": "50-400 guests",
+            "image": "https://content.jdmagicbox.com/comp/visakhapatnam/81/0891p891std9000981/catalogue/vihar-restaurant-rushikonda-visakhapatnam-restaurants-3sy6cw1-250.jpg",
+            "experience": "11 years",
+            "features": ["Fresh Seafood", "Coastal Recipes", "Traditional Cooking", "Quality Ingredients"],
+            "contact": {"phone": "+91 9876543225"},
+            "packages": [
+                {
+                    "name": "Seafood Basic",
+                    "price": "₹700 per plate",
+                    "features": [
+                        "Steamed Rice",
+                        "Fish Curry",
+                        "Prawn Fry",
+                        "Vegetable Curry",
+                        "Rasam",
+                        "Curd/Yogurt",
+                        "Pickle & Papad"
+                    ]
+                },
+                {
+                    "name": "Seafood Special",
+                    "price": "₹1,100 per plate",
+                    "features": [
+                        "Seafood Biryani",
+                        "Fish Curry",
+                        "Prawn Curry",
+                        "Crab Masala",
+                        "Two Vegetable Curries",
+                        "Sambar & Rasam",
+                        "Curd/Yogurt",
+                        "Traditional Pickles",
+                        "Dessert"
+                    ]
+                },
+                {
+                    "name": "Seafood Grand",
+                    "price": "₹1,800 per plate",
+                    "features": [
+                        "Seafood Special Biryani",
+                        "Three Seafood Curries",
+                        "Four Vegetable Dishes",
+                        "Traditional Coastal Specialties",
+                        "Sambar, Rasam & Chaaru",
+                        "Multiple Rice Varieties",
+                        "Assorted Pickles & Chutneys",
+                        "Two Desserts",
+                        "Traditional Drinks"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 47,
+            "name": "Tirupati Prasadam Caterers",
+            "specialty": "Traditional Temple Style Food",
+            "rating": 4.9,
+            "price": "₹300 - ₹800 per plate",
+            "capacity": "100-2000 guests",
+            "image": "https://www.tirumalacaterers.com/images/Veg-Standard-Home.png",
+            "experience": "20 years",
+            "features": ["Temple Style", "Pure Vegetarian", "Traditional Recipes", "Devotional Atmosphere"],
+            "contact": {"phone": "+91 9876543226"},
+            "packages": [
+                {
+                    "name": "Prasadam Basic",
+                    "price": "₹300 per plate",
+                    "features": [
+                        "Steamed Rice",
+                        "Sambar",
+                        "Vegetable Curry",
+                        "Rasam",
+                        "Curd/Yogurt",
+                        "Pickle & Papad"
+                    ]
+                },
+                {
+                    "name": "Prasadam Special",
+                    "price": "₹550 per plate",
+                    "features": [
+                        "Steamed Rice & Pulihora",
+                        "Three Vegetable Curries",
+                        "Traditional Temple Specialties",
+                        "Sambar & Rasam",
+                        "Curd/Yogurt",
+                        "Traditional Pickles",
+                        "Dessert"
+                    ]
+                },
+                {
+                    "name": "Prasadam Grand",
+                    "price": "₹800 per plate",
+                    "features": [
+                        "Multiple Rice Varieties",
+                        "Five Vegetable Specialties",
+                        "Traditional Temple Curries",
+                        "Sambar, Rasam & Chaaru",
+                        "Assorted Pickles & Chutneys",
+                        "Two Desserts",
+                        "Traditional Drinks"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 48,
+            "name": "Nellore Food Express",
+            "specialty": "Andhra Multi-cuisine",
+            "rating": 4.4,
+            "price": "₹450 - ₹1,100 per plate",
+            "capacity": "50-500 guests",
+            "image": "https://tiimg.tistatic.com/fp/1/005/064/popular-catering-buffet-service-959.jpg",
+            "experience": "7 years",
+            "features": ["Multi-cuisine Options", "Andhra Specialties", "Flexible Menus", "Quality Service"],
+            "contact": {"phone": "+91 9876543227"},
+            "packages": [
+                {
+                    "name": "Multi-cuisine Basic",
+                    "price": "₹450 per plate",
+                    "features": [
+                        "Steamed Rice",
+                        "Sambar",
+                        "Vegetable Curry",
+                        "Rasam",
+                        "Curd/Yogurt",
+                        "Pickle & Papad"
+                    ]
+                },
+                {
+                    "name": "Multi-cuisine Special",
+                    "price": "₹750 per plate",
+                    "features": [
+                        "Steamed Rice & Biryani",
+                        "Three Vegetable Curries",
+                        "Traditional Andhra Specialties",
+                        "Sambar & Rasam",
+                        "Curd/Yogurt",
+                        "Traditional Pickles",
+                        "Dessert"
+                    ]
+                },
+                {
+                    "name": "Multi-cuisine Grand",
+                    "price": "₹1,100 per plate",
+                    "features": [
+                        "Multiple Rice Varieties",
+                        "Five Vegetable Specialties",
+                        "Traditional Andhra Curries",
+                        "Sambar, Rasam & Chaaru",
+                        "Assorted Pickles & Chutneys",
+                        "Two Desserts",
+                        "Traditional Drinks"
+                    ]
+                }
+            ]
+        }
+    ],
+    "Tamil Nadu": [
+        {
+            "id": 49,
+            "name": "Chettinad Delights",
+            "specialty": "Authentic Chettinad Cuisine",
+            "rating": 4.6,
+            "price": "₹600 - ₹1,400 per plate",
+            "capacity": "50-500 guests",
+            "image": "https://content.jdmagicbox.com/comp/karaikudi/r3/9999p4565.4565.180713202711.h9r3/catalogue/sri-narivizhi-ammha-mees-karaikudi-h-o-karaikudi-caterers-1zcsxruofw.jpg",
+            "experience": "11 years",
+            "features": ["Authentic Chettinad", "Spicy Specialties", "Traditional Recipes", "Quality Ingredients"],
+            "contact": {"phone": "+91 9876543230"},
+            "packages": [
+                {
+                    "name": "Chettinad Basic",
+                    "price": "₹600 per plate",
+                    "features": [
+                        "Steamed Rice",
+                        "Chettinad Chicken Curry",
+                        "Vegetable Curry",
+                        "Rasam",
+                        "Curd/Yogurt",
+                        "Pickle & Papad"
+                    ]
+                },
+                {
+                    "name": "Chettinad Special",
+                    "price": "₹950 per plate",
+                    "features": [
+                        "Chettinad Biryani",
+                        "Chicken Chettinad",
+                        "Mutton Chettinad",
+                        "Two Vegetable Curries",
+                        "Sambar & Rasam",
+                        "Curd/Yogurt",
+                        "Traditional Pickles",
+                        "Dessert"
+                    ]
+                },
+                {
+                    "name": "Chettinad Grand",
+                    "price": "₹1,400 per plate",
+                    "features": [
+                        "Chettinad Special Biryani",
+                        "Three Non-Veg Chettinad Curries",
+                        "Four Vegetable Dishes",
+                        "Traditional Chettinad Specialties",
+                        "Sambar, Rasam & Chaaru",
+                        "Multiple Rice Varieties",
+                        "Assorted Pickles & Chutneys",
+                        "Two Desserts",
+                        "Traditional Drinks"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 50,
+            "name": "Madurai Meals",
+            "specialty": "Traditional Tamil Cuisine",
+            "rating": 4.4,
+            "price": "₹450 - ₹1,100 per plate",
+            "capacity": "50-400 guests",
+            "image": "https://5.imimg.com/data5/ANDROID/Default/2025/5/513279718/GA/KN/QY/162752310/product-jpeg.jpg",
+            "experience": "8 years",
+            "features": ["Traditional Tamil", "Authentic Recipes", "Fresh Ingredients", "Quality Service"],
+            "contact": {"phone": "+91 9876543231"},
+            "packages": [
+                {
+                    "name": "Madurai Basic",
+                    "price": "₹450 per plate",
+                    "features": [
+                        "Steamed Rice",
+                        "Sambar",
+                        "Vegetable Curry",
+                        "Rasam",
+                        "Curd/Yogurt",
+                        "Pickle & Papad"
+                    ]
+                },
+                {
+                    "name": "Madurai Special",
+                    "price": "₹750 per plate",
+                    "features": [
+                        "Steamed Rice & Biryani",
+                        "Three Vegetable Curries",
+                        "Traditional Tamil Specialties",
+                        "Sambar & Rasam",
+                        "Curd/Yogurt",
+                        "Traditional Pickles",
+                        "Dessert"
+                    ]
+                },
+                {
+                    "name": "Madurai Grand",
+                    "price": "₹1,100 per plate",
+                    "features": [
+                        "Multiple Rice Varieties",
+                        "Five Vegetable Specialties",
+                        "Traditional Tamil Curries",
+                        "Sambar, Rasam & Chaaru",
+                        "Assorted Pickles & Chutneys",
+                        "Two Desserts",
+                        "Traditional Drinks"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 51,
+            "name": "Coimbatore Kitchen",
+            "specialty": "Kongunadu Cuisine",
+            "rating": 4.5,
+            "price": "₹550 - ₹1,300 per plate",
+            "capacity": "50-500 guests",
+            "image": "https://th-i.thgim.com/public/incoming/rismro/article66841708.ece/alternates/LANDSCAPE_1200/Kongunadu%20food%20festival%205.jpg",
+            "experience": "9 years",
+            "features": ["Kongunadu Specialties", "Traditional Recipes", "Fresh Ingredients", "Quality Service"],
+            "contact": {"phone": "+91 9876543232"},
+            "packages": [
+                {
+                    "name": "Kongunadu Basic",
+                    "price": "₹550 per plate",
+                    "features": [
+                        "Steamed Rice",
+                        "Kongunadu Chicken Curry",
+                        "Vegetable Curry",
+                        "Rasam",
+                        "Curd/Yogurt",
+                        "Pickle & Papad"
+                    ]
+                },
+                {
+                    "name": "Kongunadu Special",
+                    "price": "₹900 per plate",
+                    "features": [
+                        "Kongunadu Biryani",
+                        "Chicken Kongunadu",
+                        "Mutton Curry",
+                        "Two Vegetable Curries",
+                        "Sambar & Rasam",
+                        "Curd/Yogurt",
+                        "Traditional Pickles",
+                        "Dessert"
+                    ]
+                },
+                {
+                    "name": "Kongunadu Grand",
+                    "price": "₹1,300 per plate",
+                    "features": [
+                        "Kongunadu Special Biryani",
+                        "Three Non-Veg Curries",
+                        "Four Vegetable Dishes",
+                        "Traditional Kongunadu Specialties",
+                        "Sambar, Rasam & Chaaru",
+                        "Multiple Rice Varieties",
+                        "Assorted Pickles & Chutneys",
+                        "Two Desserts",
+                        "Traditional Drinks"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 52,
+            "name": "Chennai Coastal Cuisine",
+            "specialty": "Coastal Tamil Food",
+            "rating": 4.7,
+            "price": "₹650 - ₹1,500 per plate",
+            "capacity": "50-400 guests",
+            "image": "https://assets.cntraveller.in/photos/67cec304ee0a72c3a2a6400f/master/w_1600%2Cc_limit/_ZC_2234.jpeg",
+            "experience": "12 years",
+            "features": ["Fresh Seafood", "Coastal Specialties", "Traditional Recipes", "Quality Ingredients"],
+            "contact": {"phone": "+91 9876543233"},
+            "packages": [
+                {
+                    "name": "Coastal Basic",
+                    "price": "₹650 per plate",
+                    "features": [
+                        "Steamed Rice",
+                        "Fish Curry",
+                        "Vegetable Curry",
+                        "Rasam",
+                        "Curd/Yogurt",
+                        "Pickle & Papad"
+                    ]
+                },
+                {
+                    "name": "Coastal Special",
+                    "price": "₹1,000 per plate",
+                    "features": [
+                        "Coastal Biryani",
+                        "Fish Curry",
+                        "Prawn Curry",
+                        "Two Vegetable Curries",
+                        "Sambar & Rasam",
+                        "Curd/Yogurt",
+                        "Traditional Pickles",
+                        "Dessert"
+                    ]
+                },
+                {
+                    "name": "Coastal Grand",
+                    "price": "₹1,500 per plate",
+                    "features": [
+                        "Coastal Special Biryani",
+                        "Three Seafood Curries",
+                        "Four Vegetable Dishes",
+                        "Traditional Coastal Specialties",
+                        "Sambar, Rasam & Chaaru",
+                        "Multiple Rice Varieties",
+                        "Assorted Pickles & Chutneys",
+                        "Two Desserts",
+                        "Traditional Drinks"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 53,
+            "name": "Traditional Tamil Meals",
+            "specialty": "Authentic Tamil Vegetarian",
+            "rating": 4.8,
+            "price": "₹400 - ₹1,000 per plate",
+            "capacity": "50-500 guests",
+            "image": "https://images.unsplash.com/photo-1565557623262-b51c2513a641?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1071&q=80",
+            "experience": "15 years",
+            "features": ["Pure Vegetarian", "Traditional Recipes", "Authentic Tamil", "Fresh Ingredients"],
+            "contact": {"phone": "+91 9876543234"},
+            "packages": [
+                {
+                    "name": "Tamil Basic",
+                    "price": "₹400 per plate",
+                    "features": [
+                        "Steamed Rice",
+                        "Sambar",
+                        "Vegetable Curry",
+                        "Rasam",
+                        "Curd/Yogurt",
+                        "Pickle & Papad"
+                    ]
+                },
+                {
+                    "name": "Tamil Special",
+                    "price": "₹700 per plate",
+                    "features": [
+                        "Steamed Rice & Biryani",
+                        "Three Vegetable Curries",
+                        "Traditional Tamil Specialties",
+                        "Sambar & Rasam",
+                        "Curd/Yogurt",
+                        "Traditional Pickles",
+                        "Dessert"
+                    ]
+                },
+                {
+                    "name": "Tamil Grand",
+                    "price": "₹1,000 per plate",
+                    "features": [
+                        "Multiple Rice Varieties",
+                        "Five Vegetable Specialties",
+                        "Traditional Tamil Curries",
+                        "Sambar, Rasam & Chaaru",
+                        "Assorted Pickles & Chutneys",
+                        "Two Desserts",
+                        "Traditional Drinks"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 54,
+            "name": "Salem Special Caterers",
+            "specialty": "Kongu Region Specialties",
+            "rating": 4.3,
+            "price": "₹500 - ₹1,200 per plate",
+            "capacity": "50-400 guests",
+            "image": "https://images.slurrp.com/prodarticles/7ilzcapk12v.webp",
+            "experience": "6 years",
+            "features": ["Kongu Specialties", "Traditional Recipes", "Fresh Ingredients", "Quality Service"],
+            "contact": {"phone": "+91 9876543235"},
+            "packages": [
+                {
+                    "name": "Salem Basic",
+                    "price": "₹500 per plate",
+                    "features": [
+                        "Steamed Rice",
+                        "Sambar",
+                        "Vegetable Curry",
+                        "Rasam",
+                        "Curd/Yogurt",
+                        "Pickle & Papad"
+                    ]
+                },
+                {
+                    "name": "Salem Special",
+                    "price": "₹850 per plate",
+                    "features": [
+                        "Steamed Rice & Biryani",
+                        "Three Vegetable Curries",
+                        "Traditional Salem Specialties",
+                        "Sambar & Rasam",
+                        "Curd/Yogurt",
+                        "Traditional Pickles",
+                        "Dessert"
+                    ]
+                },
+                {
+                    "name": "Salem Grand",
+                    "price": "₹1,200 per plate",
+                    "features": [
+                        "Multiple Rice Varieties",
+                        "Five Vegetable Specialties",
+                        "Traditional Salem Curries",
+                        "Sambar, Rasam & Chaaru",
+                        "Assorted Pickles & Chutneys",
+                        "Two Desserts",
+                        "Traditional Drinks"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 55,
+            "name": "Trichy Traditional Foods",
+            "specialty": "Central Tamil Cuisine",
+            "rating": 4.6,
+            "price": "₹550 - ₹1,300 per plate",
+            "capacity": "50-500 guests",
+            "image": "https://images.travelandleisureasia.com/wp-content/uploads/sites/2/2025/01/29172911/famous-food-Tamil-Nadu-FI-1600x900.jpg",
+            "experience": "10 years",
+            "features": ["Central Tamil Specialties", "Traditional Recipes", "Fresh Ingredients", "Quality Service"],
+            "contact": {"phone": "+91 9876543236"},
+            "packages": [
+                {
+                    "name": "Trichy Basic",
+                    "price": "₹550 per plate",
+                    "features": [
+                        "Steamed Rice",
+                        "Sambar",
+                        "Vegetable Curry",
+                        "Rasam",
+                        "Curd/Yogurt",
+                        "Pickle & Papad"
+                    ]
+                },
+                {
+                    "name": "Trichy Special",
+                    "price": "₹900 per plate",
+                    "features": [
+                        "Steamed Rice & Biryani",
+                        "Three Vegetable Curries",
+                        "Traditional Trichy Specialties",
+                        "Sambar & Rasam",
+                        "Curd/Yogurt",
+                        "Traditional Pickles",
+                        "Dessert"
+                    ]
+                },
+                {
+                    "name": "Trichy Grand",
+                    "price": "₹1,300 per plate",
+                    "features": [
+                        "Multiple Rice Varieties",
+                        "Five Vegetable Specialties",
+                        "Traditional Trichy Curries",
+                        "Sambar, Rasam & Chaaru",
+                        "Assorted Pickles & Chutneys",
+                        "Two Desserts",
+                        "Traditional Drinks"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 56,
+            "name": "Tirunelveli Halwa Masters",
+            "specialty": "Famous Tirunelveli Cuisine",
+            "rating": 4.9,
+            "price": "₹600 - ₹1,400 per plate",
+            "capacity": "50-500 guests",
+            "image": "https://content.jdmagicbox.com/comp/tirunelveli/a8/0462px462.x462.130918170957.r4a8/catalogue/s-arunachalam-pillai-catering-service-tirunelveli-1aduqlopwq.jpg",
+            "experience": "18 years",
+            "features": ["Tirunelveli Specialties", "Famous Halwa", "Traditional Recipes", "Quality Service"],
+            "contact": {"phone": "+91 9876543237"},
+            "packages": [
+                {
+                    "name": "Tirunelveli Basic",
+                    "price": "₹600 per plate",
+                    "features": [
+                        "Steamed Rice",
+                        "Sambar",
+                        "Vegetable Curry",
+                        "Rasam",
+                        "Curd/Yogurt",
+                        "Pickle & Papad",
+                        "Tirunelveli Halwa"
+                    ]
+                },
+                {
+                    "name": "Tirunelveli Special",
+                    "price": "₹950 per plate",
+                    "features": [
+                        "Steamed Rice & Biryani",
+                        "Three Vegetable Curries",
+                        "Traditional Tirunelveli Specialties",
+                        "Sambar & Rasam",
+                        "Curd/Yogurt",
+                        "Traditional Pickles",
+                        "Dessert",
+                        "Tirunelveli Halwa"
+                    ]
+                },
+                {
+                    "name": "Tirunelveli Grand",
+                    "price": "₹1,400 per plate",
+                    "features": [
+                        "Multiple Rice Varieties",
+                        "Five Vegetable Specialties",
+                        "Traditional Tirunelveli Curries",
+                        "Sambar, Rasam & Chaaru",
+                        "Assorted Pickles & Chutneys",
+                        "Two Desserts",
+                        "Traditional Drinks",
+                        "Premium Tirunelveli Halwa"
+                    ]
+                }
+            ]
+        }
+    ],
+    "Karnataka": [
+        {
+            "id": 57,
+            "name": "Mangalore Specials",
+            "specialty": "Coastal Karnataka Cuisine",
+            "rating": 4.5,
+            "price": "₹550 - ₹1,300 per plate",
+            "capacity": "50-500 guests",
+            "image": "https://media.assettype.com/deccanherald%2Fimport%2Fsites%2Fdh%2Ffiles%2Farticle_images%2F2020%2F05%2F19%2FC42A06C2-2D9E-4435-BC65-65B295882CC6-474557414-1526917326.jpg?w=1200&ar=40%3A21&auto=format%2Ccompress&ogImage=true&mode=crop",
+            "experience": "9 years",
+            "features": ["Coastal Specialties", "Fresh Seafood", "Traditional Recipes", "Quality Ingredients"],
+            "contact": {"phone": "+91 9876543240"},
+            "packages": [
+                {
+                    "name": "Mangalore Basic",
+                    "price": "₹550 per plate",
+                    "features": [
+                        "Steamed Rice",
+                        "Fish Curry",
+                        "Vegetable Curry",
+                        "Rasam",
+                        "Curd/Yogurt",
+                        "Pickle & Papad"
+                    ]
+                },
+                {
+                    "name": "Mangalore Special",
+                    "price": "₹900 per plate",
+                    "features": [
+                        "Mangalore Biryani",
+                        "Fish Curry",
+                        "Prawn Curry",
+                        "Two Vegetable Curries",
+                        "Sambar & Rasam",
+                        "Curd/Yogurt",
+                        "Traditional Pickles",
+                        "Dessert"
+                    ]
+                },
+                {
+                    "name": "Mangalore Grand",
+                    "price": "₹1,300 per plate",
+                    "features": [
+                        "Mangalore Special Biryani",
+                        "Three Seafood Curries",
+                        "Four Vegetable Dishes",
+                        "Traditional Coastal Specialties",
+                        "Sambar, Rasam & Chaaru",
+                        "Multiple Rice Varieties",
+                        "Assorted Pickles & Chutneys",
+                        "Two Desserts",
+                        "Traditional Drinks"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 58,
+            "name": "Bangalore Fusion Kitchen",
+            "specialty": "Modern Fusion Cuisine",
+            "rating": 4.3,
+            "price": "₹700 - ₹1,600 per plate",
+            "capacity": "50-400 guests",
+            "image": "https://media.istockphoto.com/id/1317255793/photo/rijsttafel-nusantara-an-elaborate-meal-of-indonesian-dishes.jpg?s=612x612&w=0&k=20&c=F_CtvP1w7CMbth0vyT-aqzkB3D5TqZbnwgLc7tbpnsc=",
+            "experience": "6 years",
+            "features": ["Fusion Cuisine", "Modern Recipes", "International Flavors", "Creative Presentation"],
+            "contact": {"phone": "+91 9876543241"},
+            "packages": [
+                {
+                    "name": "Fusion Basic",
+                    "price": "₹700 per plate",
+                    "features": [
+                        "Steamed Rice",
+                        "Fusion Chicken Curry",
+                        "Vegetable Curry",
+                        "Rasam",
+                        "Curd/Yogurt",
+                        "Pickle & Papad"
+                    ]
+                },
+                {
+                    "name": "Fusion Special",
+                    "price": "₹1,100 per plate",
+                    "features": [
+                        "Fusion Biryani",
+                        "Chicken Fusion",
+                        "Mutton Curry",
+                        "Two Vegetable Curries",
+                        "Sambar & Rasam",
+                        "Curd/Yogurt",
+                        "Fusion Pickles",
+                        "Dessert"
+                    ]
+                },
+                {
+                    "name": "Fusion Grand",
+                    "price": "₹1,600 per plate",
+                    "features": [
+                        "Fusion Special Biryani",
+                        "Three Fusion Curries",
+                        "Four Vegetable Dishes",
+                        "International Specialties",
+                        "Sambar, Rasam & Chaaru",
+                        "Multiple Rice Varieties",
+                        "Assorted Pickles & Chutneys",
+                        "Two Desserts",
+                        "Fusion Drinks"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 59,
+            "name": "Udupi Vegetarian Delights",
+            "specialty": "Authentic Udupi Food",
+            "rating": 4.8,
+            "price": "₹400 - ₹1,000 per plate",
+            "capacity": "50-500 guests",
+            "image": "https://images.jdmagicbox.com/v2/comp/bangalore/n9/080pxx80.xx80.221119233431.x9n9/catalogue/sri-udupi-food-hub-caterers-gandhi-nagar-bangalore-restaurants-c49ur2t61c.jpg",
+            "experience": "14 years",
+            "features": ["Pure Vegetarian", "Udupi Specialties", "Traditional Recipes", "Fresh Ingredients"],
+            "contact": {"phone": "+91 9876543242"},
+            "packages": [
+                {
+                    "name": "Udupi Basic",
+                    "price": "₹400 per plate",
+                    "features": [
+                        "Steamed Rice",
+                        "Sambar",
+                        "Vegetable Curry",
+                        "Rasam",
+                        "Curd/Yogurt",
+                        "Pickle & Papad"
+                    ]
+                },
+                {
+                    "name": "Udupi Special",
+                    "price": "₹700 per plate",
+                    "features": [
+                        "Steamed Rice & Biryani",
+                        "Three Vegetable Curries",
+                        "Traditional Udupi Specialties",
+                        "Sambar & Rasam",
+                        "Curd/Yogurt",
+                        "Traditional Pickles",
+                        "Dessert"
+                    ]
+                },
+                {
+                    "name": "Udupi Grand",
+                    "price": "₹1,000 per plate",
+                    "features": [
+                        "Multiple Rice Varieties",
+                        "Five Vegetable Specialties",
+                        "Traditional Udupi Curries",
+                        "Sambar, Rasam & Chaaru",
+                        "Assorted Pickles & Chutneys",
+                        "Two Desserts",
+                        "Traditional Drinks"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 60,
+            "name": "Mysore Traditional Kitchen",
+            "specialty": "Mysore Region Specialties",
+            "rating": 4.7,
+            "price": "₹500 - ₹1,200 per plate",
+            "capacity": "50-500 guests",
+            "image": "https://www.shaadibaraati.com/vendors-profile/e86aa4931d4ca12f40543fe39b1a3c74.jpg",
+            "experience": "11 years",
+            "features": ["Mysore Specialties", "Traditional Recipes", "Fresh Ingredients", "Quality Service"],
+            "contact": {"phone": "+91 9876543243"},
+            "packages": [
+                {
+                    "name": "Mysore Basic",
+                    "price": "₹500 per plate",
+                    "features": [
+                        "Steamed Rice",
+                        "Sambar",
+                        "Vegetable Curry",
+                        "Rasam",
+                        "Curd/Yogurt",
+                        "Pickle & Papad"
+                    ]
+                },
+                {
+                    "name": "Mysore Special",
+                    "price": "₹850 per plate",
+                    "features": [
+                        "Steamed Rice & Biryani",
+                        "Three Vegetable Curries",
+                        "Traditional Mysore Specialties",
+                        "Sambar & Rasam",
+                        "Curd/Yogurt",
+                        "Traditional Pickles",
+                        "Dessert"
+                    ]
+                },
+                {
+                    "name": "Mysore Grand",
+                    "price": "₹1,200 per plate",
+                    "features": [
+                        "Multiple Rice Varieties",
+                        "Five Vegetable Specialties",
+                        "Traditional Mysore Curries",
+                        "Sambar, Rasam & Chaaru",
+                        "Assorted Pickles & Chutneys",
+                        "Two Desserts",
+                        "Traditional Drinks"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 61,
+            "name": "North Karnataka Specials",
+            "specialty": "North Karnataka Cuisine",
+            "rating": 4.4,
+            "price": "₹450 - ₹1,100 per plate",
+            "capacity": "50-400 guests",
+            "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMfPkrYOVw2fEPuVE8RmJQkvh1GkMl0K37Og&s",
+            "experience": "8 years",
+            "features": ["North Karnataka Specialties", "Jolada Roti", "Traditional Recipes", "Fresh Ingredients"],
+            "contact": {"phone": "+91 9876543244"},
+            "packages": [
+                {
+                    "name": "North Karnataka Basic",
+                    "price": "₹450 per plate",
+                    "features": [
+                        "Jolada Roti",
+                        "Sambar",
+                        "Vegetable Curry",
+                        "Rasam",
+                        "Curd/Yogurt",
+                        "Pickle & Papad"
+                    ]
+                },
+                {
+                    "name": "North Karnataka Special",
+                    "price": "₹750 per plate",
+                    "features": [
+                        "Jolada Roti & Rice",
+                        "Three Vegetable Curries",
+                        "Traditional North Karnataka Specialties",
+                        "Sambar & Rasam",
+                        "Curd/Yogurt",
+                        "Traditional Pickles",
+                        "Dessert"
+                    ]
+                },
+                {
+                    "name": "North Karnataka Grand",
+                    "price": "₹1,100 per plate",
+                    "features": [
+                        "Multiple Bread Varieties",
+                        "Five Vegetable Specialties",
+                        "Traditional North Karnataka Curries",
+                        "Sambar, Rasam & Chaaru",
+                        "Assorted Pickles & Chutneys",
+                        "Two Desserts",
+                        "Traditional Drinks"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 62,
+            "name": "Coorg Special Cuisine",
+            "specialty": "Kodava Traditional Food",
+            "rating": 4.6,
+            "price": "₹600 - ₹1,400 per plate",
+            "capacity": "50-500 guests",
+            "image": "https://hospibuz.com/wp-content/uploads/2023/11/Coorgi-Cuisine-at-Four-Seasons-Hotel-Bengaluru.webp",
+            "experience": "10 years",
+            "features": ["Coorg Specialties", "Pork Dishes", "Traditional Recipes", "Fresh Ingredients"],
+            "contact": {"phone": "+91 9876543245"},
+            "packages": [
+                {
+                    "name": "Coorg Basic",
+                    "price": "₹600 per plate",
+                    "features": [
+                        "Steamed Rice",
+                        "Pork Curry",
+                        "Vegetable Curry",
+                        "Rasam",
+                        "Curd/Yogurt",
+                        "Pickle & Papad"
+                    ]
+                },
+                {
+                    "name": "Coorg Special",
+                    "price": "₹950 per plate",
+                    "features": [
+                        "Coorg Biryani",
+                        "Pork Curry",
+                        "Chicken Curry",
+                        "Two Vegetable Curries",
+                        "Sambar & Rasam",
+                        "Curd/Yogurt",
+                        "Traditional Pickles",
+                        "Dessert"
+                    ]
+                },
+                {
+                    "name": "Coorg Grand",
+                    "price": "₹1,400 per plate",
+                    "features": [
+                        "Coorg Special Biryani",
+                        "Three Non-Veg Curries",
+                        "Four Vegetable Dishes",
+                        "Traditional Coorg Specialties",
+                        "Sambar, Rasam & Chaaru",
+                        "Multiple Rice Varieties",
+                        "Assorted Pickles & Chutneys",
+                        "Two Desserts",
+                        "Traditional Drinks"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 63,
+            "name": "Dharwad Peda Masters",
+            "specialty": "North Karnataka Delicacies",
+            "rating": 4.5,
+            "price": "₹500 - ₹1,200 per plate",
+            "capacity": "50-500 guests",
+            "image": "https://hiibangalore.com/wp-content/uploads/2023/06/best-south-indian-food-wedding-lunch.jpg",
+            "experience": "9 years",
+            "features": ["North Karnataka Specialties", "Famous Peda", "Traditional Recipes", "Fresh Ingredients"],
+            "contact": {"phone": "+91 9876543246"},
+            "packages": [
+                {
+                    "name": "Dharwad Basic",
+                    "price": "₹500 per plate",
+                    "features": [
+                        "Jolada Roti",
+                        "Sambar",
+                        "Vegetable Curry",
+                        "Rasam",
+                        "Curd/Yogurt",
+                        "Pickle & Papad",
+                        "Dharwad Peda"
+                    ]
+                },
+                {
+                    "name": "Dharwad Special",
+                    "price": "₹850 per plate",
+                    "features": [
+                        "Jolada Roti & Rice",
+                        "Three Vegetable Curries",
+                        "Traditional Dharwad Specialties",
+                        "Sambar & Rasam",
+                        "Curd/Yogurt",
+                        "Traditional Pickles",
+                        "Dessert",
+                        "Dharwad Peda"
+                    ]
+                },
+                {
+                    "name": "Dharwad Grand",
+                    "price": "₹1,200 per plate",
+                    "features": [
+                        "Multiple Bread Varieties",
+                        "Five Vegetable Specialties",
+                        "Traditional Dharwad Curries",
+                        "Sambar, Rasam & Chaaru",
+                        "Assorted Pickles & Chutneys",
+                        "Two Desserts",
+                        "Traditional Drinks",
+                        "Premium Dharwad Peda"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 64,
+            "name": "Bangalore Multi-cuisine",
+            "specialty": "International & Local Fusion",
+            "rating": 4.2,
+            "price": "₹800 - ₹1,800 per plate",
+            "capacity": "50-500 guests",
+            "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSks7FMEe1b8rwqBexGeKXTAPiYatVq0xbojQ&s",
+            "experience": "5 years",
+            "features": ["Multi-cuisine Options", "International Flavors", "Flexible Menus", "Creative Presentation"],
+            "contact": {"phone": "+91 9876543247"},
+            "packages": [
+                {
+                    "name": "Multi-cuisine Basic",
+                    "price": "₹800 per plate",
+                    "features": [
+                        "Steamed Rice",
+                        "Chicken Curry",
+                        "Vegetable Curry",
+                        "Rasam",
+                        "Curd/Yogurt",
+                        "Pickle & Papad"
+                    ]
+                },
+                {
+                    "name": "Multi-cuisine Special",
+                    "price": "₹1,200 per plate",
+                    "features": [
+                        "Multi-cuisine Biryani",
+                        "Chicken Curry",
+                        "Mutton Curry",
+                        "Two Vegetable Curries",
+                        "Sambar & Rasam",
+                        "Curd/Yogurt",
+                        "International Pickles",
+                        "Dessert"
+                    ]
+                },
+                {
+                    "name": "Multi-cuisine Grand",
+                    "price": "₹1,800 per plate",
+                    "features": [
+                        "Multi-cuisine Special Biryani",
+                        "Three International Curries",
+                        "Four Vegetable Dishes",
+                        "Global Specialties",
+                        "Sambar, Rasam & Chaaru",
+                        "Multiple Rice Varieties",
+                        "Assorted Pickles & Chutneys",
+                        "Two Desserts",
+                        "International Drinks"
+                    ]
+                }
+            ]
+        }
+    ],
+    "Kerala": [
+        {
+            "id": 65,
+            "name": "Kerala Sadhya Specialists",
+            "specialty": "Traditional Kerala Sadhya",
+            "rating": 4.8,
+            "price": "₹500 - ₹1,200 per plate",
+            "capacity": "50-500 guests",
+            "image": "https://curlytales.com/wp-content/uploads/2025/09/Onam-Sadhya-2025-640x480.jpg",
+            "experience": "13 years",
+            "features": ["Traditional Sadhya", "Pure Vegetarian", "Authentic Recipes", "Banana Leaf Service"],
+            "contact": {"phone": "+91 9876543250"},
+            "packages": [
+                {
+                    "name": "Sadhya Basic",
+                    "price": "₹500 per plate",
+                    "features": [
+                        "Steamed Rice",
+                        "Sambar",
+                        "Vegetable Curry",
+                        "Rasam",
+                        "Curd/Yogurt",
+                        "Pickle & Papad"
+                    ]
+                },
+                {
+                    "name": "Sadhya Special",
+                    "price": "₹850 per plate",
+                    "features": [
+                        "Steamed Rice & Biryani",
+                        "Three Vegetable Curries",
+                        "Traditional Kerala Specialties",
+                        "Sambar & Rasam",
+                        "Curd/Yogurt",
+                        "Traditional Pickles",
+                        "Dessert"
+                    ]
+                },
+                {
+                    "name": "Sadhya Grand",
+                    "price": "₹1,200 per plate",
+                    "features": [
+                        "Multiple Rice Varieties",
+                        "Five Vegetable Specialties",
+                        "Traditional Kerala Curries",
+                        "Sambar, Rasam & Chaaru",
+                        "Assorted Pickles & Chutneys",
+                        "Two Desserts",
+                        "Traditional Drinks"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 66,
+            "name": "Cochin Seafood Express",
+            "specialty": "Fresh Seafood Specialties",
+            "rating": 4.6,
+            "price": "₹650 - ₹1,500 per plate",
+            "capacity": "50-400 guests",
+            "image": "https://i0.wp.com/foodntravel.in/wp-content/uploads/2023/02/Fresh-Catch-Seafood-Restaurant.jpg?fit=1280%2C720&ssl=1",
+            "experience": "10 years",
+            "features": ["Fresh Seafood", "Coastal Specialties", "Traditional Recipes", "Quality Ingredients"],
+            "contact": {"phone": "+91 9876543251"},
+            "packages": [
+                {
+                    "name": "Seafood Basic",
+                    "price": "₹650 per plate",
+                    "features": [
+                        "Steamed Rice",
+                        "Fish Curry",
+                        "Vegetable Curry",
+                        "Rasam",
+                        "Curd/Yogurt",
+                        "Pickle & Papad"
+                    ]
+                },
+                {
+                    "name": "Seafood Special",
+                    "price": "₹1,000 per plate",
+                    "features": [
+                        "Seafood Biryani",
+                        "Fish Curry",
+                        "Prawn Curry",
+                        "Two Vegetable Curries",
+                        "Sambar & Rasam",
+                        "Curd/Yogurt",
+                        "Traditional Pickles",
+                        "Dessert"
+                    ]
+                },
+                {
+                    "name": "Seafood Grand",
+                    "price": "₹1,500 per plate",
+                    "features": [
+                        "Seafood Special Biryani",
+                        "Three Seafood Curries",
+                        "Four Vegetable Dishes",
+                        "Traditional Coastal Specialties",
+                        "Sambar, Rasam & Chaaru",
+                        "Multiple Rice Varieties",
+                        "Assorted Pickles & Chutneys",
+                        "Two Desserts",
+                        "Traditional Drinks"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 67,
+            "name": "Malabar Biryani House",
+            "specialty": "Authentic Malabar Cuisine",
+            "rating": 4.7,
+            "price": "₹600 - ₹1,400 per plate",
+            "capacity": "50-500 guests",
+            "image": "https://www.trawell.in/blog/wp-content/uploads/2021/08/Main_Image-6.jpg",
+            "experience": "12 years",
+            "features": ["Malabar Specialties", "Famous Biryani", "Traditional Recipes", "Quality Ingredients"],
+            "contact": {"phone": "+91 9876543252"},
+            "packages": [
+                {
+                    "name": "Malabar Basic",
+                    "price": "₹600 per plate",
+                    "features": [
+                        "Steamed Rice",
+                        "Malabar Chicken Curry",
+                        "Vegetable Curry",
+                        "Rasam",
+                        "Curd/Yogurt",
+                        "Pickle & Papad"
+                    ]
+                },
+                {
+                    "name": "Malabar Special",
+                    "price": "₹950 per plate",
+                    "features": [
+                        "Malabar Biryani",
+                        "Chicken Curry",
+                        "Mutton Curry",
+                        "Two Vegetable Curries",
+                        "Sambar & Rasam",
+                        "Curd/Yogurt",
+                        "Traditional Pickles",
+                        "Dessert"
+                    ]
+                },
+                {
+                    "name": "Malabar Grand",
+                    "price": "₹1,400 per plate",
+                    "features": [
+                        "Malabar Special Biryani",
+                        "Three Non-Veg Curries",
+                        "Four Vegetable Dishes",
+                        "Traditional Malabar Specialties",
+                        "Sambar, Rasam & Chaaru",
+                        "Multiple Rice Varieties",
+                        "Assorted Pickles & Chutneys",
+                        "Two Desserts",
+                        "Traditional Drinks"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 68,
+            "name": "Thiruvananthapuram Traditional",
+            "specialty": "South Kerala Cuisine",
+            "rating": 4.5,
+            "price": "₹550 - ₹1,300 per plate",
+            "capacity": "50-500 guests",
+            "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlg6TnCLqqapBpoU-ZENVNkAUAsf2uva-EDw&s",
+            "experience": "11 years",
+            "features": ["South Kerala Specialties", "Traditional Recipes", "Fresh Ingredients", "Quality Service"],
+            "contact": {"phone": "+91 9876543253"},
+            "packages": [
+                {
+                    "name": "South Kerala Basic",
+                    "price": "₹550 per plate",
+                    "features": [
+                        "Steamed Rice",
+                        "Sambar",
+                        "Vegetable Curry",
+                        "Rasam",
+                        "Curd/Yogurt",
+                        "Pickle & Papad"
+                    ]
+                },
+                {
+                    "name": "South Kerala Special",
+                    "price": "₹900 per plate",
+                    "features": [
+                        "Steamed Rice & Biryani",
+                        "Three Vegetable Curries",
+                        "Traditional South Kerala Specialties",
+                        "Sambar & Rasam",
+                        "Curd/Yogurt",
+                        "Traditional Pickles",
+                        "Dessert"
+                    ]
+                },
+                {
+                    "name": "South Kerala Grand",
+                    "price": "₹1,300 per plate",
+                    "features": [
+                        "Multiple Rice Varieties",
+                        "Five Vegetable Specialties",
+                        "Traditional South Kerala Curries",
+                        "Sambar, Rasam & Chaaru",
+                        "Assorted Pickles & Chutneys",
+                        "Two Desserts",
+                        "Traditional Drinks"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 69,
+            "name": "Kottayam Christian Cuisine",
+            "specialty": "Syrian Christian Food",
+            "rating": 4.6,
+            "price": "₹600 - ₹1,400 per plate",
+            "capacity": "50-500 guests",
+            "image": "https://d1oh9y2nmj4y5b.cloudfront.net/uploads/photo/filename/489/2_Cochin_LeelaManjooran_Food6ResizedForWeb.jpg",
+            "experience": "9 years",
+            "features": ["Syrian Christian Specialties", "Traditional Recipes", "Fresh Ingredients", "Quality Service"],
+            "contact": {"phone": "+91 9876543254"},
+            "packages": [
+                {
+                    "name": "Syrian Christian Basic",
+                    "price": "₹600 per plate",
+                    "features": [
+                        "Steamed Rice",
+                        "Chicken Curry",
+                        "Vegetable Curry",
+                        "Rasam",
+                        "Curd/Yogurt",
+                        "Pickle & Papad"
+                    ]
+                },
+                {
+                    "name": "Syrian Christian Special",
+                    "price": "₹950 per plate",
+                    "features": [
+                        "Steamed Rice & Biryani",
+                        "Chicken Curry",
+                        "Mutton Curry",
+                        "Two Vegetable Curries",
+                        "Sambar & Rasam",
+                        "Curd/Yogurt",
+                        "Traditional Pickles",
+                        "Dessert"
+                    ]
+                },
+                {
+                    "name": "Syrian Christian Grand",
+                    "price": "₹1,400 per plate",
+                    "features": [
+                        "Multiple Rice Varieties",
+                        "Three Non-Veg Specialties",
+                        "Four Vegetable Dishes",
+                        "Traditional Syrian Christian Specialties",
+                        "Sambar, Rasam & Chaaru",
+                        "Assorted Pickles & Chutneys",
+                        "Two Desserts",
+                        "Traditional Drinks"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 70,
+            "name": "Kozhikode Street Food Specials",
+            "specialty": "Famous Street Food",
+            "rating": 4.4,
+            "price": "₹450 - ₹1,100 per plate",
+            "capacity": "50-400 guests",
+            "image": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/13/85/54/be/al-faham-chicken.jpg",
+            "experience": "7 years",
+            "features": ["Street Food Specialties", "Quick Service", "Traditional Recipes", "Fresh Ingredients"],
+            "contact": {"phone": "+91 9876543255"},
+            "packages": [
+                {
+                    "name": "Street Food Basic",
+                    "price": "₹450 per plate",
+                    "features": [
+                        "Steamed Rice",
+                        "Chicken Curry",
+                        "Vegetable Curry",
+                        "Rasam",
+                        "Curd/Yogurt",
+                        "Pickle & Papad"
+                    ]
+                },
+                {
+                    "name": "Street Food Special",
+                    "price": "₹750 per plate",
+                    "features": [
+                        "Steamed Rice & Biryani",
+                        "Chicken Curry",
+                        "Mutton Curry",
+                        "Two Vegetable Curries",
+                        "Sambar & Rasam",
+                        "Curd/Yogurt",
+                        "Traditional Pickles",
+                        "Dessert"
+                    ]
+                },
+                {
+                    "name": "Street Food Grand",
+                    "price": "₹1,100 per plate",
+                    "features": [
+                        "Multiple Rice Varieties",
+                        "Three Non-Veg Specialties",
+                        "Four Vegetable Dishes",
+                        "Traditional Street Food Specialties",
+                        "Sambar, Rasam & Chaaru",
+                        "Assorted Pickles & Chutneys",
+                        "Two Desserts",
+                        "Traditional Drinks"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 71,
+            "name": "Alleppey Backwater Cuisine",
+            "specialty": "Backwater Region Specialties",
+            "rating": 4.7,
+            "price": "₹650 - ₹1,500 per plate",
+            "capacity": "50-500 guests",
+            "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQANmGbV0LgeF4gHzLe25PhBMXD5oVM2y_KDw&s",
+            "experience": "10 years",
+            "features": ["Backwater Specialties", "Fresh Seafood", "Traditional Recipes", "Quality Ingredients"],
+            "contact": {"phone": "+91 9876543256"},
+            "packages": [
+                {
+                    "name": "Backwater Basic",
+                    "price": "₹650 per plate",
+                    "features": [
+                        "Steamed Rice",
+                        "Fish Curry",
+                        "Vegetable Curry",
+                        "Rasam",
+                        "Curd/Yogurt",
+                        "Pickle & Papad"
+                    ]
+                },
+                {
+                    "name": "Backwater Special",
+                    "price": "₹1,000 per plate",
+                    "features": [
+                        "Backwater Biryani",
+                        "Fish Curry",
+                        "Prawn Curry",
+                        "Two Vegetable Curries",
+                        "Sambar & Rasam",
+                        "Curd/Yogurt",
+                        "Traditional Pickles",
+                        "Dessert"
+                    ]
+                },
+                {
+                    "name": "Backwater Grand",
+                    "price": "₹1,500 per plate",
+                    "features": [
+                        "Backwater Special Biryani",
+                        "Three Seafood Curries",
+                        "Four Vegetable Dishes",
+                        "Traditional Backwater Specialties",
+                        "Sambar, Rasam & Chaaru",
+                        "Multiple Rice Varieties",
+                        "Assorted Pickles & Chutneys",
+                        "Two Desserts",
+                        "Traditional Drinks"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 72,
+            "name": "Kannur Thalassery Delights",
+            "specialty": "North Kerala Cuisine",
+            "rating": 4.5,
+            "price": "₹550 - ₹1,300 per plate",
+            "capacity": "50-500 guests",
+            "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlg6TnCLqqapBpoU-ZENVNkAUAsf2uva-EDw&s",
+            "experience": "8 years",
+            "features": ["Thalassery Specialties", "North Kerala Cuisine", "Traditional Recipes", "Fresh Ingredients"],
+            "contact": {"phone": "+91 9876543257"},
+            "packages": [
+                {
+                    "name": "Thalassery Basic",
+                    "price": "₹550 per plate",
+                    "features": [
+                        "Steamed Rice",
+                        "Chicken Curry",
+                        "Vegetable Curry",
+                        "Rasam",
+                        "Curd/Yogurt",
+                        "Pickle & Papad"
+                    ]
+                },
+                {
+                    "name": "Thalassery Special",
+                    "price": "₹900 per plate",
+                    "features": [
+                        "Thalassery Biryani",
+                        "Chicken Curry",
+                        "Mutton Curry",
+                        "Two Vegetable Curries",
+                        "Sambar & Rasam",
+                        "Curd/Yogurt",
+                        "Traditional Pickles",
+                        "Dessert"
+                    ]
+                },
+                {
+                    "name": "Thalassery Grand",
+                    "price": "₹1,300 per plate",
+                    "features": [
+                        "Thalassery Special Biryani",
+                        "Three Non-Veg Curries",
+                        "Four Vegetable Dishes",
+                        "Traditional Thalassery Specialties",
+                        "Sambar, Rasam & Chaaru",
+                        "Multiple Rice Varieties",
+                        "Assorted Pickles & Chutneys",
+                        "Two Desserts",
+                        "Traditional Drinks"
+                    ]
+                }
+            ]
+        }
+    ],
+    "Telangana": [
+        {
+            "id": 73,
+            "name": "Hyderabad Biryani House",
+            "specialty": "Authentic Hyderabadi Biryani",
+            "rating": 4.7,
+            "price": "₹600 - ₹1,400 per plate",
+            "capacity": "50-500 guests",
+            "image": "https://charminarhotel.com/wp-content/uploads/2024/07/Untitled-design-9.jpg",
+            "experience": "12 years",
+            "features": ["Hyderabadi Biryani", "Authentic Recipes", "Premium Ingredients", "Traditional Cooking"],
+            "contact": {"phone": "+91 9876543260"},
+            "packages": [
+                {
+                    "name": "Biryani Basic",
+                    "price": "₹600 per plate",
+                    "features": [
+                        "Hyderabadi Biryani",
+                        "Mirchi Ka Salan",
+                        "Vegetable Curry",
+                        "Raita",
+                        "Pickle & Papad"
+                    ]
+                },
+                {
+                    "name": "Biryani Special",
+                    "price": "₹950 per plate",
+                    "features": [
+                        "Hyderabadi Biryani",
+                        "Chicken Curry",
+                        "Mutton Curry",
+                        "Two Vegetable Curries",
+                        "Mirchi Ka Salan",
+                        "Raita",
+                        "Traditional Pickles",
+                        "Dessert"
+                    ]
+                },
+                {
+                    "name": "Biryani Grand",
+                    "price": "₹1,400 per plate",
+                    "features": [
+                        "Hyderabadi Special Biryani",
+                        "Three Non-Veg Curries",
+                        "Four Vegetable Dishes",
+                        "Traditional Hyderabadi Specialties",
+                        "Mirchi Ka Salan & Raita",
+                        "Multiple Rice Varieties",
+                        "Assorted Pickles & Chutneys",
+                        "Two Desserts",
+                        "Traditional Drinks"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 74,
+            "name": "Nizami Kitchen",
+            "specialty": "Royal Mughlai Cuisine",
+            "rating": 4.9,
+            "price": "₹900 - ₹2,000 per plate",
+            "capacity": "100-1000 guests",
+            "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-rJscxmmdgl0TstXfy4Bow2BJqQzu7Kb-vw&s",
+            "experience": "15 years",
+            "features": ["Royal Mughlai", "Premium Ingredients", "Professional Service", "Custom Menus"],
+            "contact": {"phone": "+91 9876543261"},
+            "packages": [
+                {
+                    "name": "Nizami Basic",
+                    "price": "₹900 per plate",
+                    "features": [
+                        "Mughlai Biryani",
+                        "Chicken Curry",
+                        "Vegetable Curry",
+                        "Raita",
+                        "Pickle & Papad"
+                    ]
+                },
+                {
+                    "name": "Nizami Special",
+                    "price": "₹1,400 per plate",
+                    "features": [
+                        "Mughlai Biryani",
+                        "Chicken Curry",
+                        "Mutton Curry",
+                        "Two Vegetable Curries",
+                        "Raita",
+                        "Traditional Pickles",
+                        "Dessert"
+                    ]
+                },
+                {
+                    "name": "Nizami Grand",
+                    "price": "₹2,000 per plate",
+                    "features": [
+                        "Mughlai Special Biryani",
+                        "Three Royal Curries",
+                        "Four Vegetable Dishes",
+                        "Traditional Mughlai Specialties",
+                        "Raita & Salan",
+                        "Multiple Rice Varieties",
+                        "Assorted Pickles & Chutneys",
+                        "Two Premium Desserts",
+                        "Royal Drinks"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 75,
+            "name": "Telangana Traditional Meals",
+            "specialty": "Authentic Telangana Cuisine",
+            "rating": 4.6,
+            "price": "₹500 - ₹1,200 per plate",
+            "capacity": "50-500 guests",
+            "image": "https://www.godavarivantillu.com/cdn/shop/files/AchaTeluguBhojanam_1200x1200.png?v=1711392541",
+            "experience": "10 years",
+            "features": ["Telangana Specialties", "Traditional Recipes", "Fresh Ingredients", "Quality Service"],
+            "contact": {"phone": "+91 9876543262"},
+            "packages": [
+                {
+                    "name": "Telangana Basic",
+                    "price": "₹500 per plate",
+                    "features": [
+                        "Steamed Rice",
+                        "Sambar",
+                        "Vegetable Curry",
+                        "Rasam",
+                        "Curd/Yogurt",
+                        "Pickle & Papad"
+                    ]
+                },
+                {
+                    "name": "Telangana Special",
+                    "price": "₹850 per plate",
+                    "features": [
+                        "Steamed Rice & Biryani",
+                        "Three Vegetable Curries",
+                        "Traditional Telangana Specialties",
+                        "Sambar & Rasam",
+                        "Curd/Yogurt",
+                        "Traditional Pickles",
+                        "Dessert"
+                    ]
+                },
+                {
+                    "name": "Telangana Grand",
+                    "price": "₹1,200 per plate",
+                    "features": [
+                        "Multiple Rice Varieties",
+                        "Five Vegetable Specialties",
+                        "Traditional Telangana Curries",
+                        "Sambar, Rasam & Chaaru",
+                        "Assorted Pickles & Chutneys",
+                        "Two Desserts",
+                        "Traditional Drinks"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 76,
+            "name": "Warangal Rural Specials",
+            "specialty": "Telangana Rural Cuisine",
+            "rating": 4.4,
+            "price": "₹400 - ₹1,000 per plate",
+            "capacity": "50-400 guests",
+            "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdz3cfw4RCwyBhPtTOC0drsbTE78xn30hRwQ&s",
+            "experience": "8 years",
+            "features": ["Rural Specialties", "Traditional Recipes", "Fresh Ingredients", "Authentic Cooking"],
+            "contact": {"phone": "+91 9876543263"},
+            "packages": [
+                {
+                    "name": "Rural Basic",
+                    "price": "₹400 per plate",
+                    "features": [
+                        "Steamed Rice",
+                        "Sambar",
+                        "Vegetable Curry",
+                        "Rasam",
+                        "Curd/Yogurt",
+                        "Pickle & Papad"
+                    ]
+                },
+                {
+                    "name": "Rural Special",
+                    "price": "₹700 per plate",
+                    "features": [
+                        "Steamed Rice & Biryani",
+                        "Three Vegetable Curries",
+                        "Traditional Rural Specialties",
+                        "Sambar & Rasam",
+                        "Curd/Yogurt",
+                        "Traditional Pickles",
+                        "Dessert"
+                    ]
+                },
+                {
+                    "name": "Rural Grand",
+                    "price": "₹1,000 per plate",
+                    "features": [
+                        "Multiple Rice Varieties",
+                        "Five Vegetable Specialties",
+                        "Traditional Rural Curries",
+                        "Sambar, Rasam & Chaaru",
+                        "Assorted Pickles & Chutneys",
+                        "Two Desserts",
+                        "Traditional Drinks"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 77,
+            "name": "Haleem Specialists",
+            "specialty": "Ramadan Special Haleem",
+            "rating": 4.8,
+            "price": "₹700 - ₹1,600 per plate",
+            "capacity": "50-500 guests",
+            "image": "https://www.thedeliciouscrescent.com/wp-content/uploads/2020/08/Haleem-6-500x500.jpg",
+            "experience": "13 years",
+            "features": ["Special Haleem", "Ramadan Specialties", "Traditional Recipes", "Premium Ingredients"],
+            "contact": {"phone": "+91 9876543264"},
+            "packages": [
+                {
+                    "name": "Haleem Basic",
+                    "price": "₹700 per plate",
+                    "features": [
+                        "Haleem",
+                        "Sheermal",
+                        "Fruit Salad",
+                        "Dates",
+                        "Traditional Drinks"
+                    ]
+                },
+                {
+                    "name": "Haleem Special",
+                    "price": "₹1,100 per plate",
+                    "features": [
+                        "Premium Haleem",
+                        "Sheermal",
+                        "Fruit Salad",
+                        "Dates",
+                        "Traditional Pickles",
+                        "Dessert",
+                        "Traditional Drinks"
+                    ]
+                },
+                {
+                    "name": "Haleem Grand",
+                    "price": "₹1,600 per plate",
+                    "features": [
+                        "Royal Haleem",
+                        "Sheermal",
+                        "Fruit Salad",
+                        "Dates",
+                        "Assorted Pickles & Chutneys",
+                        "Two Premium Desserts",
+                        "Traditional Drinks",
+                        "Live Haleem Counter"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 78,
+            "name": "Kebabs & Tikkas",
+            "specialty": "Mughlai Starter Specialties",
+            "rating": 4.5,
+            "price": "₹800 - ₹1,800 per plate",
+            "capacity": "50-500 guests",
+            "image": "https://www.clubmahindra.com/blog/media/section_images/mughlaicui-706ca44ba1f2a25.jpg",
+            "experience": "9 years",
+            "features": ["Kebab Specialties", "Mughlai Starters", "Premium Ingredients", "Live Counters"],
+            "contact": {"phone": "+91 9876543265"},
+            "packages": [
+                {
+                    "name": "Kebab Basic",
+                    "price": "₹800 per plate",
+                    "features": [
+                        "Chicken Kebabs",
+                        "Mutton Kebabs",
+                        "Vegetable Kebabs",
+                        "Raita",
+                        "Salad",
+                        "Bread"
+                    ]
+                },
+                {
+                    "name": "Kebab Special",
+                    "price": "₹1,200 per plate",
+                    "features": [
+                        "Chicken Kebabs",
+                        "Mutton Kebabs",
+                        "Fish Kebabs",
+                        "Vegetable Kebabs",
+                        "Raita",
+                        "Salad",
+                        "Bread",
+                        "Traditional Pickles",
+                        "Dessert"
+                    ]
+                },
+                {
+                    "name": "Kebab Grand",
+                    "price": "₹1,800 per plate",
+                    "features": [
+                        "Premium Chicken Kebabs",
+                        "Royal Mutton Kebabs",
+                        "Fish Kebabs",
+                        "Vegetable Kebabs",
+                        "Raita",
+                        "Salad",
+                        "Multiple Bread Varieties",
+                        "Assorted Pickles & Chutneys",
+                        "Two Desserts",
+                        "Traditional Drinks",
+                        "Live Kebab Counter"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 79,
+            "name": "Vegetarian Hyderabadi",
+            "specialty": "Hyderabadi Veg Delicacies",
+            "rating": 4.3,
+            "price": "₹500 - ₹1,200 per plate",
+            "capacity": "50-500 guests",
+            "image": "https://aadhyacaterers.com/wp-content/uploads/2025/09/a94a23_aa674298181e422db3f4da9c8bfac4ccmv2.jpg",
+            "experience": "7 years",
+            "features": ["Vegetarian Specialties", "Hyderabadi Flavors", "Traditional Recipes", "Fresh Ingredients"],
+            "contact": {"phone": "+91 9876543266"},
+            "packages": [
+                {
+                    "name": "Veg Hyderabadi Basic",
+                    "price": "₹500 per plate",
+                    "features": [
+                        "Steamed Rice",
+                        "Sambar",
+                        "Vegetable Curry",
+                        "Rasam",
+                        "Curd/Yogurt",
+                        "Pickle & Papad"
+                    ]
+                },
+                {
+                    "name": "Veg Hyderabadi Special",
+                    "price": "₹850 per plate",
+                    "features": [
+                        "Steamed Rice & Biryani",
+                        "Three Vegetable Curries",
+                        "Traditional Hyderabadi Specialties",
+                        "Sambar & Rasam",
+                        "Curd/Yogurt",
+                        "Traditional Pickles",
+                        "Dessert"
+                    ]
+                },
+                {
+                    "name": "Veg Hyderabadi Grand",
+                    "price": "₹1,200 per plate",
+                    "features": [
+                        "Multiple Rice Varieties",
+                        "Five Vegetable Specialties",
+                        "Traditional Hyderabadi Curries",
+                        "Sambar, Rasam & Chaaru",
+                        "Assorted Pickles & Chutneys",
+                        "Two Desserts",
+                        "Traditional Drinks"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 80,
+            "name": "Modern Telangana Fusion",
+            "specialty": "Contemporary Telangana Food",
+            "rating": 4.2,
+            "price": "₹600 - ₹1,400 per plate",
+            "capacity": "50-500 guests",
+            "image": "https://restaurantindia.s3.ap-south-1.amazonaws.com/s3fs-public/2025-01/getty_545286388_389790%20%281%29.jpg",
+            "experience": "5 years",
+            "features": ["Fusion Cuisine", "Modern Presentation", "Creative Recipes", "Flexible Menus"],
+            "contact": {"phone": "+91 9876543267"},
+            "packages": [
+                {
+                    "name": "Fusion Basic",
+                    "price": "₹600 per plate",
+                    "features": [
+                        "Steamed Rice",
+                        "Fusion Chicken Curry",
+                        "Vegetable Curry",
+                        "Rasam",
+                        "Curd/Yogurt",
+                        "Pickle & Papad"
+                    ]
+                },
+                {
+                    "name": "Fusion Special",
+                    "price": "₹950 per plate",
+                    "features": [
+                        "Fusion Biryani",
+                        "Chicken Fusion",
+                        "Mutton Curry",
+                        "Two Vegetable Curries",
+                        "Sambar & Rasam",
+                        "Curd/Yogurt",
+                        "Fusion Pickles",
+                        "Dessert"
+                    ]
+                },
+                {
+                    "name": "Fusion Grand",
+                    "price": "₹1,400 per plate",
+                    "features": [
+                        "Fusion Special Biryani",
+                        "Three Fusion Curries",
+                        "Four Vegetable Dishes",
+                        "Modern Telangana Specialties",
+                        "Sambar, Rasam & Chaaru",
+                        "Multiple Rice Varieties",
+                        "Assorted Pickles & Chutneys",
+                        "Two Desserts",
+                        "Fusion Drinks"
+                    ]
+                }
+            ]
+        }
+    ]
+};
+
+// Generate unique ID function - MOVED TO TOP
+// Add this at the VERY TOP of your script
+function generateId() {
+    return 'id_' + Date.now().toString(36) + Math.random().toString(36).substr(2);
+}
+
+ // DOM Elements
+const cateringGrid = document.getElementById('cateringGrid');
+const stateFilter = document.getElementById('stateFilter');
+const cuisineTypeFilter = document.getElementById('cuisineTypeFilter');
+const searchInput = document.getElementById('searchInput');
+const minPrice = document.getElementById('minPrice');
+const maxPrice = document.getElementById('maxPrice');
+const resetFilters = document.getElementById('resetFilters');
+const totalCatering = document.getElementById('totalCatering');
+const avgRating = document.getElementById('avgRating');
+const statesCovered = document.getElementById('statesCovered');
+const topRated = document.getElementById('topRated');
+const shortlistToast = document.getElementById('shortlistToast');
+
+// Current filters and shortlist
+let currentState = 'all';
+let currentCuisineType = 'all';
+let currentMinPrice = '';
+let currentMaxPrice = '';
+let currentSearch = '';
+let shortlistedServices = JSON.parse(localStorage.getItem('shortlistedCatering')) || [];
+let bookings = JSON.parse(localStorage.getItem('cateringBookings')) || [];
+
+// Initialize the page
+function init() {
+    updateStats();
+    displayCateringServices();
+    setupEventListeners();
+    checkPendingBookings();
+}
+
+// Update statistics
+function updateStats() {
+    let allCatering = [];
+    let totalRating = 0;
+    let topRatedCount = 0;
+    
+    for (const state in cateringData) {
+        cateringData[state].forEach(service => {
+            allCatering.push(service);
+            totalRating += service.rating;
+            if (service.rating >= 4.5) topRatedCount++;
+        });
+    }
+    
+    totalCatering.textContent = allCatering.length;
+    avgRating.textContent = (totalRating / allCatering.length).toFixed(1);
+    statesCovered.textContent = Object.keys(cateringData).length;
+    topRated.textContent = topRatedCount;
+}
+
+// Set up event listeners
+function setupEventListeners() {
+    // State filter
+    stateFilter.addEventListener('change', () => {
+        currentState = stateFilter.value;
+        displayCateringServices();
+    });
+
+    // Cuisine type filter
+    cuisineTypeFilter.addEventListener('change', () => {
+        currentCuisineType = cuisineTypeFilter.value;
+        displayCateringServices();
+    });
+
+    // Search
+    searchInput.addEventListener('input', () => {
+        currentSearch = searchInput.value.toLowerCase();
+        displayCateringServices();
+    });
+
+    // Price filters
+    minPrice.addEventListener('input', () => {
+        currentMinPrice = minPrice.value;
+        displayCateringServices();
+    });
+
+    maxPrice.addEventListener('input', () => {
+        currentMaxPrice = maxPrice.value;
+        displayCateringServices();
+    });
+
+    // Reset filters
+    resetFilters.addEventListener('click', () => {
+        stateFilter.value = 'all';
+        cuisineTypeFilter.value = 'all';
+        searchInput.value = '';
+        minPrice.value = '';
+        maxPrice.value = '';
+        
+        currentState = 'all';
+        currentCuisineType = 'all';
+        currentSearch = '';
+        currentMinPrice = '';
+        currentMaxPrice = '';
+        
+        displayCateringServices();
+    });
+        const bookingModal = document.getElementById('bookingModal');
+    const bookingForm = document.getElementById('bookingForm');
+    const closeBookingForm = document.getElementById('closeBookingForm');
+    const cancelBooking = document.getElementById('cancelBooking');
+    
+    // Close modal when clicking X
+    closeBookingForm.addEventListener('click', closeBookingModal);
+    
+    // Close modal when clicking cancel
+    cancelBooking.addEventListener('click', closeBookingModal);
+    
+    // Close modal when clicking outside
+    bookingModal.addEventListener('click', (e) => {
+        if (e.target === bookingModal) {
+            closeBookingModal();
+        }
+    });
+    
+    // Handle form submission
+    bookingForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        const formData = {
+            customerName: document.getElementById('customerName').value,
+            customerPhone: document.getElementById('customerPhone').value,
+            customerEmail: document.getElementById('customerEmail').value,
+            eventType: document.getElementById('eventType').value,
+            eventDate: document.getElementById('eventDate').value,
+            eventTime: document.getElementById('eventTime').value,
+            guestCount: document.getElementById('guestCount').value,
+            eventAddress: document.getElementById('eventAddress').value,
+            specialRequirements: document.getElementById('specialRequirements').value
+        };
+        
+        submitBookingForm(formData);
+    });
+
+}
+
+// Display catering services based on current filters
+function displayCateringServices() {
+    cateringGrid.innerHTML = '';
+    
+    let servicesToShow = [];
+    
+    // Collect services based on state filter
+    if (currentState === 'all') {
+        // Show services from all states
+        for (const state in cateringData) {
+            cateringData[state].forEach(service => {
+                service.state = state;
+                servicesToShow.push(service);
+            });
+        }
+    } else {
+        // Show services from specific state
+        if (cateringData[currentState]) {
+            cateringData[currentState].forEach(service => {
+                service.state = currentState;
+                servicesToShow.push(service);
+            });
+        }
+    }
+    
+    // Apply cuisine type filter
+    if (currentCuisineType !== 'all') {
+        servicesToShow = servicesToShow.filter(service => 
+            service.specialty === currentCuisineType
+        );
+    }
+    
+    // Apply search filter
+    if (currentSearch) {
+        servicesToShow = servicesToShow.filter(service => {
+            const searchTerm = currentSearch;
+            const searchableText = (
+                service.name + ' ' + 
+                service.specialty + ' ' + 
+                service.state + ' ' +
+                service.features.join(' ')
+            ).toLowerCase();
+            
+            return searchableText.includes(searchTerm);
+        });
+    }
+    
+    // Apply price filter
+    if (currentMinPrice || currentMaxPrice) {
+        servicesToShow = servicesToShow.filter(service => {
+            // Extract price range from string (e.g., "₹500 - ₹1,200 per plate")
+            const priceMatch = service.price.match(/₹(\d+(?:,\d+)*)\s*-\s*₹(\d+(?:,\d+)*)/);
+            if (!priceMatch) return true;
+            
+            const minServicePrice = parseInt(priceMatch[1].replace(/,/g, ''));
+            const maxServicePrice = parseInt(priceMatch[2].replace(/,/g, ''));
+            
+            let minFilter = currentMinPrice ? parseInt(currentMinPrice) : 0;
+            let maxFilter = currentMaxPrice ? parseInt(currentMaxPrice) : Infinity;
+            
+            return maxServicePrice >= minFilter && minServicePrice <= maxFilter;
+        });
+    }
+    
+    // Display services or show no results message
+    if (servicesToShow.length === 0) {
+        cateringGrid.innerHTML = `
+            <div class="no-results">
+                <h3>No catering services found matching your criteria</h3>
+                <p>Try adjusting your filters or search terms</p>
+            </div>
+        `;
+    } else {
+        servicesToShow.forEach(service => {
+            const serviceCard = createServiceCard(service);
+            cateringGrid.appendChild(serviceCard);
+        });
+    }
+}
+
+// Create service card element
+function createServiceCard(service) {
+    const card = document.createElement('div');
+    card.className = 'catering-card';
+    
+    // Create feature tags
+    const featureTags = service.features.map(feature => 
+        `<span class="catering-feature-tag">${feature}</span>`
+    ).join('');
+    
+    // Create packages HTML
+    let packagesHTML = '';
+    if (service.packages && service.packages.length > 0) {
+        packagesHTML = `
+            <div class="packages-section">
+                <div class="packages-title">
+                    Catering Packages
+                    <button class="packages-toggle">Show Packages</button>
+                </div>
+                <div class="packages-list">
+                    ${service.packages.map(pkg => `
+                        <div class="package-item">
+                            <div class="package-name">${pkg.name}</div>
+                            <div class="package-price">${pkg.price}</div>
+                            <div class="package-features">
+                                <ul>
+                                    ${pkg.features.map(feature => `<li>${feature}</li>`).join('')}
+                                </ul>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        `;
+    }
+    
+    // Check if service is already shortlisted
+    const isShortlisted = shortlistedServices.some(item => item.id === service.id);
+    
+    // Check if already booked
+    const existingBooking = bookings.find(booking => booking.id === service.id);
+    const isBooked = existingBooking && existingBooking.status !== 'cancelled';
+    
+    card.innerHTML = `
+        <div class="catering-image" style="background-image: url('${service.image}')">
+            <div class="state-badge">${service.state}</div>
+            <div class="catering-rating">⭐ ${service.rating}</div>
+            ${isBooked ? `<div class="booking-badge">${existingBooking.status.toUpperCase()}</div>` : ''}
+        </div>
+        <div class="catering-content">
+            <h3 class="catering-name">${service.name}</h3>
+            <p class="catering-specialty">${service.specialty}</p>
+            <div class="catering-details">
+                <span class="catering-price">${service.price}</span>
+                <span class="catering-capacity">${service.capacity}</span>
+            </div>
+            <div class="catering-features">
+                ${featureTags}
+            </div>
+            ${packagesHTML}
+            <div class="action-buttons">
+                <button class="btn ${isBooked ? 'btn-success' : 'btn-primary'} book-now-btn" 
+                        data-service-id="${service.id}"
+                        ${isBooked ? 'disabled' : ''}>
+                    ${isBooked ? '✓ ' + existingBooking.status.charAt(0).toUpperCase() + existingBooking.status.slice(1) : 'Book Now'}
+                </button>
+                <button class="btn btn-secondary shortlist-btn ${isShortlisted ? 'added' : ''}" data-service-id="${service.id}">
+                    ${isShortlisted ? '✓ Shortlisted' : 'Add to Shortlist'}
+                </button>
+            </div>
+            <div class="catering-contact">
+                <div class="catering-phone">${service.contact.phone}</div>
+                <small>Contact for bookings and custom packages</small>
+            </div>
+        </div>
+    `;
+    
+    // Add click event to toggle packages
+    const packagesToggle = card.querySelector('.packages-toggle');
+    const packagesList = card.querySelector('.packages-list');
+    
+    if (packagesToggle && packagesList) {
+        packagesToggle.addEventListener('click', () => {
+            packagesList.classList.toggle('show');
+            packagesToggle.textContent = packagesList.classList.contains('show') ? 
+                'Hide Packages' : 'Show Packages';
+        });
+    }
+    
+    // Add click event to Book Now button
+    const bookNowBtn = card.querySelector('.book-now-btn');
+    if (!isBooked) {
+        bookNowBtn.addEventListener('click', () => {
+            bookService(service, bookNowBtn);
+        });
+    }
+    
+    // Add click event to Shortlist button
+    const shortlistBtn = card.querySelector('.shortlist-btn');
+    shortlistBtn.addEventListener('click', () => {
+        toggleShortlist(service, shortlistBtn);
+    });
+    
+    return card;
+}
+
+function bookService(service, button) {
+    currentBookingService = service;
+    currentBookingButton = button;
+    
+    // Show booking form modal
+    const bookingModal = document.getElementById('bookingModal');
+    bookingModal.classList.add('show');
+    
+    // Set minimum date to today
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('eventDate').min = today;
+}
+function submitBookingForm(formData) {
+    console.log('Submitting booking for service:', currentBookingService);
+    
+    // Create comprehensive booking object
+    const booking = {
+        id: currentBookingService.id,
+        serviceId: currentBookingService.id,
+        name: currentBookingService.name,
+        serviceType: 'catering',
+        specialty: currentBookingService.specialty,
+        price: currentBookingService.price,
+        image: currentBookingService.image,
+        contact: currentBookingService.contact,
+        state: currentBookingService.state,
+        
+        // Customer details
+        customerName: formData.customerName,
+        customerPhone: formData.customerPhone,
+        customerEmail: formData.customerEmail,
+        
+        // Event details
+        eventType: formData.eventType,
+        eventDate: formData.eventDate,
+        eventTime: formData.eventTime,
+        guestCount: parseInt(formData.guestCount),
+        eventAddress: formData.eventAddress,
+        specialRequirements: formData.specialRequirements,
+        
+        // Booking metadata
+        bookingDate: new Date().toISOString().split('T')[0],
+        bookingTime: new Date().toLocaleTimeString(),
+        status: 'pending',
+        vendor: currentBookingService.name,
+        acceptedAt: null
+    };
+    
+    // Add to bookings
+    bookings.push(booking);
+    localStorage.setItem('cateringBookings', JSON.stringify(bookings));
+    
+    // Update button
+    if (currentBookingButton) {
+        currentBookingButton.textContent = '✓ Pending';
+        currentBookingButton.classList.remove('btn-primary');
+        currentBookingButton.classList.add('btn-success');
+        currentBookingButton.disabled = true;
+    }
+    
+    // Show confirmation
+    showShortlistToast(`Booking request sent to ${currentBookingService.name}! Vendor will review your event details.`);
+    
+    // Simulate vendor response after 1 minute
+    setTimeout(() => {
+        updateBookingStatus(currentBookingService.id, 'accepted');
+    }, 60000);
+    
+    // Close modal
+    closeBookingModal();
+    
+    // Reset current booking variables
+    currentBookingService = null;
+    currentBookingButton = null;
+}
+function closeBookingModal() {
+    const bookingModal = document.getElementById('bookingModal');
+    bookingModal.classList.remove('show');
+    document.getElementById('bookingForm').reset();
+}
+
+// Update booking status
+// Enhanced updateBookingStatus function
+function updateBookingStatus(serviceId, status) {
+    const bookingIndex = bookings.findIndex(booking => booking.id === serviceId);
+    
+    if (bookingIndex !== -1) {
+        bookings[bookingIndex].status = status;
+        bookings[bookingIndex].acceptedAt = new Date().toISOString();
+        localStorage.setItem('cateringBookings', JSON.stringify(bookings));
+        
+        // Update UI if the card is visible
+        const bookButton = document.querySelector(`.book-now-btn[data-service-id="${serviceId}"]`);
+        if (bookButton) {
+            bookButton.textContent = '✓ ' + status.charAt(0).toUpperCase() + status.slice(1);
+            bookButton.classList.remove('btn-primary');
+            bookButton.classList.add('btn-success');
+            
+            // Update badge if exists
+            const badge = bookButton.closest('.catering-card')?.querySelector('.booking-badge');
+            if (badge) {
+                badge.textContent = status.toUpperCase();
+            }
+        }
+        
+        const statusMessage = status === 'accepted' ? 'accepted' : 'rejected';
+        showShortlistToast(`Booking ${statusMessage} for ${bookings[bookingIndex].name}!`);
+        
+        // Add notification
+        if (typeof addNotification === 'function') {
+            addNotification(
+                'Booking ' + statusMessage.charAt(0).toUpperCase() + statusMessage.slice(1), 
+                `Your catering booking with ${bookings[bookingIndex].name} has been ${statusMessage}!`, 
+                status === 'accepted' ? 'success' : 'warning'
+            );
+        }
+    }
+}
+
+// Check for pending bookings that need to be auto-accepted
+function checkPendingBookings() {
+    const now = new Date();
+    bookings.forEach(booking => {
+        if (booking.status === 'pending') {
+            const bookingDate = new Date(booking.bookingDate);
+            const timeDiff = now - bookingDate;
+            
+            // If more than 1 minute has passed, auto-accept
+            if (timeDiff > 60000) {
+                updateBookingStatus(booking.id, 'confirmed');
+            } else {
+                // Set timeout for remaining time
+                const remainingTime = 60000 - timeDiff;
+                setTimeout(() => {
+                    updateBookingStatus(booking.id, 'confirmed');
+                }, remainingTime);
+            }
+        }
+    });
+}
+
+// Toggle shortlist function
+function toggleShortlist(service, button) {
+    const index = shortlistedServices.findIndex(item => item.id === service.id);
+    
+    if (index === -1) {
+        // Add to shortlist
+        shortlistedServices.push(service);
+        button.textContent = '✓ Shortlisted';
+        button.classList.add('added');
+        showShortlistToast('Service added to shortlist!');
+        
+        // Also add to main dashboard shortlist
+        if (typeof addToShortlist === 'function') {
+            addToShortlist({
+                id: service.id,
+                name: service.name,
+                type: 'Catering',
+                price: service.price,
+                vendor: service.name,
+                addedDate: new Date().toISOString().split('T')[0]
+            });
+        }
+    } else {
+        // Remove from shortlist
+        shortlistedServices.splice(index, 1);
+        button.textContent = 'Add to Shortlist';
+        button.classList.remove('added');
+        showShortlistToast('Service removed from shortlist!');
+        
+        // Also remove from main dashboard shortlist if function exists
+        if (typeof removeFromShortlist === 'function') {
+            removeFromShortlist(service.id);
+        }
+    }
+    
+    // Save to localStorage
+    localStorage.setItem('shortlistedCatering', JSON.stringify(shortlistedServices));
+}
+
+// Show shortlist toast notification
+function showShortlistToast(message) {
+    if (shortlistToast) {
+        shortlistToast.textContent = message;
+        shortlistToast.classList.add('show');
+        
+        setTimeout(() => {
+            shortlistToast.classList.remove('show');
+        }, 3000);
+    } else {
+        // Fallback: use alert or console
+        console.log(message);
+    }
+}
+
+// Add to each service page
+document.addEventListener('DOMContentLoaded', function() {
+  // Add event listeners to all "Book Now" buttons
+  document.querySelectorAll('.book-now-btn').forEach(button => {
+    button.addEventListener('click', function() {
+      const serviceCard = this.closest('.service-card');
+      const serviceName = serviceCard.querySelector('.service-title').textContent;
+      const serviceCategory = document.querySelector('h1').textContent.toLowerCase();
+      const servicePrice = serviceCard.querySelector('.service-price')?.textContent || 'Not specified';
+      const serviceVendor = serviceCard.querySelector('.vendor-name')?.textContent || 'Not specified';
+      
+      // Add to bookings
+      if (typeof addBooking === 'function') {
+        addBooking({
+          name: serviceName,
+          category: serviceCategory,
+          price: servicePrice,
+          vendor: serviceVendor
+        });
+      } else {
+        // If not on dashboard, redirect to dashboard
+        window.location.href = 'customer-dashboard.html';
+      }
+    });
+  });
+  
+  // Add event listeners to all "Add to Shortlist" buttons
+  document.querySelectorAll('.add-to-shortlist-btn').forEach(button => {
+    button.addEventListener('click', function() {
+      const serviceCard = this.closest('.service-card');
+      const serviceName = serviceCard.querySelector('.service-title').textContent;
+      const serviceCategory = document.querySelector('h1').textContent.toLowerCase();
+      const servicePrice = serviceCard.querySelector('.service-price')?.textContent || 'Not specified';
+      const serviceVendor = serviceCard.querySelector('.vendor-name')?.textContent || 'Not specified';
+      const serviceRating = serviceCard.querySelector('.service-rating')?.textContent || 'Not rated';
+      
+      // Add to shortlist
+      if (typeof addToShortlist === 'function') {
+        addToShortlist({
+          name: serviceName,
+          category: serviceCategory,
+          price: servicePrice,
+          vendor: serviceVendor,
+          rating: serviceRating
+        });
+      } else {
+        // If not on dashboard, redirect to dashboard
+        window.location.href = 'customer-dashboard.html';
+      }
+    });
+  });
+});
+
+// ========== MISSING FUNCTIONS ADDED ==========
+
+// Generate unique ID function
+function generateId() {
+    return Date.now().toString(36) + Math.random().toString(36).substr(2);
+}
+
+// Add booking function for compatibility
+function addBooking(bookingData) {
+    const booking = {
+        id: generateId(),
+        name: bookingData.name,
+        serviceType: 'catering',
+        price: bookingData.price,
+        vendor: bookingData.vendor,
+        date: new Date().toISOString().split('T')[0],
+        time: '12:00',
+        status: 'pending',
+        bookingDate: new Date().toISOString().split('T')[0]
+    };
+    
+    const existingBookings = JSON.parse(localStorage.getItem('cateringBookings')) || [];
+    existingBookings.push(booking);
+    localStorage.setItem('cateringBookings', JSON.stringify(existingBookings));
+    
+    showShortlistToast(`Booking request sent for ${bookingData.name}!`);
+    
+    // Auto-accept after 1 minute
+    setTimeout(() => {
+        const updatedBookings = JSON.parse(localStorage.getItem('cateringBookings')) || [];
+        const bookingIndex = updatedBookings.findIndex(b => b.id === booking.id);
+        if (bookingIndex !== -1 && updatedBookings[bookingIndex].status === 'pending') {
+            updatedBookings[bookingIndex].status = 'confirmed';
+            localStorage.setItem('cateringBookings', JSON.stringify(updatedBookings));
+            showShortlistToast(`Booking confirmed for ${bookingData.name}!`);
+        }
+    }, 60000);
+}
+
+// Add to shortlist function for compatibility
+function addToShortlist(itemData) {
+    const shortlist = JSON.parse(localStorage.getItem('shortlistedCatering')) || [];
+    
+    // Check if already in shortlist
+    const exists = shortlist.some(item => item.name === itemData.name && item.vendor === itemData.vendor);
+    if (exists) {
+        showShortlistToast('This item is already in your shortlist!');
+        return;
+    }
+    
+    // Add to shortlist
+    shortlist.push({
+        id: generateId(),
+        name: itemData.name,
+        type: 'Catering',
+        price: itemData.price,
+        vendor: itemData.vendor,
+        rating: itemData.rating,
+        addedDate: new Date().toISOString().split('T')[0]
+    });
+    
+    localStorage.setItem('shortlistedCatering', JSON.stringify(shortlist));
+    showShortlistToast('Added to shortlist successfully!');
+}
+
+// Remove from shortlist function for compatibility
+function removeFromShortlist(itemId) {
+    const shortlist = JSON.parse(localStorage.getItem('shortlistedCatering')) || [];
+    const updatedShortlist = shortlist.filter(item => item.id !== itemId);
+    localStorage.setItem('shortlistedCatering', JSON.stringify(updatedShortlist));
+    showShortlistToast('Item removed from shortlist');
+}
+
+// Notification function for compatibility
+function addNotification(title, message, type = 'info') {
+    const notifications = JSON.parse(localStorage.getItem('notifications')) || [];
+    const icons = {
+        info: '🔔',
+        success: '✅',
+        warning: '⚠️'
+    };
+    
+    notifications.unshift({
+        id: generateId(),
+        title,
+        message,
+        type,
+        icon: icons[type] || '🔔',
+        timestamp: new Date().toISOString(),
+        read: false
+    });
+    
+    localStorage.setItem('notifications', JSON.stringify(notifications));
+    console.log(`Notification: ${title} - ${message}`);
+}
+
+// ========== DASHBOARD INTEGRATION FUNCTIONS ==========
+
+// Generate unique ID function
+function generateId() {
+    return Date.now().toString(36) + Math.random().toString(36).substr(2);
+}
+
+// Add to shortlist function for dashboard integration
+function addToShortlist(itemData) {
+    const shortlist = JSON.parse(localStorage.getItem('shortlist')) || [];
+    
+    // Check if already in shortlist
+    const exists = shortlist.some(item => item.id === itemData.id);
+    if (exists) {
+        showShortlistToast('This item is already in your shortlist!');
+        return;
+    }
+    
+    // Add to shortlist
+    shortlist.push({
+        id: itemData.id,
+        name: itemData.name,
+        type: itemData.type,
+        price: itemData.price,
+        vendor: itemData.vendor,
+        addedDate: new Date().toISOString().split('T')[0],
+        image: itemData.image,
+        specialty: itemData.specialty
+    });
+    
+    localStorage.setItem('shortlist', JSON.stringify(shortlist));
+    showShortlistToast('Added to shortlist successfully!');
+    
+    // Update dashboard badge count
+    updateDashboardShortlistCount();
+}
+
+// Remove from shortlist function
+function removeFromShortlist(itemId) {
+    const shortlist = JSON.parse(localStorage.getItem('shortlist')) || [];
+    const updatedShortlist = shortlist.filter(item => item.id !== itemId);
+    localStorage.setItem('shortlist', JSON.stringify(updatedShortlist));
+    showShortlistToast('Item removed from shortlist');
+    updateDashboardShortlistCount();
+}
+
+// Update dashboard shortlist count
+function updateDashboardShortlistCount() {
+    const shortlist = JSON.parse(localStorage.getItem('shortlist')) || [];
+    // This will update the badge when user returns to dashboard
+    console.log('Shortlist updated. Total items:', shortlist.length);
+}
+
+// Add booking function for dashboard integration
+function addBooking(bookingData) {
+    const booking = {
+        id: bookingData.id,
+        name: bookingData.name,
+        serviceType: bookingData.serviceType,
+        price: bookingData.price,
+        vendor: bookingData.vendor,
+        date: bookingData.date,
+        time: bookingData.time,
+        status: 'pending',
+        bookingDate: new Date().toISOString().split('T')[0]
+    };
+    
+    const existingBookings = JSON.parse(localStorage.getItem('bookings')) || [];
+    existingBookings.push(booking);
+    localStorage.setItem('bookings', JSON.stringify(existingBookings));
+    
+    showShortlistToast(`Booking request sent for ${bookingData.name}!`);
+}
+
+// Notification function for compatibility
+function addNotification(title, message, type = 'info') {
+    const notifications = JSON.parse(localStorage.getItem('notifications')) || [];
+    const icons = {
+        info: '🔔',
+        success: '✅',
+        warning: '⚠️'
+    };
+    
+    notifications.unshift({
+        id: generateId(),
+        title,
+        message,
+        type,
+        icon: icons[type] || '🔔',
+        timestamp: new Date().toISOString(),
+        read: false
+    });
+    
+    localStorage.setItem('notifications', JSON.stringify(notifications));
+    console.log(`Notification: ${title} - ${message}`);
+}
+
+// Initialize the application
+init();
+    </script>
+</body>
+</html>

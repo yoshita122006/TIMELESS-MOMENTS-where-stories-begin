@@ -1,0 +1,1902 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - Timeless Moments</title>
+  <style>
+    :root {
+      --light-blue: #e1f5fe;
+      --light-pink: #fce4ec;
+      --light-purple: #f3e5f5;
+      --medium-blue: #81d4fa;
+      --medium-pink: #f8bbd9;
+      --medium-purple: #e1bee7;
+      --dark-blue: #0288d1;
+      --dark-pink: #f06292;
+      --dark-purple: #8b5cf6;
+    }
+
+    * {margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;}
+    body {
+      background: linear-gradient(135deg, var(--light-blue) 0%, var(--light-pink) 50%, var(--light-purple) 100%);
+      min-height: 100vh; display: flex;
+    }
+/* Table Alignment Fixes */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  table-layout: fixed; /* Added for consistent column widths */
+}
+
+th, td {
+  text-align: left;
+  padding: 12px 10px;
+  border-bottom: 1px solid #eee;
+  word-wrap: break-word; /* Added for long content */
+}
+
+th {
+  background: var(--light-purple);
+  color: var(--dark-blue);
+  position: sticky;
+  top: 0;
+}
+
+tr:hover {
+  background: #f9f9f9;
+}
+
+/* Ensure action buttons column has enough width */
+.action-buttons {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* Make tables responsive on smaller screens */
+@media (max-width: 768px) {
+  table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  
+  .action-buttons {
+    flex-direction: column;
+  }
+  
+  .action-buttons .btn {
+    margin-bottom: 5px;
+  }
+}
+/* Responsive adjustments for dashboard */
+@media (max-width: 1200px) {
+  .stats {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .stats {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
+  
+  .stat-card {
+    padding: 15px;
+    min-height: 100px;
+  }
+  
+  .stat-number {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .stats {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  
+  .stat-card {
+    padding: 12px;
+    min-height: 90px;
+  }
+  
+  .stat-number {
+    font-size: 1.6rem;
+  }
+  
+  .stat-label {
+    font-size: 0.9rem;
+  }
+}
+    /* Sidebar */
+    .sidebar {
+      width: 250px; background: white; box-shadow: 4px 0 15px rgba(0,0,0,0.1);
+      padding: 30px 20px; display: flex; flex-direction: column;
+      position: fixed; height: 100vh; overflow-y: auto; z-index: 100;
+    }
+
+    .logo {font-size: 1.5rem; font-weight: bold; color: var(--dark-purple); margin-bottom: 30px; text-align: center;}
+    .nav-item {padding: 12px 15px; margin-bottom: 10px; border-radius: 10px; color: var(--dark-blue);
+      font-weight: 500; cursor: pointer; transition: 0.3s; display: flex; align-items: center;}
+    .nav-item:hover, .nav-item.active {background: var(--medium-purple); color: white;}
+    .nav-item i {margin-right: 10px; font-size: 1.2rem;}
+
+    /* Main Content */
+    .main {flex: 1; padding: 30px; margin-left: 250px; width: calc(100% - 250px);}
+    .header {display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;}
+    .header h1 {color: var(--dark-purple); font-size: 28px;}
+    .header .admin-name {color: var(--dark-blue); font-size: 18px; font-weight: 600;}
+
+    /* Stats Cards */
+    .stats {display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-bottom: 30px;}
+    .stat-card {background: white; padding: 20px; border-radius: 15px; box-shadow: 0 6px 12px rgba(0,0,0,0.1); text-align: center; transition: transform 0.3s ease; cursor: pointer;}
+    .stat-card:hover {transform: translateY(-5px);}
+    .stat-number {font-size: 2rem; color: var(--dark-purple); font-weight: bold; margin-bottom: 10px;}
+    .stat-label {color: var(--dark-blue); font-size: 1rem;}
+
+    /* Tables */
+    table {width: 100%; border-collapse: collapse; margin-bottom: 20px;}
+    th, td {text-align: left; padding: 12px 10px; border-bottom: 1px solid #eee;}
+    th {background: var(--light-purple); color: var(--dark-blue);}
+    tr:hover {background: #f9f9f9;}
+    .status {font-weight: 600; padding: 6px 10px; border-radius: 8px; text-align: center; display: inline-block; min-width: 100px;}
+    .status.active {background: #d4edda; color: #155724;}
+    .status.inactive {background: #f8d7da; color: #721c24;}
+    .status.restricted {background: #ffeaa7; color: #856404;}
+    .status.pending {background: #fff3cd; color: #856404;}
+    .status.confirmed {background: #cce5ff; color: #004085;}
+    .status.completed {background: #d1ecf1; color: #0c5460;}
+    .status.resolved {background: #d4edda; color: #155724;}
+    .status.unresolved {background: #f8d7da; color: #721c24;}
+
+    .btn {padding: 8px 15px; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; transition: 0.3s; display: inline-flex; align-items: center; justify-content: center;}
+    .btn i {margin-right: 5px;}
+    .btn-primary {background: var(--dark-purple); color: white;}
+    .btn-primary:hover {background: var(--medium-purple);}
+    .btn-success {background: #28a745; color: white;}
+    .btn-success:hover {background: #218838;}
+    .btn-danger {background: #dc3545; color: white;}
+    .btn-danger:hover {background: #c82333;}
+    .btn-warning {background: #ffc107; color: #212529;}
+    .btn-warning:hover {background: #e0a800;}
+    .btn-secondary {background: #6c757d; color: white;}
+    .btn-secondary:hover {background: #5a6268;}
+    .btn-info {background: #17a2b8; color: white;}
+    .btn-info:hover {background: #138496;}
+    .action-buttons {display: flex; gap: 10px;}
+
+    /* Page Content */
+    .page-content {display: none;}
+    .page-content.active {display: block;}
+
+    /* Back button */
+    .back-btn {background: var(--dark-blue); color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: 600; transition: background 0.3s ease; margin-bottom: 20px; display: flex; align-items: center; gap: 8px;}
+    .back-btn:hover {background: var(--medium-blue);}
+
+    /* Modal */
+    .modal {display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center;}
+    .modal.active {display: flex;}
+    .modal-content {background: white; padding: 30px; border-radius: 15px; width: 90%; max-width: 500px; box-shadow: 0 10px 25px rgba(0,0,0,0.2);}
+    .modal-header {display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;}
+    .modal-title {font-size: 1.5rem; color: var(--dark-purple);}
+    .close-modal {background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #888;}
+    .form-group {margin-bottom: 20px;}
+    .form-group label {display: block; margin-bottom: 8px; font-weight: 600; color: var(--dark-blue);}
+    .form-group input, .form-group select, .form-group textarea {width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem;}
+    .form-group textarea {min-height: 100px; resize: vertical;}
+    .modal-footer {display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;}
+
+    /* Search and Filter */
+    .search-filter {display: flex; justify-content: space-between; margin-bottom: 20px; gap: 15px;}
+    .search-box {flex: 1; position: relative;}
+    .search-box input {width: 100%; padding: 10px 40px 10px 15px; border: 1px solid #ddd; border-radius: 8px;}
+    .search-box i {position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: #888;}
+    .filter-box select {padding: 10px; border: 1px solid #ddd; border-radius: 8px; background: white;}
+
+    /* Notifications */
+    .notification {position: fixed; top: 20px; right: 20px; padding: 15px 20px; border-radius: 8px; color: white; font-weight: 600; z-index: 1100; box-shadow: 0 5px 15px rgba(0,0,0,0.2);}
+    .notification.success {background: #28a745;}
+    .notification.error {background: #dc3545;}
+    .notification.info {background: #17a2b8;}
+
+    /* Feedback Cards */
+    .feedback-cards {display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 20px; margin-bottom: 30px;}
+    .feedback-card {background: white; padding: 20px; border-radius: 15px; box-shadow: 0 6px 12px rgba(0,0,0,0.1);}
+    .feedback-header {display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;}
+    .feedback-user {font-weight: 600; color: var(--dark-blue);}
+    .feedback-rating {color: #ffc107; font-weight: 600;}
+    .feedback-content {margin-bottom: 15px; line-height: 1.5;}
+    .feedback-meta {font-size: 0.9rem; color: #666; display: flex; justify-content: space-between; margin-bottom: 10px;}
+    .feedback-issue {background: #f8f9fa; padding: 10px; border-radius: 8px; margin-bottom: 15px;}
+    .feedback-actions {display: flex; gap: 10px; margin-top: 15px;}
+
+    /* Responsive */
+    @media (max-width: 992px) {.sidebar {width: 200px;} .main {margin-left: 200px; width: calc(100% - 200px);}}
+    @media (max-width: 768px) {body {flex-direction: column;} .sidebar {width: 100%; height: auto; position: relative; padding: 15px;} .main {margin-left:0; width:100%; padding:15px;} .nav-item {display:inline-block; margin-right:10px; margin-bottom:10px;} .header {flex-direction: column; align-items:flex-start;} .header .admin-name {margin-top:10px;} .search-filter {flex-direction: column;}}
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <div class="sidebar">
+  <div class="logo">Timeless Moments</div>
+  <div class="nav-item active" data-page="dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</div>
+  <div class="nav-item" data-page="admin-management"><i class="fas fa-user-shield"></i> Admin Management</div>
+  <div class="nav-item" data-page="customers"><i class="fas fa-users"></i> Customers</div>
+  <div class="nav-item" data-page="vendors"><i class="fas fa-store"></i> Vendors</div>
+  <div class="nav-item" data-page="bookings"><i class="fas fa-calendar-check"></i> Bookings</div>
+  <div class="nav-item" data-page="customer-feedback"><i class="fas fa-comment-dots"></i> Customer Feedback</div>
+  <div class="nav-item" data-page="vendor-feedback"><i class="fas fa-comments"></i> Vendor Feedback</div>
+  <div class="nav-item" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</div>
+</div>
+
+  <div class="main">
+    <!-- Dashboard Page -->
+    <!-- Dashboard Page -->
+<div class="page-content active" id="dashboard">
+  <div class="header">
+    <h1>Admin Dashboard</h1>
+    <div class="admin-name">Welcome, <span>Admin</span></div>
+  </div>
+  
+  <div class="stats">
+    <!-- Move Total Admins inside the stats container -->
+    <div class="stat-card" data-target="admin-management">
+      <div class="stat-number" id="total-admins">4</div>
+      <div class="stat-label">Total Admins</div>
+    </div>
+    
+    <div class="stat-card" data-target="customers">
+      <div class="stat-number" id="total-customers">4</div>
+      <div class="stat-label">Total Customers</div>
+    </div>
+    
+    <div class="stat-card" data-target="vendors">
+      <div class="stat-number" id="total-vendors">4</div>
+      <div class="stat-label">Total Vendors</div>
+    </div>
+    
+    <div class="stat-card" data-target="pending-bookings">
+      <div class="stat-number" id="pending-bookings-count">2</div>
+      <div class="stat-label">Pending Bookings</div>
+    </div>
+    
+    <div class="stat-card" data-target="customer-feedback">
+      <div class="stat-number" id="pending-feedback">3</div>
+      <div class="stat-label">Pending Feedback</div>
+    </div>
+  </div>
+</div>
+    <!-- Customers Page -->
+    <div class="page-content" id="customers">
+      <div class="header">
+        <h1>Customers</h1>
+        <button class="back-btn" data-back="dashboard"><i class="fas fa-arrow-left"></i> Back to Dashboard</button>
+      </div>
+      
+      <div class="search-filter">
+        <div class="search-box">
+          <input type="text" id="customer-search" placeholder="Search customers...">
+          <i class="fas fa-search"></i>
+        </div>
+        <div class="filter-box">
+          <select id="customer-status-filter">
+            <option value="all">All Status</option>
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
+            <option value="restricted">Restricted</option>
+          </select>
+        </div>
+        <button class="btn btn-primary" id="add-customer-btn"><i class="fas fa-plus"></i> Add Customer</button>
+      </div>
+      
+      <table id="customers-table">
+        <thead>
+          <tr><th>Name</th><th>Email</th><th>Phone</th><th>Location</th><th>Status</th><th>Actions</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Priya Sharma</td>
+            <td>priya@example.com</td>
+            <td>+91 9876543210</td>
+            <td>Hyderabad</td>
+            <td><span class="status active">Active</span></td>
+            <td><div class="action-buttons">
+              <button class="btn btn-secondary edit-customer" data-id="1"><i class="fas fa-edit"></i> Edit</button>
+              <button class="btn btn-warning restrict-customer" data-id="1"><i class="fas fa-ban"></i> Restrict</button>
+            </div></td>
+          </tr>
+          <tr>
+            <td>Rahul Mehta</td>
+            <td>rahul@example.com</td>
+            <td>+91 9123456780</td>
+            <td>Bangalore</td>
+            <td><span class="status inactive">Inactive</span></td>
+            <td><div class="action-buttons">
+              <button class="btn btn-secondary edit-customer" data-id="2"><i class="fas fa-edit"></i> Edit</button>
+              <button class="btn btn-warning restrict-customer" data-id="2"><i class="fas fa-ban"></i> Restrict</button>
+            </div></td>
+          </tr>
+          <tr>
+            <td>Anjali Reddy</td>
+            <td>anjali@example.com</td>
+            <td>+91 8765432109</td>
+            <td>Chennai</td>
+            <td><span class="status active">Active</span></td>
+            <td><div class="action-buttons">
+              <button class="btn btn-secondary edit-customer" data-id="3"><i class="fas fa-edit"></i> Edit</button>
+              <button class="btn btn-warning restrict-customer" data-id="3"><i class="fas fa-ban"></i> Restrict</button>
+            </div></td>
+          </tr>
+          <tr>
+            <td>Vikram Singh</td>
+            <td>vikram@example.com</td>
+            <td>+91 7654321098</td>
+            <td>Mumbai</td>
+            <td><span class="status restricted">Restricted</span></td>
+            <td><div class="action-buttons">
+              <button class="btn btn-secondary edit-customer" data-id="4"><i class="fas fa-edit"></i> Edit</button>
+              <button class="btn btn-success activate-customer" data-id="4"><i class="fas fa-check"></i> Activate</button>
+            </div></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Vendors Page -->
+    <div class="page-content" id="vendors">
+      <div class="header">
+        <h1>Vendors</h1>
+        <button class="back-btn" data-back="dashboard"><i class="fas fa-arrow-left"></i> Back to Dashboard</button>
+      </div>
+      
+      <div class="search-filter">
+        <div class="search-box">
+          <input type="text" id="vendor-search" placeholder="Search vendors...">
+          <i class="fas fa-search"></i>
+        </div>
+        <div class="filter-box">
+          <select id="vendor-category-filter">
+            <option value="all">All Categories</option>
+            <option value="Venue">Venue</option>
+            <option value="Photography">Photography</option>
+            <option value="Catering">Catering</option>
+            <option value="Entertainment">Entertainment</option>
+          </select>
+        </div>
+        <div class="filter-box">
+          <select id="vendor-status-filter">
+            <option value="all">All Status</option>
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
+            <option value="restricted">Restricted</option>
+          </select>
+        </div>
+        <button class="btn btn-primary" id="add-vendor-btn"><i class="fas fa-plus"></i> Add Vendor</button>
+      </div>
+      
+      <table id="vendors-table">
+        <thead>
+          <tr><th>Name</th><th>Category</th><th>Email</th><th>Phone</th><th>Rating</th><th>Status</th><th>Actions</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Grand Vijayawada Convention</td>
+            <td>Venue</td>
+            <td>info@grandvijayawada.com</td>
+            <td>+91 9876543211</td>
+            <td>4.8★</td>
+            <td><span class="status active">Active</span></td>
+            <td><div class="action-buttons">
+              <button class="btn btn-secondary edit-vendor" data-id="1"><i class="fas fa-edit"></i> Edit</button>
+              <button class="btn btn-warning restrict-vendor" data-id="1"><i class="fas fa-ban"></i> Restrict</button>
+            </div></td>
+          </tr>
+          <tr>
+            <td>Vizag LensCraft</td>
+            <td>Photography</td>
+            <td>contact@vizaglenscraft.com</td>
+            <td>+91 9123456781</td>
+            <td>4.9★</td>
+            <td><span class="status active">Active</span></td>
+            <td><div class="action-buttons">
+              <button class="btn btn-secondary edit-vendor" data-id="2"><i class="fas fa-edit"></i> Edit</button>
+              <button class="btn btn-warning restrict-vendor" data-id="2"><i class="fas fa-ban"></i> Restrict</button>
+            </div></td>
+          </tr>
+          <tr>
+            <td>Delicious Catering</td>
+            <td>Catering</td>
+            <td>info@deliciouscatering.com</td>
+            <td>+91 8765432101</td>
+            <td>4.7★</td>
+            <td><span class="status restricted">Restricted</span></td>
+            <td><div class="action-buttons">
+              <button class="btn btn-secondary edit-vendor" data-id="3"><i class="fas fa-edit"></i> Edit</button>
+              <button class="btn btn-success activate-vendor" data-id="3"><i class="fas fa-check"></i> Activate</button>
+            </div></td>
+          </tr>
+          <tr>
+            <td>Melody Music Band</td>
+            <td>Entertainment</td>
+            <td>bookings@melodymusic.com</td>
+            <td>+91 7654321091</td>
+            <td>4.6★</td>
+            <td><span class="status active">Active</span></td>
+            <td><div class="action-buttons">
+              <button class="btn btn-secondary edit-vendor" data-id="4"><i class="fas fa-edit"></i> Edit</button>
+              <button class="btn btn-warning restrict-vendor" data-id="4"><i class="fas fa-ban"></i> Restrict</button>
+            </div></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Bookings Page -->
+    <div class="page-content" id="bookings">
+      <div class="header">
+        <h1>Bookings</h1>
+        <button class="back-btn" data-back="dashboard"><i class="fas fa-arrow-left"></i> Back to Dashboard</button>
+      </div>
+      
+      <div class="search-filter">
+        <div class="search-box">
+          <input type="text" id="booking-search" placeholder="Search bookings...">
+          <i class="fas fa-search"></i>
+        </div>
+        <div class="filter-box">
+          <select id="booking-status-filter">
+            <option value="all">All Status</option>
+            <option value="pending">Pending</option>
+            <option value="confirmed">Confirmed</option>
+            <option value="completed">Completed</option>
+            <option value="cancelled">Cancelled</option>
+          </select>
+        </div>
+        <button class="btn btn-primary" id="add-booking-btn"><i class="fas fa-plus"></i> Add Booking</button>
+      </div>
+      
+      <table id="bookings-table">
+        <thead>
+          <tr><th>Customer</th><th>Vendor</th><th>Event</th><th>Date</th><th>Amount</th><th>Status</th><th>Actions</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Priya Sharma</td>
+            <td>Grand Vijayawada Convention</td>
+            <td>Wedding Reception</td>
+            <td>20 Oct 2025</td>
+            <td>₹85,000</td>
+            <td><span class="status confirmed">Confirmed</span></td>
+            <td><div class="action-buttons">
+              <button class="btn btn-secondary edit-booking" data-id="1"><i class="fas fa-edit"></i> Edit</button>
+            </div></td>
+          </tr>
+          <tr>
+            <td>Rahul Mehta</td>
+            <td>Vizag LensCraft</td>
+            <td>Birthday Party</td>
+            <td>15 Nov 2025</td>
+            <td>₹25,000</td>
+            <td><span class="status pending">Pending</span></td>
+            <td><div class="action-buttons">
+              <button class="btn btn-secondary edit-booking" data-id="2"><i class="fas fa-edit"></i> Edit</button>
+            </div></td>
+          </tr>
+          <tr>
+            <td>Anjali Reddy</td>
+            <td>Delicious Catering</td>
+            <td>Wedding</td>
+            <td>5 Dec 2025</td>
+            <td>₹45,000</td>
+            <td><span class="status pending">Pending</span></td>
+            <td><div class="action-buttons">
+              <button class="btn btn-secondary edit-booking" data-id="3"><i class="fas fa-edit"></i> Edit</button>
+            </div></td>
+          </tr>
+          <tr>
+            <td>Vikram Singh</td>
+            <td>Melody Music Band</td>
+            <td>Corporate Event</td>
+            <td>10 Jan 2026</td>
+            <td>₹35,000</td>
+            <td><span class="status completed">Completed</span></td>
+            <td><div class="action-buttons">
+              <button class="btn btn-secondary edit-booking" data-id="4"><i class="fas fa-edit"></i> Edit</button>
+            </div></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Customer Feedback Page -->
+    <div class="page-content" id="customer-feedback">
+      <div class="header">
+        <h1>Customer Feedback</h1>
+        <button class="back-btn" data-back="dashboard"><i class="fas fa-arrow-left"></i> Back to Dashboard</button>
+      </div>
+      
+      <div class="search-filter">
+        <div class="search-box">
+          <input type="text" id="customer-feedback-search" placeholder="Search customer feedback...">
+          <i class="fas fa-search"></i>
+        </div>
+        <div class="filter-box">
+          <select id="customer-feedback-status-filter">
+            <option value="all">All Status</option>
+            <option value="resolved">Resolved</option>
+            <option value="unresolved">Unresolved</option>
+          </select>
+        </div>
+        <div class="filter-box">
+          <select id="customer-feedback-rating-filter">
+            <option value="all">All Ratings</option>
+            <option value="5">5★</option>
+            <option value="4">4★</option>
+            <option value="3">3★</option>
+            <option value="2">2★</option>
+            <option value="1">1★</option>
+          </select>
+        </div>
+      </div>
+      
+      <div class="feedback-cards" id="customer-feedback-cards">
+        <!-- Customer feedback cards will be dynamically generated here -->
+      </div>
+    </div>
+
+    <!-- Vendor Feedback Page -->
+    <div class="page-content" id="vendor-feedback">
+      <div class="header">
+        <h1>Vendor Feedback</h1>
+        <button class="back-btn" data-back="dashboard"><i class="fas fa-arrow-left"></i> Back to Dashboard</button>
+      </div>
+      
+      <div class="search-filter">
+        <div class="search-box">
+          <input type="text" id="vendor-feedback-search" placeholder="Search vendor feedback...">
+          <i class="fas fa-search"></i>
+        </div>
+        <div class="filter-box">
+          <select id="vendor-feedback-status-filter">
+            <option value="all">All Status</option>
+            <option value="resolved">Resolved</option>
+            <option value="unresolved">Unresolved</option>
+          </select>
+        </div>
+        <div class="filter-box">
+          <select id="vendor-feedback-rating-filter">
+            <option value="all">All Ratings</option>
+            <option value="5">5★</option>
+            <option value="4">4★</option>
+            <option value="3">3★</option>
+            <option value="2">2★</option>
+            <option value="1">1★</option>
+          </select>
+        </div>
+      </div>
+      
+      <div class="feedback-cards" id="vendor-feedback-cards">
+        <!-- Vendor feedback cards will be dynamically generated here -->
+      </div>
+    </div>
+  </div>
+    <!-- Admin Management Page -->
+<div class="page-content" id="admin-management">
+  <div class="header">
+    <h1>Admin Management</h1>
+    <button class="back-btn" data-back="dashboard"><i class="fas fa-arrow-left"></i> Back to Dashboard</button>
+  </div>
+  
+  <div class="search-filter">
+    <div class="search-box">
+      <input type="text" id="admin-search" placeholder="Search admins...">
+      <i class="fas fa-search"></i>
+    </div>
+    <div class="filter-box">
+      <select id="admin-role-filter">
+        <option value="all">All Roles</option>
+        <option value="Super Admin">Super Admin</option>
+        <option value="Admin">Admin</option>
+        <option value="Moderator">Moderator</option>
+      </select>
+    </div>
+    <div class="filter-box">
+      <select id="admin-status-filter">
+        <option value="all">All Status</option>
+        <option value="active">Active</option>
+        <option value="inactive">Inactive</option>
+      </select>
+    </div>
+    <button class="btn btn-primary" id="add-admin-btn"><i class="fas fa-plus"></i> Add Admin</button>
+  </div>
+  
+  <table id="admins-table">
+    <thead>
+      <tr>
+        <th>Admin ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>ADM001</td>
+        <td>Super Admin</td>
+        <td>superadmin@timelessmoments.com</td>
+        <td><span class="status active">Super Admin</span></td>
+        <td><span class="status active">Active</span></td>
+        <td><div class="action-buttons">
+          <button class="btn btn-info view-admin" data-id="1"><i class="fas fa-eye"></i> View</button>
+          <button class="btn btn-secondary edit-admin" data-id="1"><i class="fas fa-edit"></i> Edit</button>
+        </div></td>
+      </tr>
+      <tr>
+        <td>ADM002</td>
+        <td>Rajesh Kumar</td>
+        <td>rajesh@timelessmoments.com</td>
+        <td><span class="status confirmed">Admin</span></td>
+        <td><span class="status active">Active</span></td>
+        <td><div class="action-buttons">
+          <button class="btn btn-info view-admin" data-id="2"><i class="fas fa-eye"></i> View</button>
+          <button class="btn btn-secondary edit-admin" data-id="2"><i class="fas fa-edit"></i> Edit</button>
+        </div></td>
+      </tr>
+      <tr>
+        <td>ADM003</td>
+        <td>Priya Patel</td>
+        <td>priya@timelessmoments.com</td>
+        <td><span class="status pending">Moderator</span></td>
+        <td><span class="status active">Active</span></td>
+        <td><div class="action-buttons">
+          <button class="btn btn-info view-admin" data-id="3"><i class="fas fa-eye"></i> View</button>
+          <button class="btn btn-secondary edit-admin" data-id="3"><i class="fas fa-edit"></i> Edit</button>
+        </div></td>
+      </tr>
+      <tr>
+        <td>ADM004</td>
+        <td>Anil Sharma</td>
+        <td>anil@timelessmoments.com</td>
+        <td><span class="status confirmed">Admin</span></td>
+        <td><span class="status inactive">Inactive</span></td>
+        <td><div class="action-buttons">
+          <button class="btn btn-info view-admin" data-id="4"><i class="fas fa-eye"></i> View</button>
+          <button class="btn btn-secondary edit-admin" data-id="4"><i class="fas fa-edit"></i> Edit</button>
+        </div></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+  <!-- Customer Modal -->
+  <div class="modal" id="customer-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="customer-modal-title">Add Customer</h3>
+        <button class="close-modal">&times;</button>
+      </div>
+      <form id="customer-form">
+        <input type="hidden" id="customer-id">
+        <div class="form-group">
+          <label for="customer-name">Name</label>
+          <input type="text" id="customer-name" required>
+        </div>
+        <div class="form-group">
+          <label for="customer-email">Email</label>
+          <input type="email" id="customer-email" required>
+        </div>
+        <div class="form-group">
+          <label for="customer-phone">Phone</label>
+          <input type="tel" id="customer-phone" required>
+        </div>
+        <div class="form-group">
+          <label for="customer-location">Location</label>
+          <input type="text" id="customer-location" required>
+        </div>
+        <div class="form-group">
+          <label for="customer-status">Status</label>
+          <select id="customer-status" required>
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
+            <option value="restricted">Restricted</option>
+          </select>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary close-modal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Customer</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Vendor Modal -->
+  <div class="modal" id="vendor-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="vendor-modal-title">Add Vendor</h3>
+        <button class="close-modal">&times;</button>
+      </div>
+      <form id="vendor-form">
+        <input type="hidden" id="vendor-id">
+        <div class="form-group">
+          <label for="vendor-name">Name</label>
+          <input type="text" id="vendor-name" required>
+        </div>
+        <div class="form-group">
+          <label for="vendor-category">Category</label>
+          <select id="vendor-category" required>
+            <option value="Venue">Venue</option>
+            <option value="Photography">Photography</option>
+            <option value="Catering">Catering</option>
+            <option value="Entertainment">Entertainment</option>
+            <option value="Decoration">Decoration</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="vendor-email">Email</label>
+          <input type="email" id="vendor-email" required>
+        </div>
+        <div class="form-group">
+          <label for="vendor-phone">Phone</label>
+          <input type="tel" id="vendor-phone" required>
+        </div>
+        <div class="form-group">
+          <label for="vendor-rating">Rating</label>
+          <select id="vendor-rating" required>
+            <option value="5">5★</option>
+            <option value="4.9">4.9★</option>
+            <option value="4.8">4.8★</option>
+            <option value="4.7">4.7★</option>
+            <option value="4.6">4.6★</option>
+            <option value="4.5">4.5★</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="vendor-status">Status</label>
+          <select id="vendor-status" required>
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
+            <option value="restricted">Restricted</option>
+          </select>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary close-modal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Vendor</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Booking Modal -->
+  <div class="modal" id="booking-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="booking-modal-title">Add Booking</h3>
+        <button class="close-modal">&times;</button>
+      </div>
+      <form id="booking-form">
+        <input type="hidden" id="booking-id">
+        <div class="form-group">
+          <label for="booking-customer">Customer</label>
+          <select id="booking-customer" required>
+            <option value="">Select Customer</option>
+            <option value="Priya Sharma">Priya Sharma</option>
+            <option value="Rahul Mehta">Rahul Mehta</option>
+            <option value="Anjali Reddy">Anjali Reddy</option>
+            <option value="Vikram Singh">Vikram Singh</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="booking-vendor">Vendor</label>
+          <select id="booking-vendor" required>
+            <option value="">Select Vendor</option>
+            <option value="Grand Vijayawada Convention">Grand Vijayawada Convention</option>
+            <option value="Vizag LensCraft">Vizag LensCraft</option>
+            <option value="Delicious Catering">Delicious Catering</option>
+            <option value="Melody Music Band">Melody Music Band</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="booking-event">Event Type</label>
+          <input type="text" id="booking-event" required>
+        </div>
+        <div class="form-group">
+          <label for="booking-date">Event Date</label>
+          <input type="date" id="booking-date" required>
+        </div>
+        <div class="form-group">
+          <label for="booking-amount">Amount (₹)</label>
+          <input type="number" id="booking-amount" required>
+        </div>
+        <div class="form-group">
+          <label for="booking-status">Status</label>
+          <select id="booking-status" required>
+            <option value="pending">Pending</option>
+            <option value="confirmed">Confirmed</option>
+            <option value="completed">Completed</option>
+            <option value="cancelled">Cancelled</option>
+          </select>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary close-modal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Booking</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- Admin Modal -->
+  <div class="modal" id="admin-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="admin-modal-title">Add Admin</h3>
+        <button class="close-modal">&times;</button>
+      </div>
+      <form id="admin-form">
+        <input type="hidden" id="admin-id">
+        <div class="form-group">
+          <label for="admin-name">Full Name</label>
+          <input type="text" id="admin-name" required>
+        </div>
+        <div class="form-group">
+          <label for="admin-email">Email Address</label>
+          <input type="email" id="admin-email" required>
+        </div>
+        <div class="form-group">
+          <label for="admin-role">Role</label>
+          <select id="admin-role" required>
+            <option value="Super Admin">Super Admin</option>
+            <option value="Admin">Admin</option>
+            <option value="Moderator">Moderator</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="admin-permissions">Permissions</label>
+          <div style="border: 1px solid #ddd; border-radius: 8px; padding: 10px; background: #f9f9f9;">
+            <div><input type="checkbox" id="perm-customers" name="permissions" value="customers" checked> <label for="perm-customers">Manage Customers</label></div>
+            <div><input type="checkbox" id="perm-vendors" name="permissions" value="vendors" checked> <label for="perm-vendors">Manage Vendors</label></div>
+            <div><input type="checkbox" id="perm-bookings" name="permissions" value="bookings" checked> <label for="perm-bookings">Manage Bookings</label></div>
+            <div><input type="checkbox" id="perm-feedback" name="permissions" value="feedback"> <label for="perm-feedback">Manage Feedback</label></div>
+            <div><input type="checkbox" id="perm-admins" name="permissions" value="admins"> <label for="perm-admins">Manage Admins</label></div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="admin-status">Status</label>
+          <select id="admin-status" required>
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
+          </select>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary close-modal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Admin</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- Notification Container -->
+  <div id="notification-container"></div>
+
+  <script>
+    // Data storage (simulating a database)
+    let customers = [
+      { id: 1, name: "Priya Sharma", email: "priya@example.com", phone: "+91 9876543210", location: "Hyderabad", status: "active" },
+      { id: 2, name: "Rahul Mehta", email: "rahul@example.com", phone: "+91 9123456780", location: "Bangalore", status: "inactive" },
+      { id: 3, name: "Anjali Reddy", email: "anjali@example.com", phone: "+91 8765432109", location: "Chennai", status: "active" },
+      { id: 4, name: "Vikram Singh", email: "vikram@example.com", phone: "+91 7654321098", location: "Mumbai", status: "restricted" }
+    ];
+
+    let vendors = [
+      { id: 1, name: "Grand Vijayawada Convention", category: "Venue", email: "info@grandvijayawada.com", phone: "+91 9876543211", rating: "4.8", status: "active" },
+      { id: 2, name: "Vizag LensCraft", category: "Photography", email: "contact@vizaglenscraft.com", phone: "+91 9123456781", rating: "4.9", status: "active" },
+      { id: 3, name: "Delicious Catering", category: "Catering", email: "info@deliciouscatering.com", phone: "+91 8765432101", rating: "4.7", status: "restricted" },
+      { id: 4, name: "Melody Music Band", category: "Entertainment", email: "bookings@melodymusic.com", phone: "+91 7654321091", rating: "4.6", status: "active" }
+    ];
+
+    let bookings = [
+      { id: 1, customer: "Priya Sharma", vendor: "Grand Vijayawada Convention", event: "Wedding Reception", date: "2025-10-20", amount: "85000", status: "confirmed" },
+      { id: 2, customer: "Rahul Mehta", vendor: "Vizag LensCraft", event: "Birthday Party", date: "2025-11-15", amount: "25000", status: "pending" },
+      { id: 3, customer: "Anjali Reddy", vendor: "Delicious Catering", event: "Wedding", date: "2025-12-05", amount: "45000", status: "pending" },
+      { id: 4, customer: "Vikram Singh", vendor: "Melody Music Band", event: "Corporate Event", date: "2026-01-10", amount: "35000", status: "completed" }
+    ];
+
+    // Customer Feedback Data
+    let customerFeedback = [
+      { 
+        id: 1, 
+        customerName: "Priya Sharma", 
+        vendorName: "Grand Vijayawada Convention", 
+        serviceType: "Venue Booking",
+        rating: 4,
+        feedback: "The venue was beautiful and well-maintained. Staff was cooperative.",
+        issue: "Slight delay in setup which caused some inconvenience.",
+        date: "2025-10-25",
+        status: "resolved"
+      },
+      { 
+        id: 2, 
+        customerName: "Rahul Mehta", 
+        vendorName: "Vizag LensCraft", 
+        serviceType: "Photography",
+        rating: 2,
+        feedback: "Photos were good but delivery was very late.",
+        issue: "Received photos 3 weeks after the event despite promise of 1 week.",
+        date: "2025-11-20",
+        status: "unresolved"
+      },
+      { 
+        id: 3, 
+        customerName: "Anjali Reddy", 
+        vendorName: "Delicious Catering", 
+        serviceType: "Catering",
+        rating: 1,
+        feedback: "Food quality was poor and not as per the menu discussed.",
+        issue: "Several guests complained about food. Some items were missing from the menu.",
+        date: "2025-12-10",
+        status: "unresolved"
+      },
+      { 
+        id: 4, 
+        customerName: "Vikram Singh", 
+        vendorName: "Melody Music Band", 
+        serviceType: "Entertainment",
+        rating: 5,
+        feedback: "Excellent performance! They kept the energy high throughout the event.",
+        issue: "No issues faced. Everything was perfect.",
+        date: "2026-01-15",
+        status: "resolved"
+      }
+    ];
+
+    // Vendor Feedback Data
+    let vendorFeedback = [
+      { 
+        id: 1, 
+        vendorName: "Grand Vijayawada Convention", 
+        customerName: "Priya Sharma", 
+        serviceType: "Venue Booking",
+        rating: 5,
+        feedback: "Customer was very cooperative and made timely payments.",
+        issue: "No issues. Everything went smoothly.",
+        date: "2025-10-25",
+        status: "resolved"
+      },
+      { 
+        id: 2, 
+        vendorName: "Vizag LensCraft", 
+        customerName: "Rahul Mehta", 
+        serviceType: "Photography",
+        rating: 3,
+        feedback: "Customer had unrealistic expectations about delivery timeline.",
+        issue: "Customer was constantly calling for updates which disrupted workflow.",
+        date: "2025-11-20",
+        status: "unresolved"
+      },
+      { 
+        id: 3, 
+        vendorName: "Delicious Catering", 
+        customerName: "Anjali Reddy", 
+        serviceType: "Catering",
+        rating: 2,
+        feedback: "Customer changed menu requirements at the last minute.",
+        issue: "Payment was delayed by 2 weeks after the event.",
+        date: "2025-12-10",
+        status: "unresolved"
+      },
+      { 
+        id: 4, 
+        vendorName: "Melody Music Band", 
+        customerName: "Vikram Singh", 
+        serviceType: "Entertainment",
+        rating: 5,
+        feedback: "Great customer! Provided clear instructions and timely payments.",
+        issue: "No issues. Perfect client.",
+        date: "2026-01-15",
+        status: "resolved"
+      }
+    ];
+
+    // Initialize dashboard stats
+    function updateDashboardStats() 
+    {   document.addEventListener('DOMContentLoaded', () => {
+      updateDashboardStats();
+      renderCustomerTable();
+      renderVendorTable();
+      renderBookingTable();
+      renderCustomerFeedback();
+      renderVendorFeedback();
+    });
+
+      document.getElementById('total-customers').textContent = customers.length;
+  document.getElementById('total-vendors').textContent = vendors.length;
+  document.getElementById('total-admins').textContent = admins.length;
+  document.getElementById('pending-bookings-count').textContent = bookings.filter(b => b.status === 'pending').length;
+  
+  // Calculate pending feedback (unresolved issues)
+  const pendingCustomerFeedback = customerFeedback.filter(f => f.status === 'unresolved').length;
+  const pendingVendorFeedback = vendorFeedback.filter(f => f.status === 'unresolved').length;
+  document.getElementById('pending-feedback').textContent = pendingCustomerFeedback + pendingVendorFeedback;
+}
+
+    // Show notification
+    function showNotification(message, type = 'info') {
+      const notification = document.createElement('div');
+      notification.className = `notification ${type}`;
+      notification.textContent = message;
+      document.getElementById('notification-container').appendChild(notification);
+      
+      setTimeout(() => {
+        notification.remove();
+      }, 3000);
+    }
+
+    // Navigation between pages
+    document.querySelectorAll('.nav-item').forEach(item => {
+      item.addEventListener('click', function() {
+        // Skip if it's the logout button
+        if (this.id === 'logout-btn') return;
+        
+        document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+        this.classList.add('active');
+        const pageId = this.getAttribute('data-page');
+        document.querySelectorAll('.page-content').forEach(page => page.classList.remove('active'));
+        if(pageId) document.getElementById(pageId).classList.add('active');
+      });
+    });
+
+    // Clickable dashboard cards
+    document.querySelectorAll('.stat-card').forEach(card => {
+      card.addEventListener('click', function() {
+        const targetPage = this.getAttribute('data-target');
+        document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+        document.querySelectorAll('.page-content').forEach(page => page.classList.remove('active'));
+        document.getElementById(targetPage).classList.add('active');
+        document.querySelector(`.nav-item[data-page="${targetPage}"]`).classList.add('active');
+      });
+    });
+
+    // Back button functionality
+    document.querySelectorAll('.back-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const targetPage = this.getAttribute('data-back');
+        document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+        document.querySelectorAll('.page-content').forEach(page => page.classList.remove('active'));
+        document.getElementById(targetPage).classList.add('active');
+        document.querySelector('.nav-item[data-page="dashboard"]').classList.add('active');
+      });
+    });
+
+    // Modal functionality
+    const modals = document.querySelectorAll('.modal');
+    const closeModalButtons = document.querySelectorAll('.close-modal');
+    
+    closeModalButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        modals.forEach(modal => modal.classList.remove('active'));
+      });
+    });
+    
+    // Close modal when clicking outside
+    modals.forEach(modal => {
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          modal.classList.remove('active');
+        }
+      });
+    });
+
+    // Customer Management
+    document.getElementById('add-customer-btn').addEventListener('click', () => {
+      document.getElementById('customer-modal-title').textContent = 'Add Customer';
+      document.getElementById('customer-form').reset();
+      document.getElementById('customer-id').value = '';
+      document.getElementById('customer-modal').classList.add('active');
+    });
+
+    // Vendor Management
+    document.getElementById('add-vendor-btn').addEventListener('click', () => {
+      document.getElementById('vendor-modal-title').textContent = 'Add Vendor';
+      document.getElementById('vendor-form').reset();
+      document.getElementById('vendor-id').value = '';
+      document.getElementById('vendor-modal').classList.add('active');
+    });
+
+    // Booking Management
+    document.getElementById('add-booking-btn').addEventListener('click', () => {
+      document.getElementById('booking-modal-title').textContent = 'Add Booking';
+      document.getElementById('booking-form').reset();
+      document.getElementById('booking-id').value = '';
+      document.getElementById('booking-modal').classList.add('active');
+    });
+    // Customer Restrict/Activate Functionality
+    document.addEventListener('click', function(e) {
+      // Restrict Customer
+      if (e.target.closest('.restrict-customer')) {
+        const button = e.target.closest('.restrict-customer');
+        const customerId = parseInt(button.getAttribute('data-id'));
+        if (confirm('Are you sure you want to restrict this customer?')) {
+          const customer = customers.find(c => c.id === customerId);
+          if (customer) {
+            customer.status = 'restricted';
+            showNotification('Customer restricted successfully!', 'success');
+            renderCustomerTable();
+            updateDashboardStats();
+          }
+        }
+      }
+      
+      // Activate Customer
+      if (e.target.closest('.activate-customer')) {
+        const button = e.target.closest('.activate-customer');
+        const customerId = parseInt(button.getAttribute('data-id'));
+        if (confirm('Are you sure you want to activate this customer?')) {
+          const customer = customers.find(c => c.id === customerId);
+          if (customer) {
+            customer.status = 'active';
+            showNotification('Customer activated successfully!', 'success');
+            renderCustomerTable();
+            updateDashboardStats();
+          }
+        }
+      }
+      
+      // Edit Customer
+      if (e.target.closest('.edit-customer')) {
+        const button = e.target.closest('.edit-customer');
+        const customerId = parseInt(button.getAttribute('data-id'));
+        const customer = customers.find(c => c.id === customerId);
+        
+        if (customer) {
+          document.getElementById('customer-modal-title').textContent = 'Edit Customer';
+          document.getElementById('customer-id').value = customer.id;
+          document.getElementById('customer-name').value = customer.name;
+          document.getElementById('customer-email').value = customer.email;
+          document.getElementById('customer-phone').value = customer.phone;
+          document.getElementById('customer-location').value = customer.location;
+          document.getElementById('customer-status').value = customer.status;
+          
+          document.getElementById('customer-modal').classList.add('active');
+        }
+      }
+      
+      // Restrict Vendor
+      if (e.target.closest('.restrict-vendor')) {
+        const button = e.target.closest('.restrict-vendor');
+        const vendorId = parseInt(button.getAttribute('data-id'));
+        if (confirm('Are you sure you want to restrict this vendor?')) {
+          const vendor = vendors.find(v => v.id === vendorId);
+          if (vendor) {
+            vendor.status = 'restricted';
+            showNotification('Vendor restricted successfully!', 'success');
+            renderVendorTable();
+            updateDashboardStats();
+          }
+        }
+      }
+      
+      // Activate Vendor
+      if (e.target.closest('.activate-vendor')) {
+        const button = e.target.closest('.activate-vendor');
+        const vendorId = parseInt(button.getAttribute('data-id'));
+        if (confirm('Are you sure you want to activate this vendor?')) {
+          const vendor = vendors.find(v => v.id === vendorId);
+          if (vendor) {
+            vendor.status = 'active';
+            showNotification('Vendor activated successfully!', 'success');
+            renderVendorTable();
+            updateDashboardStats();
+          }
+        }
+      }
+      
+      // Edit Vendor
+      if (e.target.closest('.edit-vendor')) {
+        const button = e.target.closest('.edit-vendor');
+        const vendorId = parseInt(button.getAttribute('data-id'));
+        const vendor = vendors.find(v => v.id === vendorId);
+        
+        if (vendor) {
+          document.getElementById('vendor-modal-title').textContent = 'Edit Vendor';
+          document.getElementById('vendor-id').value = vendor.id;
+          document.getElementById('vendor-name').value = vendor.name;
+          document.getElementById('vendor-category').value = vendor.category;
+          document.getElementById('vendor-email').value = vendor.email;
+          document.getElementById('vendor-phone').value = vendor.phone;
+          document.getElementById('vendor-rating').value = vendor.rating;
+          document.getElementById('vendor-status').value = vendor.status;
+          
+          document.getElementById('vendor-modal').classList.add('active');
+        }
+      }
+      
+      // Edit Booking
+      if (e.target.closest('.edit-booking')) {
+        const button = e.target.closest('.edit-booking');
+        const bookingId = parseInt(button.getAttribute('data-id'));
+        const booking = bookings.find(b => b.id === bookingId);
+        
+        if (booking) {
+          document.getElementById('booking-modal-title').textContent = 'Edit Booking';
+          document.getElementById('booking-id').value = booking.id;
+          document.getElementById('booking-customer').value = booking.customer;
+          document.getElementById('booking-vendor').value = booking.vendor;
+          document.getElementById('booking-event').value = booking.event;
+          document.getElementById('booking-date').value = booking.date;
+          document.getElementById('booking-amount').value = booking.amount;
+          document.getElementById('booking-status').value = booking.status;
+          
+          document.getElementById('booking-modal').classList.add('active');
+        }
+      }
+    });
+
+    // Form submission handlers
+    document.getElementById('customer-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const customerId = document.getElementById('customer-id').value;
+      const customerData = {
+        name: document.getElementById('customer-name').value,
+        email: document.getElementById('customer-email').value,
+        phone: document.getElementById('customer-phone').value,
+        location: document.getElementById('customer-location').value,
+        status: document.getElementById('customer-status').value
+      };
+      
+      if (customerId) {
+        // Update existing customer
+        const index = customers.findIndex(c => c.id === parseInt(customerId));
+        if (index !== -1) {
+          customers[index] = { ...customers[index], ...customerData };
+          showNotification('Customer updated successfully!', 'success');
+        }
+      } else {
+        // Add new customer
+        const newId = Math.max(...customers.map(c => c.id)) + 1;
+        customers.push({ id: newId, ...customerData });
+        showNotification('Customer added successfully!', 'success');
+      }
+      
+      // Refresh customer table
+      renderCustomerTable();
+      updateDashboardStats();
+      document.getElementById('customer-modal').classList.remove('active');
+    });
+   // Admin Management Data
+let admins = [
+  { 
+    id: 1, 
+    adminId: "ADM001", 
+    name: "Super Admin", 
+    email: "superadmin@timelessmoments.com", 
+    role: "Super Admin", 
+    status: "active",
+    permissions: ["customers", "vendors", "bookings", "feedback", "admins"]
+  },
+  { 
+    id: 2, 
+    adminId: "ADM002", 
+    name: "Rajesh Kumar", 
+    email: "rajesh@timelessmoments.com", 
+    role: "Admin", 
+    status: "active",
+    permissions: ["customers", "vendors", "bookings"]
+  },
+  { 
+    id: 3, 
+    adminId: "ADM003", 
+    name: "Priya Patel", 
+    email: "priya@timelessmoments.com", 
+    role: "Moderator", 
+    status: "active",
+    permissions: ["customers", "vendors"]
+  },
+  { 
+    id: 4, 
+    adminId: "ADM004", 
+    name: "Anil Sharma", 
+    email: "anil@timelessmoments.com", 
+    role: "Admin", 
+    status: "inactive",
+    permissions: ["bookings", "feedback"]
+  }
+];
+
+    // Admin Management
+    document.getElementById('add-admin-btn').addEventListener('click', () => {
+      document.getElementById('admin-modal-title').textContent = 'Add Admin';
+      document.getElementById('admin-form').reset();
+      document.getElementById('admin-id').value = '';
+      // Reset all checkboxes
+      document.querySelectorAll('input[name="permissions"]').forEach(checkbox => {
+        checkbox.checked = false;
+      });
+      // Default check some permissions
+      document.getElementById('perm-customers').checked = true;
+      document.getElementById('perm-vendors').checked = true;
+      document.getElementById('perm-bookings').checked = true;
+      
+      document.getElementById('admin-modal').classList.add('active');
+    });
+
+    // Admin form submission
+    document.getElementById('admin-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const adminId = document.getElementById('admin-id').value;
+      const selectedPermissions = Array.from(document.querySelectorAll('input[name="permissions"]:checked'))
+        .map(checkbox => checkbox.value);
+      
+      const adminData = {
+        name: document.getElementById('admin-name').value,
+        email: document.getElementById('admin-email').value,
+        role: document.getElementById('admin-role').value,
+        status: document.getElementById('admin-status').value,
+        permissions: selectedPermissions,
+        lastLogin: "Never"
+      };
+      
+      if (adminId) {
+        // Update existing admin
+        const index = admins.findIndex(a => a.id === parseInt(adminId));
+        if (index !== -1) {
+          admins[index] = { ...admins[index], ...adminData };
+          showNotification('Admin updated successfully!', 'success');
+        }
+      } else {
+        // Add new admin
+        const newId = Math.max(...admins.map(a => a.id)) + 1;
+        const newAdminId = `ADM${String(newId).padStart(3, '0')}`;
+        admins.push({ 
+          id: newId, 
+          adminId: newAdminId, 
+          ...adminData 
+        });
+        showNotification('Admin added successfully!', 'success');
+      }
+      
+      // Refresh admin table
+      renderAdminTable();
+      document.getElementById('admin-modal').classList.remove('active');
+    });
+
+    // Admin table rendering
+function renderAdminTable() {
+  const tbody = document.querySelector('#admins-table tbody');
+  tbody.innerHTML = '';
+  
+  admins.forEach(admin => {
+    const row = document.createElement('tr');
+    
+    row.innerHTML = `
+      <td>${admin.adminId}</td>
+      <td>${admin.name}</td>
+      <td>${admin.email}</td>
+      <td><span class="status ${admin.role === 'Super Admin' ? 'active' : admin.role === 'Admin' ? 'confirmed' : 'pending'}">${admin.role}</span></td>
+      <td><span class="status ${admin.status}">${admin.status.charAt(0).toUpperCase() + admin.status.slice(1)}</span></td>
+      <td><div class="action-buttons">
+        <button class="btn btn-info view-admin" data-id="${admin.id}"><i class="fas fa-eye"></i> View</button>
+        <button class="btn btn-secondary edit-admin" data-id="${admin.id}"><i class="fas fa-edit"></i> Edit</button>
+      </div></td>
+    `;
+    tbody.appendChild(row);
+  });
+  
+  // Add event listeners for admin actions
+  attachAdminEventListeners();
+}
+
+    function attachAdminEventListeners() {
+      // View Admin
+      document.querySelectorAll('.view-admin').forEach(button => {
+        button.addEventListener('click', (e) => {
+          const adminId = parseInt(e.target.closest('button').getAttribute('data-id'));
+          const admin = admins.find(a => a.id === adminId);
+          
+          if (admin) {
+            alert(`Admin Details:\n\nID: ${admin.adminId}\nName: ${admin.name}\nEmail: ${admin.email}\nRole: ${admin.role}\nStatus: ${admin.status}\nLast Login: ${admin.lastLogin}\nPermissions: ${admin.permissions.join(', ')}`);
+          }
+        });
+      });
+      
+      // Edit Admin
+      document.querySelectorAll('.edit-admin').forEach(button => {
+        button.addEventListener('click', (e) => {
+          const adminId = parseInt(e.target.closest('button').getAttribute('data-id'));
+          const admin = admins.find(a => a.id === adminId);
+          
+          if (admin) {
+            document.getElementById('admin-modal-title').textContent = 'Edit Admin';
+            document.getElementById('admin-id').value = admin.id;
+            document.getElementById('admin-name').value = admin.name;
+            document.getElementById('admin-email').value = admin.email;
+            document.getElementById('admin-role').value = admin.role;
+            document.getElementById('admin-status').value = admin.status;
+            
+            // Set permissions checkboxes
+            document.querySelectorAll('input[name="permissions"]').forEach(checkbox => {
+              checkbox.checked = admin.permissions.includes(checkbox.value);
+            });
+            
+            document.getElementById('admin-modal').classList.add('active');
+          }
+        });
+      });
+    }
+
+    // Admin search and filter functionality
+    document.getElementById('admin-search').addEventListener('input', (e) => {
+      filterAdminTable(e.target.value, document.getElementById('admin-role-filter').value, document.getElementById('admin-status-filter').value);
+    });
+
+    document.getElementById('admin-role-filter').addEventListener('change', (e) => {
+      filterAdminTable(document.getElementById('admin-search').value, e.target.value, document.getElementById('admin-status-filter').value);
+    });
+
+    document.getElementById('admin-status-filter').addEventListener('change', (e) => {
+      filterAdminTable(document.getElementById('admin-search').value, document.getElementById('admin-role-filter').value, e.target.value);
+    });
+
+    function filterAdminTable(searchTerm, roleFilter, statusFilter) {
+  const rows = document.querySelectorAll('#admins-table tbody tr');
+  
+  rows.forEach(row => {
+    const name = row.cells[1].textContent.toLowerCase();
+    const email = row.cells[2].textContent.toLowerCase();
+    const role = row.cells[3].textContent.toLowerCase();
+    const status = row.cells[4].textContent.toLowerCase();
+    
+    const matchesSearch = searchTerm === '' || 
+      name.includes(searchTerm.toLowerCase()) || 
+      email.includes(searchTerm.toLowerCase());
+    
+    const matchesRole = roleFilter === 'all' || role.includes(roleFilter.toLowerCase());
+    const matchesStatus = statusFilter === 'all' || status.includes(statusFilter);
+    
+    row.style.display = (matchesSearch && matchesRole && matchesStatus) ? '' : 'none';
+  });
+}
+    document.getElementById('vendor-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const vendorId = document.getElementById('vendor-id').value;
+      const vendorData = {
+        name: document.getElementById('vendor-name').value,
+        category: document.getElementById('vendor-category').value,
+        email: document.getElementById('vendor-email').value,
+        phone: document.getElementById('vendor-phone').value,
+        rating: document.getElementById('vendor-rating').value,
+        status: document.getElementById('vendor-status').value
+      };
+      
+      if (vendorId) {
+        // Update existing vendor
+        const index = vendors.findIndex(v => v.id === parseInt(vendorId));
+        if (index !== -1) {
+          vendors[index] = { ...vendors[index], ...vendorData };
+          showNotification('Vendor updated successfully!', 'success');
+        }
+      } else {
+        // Add new vendor
+        const newId = Math.max(...vendors.map(v => v.id)) + 1;
+        vendors.push({ id: newId, ...vendorData });
+        showNotification('Vendor added successfully!', 'success');
+      }
+      
+      // Refresh vendor table
+      renderVendorTable();
+      updateDashboardStats();
+      document.getElementById('vendor-modal').classList.remove('active');
+    });
+
+    document.getElementById('booking-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const bookingId = document.getElementById('booking-id').value;
+      const bookingData = {
+        customer: document.getElementById('booking-customer').value,
+        vendor: document.getElementById('booking-vendor').value,
+        event: document.getElementById('booking-event').value,
+        date: document.getElementById('booking-date').value,
+        amount: document.getElementById('booking-amount').value,
+        status: document.getElementById('booking-status').value
+      };
+      
+      if (bookingId) {
+        // Update existing booking
+        const index = bookings.findIndex(b => b.id === parseInt(bookingId));
+        if (index !== -1) {
+          bookings[index] = { ...bookings[index], ...bookingData };
+          showNotification('Booking updated successfully!', 'success');
+        }
+      } else {
+        // Add new booking
+        const newId = Math.max(...bookings.map(b => b.id)) + 1;
+        bookings.push({ id: newId, ...bookingData });
+        showNotification('Booking added successfully!', 'success');
+      }
+      
+      // Refresh booking tables
+      renderBookingTable();
+      updateDashboardStats();
+      document.getElementById('booking-modal').classList.remove('active');
+    });
+
+    // Table Rendering Functions
+    function renderCustomerTable() {
+      const tbody = document.querySelector('#customers-table tbody');
+      tbody.innerHTML = '';
+      
+      customers.forEach(customer => {
+        const row = document.createElement('tr');
+        
+        // Determine which action button to show
+        let actionButton;
+        if (customer.status === 'restricted') {
+          actionButton = `<button class="btn btn-success activate-customer" data-id="${customer.id}"><i class="fas fa-check"></i> Activate</button>`;
+        } else {
+          actionButton = `<button class="btn btn-warning restrict-customer" data-id="${customer.id}"><i class="fas fa-ban"></i> Restrict</button>`;
+        }
+        
+        row.innerHTML = `
+          <td>${customer.name}</td>
+          <td>${customer.email}</td>
+          <td>${customer.phone}</td>
+          <td>${customer.location}</td>
+          <td><span class="status ${customer.status}">${customer.status.charAt(0).toUpperCase() + customer.status.slice(1)}</span></td>
+          <td><div class="action-buttons">
+            <button class="btn btn-secondary edit-customer" data-id="${customer.id}"><i class="fas fa-edit"></i> Edit</button>
+            ${actionButton}
+          </div></td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    function renderVendorTable() {
+      const tbody = document.querySelector('#vendors-table tbody');
+      tbody.innerHTML = '';
+      
+      vendors.forEach(vendor => {
+        const row = document.createElement('tr');
+        
+        // Determine which action button to show
+        let actionButton;
+        if (vendor.status === 'restricted') {
+          actionButton = `<button class="btn btn-success activate-vendor" data-id="${vendor.id}"><i class="fas fa-check"></i> Activate</button>`;
+        } else {
+          actionButton = `<button class="btn btn-warning restrict-vendor" data-id="${vendor.id}"><i class="fas fa-ban"></i> Restrict</button>`;
+        }
+        
+        row.innerHTML = `
+          <td>${vendor.name}</td>
+          <td>${vendor.category}</td>
+          <td>${vendor.email}</td>
+          <td>${vendor.phone}</td>
+          <td>${vendor.rating}★</td>
+          <td><span class="status ${vendor.status}">${vendor.status.charAt(0).toUpperCase() + vendor.status.slice(1)}</span></td>
+          <td><div class="action-buttons">
+            <button class="btn btn-secondary edit-vendor" data-id="${vendor.id}"><i class="fas fa-edit"></i> Edit</button>
+            ${actionButton}
+          </div></td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    function renderBookingTable() {
+      const tbody = document.querySelector('#bookings-table tbody');
+      tbody.innerHTML = '';
+      
+      bookings.forEach(booking => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${booking.customer}</td>
+          <td>${booking.vendor}</td>
+          <td>${booking.event}</td>
+          <td>${new Date(booking.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</td>
+          <td>₹${parseInt(booking.amount).toLocaleString('en-IN')}</td>
+          <td><span class="status ${booking.status}">${booking.status.charAt(0).toUpperCase() + booking.status.slice(1)}</span></td>
+          <td><div class="action-buttons">
+            <button class="btn btn-secondary edit-booking" data-id="${booking.id}"><i class="fas fa-edit"></i> Edit</button>
+          </div></td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+    // Render Customer Feedback
+    function renderCustomerFeedback() {
+      const container = document.getElementById('customer-feedback-cards');
+      container.innerHTML = '';
+      
+      if (customerFeedback.length === 0) {
+        container.innerHTML = '<p>No customer feedback available.</p>';
+        return;
+      }
+      
+      customerFeedback.forEach(feedback => {
+        const card = document.createElement('div');
+        card.className = 'feedback-card';
+        
+        // Create star rating HTML
+        let stars = '';
+        for (let i = 1; i <= 5; i++) {
+          if (i <= feedback.rating) {
+            stars += '<i class="fas fa-star"></i>';
+          } else {
+            stars += '<i class="far fa-star"></i>';
+          }
+        }
+        
+        card.innerHTML = `
+          <div class="feedback-header">
+            <div class="feedback-user">${feedback.customerName} → ${feedback.vendorName}</div>
+            <div class="feedback-rating">${stars}</div>
+          </div>
+          <div class="feedback-meta">
+            <span>Service: ${feedback.serviceType}</span>
+            <span>${new Date(feedback.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
+          </div>
+          <div class="feedback-content">
+            <strong>Feedback:</strong> ${feedback.feedback}
+          </div>
+          <div class="feedback-issue">
+            <strong>Issue Reported:</strong> ${feedback.issue}
+          </div>
+          <div class="feedback-actions">
+            <span class="status ${feedback.status}">${feedback.status.charAt(0).toUpperCase() + feedback.status.slice(1)}</span>
+            <button class="btn ${feedback.status === 'unresolved' ? 'btn-success' : 'btn-warning'} resolve-feedback" data-id="${feedback.id}" data-type="customer">
+              <i class="fas ${feedback.status === 'unresolved' ? 'fa-check' : 'fa-undo'}"></i> 
+              ${feedback.status === 'unresolved' ? 'Mark Resolved' : 'Mark Unresolved'}
+            </button>
+            <button class="btn btn-danger delete-feedback" data-id="${feedback.id}" data-type="customer">
+              <i class="fas fa-trash"></i> Delete
+            </button>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+      
+      // Add event listeners for resolve and delete actions
+      document.querySelectorAll('.resolve-feedback').forEach(button => {
+        button.addEventListener('click', (e) => {
+          const feedbackId = parseInt(e.target.closest('button').getAttribute('data-id'));
+          const feedbackType = e.target.closest('button').getAttribute('data-type');
+          
+          if (feedbackType === 'customer') {
+            const feedback = customerFeedback.find(f => f.id === feedbackId);
+            if (feedback) {
+              feedback.status = feedback.status === 'unresolved' ? 'resolved' : 'unresolved';
+              showNotification(`Customer feedback marked as ${feedback.status}!`, 'success');
+              renderCustomerFeedback();
+              updateDashboardStats();
+            }
+          }
+        });
+      });
+      
+      document.querySelectorAll('.delete-feedback').forEach(button => {
+        button.addEventListener('click', (e) => {
+          const feedbackId = parseInt(e.target.closest('button').getAttribute('data-id'));
+          const feedbackType = e.target.closest('button').getAttribute('data-type');
+          
+          if (confirm('Are you sure you want to delete this feedback?')) {
+            if (feedbackType === 'customer') {
+              const index = customerFeedback.findIndex(f => f.id === feedbackId);
+              if (index !== -1) {
+                customerFeedback.splice(index, 1);
+                showNotification('Customer feedback deleted successfully!', 'success');
+                renderCustomerFeedback();
+                updateDashboardStats();
+              }
+            }
+          }
+        });
+      });
+    }
+
+    // Render Vendor Feedback
+    function renderVendorFeedback() {
+      const container = document.getElementById('vendor-feedback-cards');
+      container.innerHTML = '';
+      
+      if (vendorFeedback.length === 0) {
+        container.innerHTML = '<p>No vendor feedback available.</p>';
+        return;
+      }
+      
+      vendorFeedback.forEach(feedback => {
+        const card = document.createElement('div');
+        card.className = 'feedback-card';
+        
+        // Create star rating HTML
+        let stars = '';
+        for (let i = 1; i <= 5; i++) {
+          if (i <= feedback.rating) {
+            stars += '<i class="fas fa-star"></i>';
+          } else {
+            stars += '<i class="far fa-star"></i>';
+          }
+        }
+        
+        card.innerHTML = `
+          <div class="feedback-header">
+            <div class="feedback-user">${feedback.vendorName} → ${feedback.customerName}</div>
+            <div class="feedback-rating">${stars}</div>
+          </div>
+          <div class="feedback-meta">
+            <span>Service: ${feedback.serviceType}</span>
+            <span>${new Date(feedback.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
+          </div>
+          <div class="feedback-content">
+            <strong>Feedback:</strong> ${feedback.feedback}
+          </div>
+          <div class="feedback-issue">
+            <strong>Issue Reported:</strong> ${feedback.issue}
+          </div>
+          <div class="feedback-actions">
+            <span class="status ${feedback.status}">${feedback.status.charAt(0).toUpperCase() + feedback.status.slice(1)}</span>
+            <button class="btn ${feedback.status === 'unresolved' ? 'btn-success' : 'btn-warning'} resolve-feedback" data-id="${feedback.id}" data-type="vendor">
+              <i class="fas ${feedback.status === 'unresolved' ? 'fa-check' : 'fa-undo'}"></i> 
+              ${feedback.status === 'unresolved' ? 'Mark Resolved' : 'Mark Unresolved'}
+            </button>
+            <button class="btn btn-danger delete-feedback" data-id="${feedback.id}" data-type="vendor">
+              <i class="fas fa-trash"></i> Delete
+            </button>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+      
+      // Add event listeners for resolve and delete actions
+      document.querySelectorAll('.resolve-feedback').forEach(button => {
+        button.addEventListener('click', (e) => {
+          const feedbackId = parseInt(e.target.closest('button').getAttribute('data-id'));
+          const feedbackType = e.target.closest('button').getAttribute('data-type');
+          
+          if (feedbackType === 'vendor') {
+            const feedback = vendorFeedback.find(f => f.id === feedbackId);
+            if (feedback) {
+              feedback.status = feedback.status === 'unresolved' ? 'resolved' : 'unresolved';
+              showNotification(`Vendor feedback marked as ${feedback.status}!`, 'success');
+              renderVendorFeedback();
+              updateDashboardStats();
+            }
+          }
+        });
+      });
+      
+      document.querySelectorAll('.delete-feedback').forEach(button => {
+        button.addEventListener('click', (e) => {
+          const feedbackId = parseInt(e.target.closest('button').getAttribute('data-id'));
+          const feedbackType = e.target.closest('button').getAttribute('data-type');
+          
+          if (confirm('Are you sure you want to delete this feedback?')) {
+            if (feedbackType === 'vendor') {
+              const index = vendorFeedback.findIndex(f => f.id === feedbackId);
+              if (index !== -1) {
+                vendorFeedback.splice(index, 1);
+                showNotification('Vendor feedback deleted successfully!', 'success');
+                renderVendorFeedback();
+                updateDashboardStats();
+              }
+            }
+          }
+        });
+      });
+    }
+
+    // Search and Filter Functionality for Customer Feedback
+    document.getElementById('customer-feedback-search').addEventListener('input', (e) => {
+      filterCustomerFeedback(e.target.value, document.getElementById('customer-feedback-status-filter').value, document.getElementById('customer-feedback-rating-filter').value);
+    });
+
+    document.getElementById('customer-feedback-status-filter').addEventListener('change', (e) => {
+      filterCustomerFeedback(document.getElementById('customer-feedback-search').value, e.target.value, document.getElementById('customer-feedback-rating-filter').value);
+    });
+
+    document.getElementById('customer-feedback-rating-filter').addEventListener('change', (e) => {
+      filterCustomerFeedback(document.getElementById('customer-feedback-search').value, document.getElementById('customer-feedback-status-filter').value, e.target.value);
+    });
+
+    // Search and Filter Functionality for Vendor Feedback
+    document.getElementById('vendor-feedback-search').addEventListener('input', (e) => {
+      filterVendorFeedback(e.target.value, document.getElementById('vendor-feedback-status-filter').value, document.getElementById('vendor-feedback-rating-filter').value);
+    });
+
+    document.getElementById('vendor-feedback-status-filter').addEventListener('change', (e) => {
+      filterVendorFeedback(document.getElementById('vendor-feedback-search').value, e.target.value, document.getElementById('vendor-feedback-rating-filter').value);
+    });
+
+    document.getElementById('vendor-feedback-rating-filter').addEventListener('change', (e) => {
+      filterVendorFeedback(document.getElementById('vendor-feedback-search').value, document.getElementById('vendor-feedback-status-filter').value, e.target.value);
+    });
+
+    // Filter Functions
+    function filterCustomerFeedback(searchTerm, statusFilter, ratingFilter) {
+      const cards = document.querySelectorAll('#customer-feedback-cards .feedback-card');
+      
+      cards.forEach(card => {
+        const customerName = card.querySelector('.feedback-user').textContent.toLowerCase();
+        const vendorName = card.querySelector('.feedback-user').textContent.toLowerCase();
+        const serviceType = card.querySelector('.feedback-meta span:first-child').textContent.toLowerCase();
+        const feedbackText = card.querySelector('.feedback-content').textContent.toLowerCase();
+        const issueText = card.querySelector('.feedback-issue').textContent.toLowerCase();
+        const status = card.querySelector('.status').textContent.toLowerCase();
+        const rating = card.querySelector('.feedback-rating').textContent;
+        
+        const matchesSearch = searchTerm === '' || 
+          customerName.includes(searchTerm.toLowerCase()) || 
+          vendorName.includes(searchTerm.toLowerCase()) || 
+          serviceType.includes(searchTerm.toLowerCase()) || 
+          feedbackText.includes(searchTerm.toLowerCase()) || 
+          issueText.includes(searchTerm.toLowerCase());
+        
+        const matchesStatus = statusFilter === 'all' || status.includes(statusFilter);
+        
+        let matchesRating = true;
+        if (ratingFilter !== 'all') {
+          matchesRating = rating.includes('★'.repeat(parseInt(ratingFilter)));
+        }
+        
+        card.style.display = (matchesSearch && matchesStatus && matchesRating) ? '' : 'none';
+      });
+    }
+
+    function filterVendorFeedback(searchTerm, statusFilter, ratingFilter) {
+      const cards = document.querySelectorAll('#vendor-feedback-cards .feedback-card');
+      
+      cards.forEach(card => {
+        const vendorName = card.querySelector('.feedback-user').textContent.toLowerCase();
+        const customerName = card.querySelector('.feedback-user').textContent.toLowerCase();
+        const serviceType = card.querySelector('.feedback-meta span:first-child').textContent.toLowerCase();
+        const feedbackText = card.querySelector('.feedback-content').textContent.toLowerCase();
+        const issueText = card.querySelector('.feedback-issue').textContent.toLowerCase();
+        const status = card.querySelector('.status').textContent.toLowerCase();
+        const rating = card.querySelector('.feedback-rating').textContent;
+        
+        const matchesSearch = searchTerm === '' || 
+          vendorName.includes(searchTerm.toLowerCase()) || 
+          customerName.includes(searchTerm.toLowerCase()) || 
+          serviceType.includes(searchTerm.toLowerCase()) || 
+          feedbackText.includes(searchTerm.toLowerCase()) || 
+          issueText.includes(searchTerm.toLowerCase());
+        
+        const matchesStatus = statusFilter === 'all' || status.includes(statusFilter);
+        
+        let matchesRating = true;
+        if (ratingFilter !== 'all') {
+          matchesRating = rating.includes('★'.repeat(parseInt(ratingFilter)));
+        }
+        
+        card.style.display = (matchesSearch && matchesStatus && matchesRating) ? '' : 'none';
+      });
+    }
+
+  
+    // Logout functionality
+document.getElementById('logout-btn').addEventListener('click', () => {
+  if(confirm('Are you sure you want to logout?')) {
+    // Redirect to admin login page
+    window.location.href = 'admin-login.html';
+  }
+});
+
+  // Initialize the dashboard
+document.addEventListener('DOMContentLoaded', () => {
+  updateDashboardStats();
+  renderCustomerTable();
+  renderVendorTable();
+  renderBookingTable();
+  renderAdminTable();
+  renderCustomerFeedback();
+  renderVendorFeedback();
+});
+  </script>
+</body>
+</html>

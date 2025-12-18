@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Business Details - Timeless Moments</title>
+    <link rel="stylesheet" href="css/vendor-register.css">
+    <style>
+        .auto-filled {
+            background-color: #f0f8ff;
+            border: 1px solid #4a90e2;
+        }
+        .form-note {
+            background: #e7f3ff;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border-left: 4px solid #4a90e2;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Timeless Moments</h1>
+        <p>Complete Your Business Profile</p>
+    </div>
+    
+    <div class="form-container">
+        <h2>Business Details</h2>
+        <div class="form-note">
+            <strong>Note:</strong> Fields prefilled from your registration are marked. Please complete all other details.
+        </div>
+        <form id="businessDetailsForm">
+            <fieldset>
+                <legend>Business Information</legend>
+                <div class="form-group">
+                    <label>Business Category</label>
+                    <select id="businessCategory" required>
+                        <option value="">-- Select Category --</option>
+                        <option value="Venue & Convention Center">Venue & Convention Center</option>
+                        <option value="Photography Studio">Photography Studio</option>
+                        <option value="Catering Service">Catering Service</option>
+                        <option value="Decoration Service">Decoration Service</option>
+                        <option value="Entertainment Service">Entertainment Service</option>
+                        <option value="Makeup & Styling">Makeup & Styling</option>
+                        <option value="Event Planning">Event Planning</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Year Established</label>
+                    <input type="number" id="establishedYear" min="1900" max="2030" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Contact Number</label>
+                    <input type="tel" id="contactNumber" class="auto-filled" readonly>
+                </div>
+                
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="businessEmail" class="auto-filled" readonly>
+                </div>
+            </fieldset>
+            
+            <fieldset>
+                <legend>Location Details</legend>
+                <div class="form-group">
+                    <label>Business Address</label>
+                    <textarea id="businessAddress" class="auto-filled" rows="3" readonly></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label>Capacity</label>
+                    <input type="text" id="capacity" placeholder="e.g., Up to 1000 guests" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Parking Facilities</label>
+                    <input type="text" id="parking" placeholder="e.g., Available for 200+ vehicles" required>
+                </div>
+            </fieldset>
+            
+            <fieldset>
+                <legend>Amenities & Facilities</legend>
+                <div class="form-group">
+                    <label>Select Available Amenities</label>
+                    <div class="amenities-grid">
+                        <label class="amenity-option">
+                            <input type="checkbox" name="amenities" value="Air Conditioning"> Air Conditioning
+                        </label>
+                        <label class="amenity-option">
+                            <input type="checkbox" name="amenities" value="Catering Services"> Catering Services
+                        </label>
+                        <label class="amenity-option">
+                            <input type="checkbox" name="amenities" value="Audio-Visual Equipment"> Audio-Visual Equipment
+                        </label>
+                        <label class="amenity-option">
+                            <input type="checkbox" name="amenities" value="Decoration Services"> Decoration Services
+                        </label>
+                        <label class="amenity-option">
+                            <input type="checkbox" name="amenities" value="Valet Parking"> Valet Parking
+                        </label>
+                        <label class="amenity-option">
+                            <input type="checkbox" name="amenities" value="WiFi"> WiFi
+                        </label>
+                        <label class="amenity-option">
+                            <input type="checkbox" name="amenities" value="Power Backup"> Power Backup
+                        </label>
+                        <label class="amenity-option">
+                            <input type="checkbox" name="amenities" value="Restrooms"> Restrooms
+                        </label>
+                    </div>
+                </div>
+            </fieldset>
+            
+            <fieldset>
+                <legend>Business Hours</legend>
+                <div class="form-group">
+                    <label>Regular Business Hours</label>
+                    <input type="text" id="regularHours" placeholder="e.g., Monday - Sunday: 9:00 AM - 11:00 PM" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Event Hours</label>
+                    <input type="text" id="eventHours" placeholder="e.g., 24/7 as per booking" required>
+                </div>
+            </fieldset>
+            
+            <!-- Dynamic Vendor-Specific Fields -->
+            <fieldset id="vendorSpecificFields">
+                <legend id="vendorSpecificLegend">Vendor Specific Details</legend>
+                <!-- This section will be populated dynamically based on vendor type -->
+            </fieldset>
+            
+            <button type="submit" class="submit-btn">Complete Registration</button>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get current vendor data from localStorage
+            const currentVendor = JSON.parse(localStorage.getItem('currentVendor'));
+            
+            if (!currentVendor) {
+                alert('No vendor data found. Please complete registration first.');
+                window.location.href = 'vendor-register.html';
+                return;
+            }
+            
+            // Auto-fill fields from registration data
+            document.getElementById('contactNumber').value = currentVendor.phone || '';
+            document.getElementById('businessEmail').value = currentVendor.email || '';
+            document.getElementById('businessAddress').value = currentVendor.address || '';
+            
+            // Set up vendor-specific fields based on selected services
+            setupVendorSpecificFields(currentVendor.services);
+            
+            // Form submission
+            document.getElementById('businessDetailsForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Collect form data
+                const businessData = {
+                    businessCategory: document.getElementById('businessCategory').value,
+                    establishedYear: document.getElementById('establishedYear').value,
+                    contactNumber: document.getElementById('contactNumber').value,
+                    businessEmail: document.getElementById('businessEmail').value,
+                    businessAddress: document.getElementById('businessAddress').value,
+                    capacity: document.getElementById('capacity').value,
+                    parking: document.getElementById('parking').value,
+                    amenities: Array.from(document.querySelectorAll('input[name="amenities"]:checked')).map(cb => cb.value),
+                    regularHours: document.getElementById('regularHours').value,
+                    eventHours: document.getElementById('eventHours').value,
+                    vendorSpecific: getVendorSpecificData()
+                };
+                
+                // Validate required fields
+                if (!businessData.businessCategory || !businessData.establishedYear || 
+                    !businessData.capacity || !businessData.parking || 
+                    !businessData.regularHours || !businessData.eventHours) {
+                    alert('Please fill in all required fields');
+                    return;
+                }
+                
+                // Update vendor data in localStorage
+                const updatedVendor = {
+                    ...currentVendor,
+                    ...businessData,
+                    profileCompleted: true,
+                    registrationDate: new Date().toISOString().split('T')[0]
+                };
+                
+                localStorage.setItem('currentVendor', JSON.stringify(updatedVendor));
+                
+                // Update vendors array
+                const vendors = JSON.parse(localStorage.getItem('vendors')) || [];
+                const vendorIndex = vendors.findIndex(v => v.email === currentVendor.email);
+                if (vendorIndex !== -1) {
+                    vendors[vendorIndex] = updatedVendor;
+                    localStorage.setItem('vendors', JSON.stringify(vendors));
+                }
+                
+                // Redirect to dashboard
+                alert('Business profile completed successfully!');
+                window.location.href = 'vendor-dashboard.html';
+            });
+            
+            function setupVendorSpecificFields(services) {
+                const container = document.getElementById('vendorSpecificFields');
+                const legend = document.getElementById('vendorSpecificLegend');
+                
+                if (services && services.length > 0) {
+                    const primaryService = services[0].name.toLowerCase();
+                    legend.textContent = `${services[0].name} Details`;
+                    
+                    let specificHTML = '';
+                    
+                    if (primaryService.includes('venue')) {
+                        specificHTML = `
+                            <div class="form-group">
+                                <label>Venue Size</label>
+                                <input type="text" id="venueSize" placeholder="e.g., 5000 sq.ft." required>
+                            </div>
+                            <div class="form-group">
+                                <label>Rooms Available</label>
+                                <input type="number" id="roomsAvailable" min="1" placeholder="e.g., 5" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Outdoor Space</label>
+                                <select id="outdoorSpace" required>
+                                    <option value="">-- Select --</option>
+                                    <option value="Available">Available</option>
+                                    <option value="Not Available">Not Available</option>
+                                    <option value="Limited">Limited</option>
+                                </select>
+                            </div>
+                        `;
+                    } else if (primaryService.includes('photography')) {
+                        specificHTML = `
+                            <div class="form-group">
+                                <label>Photography Styles</label>
+                                <input type="text" id="photographyStyles" placeholder="e.g., Portrait, Wedding, Commercial" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Equipment Available</label>
+                                <input type="text" id="equipment" placeholder="e.g., DSLR, Drone, Lighting" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Team Size</label>
+                                <input type="number" id="teamSize" min="1" placeholder="e.g., 3" required>
+                            </div>
+                        `;
+                    }
+                    // Add more service types as needed
+                    
+                    container.innerHTML = specificHTML;
+                }
+            }
+            
+            function getVendorSpecificData() {
+                const primaryService = JSON.parse(localStorage.getItem('currentVendor')).services[0].name.toLowerCase();
+                
+                if (primaryService.includes('venue')) {
+                    return {
+                        venueSize: document.getElementById('venueSize').value,
+                        roomsAvailable: document.getElementById('roomsAvailable').value,
+                        outdoorSpace: document.getElementById('outdoorSpace').value
+                    };
+                } else if (primaryService.includes('photography')) {
+                    return {
+                        photographyStyles: document.getElementById('photographyStyles').value,
+                        equipment: document.getElementById('equipment').value,
+                        teamSize: document.getElementById('teamSize').value
+                    };
+                }
+                
+                return {};
+            }
+        });
+    </script>
+</body>
+</html>

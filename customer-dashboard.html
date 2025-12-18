@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Timeless Moments - Dashboard</title>
+  <link rel="stylesheet" href="css/customer.css">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <div class="logo">
+          <h1>Timeless Moments</h1>
+          <p>Where Stories Begin – Book All Event Services in One Place</p>
+        </div>
+        <nav>
+          <ul>
+            <li><a href="index (2).html">Home</a></li>
+            <li><a href="customer-feedback-form.html">Feedback</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="#" onclick="customerDashboard.switchMainContent('profile')" class="user-profile-link">
+              <div class="header-profile">
+                <div class="profile-avatar-small">JS</div>
+                <span>My Profile</span>
+              </div>
+            </a></li>
+            <li><a href="#" onclick="customerDashboard.logout()">Logout</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="dashboard-layout">
+      <!-- LEFT SIDEBAR -->
+      <div class="sidebar">
+        <!-- Navigation Menu -->
+        <div class="sidebar-section">
+          <h3 class="sidebar-title">Dashboard</h3>
+          <nav class="sidebar-nav">
+            <a href="#" class="nav-item active" onclick="customerDashboard.switchMainContent('overview')">
+              <span class="nav-icon">📊</span>
+              <span class="nav-text">Overview</span>
+            </a>
+            <a href="#" class="nav-item" onclick="customerDashboard.switchMainContent('bookings')">
+              <span class="nav-icon">📋</span>
+              <span class="nav-text">My Bookings</span>
+              <span class="nav-badge" id="bookingsBadge">5</span>
+            </a>
+            <a href="#" class="nav-item" onclick="customerDashboard.switchMainContent('services')">
+              <span class="nav-icon">🎪</span>
+              <span class="nav-text">Our Services</span>
+            </a>
+            <a href="#" class="nav-item" onclick="customerDashboard.switchMainContent('shortlist')">
+              <span class="nav-icon">⭐</span>
+              <span class="nav-text">My Shortlist</span>
+              <span class="nav-badge" id="shortlistBadge">8</span>
+            </a>
+            <a href="#" class="nav-item" onclick="customerDashboard.switchMainContent('recommendations')">
+              <span class="nav-icon">💡</span>
+              <span class="nav-text">Recommendations</span>
+            </a>
+          </nav>
+        </div>
+
+        <!-- Notifications & Messages -->
+        <div class="sidebar-section">
+          <h3 class="sidebar-title">Alerts</h3>
+          <nav class="sidebar-nav">
+            <a href="#" class="nav-item" onclick="customerDashboard.switchMainContent('notifications')">
+              <span class="nav-icon">🔔</span>
+              <span class="nav-text">Notifications</span>
+              <span class="nav-badge alert" id="notificationsBadge">3</span>
+            </a>
+            <a href="#" class="nav-item" onclick="customerDashboard.switchMainContent('messages')">
+              <span class="nav-icon">💬</span>
+              <span class="nav-text">Vendor Messages</span>
+              <span class="nav-badge alert" id="messagesBadge">2</span>
+            </a>
+            <a href="#" class="nav-item" onclick="customerDashboard.switchMainContent('payments')">
+              <span class="nav-icon">💰</span>
+              <span class="nav-text">Payment Agreements</span>
+            </a>
+            <a href="#" class="nav-item" onclick="customerDashboard.switchMainContent('activity')">
+              <span class="nav-icon">📝</span>
+              <span class="nav-text">Recent Activity</span>
+            </a>
+          </nav>
+        </div>
+
+        <!-- Profile in Sidebar too -->
+        <div class="sidebar-section">
+          <h3 class="sidebar-title">Account</h3>
+          <nav class="sidebar-nav">
+            <a href="#" class="nav-item" onclick="customerDashboard.switchMainContent('profile')">
+              <span class="nav-icon">👤</span>
+              <span class="nav-text">My Profile</span>
+            </a>
+           
+          </nav>
+        </div>
+      </div>
+
+      <!-- MAIN CONTENT AREA -->
+      <div class="main-content">
+        <!-- DEFAULT CONTENT - Overview -->
+        <div id="overview-content" class="content-section active">
+          <div class="content-header">
+            <h2>Dashboard Overview</h2>
+            <p>Welcome back, <span id="welcomeUserName">John</span>! Here's your event planning summary.</p>
+          </div>
+
+          <!-- Stats Cards -->
+          <div class="dashboard-grid">
+            <div class="dashboard-card">
+              <h3 class="dashboard-title">My Bookings</h3>
+              <div class="dashboard-stats">
+                <div class="stat">
+                  <div class="stat-number" id="totalBookings">5</div>
+                  <div class="stat-label">Total</div>
+                </div>
+                <div class="stat">
+                  <div class="stat-number" id="confirmedBookings">3</div>
+                  <div class="stat-label">Confirmed</div>
+                </div>
+                <div class="stat">
+                  <div class="stat-number" id="pendingBookings">2</div>
+                  <div class="stat-label">Pending</div>
+                </div>
+              </div>
+              <button class="service-btn" onclick="customerDashboard.openBookingModal()">New Booking</button>
+            </div>
+            
+            <div class="dashboard-card">
+              <h3 class="dashboard-title">My Shortlist</h3>
+              <div class="dashboard-stats">
+                <div class="stat">
+                  <div class="stat-number" id="shortlistItems">8</div>
+                  <div class="stat-label">Items</div>
+                </div>
+                <div class="stat">
+                  <div class="stat-number" id="shortlistVenues">3</div>
+                  <div class="stat-label">Venues</div>
+                </div>
+                <div class="stat">
+                  <div class="stat-number" id="shortlistServices">5</div>
+                  <div class="stat-label">Services</div>
+                </div>
+              </div>
+              <button class="service-btn" onclick="customerDashboard.switchMainContent('shortlist')">View All</button>
+            </div>
+            
+            <div class="dashboard-card">
+              <h3 class="dashboard-title">Upcoming Events</h3>
+              <div class="dashboard-stats">
+                <div class="stat">
+                  <div class="stat-number" id="eventsThisWeek">2</div>
+                  <div class="stat-label">This Week</div>
+                </div>
+                <div class="stat">
+                  <div class="stat-number" id="eventsThisMonth">1</div>
+                  <div class="stat-label">This Month</div>
+                </div>
+              </div>
+              <button class="service-btn" onclick="customerDashboard.switchMainContent('calendar')">View Calendar</button>
+            </div>
+          </div>
+
+          <!-- Quick Stats -->
+          <div class="content-section">
+            <h3 class="section-title">Quick Stats</h3>
+            <div class="stats-grid">
+              <div class="stat-card">
+                <div class="stat-icon">💰</div>
+                <div class="stat-info">
+                  <div class="stat-value">₹85,000</div>
+                  <div class="stat-label">Total Spent</div>
+                </div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-icon">⭐</div>
+                <div class="stat-info">
+                  <div class="stat-value">12</div>
+                  <div class="stat-label">Vendors Contacted</div>
+                </div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-icon">🎯</div>
+                <div class="stat-info">
+                  <div class="stat-value">3</div>
+                  <div class="stat-label">Active Events</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PROFILE CONTENT -->
+        <div id="profile-content" class="content-section">
+          <div class="content-header">
+            <h2>My Profile</h2>
+            <p>Manage your account information and preferences</p>
+          </div>
+          <div class="user-profile-section">
+            <div class="profile-card">
+              <div class="profile-header">
+                <div class="profile-avatar" id="userInitials">JS</div>
+                <div class="profile-info">
+                  <h2 id="userName">John Smith</h2>
+                  <p id="userEmail">john.smith@example.com</p>
+                  <p>Member since <span id="memberSince">2023</span></p>
+                </div>
+              </div>
+              <div class="profile-stats">
+                <div class="profile-stat">
+                  <div class="profile-stat-value" id="totalEvents">12</div>
+                  <div class="profile-stat-label">Total Events</div>
+                </div>
+                <div class="profile-stat">
+                  <div class="profile-stat-value" id="upcomingEvents">3</div>
+                  <div class="profile-stat-label">Upcoming</div>
+                </div>
+                <div class="profile-stat">
+                  <div class="profile-stat-value" id="loyaltyPoints">450</div>
+                  <div class="profile-stat-label">Loyalty Points</div>
+                </div>
+              </div>
+              <button class="service-btn" style="margin-top: 20px; width: 100%;" onclick="customerDashboard.openEditProfileModal()">Edit Profile</button>
+            </div>
+            
+            <div class="profile-card profile-details">
+              <h3 class="dashboard-title">Personal Details</h3>
+              <div class="profile-details-grid">
+                <div class="detail-item">
+                  <div class="detail-label">Full Name</div>
+                  <div class="detail-value" id="profileFullName">John Smith</div>
+                </div>
+                <div class="detail-item">
+                  <div class="detail-label">Email</div>
+                  <div class="detail-value" id="profileEmail">john.smith@example.com</div>
+                </div>
+                <div class="detail-item">
+                  <div class="detail-label">Phone</div>
+                  <div class="detail-value" id="profilePhone">+1 (555) 123-4567</div>
+                </div>
+                <div class="detail-item">
+                  <div class="detail-label">Location</div>
+                  <div class="detail-value" id="profileLocation">New York, USA</div>
+                </div>
+                <div class="detail-item">
+                  <div class="detail-label">Preferred Event Type</div>
+                  <div class="detail-value" id="profileEventType">Weddings & Corporate</div>
+                </div>
+                <div class="detail-item">
+                  <div class="detail-label">Notification Preferences</div>
+                  <div class="detail-value" id="profileNotifications">Email & SMS</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="section">
+            <h3 class="section-title">Upcoming Events</h3>
+            <div class="events-grid" id="upcomingEventsContainer">
+              <!-- Content will be populated dynamically by JavaScript -->
+            </div>
+          </div>
+        </div>
+
+        <!-- BOOKINGS CONTENT -->
+        <div id="bookings-content" class="content-section">
+          <div class="content-header">
+            <h2>My Bookings</h2>
+            <p>Manage your event bookings and reservations</p>
+          </div>
+          <div class="bookings-list" id="bookingsContainer">
+            <!-- Content will be populated dynamically by JavaScript -->
+          </div>
+        </div>
+
+        <!-- SERVICES CONTENT -->
+        <div id="services-content" class="content-section">
+          <div class="content-header">
+            <h2>Our Services</h2>
+            <p>Explore and book event services</p>
+          </div>
+          <div class="services-grid">
+            <div class="service-card">
+              <h3 class="service-title">Venue</h3>
+              <p>Find and book the perfect venue for your event. We offer a wide selection of beautiful locations for weddings, parties, and corporate events.</p>
+              <div class="service-actions">
+                <button class="service-btn" onclick="customerDashboard.bookServiceWithModal('Venue')">Quick Book</button>
+                <a href="venue-vendors.html" class="service-btn btn-secondary">Browse Vendors</a>
+              </div>
+            </div>
+            <div class="service-card">
+              <h3 class="service-title">Photography</h3>
+              <p>Capture your memories with professional photographers. Our team specializes in wedding, event, and portrait photography.</p>
+              <div class="service-actions">
+                <button class="service-btn" onclick="customerDashboard.bookServiceWithModal('Photography')">Quick Book</button>
+                <a href="photography-vendors.html" class="service-btn btn-secondary">Browse Vendors</a>
+              </div>
+            </div>
+            <div class="service-card">
+              <h3 class="service-title">Catering</h3>
+              <p>Delicious catering services for every occasion. From intimate gatherings to large events, we provide exceptional food experiences.</p>
+              <div class="service-actions">
+                <button class="service-btn" onclick="customerDashboard.bookServiceWithModal('Catering')">Quick Book</button>
+                <a href="catering-vendors.html" class="service-btn btn-secondary">Browse Vendors</a>
+              </div>
+            </div>
+            <div class="service-card">
+              <h3 class="service-title">Entertainment</h3>
+              <p>Hire entertainers to make your event lively. We offer DJs, live bands, performers, and other entertainment options.</p>
+              <div class="service-actions">
+                <button class="service-btn" onclick="customerDashboard.bookServiceWithModal('Entertainment')">Quick Book</button>
+                <a href="entertainment-vendor.html" class="service-btn btn-secondary">Browse Vendors</a>
+              </div>
+            </div>
+            <div class="service-card">
+              <h3 class="service-title">Decoration</h3>
+              <p>Elegant decorations to match your theme. Our creative team will transform your venue into a beautiful space.</p>
+              <div class="service-actions">
+                <button class="service-btn" onclick="customerDashboard.bookServiceWithModal('Decoration')">Quick Book</button>
+                <a href="decoration-vendors.html" class="service-btn btn-secondary">Browse Vendors</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SHORTLIST CONTENT -->
+        <div id="shortlist-content" class="content-section">
+          <div class="content-header">
+            <h2>My Shortlist</h2>
+            <p>Your saved services and venues</p>
+          </div>
+          <div class="shortlist-list" id="shortlistContainer">
+            <!-- Content will be populated dynamically by JavaScript -->
+          </div>
+        </div>
+
+        <!-- RECOMMENDATIONS CONTENT -->
+        <div id="recommendations-content" class="content-section">
+          <div class="content-header">
+            <h2>Recommendations</h2>
+            <p>Personalized suggestions based on your preferences</p>
+          </div>
+          <div class="recommendations-grid" id="recommendationsContainer">
+            <!-- Content will be populated dynamically by JavaScript -->
+          </div>
+        </div>
+
+        <!-- NOTIFICATIONS CONTENT -->
+        <div id="notifications-content" class="content-section">
+          <div class="content-header">
+            <h2>Notifications</h2>
+            <p>Stay updated with your event activities</p>
+          </div>
+          <div class="notifications-list" id="notificationsContainer">
+            <!-- Content will be populated dynamically by JavaScript -->
+          </div>
+        </div>
+
+        <!-- MESSAGES CONTENT -->
+        <div id="messages-content" class="content-section">
+          <div class="content-header">
+            <h2>Vendor Messages</h2>
+            <p>Communicate with your service providers</p>
+          </div>
+          <div class="messages-list" id="messagesContainer">
+            <!-- Content will be populated dynamically by JavaScript -->
+          </div>
+        </div>
+
+        <!-- PAYMENTS CONTENT -->
+        <div id="payments-content" class="content-section">
+          <div class="content-header">
+            <h2>Payment Agreements</h2>
+            <p>Track your payment schedules</p>
+          </div>
+          <div class="payment-categories" id="paymentsContainer">
+            <!-- Content will be populated dynamically by JavaScript -->
+          </div>
+        </div>
+
+        <!-- ACTIVITY CONTENT -->
+        <div id="activity-content" class="content-section">
+          <div class="content-header">
+            <h2>Recent Activity</h2>
+            <p>Your recent actions and updates</p>
+          </div>
+          <div class="activity-timeline" id="activityContainer">
+            <!-- Content will be populated dynamically by JavaScript -->
+          </div>
+        </div>
+
+        <!-- CALENDAR CONTENT -->
+        <div id="calendar-content" class="content-section">
+          <div class="content-header">
+            <h2>Event Calendar</h2>
+            <p>View your event schedule</p>
+          </div>
+          <div class="empty-state">
+            <div class="empty-state-icon">📅</div>
+            <h3>Calendar View</h3>
+            <p>Calendar integration would be displayed here</p>
+          </div>
+        </div>
+
+        <!-- SETTINGS CONTENT -->
+        <div id="settings-content" class="content-section">
+          <div class="content-header">
+            <h2>Settings</h2>
+            <p>Customize your dashboard preferences</p>
+          </div>
+          <div class="empty-state">
+            <div class="empty-state-icon">⚙️</div>
+            <h3>Settings Panel</h3>
+            <p>Account settings and preferences would be managed here</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Booking Modal -->
+  <div id="bookingModal" class="modal">
+    <div class="modal-content">
+      <h3 class="modal-title">New Booking</h3>
+      <form id="bookingForm">
+        <div class="form-group">
+          <label for="serviceType">Service Type</label>
+          <select id="serviceType" required>
+            <option value="">Select a service</option>
+            <option value="venue">Venue</option>
+            <option value="photography">Photography</option>
+            <option value="catering">Catering</option>
+            <option value="entertainment">Entertainment</option>
+            <option value="decoration">Decoration</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="eventDate">Event Date</label>
+          <input type="date" id="eventDate" required>
+        </div>
+        <div class="form-group">
+          <label for="eventTime">Event Time</label>
+          <input type="time" id="eventTime" required>
+        </div>
+        <div class="form-group">
+          <label for="guestCount">Number of Guests</label>
+          <input type="number" id="guestCount" min="1" required>
+        </div>
+        <div class="form-group">
+          <label for="specialRequests">Special Requests</label>
+          <textarea id="specialRequests" rows="3"></textarea>
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn btn-cancel" onclick="customerDashboard.closeBookingModal()">Cancel</button>
+          <button type="submit" class="btn btn-submit">Submit Booking</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Edit Profile Modal -->
+  <div id="editProfileModal" class="modal">
+    <div class="modal-content">
+      <h3 class="modal-title">Edit Profile</h3>
+      <form id="profileForm">
+        <div class="form-group">
+          <label for="editFullName">Full Name</label>
+          <input type="text" id="editFullName" required>
+        </div>
+        <div class="form-group">
+          <label for="editEmail">Email</label>
+          <input type="email" id="editEmail" required>
+        </div>
+        <div class="form-group">
+          <label for="editPhone">Phone</label>
+          <input type="tel" id="editPhone">
+        </div>
+        <div class="form-group">
+          <label for="editLocation">Location</label>
+          <input type="text" id="editLocation">
+        </div>
+        <div class="form-group">
+          <label for="editEventType">Preferred Event Type</label>
+          <select id="editEventType">
+            <option value="Weddings">Weddings</option>
+            <option value="Corporate">Corporate Events</option>
+            <option value="Birthdays">Birthdays</option>
+            <option value="All Types">All Types</option>
+          </select>
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn btn-cancel" onclick="customerDashboard.closeEditProfileModal()">Cancel</button>
+          <button type="submit" class="btn btn-submit">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+      <div class="logo">
+        <h1>Timeless Moments</h1>
+        <p>Where Stories Begin – Book All Event Services in One Place</p>
+      </div>
+      <div class="footer-links">
+        <a href="index (2).html">Home</a>
+        <a href="feedback form.html">Feedback</a>
+        <a href="about.html">About</a>
+      </div>
+      <div class="copyright">
+        &copy; 2025 Timeless Moments. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <!-- Add CustomerDashboard JavaScript -->
+  <script src="js/CustomerDashboard.js"></script>
+  <script src="js/shared-message-bus.js"></script>
+  <script>
+    
+  // Load real user data on page load
+  document.addEventListener('DOMContentLoaded', function() {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    
+    if (currentUser) {
+      // Update user information throughout the dashboard
+      updateUserProfile(currentUser);
+      updateWelcomeMessage(currentUser);
+      updateHeaderProfile(currentUser);
+    } else {
+      // Redirect to login if no user is logged in
+      window.location.href = 'customer-login.html';
+    }
+  });
+
+  function updateUserProfile(user) {
+    // Update profile section
+    document.getElementById('userInitials').textContent = getInitials(user.fullName);
+    document.getElementById('userName').textContent = user.fullName;
+    document.getElementById('userEmail').textContent = user.email;
+    document.getElementById('memberSince').textContent = new Date().getFullYear();
+    
+    // Update profile details
+    document.getElementById('profileFullName').textContent = user.fullName;
+    document.getElementById('profileEmail').textContent = user.email;
+    document.getElementById('profilePhone').textContent = user.phone || 'Not provided';
+    document.getElementById('profileLocation').textContent = user.address || 'Not provided';
+    document.getElementById('profileEventType').textContent = 'All Types'; // Default
+    document.getElementById('profileNotifications').textContent = 'Email & SMS'; // Default
+  }
+
+  function updateWelcomeMessage(user) {
+    document.getElementById('welcomeUserName').textContent = user.fullName.split(' ')[0]; // First name only
+  }
+
+  function updateHeaderProfile(user) {
+    const headerAvatar = document.querySelector('.header-profile .profile-avatar-small');
+    if (headerAvatar) {
+      headerAvatar.textContent = getInitials(user.fullName);
+    }
+  }
+
+  function getInitials(fullName) {
+    return fullName.split(' ').map(name => name[0]).join('').toUpperCase();
+  }
+</script>
+</body>
+</html>

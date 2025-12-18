@@ -1,0 +1,3370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Venue Services - Timeless Moments</title>
+    <link rel="stylesheet" href="common.css">
+    <style>
+        :root {
+            --light-blue: #e1f5fe;
+            --light-pink: #fce4ec;
+            --light-purple: #f3e5f5;
+            --medium-blue: #81d4fa;
+            --medium-pink: #f8bbd9;
+            --medium-purple: #e1bee7;
+            --dark-blue: #0288d1;
+            --dark-pink: #f06292;
+            --dark-purple: #8b5cf6;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--light-blue) 0%, var(--light-pink) 50%, var(--light-purple) 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            width: 100%;
+        }
+        
+        .header h1 {
+            color: var(--dark-purple);
+            font-size: 36px;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .header p {
+            color: #555;
+            font-size: 18px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .controls-container {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            padding: 25px;
+            margin-bottom: 30px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .filters {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .filter-group {
+            margin-bottom: 15px;
+        }
+        
+        .filter-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 500;
+        }
+        
+        .filter-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid var(--light-blue);
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            outline: none;
+            background: white;
+        }
+        
+        .filter-group select:focus {
+            border-color: var(--medium-blue);
+            box-shadow: 0 0 0 3px rgba(129, 212, 250, 0.3);
+        }
+        
+        .capacity-filter {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .capacity-inputs {
+            display: flex;
+            gap: 10px;
+            margin-top: 5px;
+        }
+        
+        .capacity-inputs input {
+            flex: 1;
+            padding: 10px;
+            border: 2px solid var(--light-blue);
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        
+        .search-box {
+            position: relative;
+            margin-bottom: 20px;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 12px 15px 12px 45px;
+            border: 2px solid var(--light-blue);
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+        
+        .search-box input:focus {
+            border-color: var(--medium-blue);
+            box-shadow: 0 0 0 3px rgba(129, 212, 250, 0.3);
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--dark-blue);
+        }
+        
+        .venues-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+            text-align: center;
+        }
+        
+        .stat-card {
+            background: var(--light-purple);
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid var(--dark-purple);
+            transition: transform 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--dark-purple);
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            color: var(--dark-blue);
+            font-size: 0.9rem;
+        }
+        
+        .venues-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .venues-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+        
+        .venue-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .venue-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .venue-image {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            background-color: #f5f5f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #888;
+        }
+        
+        .venue-rating {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-weight: 600;
+            color: var(--dark-purple);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .venue-content {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .venue-name {
+            font-size: 1.4rem;
+            margin-bottom: 8px;
+            color: var(--dark-blue);
+        }
+        
+        .venue-specialty {
+            color: #7f8c8d;
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
+        
+        .venue-details {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            color: #555;
+        }
+        
+        .venue-price {
+            font-weight: 600;
+            color: var(--dark-purple);
+            font-size: 1.1rem;
+        }
+        
+        .venue-capacity {
+            font-size: 0.9rem;
+        }
+        
+        .venue-features {
+            margin-bottom: 15px;
+        }
+        
+        .venue-feature-tag {
+            display: inline-block;
+            background: var(--light-pink);
+            color: var(--dark-pink);
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+        
+        .packages-section {
+            margin: 15px 0;
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+        }
+        
+        .packages-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--dark-blue);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .packages-toggle {
+            background: none;
+            border: none;
+            color: var(--dark-purple);
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        
+        .packages-list {
+            display: none;
+            margin-top: 10px;
+        }
+        
+        .packages-list.show {
+            display: block;
+        }
+        
+        .package-item {
+            background: var(--light-blue);
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-left: 3px solid var(--dark-blue);
+        }
+        
+        .package-name {
+            font-weight: 600;
+            color: var(--dark-blue);
+            margin-bottom: 5px;
+        }
+        
+        .package-price {
+            font-weight: 600;
+            color: var(--dark-purple);
+            margin-bottom: 8px;
+        }
+        
+        .package-features {
+            font-size: 0.85rem;
+            color: #555;
+            margin-bottom: 5px;
+        }
+        
+        .package-features ul {
+            padding-left: 20px;
+            margin: 5px 0;
+        }
+        
+        .package-features li {
+            margin-bottom: 3px;
+        }
+        
+        .venue-contact {
+            background: var(--light-blue);
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: auto;
+            text-align: center;
+        }
+        
+        .venue-phone {
+            font-weight: 600;
+            color: var(--dark-blue);
+            font-size: 1.1rem;
+        }
+        
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            color: #555;
+            font-size: 1.2rem;
+            grid-column: 1 / -1;
+        }
+        
+        .state-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--dark-pink);
+        }
+        
+        .reset-filters {
+            background: var(--dark-purple);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s ease;
+            margin-top: 10px;
+        }
+        
+        .reset-filters:hover {
+            background: var(--medium-purple);
+        }
+        
+        @media (max-width: 768px) {
+            .venues-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .filters {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 28px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .venues-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .controls-container {
+                padding: 15px;
+            }
+            
+            .header h1 {
+                font-size: 24px;
+            }
+            
+            .header p {
+                font-size: 16px;
+            }
+        }
+        /* Booking Modal Styles */
+.booking-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.booking-modal.show {
+    display: flex;
+}
+
+.booking-form-container {
+    background: white;
+    border-radius: 12px;
+    padding: 0;
+    width: 90%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.booking-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 25px;
+    border-bottom: 1px solid #eee;
+    background: var(--primary-color);
+    color: white;
+    border-radius: 12px 12px 0 0;
+}
+
+.booking-header h3 {
+    margin: 0;
+    font-size: 1.3rem;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#bookingForm {
+    padding: 25px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #333;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #e1e1e1;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: border-color 0.3s;
+    box-sizing: border-box;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+.form-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.form-actions .btn {
+    flex: 1;
+    padding: 12px;
+}
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Timeless Moments</h1>
+        <p>Find the Perfect Venue for Your Special Day</p>
+    </div>
+    
+    <div class="controls-container">
+        <div class="search-box">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="searchInput" placeholder="Search venues by name, type, or location...">
+        </div>
+        
+        <div class="filters">
+            <div class="filter-group">
+                <label for="stateFilter">State</label>
+                <select id="stateFilter">
+                    <option value="all">All States</option>
+                    <option value="Andhra Pradesh">Andhra Pradesh</option>
+                    <option value="Telangana">Telangana</option>
+                    <option value="Karnataka">Karnataka</option>
+                    <option value="Kerala">Kerala</option>
+                    <option value="Tamil Nadu">Tamil Nadu</option>
+                </select>
+            </div>
+            
+            <div class="filter-group">
+                <label for="venueTypeFilter">Venue Type</label>
+                <select id="venueTypeFilter">
+                    <option value="all">All Types</option>
+                    <option value="Convention Hall">Convention Hall</option>
+                    <option value="Beach Resort">Beach Resort</option>
+                    <option value="Luxury Hotel">Luxury Hotel</option>
+                    <option value="Garden Venue">Garden Venue</option>
+                    <option value="Temple Hall">Temple Hall</option>
+                    <option value="Community Hall">Community Hall</option>
+                    <option value="Outdoor Lawn">Outdoor Lawn</option>
+                    <option value="Banquet Hall">Banquet Hall</option>
+                </select>
+            </div>
+            
+            <div class="filter-group capacity-filter">
+                <label for="minCapacity">Capacity Range (guests)</label>
+                <div class="capacity-inputs">
+                    <input type="number" id="minCapacity" placeholder="Min" min="0">
+                    <input type="number" id="maxCapacity" placeholder="Max" min="0">
+                </div>
+            </div>
+        </div>
+        
+        <button class="reset-filters" id="resetFilters">Reset All Filters</button>
+        
+        <div class="venues-stats">
+            <div class="stat-card">
+                <div class="stat-number" id="totalVenues">0</div>
+                <div class="stat-label">Total Venues</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="avgRating">0.0</div>
+                <div class="stat-label">Average Rating</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="statesCovered">0</div>
+                <div class="stat-label">States Covered</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="topRated">0</div>
+                <div class="stat-label">Top Rated (4.5+)</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="venues-container">
+        <div class="venues-grid" id="venuesGrid">
+            <!-- Venue cards will be dynamically inserted here -->
+        </div>
+    </div>
+    <!-- Booking Form Modal -->
+<div class="booking-modal" id="bookingModal">
+    <div class="booking-form-container">
+        <div class="booking-header">
+            <h3>Book Venue</h3>
+            <button class="close-btn" id="closeBookingForm">&times;</button>
+        </div>
+        <form id="bookingForm">
+            <div class="form-group">
+                <label for="customerName">Your Name *</label>
+                <input type="text" id="customerName" name="customerName" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="customerPhone">Phone Number *</label>
+                <input type="tel" id="customerPhone" name="customerPhone" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="customerEmail">Email Address</label>
+                <input type="email" id="customerEmail" name="customerEmail">
+            </div>
+            
+            <div class="form-group">
+                <label for="eventType">Event Type *</label>
+                <select id="eventType" name="eventType" required>
+                    <option value="">Select Event Type</option>
+                    <option value="wedding">Wedding</option>
+                    <option value="engagement">Engagement</option>
+                    <option value="birthday">Birthday</option>
+                    <option value="corporate">Corporate Event</option>
+                    <option value="anniversary">Anniversary</option>
+                    <option value="reception">Reception</option>
+                    <option value="sangeet">Sangeet</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="eventDate">Event Date *</label>
+                <input type="date" id="eventDate" name="eventDate" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="eventTime">Event Time *</label>
+                <input type="time" id="eventTime" name="eventTime" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="venueDuration">Venue Duration (hours) *</label>
+                <input type="number" id="venueDuration" name="venueDuration" min="1" max="12" required placeholder="e.g., 6">
+            </div>
+            
+            <div class="form-group">
+                <label for="guestCount">Expected Number of Guests *</label>
+                <input type="number" id="guestCount" name="guestCount" min="1" required placeholder="e.g., 200">
+            </div>
+            
+            <div class="form-group">
+                <label for="venuePackage">Preferred Venue Package</label>
+                <select id="venuePackage" name="venuePackage">
+                    <option value="">Select Package</option>
+                    <option value="basic">Basic Package</option>
+                    <option value="standard">Standard Package</option>
+                    <option value="premium">Premium Package</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="setupRequirements">Setup Requirements</label>
+                <textarea id="setupRequirements" name="setupRequirements" rows="2" placeholder="Any specific seating arrangements, stage setup, or layout preferences..."></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="cateringNeeded">Catering Requirements</label>
+                <select id="cateringNeeded" name="cateringNeeded">
+                    <option value="">Select Option</option>
+                    <option value="external">Bringing External Caterer</option>
+                    <option value="venue">Use Venue Catering Services</option>
+                    <option value="none">No Catering Required</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="decorationNeeded">Decoration Requirements</label>
+                <select id="decorationNeeded" name="decorationNeeded">
+                    <option value="">Select Option</option>
+                    <option value="external">Bringing External Decorator</option>
+                    <option value="venue">Use Venue Decoration Services</option>
+                    <option value="none">No Decoration Required</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="parkingRequirements">Parking Requirements</label>
+                <input type="number" id="parkingRequirements" name="parkingRequirements" min="0" placeholder="Number of vehicles expected">
+            </div>
+            
+            <div class="form-group">
+                <label for="specialRequirements">Special Requirements</label>
+                <textarea id="specialRequirements" name="specialRequirements" rows="3" placeholder="Any specific venue requirements, technical needs, or special arrangements..."></textarea>
+            </div>
+            
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" id="cancelBooking">Cancel</button>
+                <button type="submit" class="btn btn-primary">Submit Booking Request</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+    <script>
+        // Venue data with packages for all 40 venues
+        const venuesData = {
+            "Andhra Pradesh": [
+                {
+                    "id": 81,
+                    "name": "Grand Vijayawada Convention",
+                    "specialty": "Convention Hall",
+                    "rating": 4.3,
+                    "price": "₹10,000 - ₹25,000",
+                    "capacity": "200-500 guests",
+                    "image": "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=800",
+                    "experience": "4 years",
+                    "features": ["Air Conditioning", "Professional Lighting", "Audio-Visual Equipment", "Catering Services", "Parking Facilities"],
+                    "contact": {"phone": "+91 9876543210"},
+                    "packages": [
+                        {
+                            "name": "Basic Venue Package",
+                            "price": "₹10,000",
+                            "features": [
+                                "4 hours venue rental",
+                                "Basic seating arrangement",
+                                "Standard lighting",
+                                "Basic sound system",
+                                "Setup assistance"
+                            ]
+                        },
+                        {
+                            "name": "Standard Venue Package",
+                            "price": "₹17,500",
+                            "features": [
+                                "6 hours venue rental",
+                                "Premium seating arrangement",
+                                "Enhanced lighting system",
+                                "Professional sound system",
+                                "Setup & teardown included",
+                                "Basic decor elements"
+                            ]
+                        },
+                        {
+                            "name": "Premium Venue Package",
+                            "price": "₹25,000",
+                            "features": [
+                                "8 hours venue rental",
+                                "Luxury seating arrangement",
+                                "Advanced lighting system",
+                                "Premium sound system",
+                                "Setup & teardown included",
+                                "Enhanced decor elements"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 82,
+                    "name": "Visakhapatnam Beach Resort",
+                    "specialty": "Beach Resort",
+                    "rating": 4.4,
+                    "price": "₹12,000 - ₹28,000",
+                    "capacity": "150-400 guests",
+                    "image": "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800",
+                    "experience": "5 years",
+                    "features": ["Beachfront Location", "Outdoor Setup", "Sea View", "Resort Amenities", "Beach Activities"],
+                    "contact": {"phone": "+91 9876543211"},
+                    "packages": [
+                        {
+                            "name": "Basic Beach Package",
+                            "price": "₹12,000",
+                            "features": [
+                                "4 hours beachfront access",
+                                "Basic seating arrangement",
+                                "Beach setup assistance",
+                                "Basic sound system",
+                                "Resort amenities access"
+                            ]
+                        },
+                        {
+                            "name": "Standard Beach Package",
+                            "price": "₹20,000",
+                            "features": [
+                                "6 hours beachfront access",
+                                "Premium seating arrangement",
+                                "Enhanced beach setup",
+                                "Professional sound system",
+                                "Resort amenities access",
+                                "Beach decor elements"
+                            ]
+                        },
+                        {
+                            "name": "Premium Beach Package",
+                            "price": "₹28,000",
+                            "features": [
+                                "8 hours exclusive beachfront",
+                                "Luxury seating arrangement",
+                                "Premium beach setup",
+                                "Advanced sound system",
+                                "Full resort amenities",
+                                "Luxury beach decor"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 83,
+                    "name": "Tirupati Luxury Hotel",
+                    "specialty": "Luxury Hotel",
+                    "rating": 4.5,
+                    "price": "₹14,000 - ₹31,000",
+                    "capacity": "100-300 guests",
+                    "image": "https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=800",
+                    "experience": "6 years",
+                    "features": ["Luxury Accommodation", "Fine Dining", "Spa Services", "Conference Facilities", "Swimming Pool"],
+                    "contact": {"phone": "+91 9876543212"},
+                    "packages": [
+                        {
+                            "name": "Basic Hotel Package",
+                            "price": "₹14,000",
+                            "features": [
+                                "4 hours banquet hall rental",
+                                "Basic hotel services",
+                                "Standard seating",
+                                "Basic audio-visual",
+                                "Hotel staff assistance"
+                            ]
+                        },
+                        {
+                            "name": "Standard Hotel Package",
+                            "price": "₹22,500",
+                            "features": [
+                                "6 hours banquet hall rental",
+                                "Premium hotel services",
+                                "Enhanced seating arrangement",
+                                "Professional audio-visual",
+                                "Dedicated event coordinator",
+                                "Hotel amenities access"
+                            ]
+                        },
+                        {
+                            "name": "Premium Hotel Package",
+                            "price": "₹31,000",
+                            "features": [
+                                "8 hours exclusive hall rental",
+                                "Luxury hotel services",
+                                "Premium seating arrangement",
+                                "Advanced audio-visual system",
+                                "Personal event manager",
+                                "Full hotel amenities"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 84,
+                    "name": "Guntur Garden Venue",
+                    "specialty": "Garden Venue",
+                    "rating": 4.6,
+                    "price": "₹16,000 - ₹34,000",
+                    "capacity": "200-600 guests",
+                    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSx5yw3HrwdBjckVoh-ARLqUS1dcWb8V4blfw&s",
+                    "experience": "7 years",
+                    "features": ["Outdoor Garden", "Natural Setting", "Landscaped Areas", "Outdoor Lighting", "Garden Decor"],
+                    "contact": {"phone": "+91 9876543213"},
+                    "packages": [
+                        {
+                            "name": "Basic Garden Package",
+                            "price": "₹16,000",
+                            "features": [
+                                "4 hours garden access",
+                                "Basic outdoor seating",
+                                "Garden setup assistance",
+                                "Basic outdoor lighting",
+                                "Natural garden ambiance"
+                            ]
+                        },
+                        {
+                            "name": "Standard Garden Package",
+                            "price": "₹25,000",
+                            "features": [
+                                "6 hours garden access",
+                                "Premium outdoor seating",
+                                "Enhanced garden setup",
+                                "Professional outdoor lighting",
+                                "Garden decor elements",
+                                "Landscaped area access"
+                            ]
+                        },
+                        {
+                            "name": "Premium Garden Package",
+                            "price": "₹34,000",
+                            "features": [
+                                "8 hours exclusive garden",
+                                "Luxury outdoor seating",
+                                "Premium garden setup",
+                                "Advanced outdoor lighting",
+                                "Luxury garden decor",
+                                "Full landscaped access"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 85,
+                    "name": "Amaravati Temple Hall",
+                    "specialty": "Temple Hall",
+                    "rating": 4.7,
+                    "price": "₹18,000 - ₹37,000",
+                    "capacity": "300-800 guests",
+                    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3yWGjriuOOY8VZjPwfMofYVVNlALnyoAMIw&s",
+                    "experience": "8 years",
+                    "features": ["Traditional Architecture", "Spiritual Atmosphere", "Cultural Setting", "Traditional Decor", "Religious Significance"],
+                    "contact": {"phone": "+91 9876543214"},
+                    "packages": [
+                        {
+                            "name": "Basic Temple Package",
+                            "price": "₹18,000",
+                            "features": [
+                                "4 hours hall rental",
+                                "Traditional seating",
+                                "Basic temple decor",
+                                "Traditional ambiance",
+                                "Temple staff assistance"
+                            ]
+                        },
+                        {
+                            "name": "Standard Temple Package",
+                            "price": "₹27,500",
+                            "features": [
+                                "6 hours hall rental",
+                                "Enhanced traditional seating",
+                                "Cultural decor elements",
+                                "Traditional lighting",
+                                "Dedicated coordinator",
+                                "Cultural atmosphere"
+                            ]
+                        },
+                        {
+                            "name": "Premium Temple Package",
+                            "price": "₹37,000",
+                            "features": [
+                                "8 hours exclusive hall",
+                                "Luxury traditional seating",
+                                "Premium cultural decor",
+                                "Advanced traditional lighting",
+                                "Personal event manager",
+                                "Authentic cultural experience"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 86,
+                    "name": "Nellore Community Hall",
+                    "specialty": "Community Hall",
+                    "rating": 4.3,
+                    "price": "₹20,000 - ₹40,000",
+                    "capacity": "150-400 guests",
+                    "image": "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=800",
+                    "experience": "9 years",
+                    "features": ["Community Space", "Affordable Pricing", "Flexible Layout", "Basic Amenities", "Local Accessibility"],
+                    "contact": {"phone": "+91 9876543215"},
+                    "packages": [
+                        {
+                            "name": "Basic Community Package",
+                            "price": "₹20,000",
+                            "features": [
+                                "4 hours hall rental",
+                                "Basic community seating",
+                                "Simple setup assistance",
+                                "Basic amenities",
+                                "Community space access"
+                            ]
+                        },
+                        {
+                            "name": "Standard Community Package",
+                            "price": "₹30,000",
+                            "features": [
+                                "6 hours hall rental",
+                                "Enhanced community seating",
+                                "Professional setup",
+                                "Improved amenities",
+                                "Community facilities",
+                                "Flexible layout options"
+                            ]
+                        },
+                        {
+                            "name": "Premium Community Package",
+                            "price": "₹40,000",
+                            "features": [
+                                "8 hours exclusive hall",
+                                "Premium community seating",
+                                "Complete setup services",
+                                "All amenities included",
+                                "Full community facilities",
+                                "Custom layout design"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 87,
+                    "name": "Kakinada Outdoor Lawn",
+                    "specialty": "Outdoor Lawn",
+                    "rating": 4.4,
+                    "price": "₹22,000 - ₹43,000",
+                    "capacity": "250-700 guests",
+                    "image": "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=800",
+                    "experience": "10 years",
+                    "features": ["Open Lawn Space", "Natural Environment", "Outdoor Setup", "Garden Areas", "Flexible Layout"],
+                    "contact": {"phone": "+91 9876543216"},
+                    "packages": [
+                        {
+                            "name": "Basic Lawn Package",
+                            "price": "₹22,000",
+                            "features": [
+                                "4 hours lawn access",
+                                "Basic outdoor seating",
+                                "Lawn setup assistance",
+                                "Natural environment",
+                                "Open space utilization"
+                            ]
+                        },
+                        {
+                            "name": "Standard Lawn Package",
+                            "price": "₹32,500",
+                            "features": [
+                                "6 hours lawn access",
+                                "Enhanced outdoor seating",
+                                "Professional lawn setup",
+                                "Garden area access",
+                                "Flexible layout options",
+                                "Outdoor amenities"
+                            ]
+                        },
+                        {
+                            "name": "Premium Lawn Package",
+                            "price": "₹43,000",
+                            "features": [
+                                "8 hours exclusive lawn",
+                                "Premium outdoor seating",
+                                "Complete lawn setup",
+                                "Full garden access",
+                                "Custom layout design",
+                                "All outdoor amenities"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 88,
+                    "name": "Rajahmundry Banquet Hall",
+                    "specialty": "Banquet Hall",
+                    "rating": 4.5,
+                    "price": "₹24,000 - ₹46,000",
+                    "capacity": "200-500 guests",
+                    "image": "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=800",
+                    "experience": "11 years",
+                    "features": ["Elegant Interior", "Professional Setup", "Quality Service", "Modern Amenities", "Event Coordination"],
+                    "contact": {"phone": "+91 9876543217"},
+                    "packages": [
+                        {
+                            "name": "Basic Banquet Package",
+                            "price": "₹24,000",
+                            "features": [
+                                "4 hours hall rental",
+                                "Basic banquet seating",
+                                "Standard setup",
+                                "Basic amenities",
+                                "Event coordination"
+                            ]
+                        },
+                        {
+                            "name": "Standard Banquet Package",
+                            "price": "₹35,000",
+                            "features": [
+                                "6 hours hall rental",
+                                "Enhanced banquet seating",
+                                "Professional setup",
+                                "Improved amenities",
+                                "Dedicated coordinator",
+                                "Quality service"
+                            ]
+                        },
+                        {
+                            "name": "Premium Banquet Package",
+                            "price": "₹46,000",
+                            "features": [
+                                "8 hours exclusive hall",
+                                "Premium banquet seating",
+                                "Complete setup services",
+                                "All amenities included",
+                                "Personal event manager",
+                                "Luxury service"
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "Tamil Nadu": [
+                {
+                    "id": 89,
+                    "name": "Chennai Grand Convention",
+                    "specialty": "Convention Hall",
+                    "rating": 4.3,
+                    "price": "₹10,000 - ₹25,000",
+                    "capacity": "300-800 guests",
+                    "image": "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=800",
+                    "experience": "4 years",
+                    "features": ["Modern Facilities", "Professional Services", "Quality Equipment", "Spacious Layout", "City Center Location"],
+                    "contact": {"phone": "+91 9876543220"},
+                    "packages": [
+                        {
+                            "name": "Basic Convention Package",
+                            "price": "₹10,000",
+                            "features": [
+                                "4 hours hall rental",
+                                "Basic convention seating",
+                                "Standard equipment",
+                                "Professional services",
+                                "City center location"
+                            ]
+                        },
+                        {
+                            "name": "Standard Convention Package",
+                            "price": "₹17,500",
+                            "features": [
+                                "6 hours hall rental",
+                                "Enhanced convention seating",
+                                "Improved equipment",
+                                "Quality services",
+                                "Prime location access",
+                                "Modern facilities"
+                            ]
+                        },
+                        {
+                            "name": "Premium Convention Package",
+                            "price": "₹25,000",
+                            "features": [
+                                "8 hours exclusive hall",
+                                "Premium convention seating",
+                                "Advanced equipment",
+                                "Premium services",
+                                "Best location access",
+                                "All modern facilities"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 90,
+                    "name": "Mahabalipuram Beach Resort",
+                    "specialty": "Beach Resort",
+                    "rating": 4.4,
+                    "price": "₹12,000 - ₹28,000",
+                    "capacity": "150-400 guests",
+                    "image": "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800",
+                    "experience": "5 years",
+                    "features": ["Historic Location", "Beachfront Access", "Resort Amenities", "Cultural Setting", "Scenic Views"],
+                    "contact": {"phone": "+91 9876543221"},
+                    "packages": [
+                        {
+                            "name": "Basic Resort Package",
+                            "price": "₹12,000",
+                            "features": [
+                                "4 hours beach access",
+                                "Basic resort seating",
+                                "Beach setup assistance",
+                                "Resort amenities",
+                                "Scenic views"
+                            ]
+                        },
+                        {
+                            "name": "Standard Resort Package",
+                            "price": "₹20,000",
+                            "features": [
+                                "6 hours beach access",
+                                "Enhanced resort seating",
+                                "Professional setup",
+                                "Premium amenities",
+                                "Cultural setting",
+                                "Historic location"
+                            ]
+                        },
+                        {
+                            "name": "Premium Resort Package",
+                            "price": "₹28,000",
+                            "features": [
+                                "8 hours exclusive beach",
+                                "Premium resort seating",
+                                "Complete setup services",
+                                "All amenities included",
+                                "Cultural experience",
+                                "Best scenic views"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 91,
+                    "name": "Coimbatore Luxury Hotel",
+                    "specialty": "Luxury Hotel",
+                    "rating": 4.5,
+                    "price": "₹14,000 - ₹31,000",
+                    "capacity": "100-300 guests",
+                    "image": "https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=800",
+                    "experience": "6 years",
+                    "features": ["Luxury Accommodation", "Fine Dining", "Spa Services", "Business Facilities", "Premium Service"],
+                    "contact": {"phone": "+91 9876543222"},
+                    "packages": [
+                        {
+                            "name": "Basic Hotel Package",
+                            "price": "₹14,000",
+                            "features": [
+                                "4 hours hall rental",
+                                "Basic hotel services",
+                                "Standard amenities",
+                                "Hotel staff assistance",
+                                "Business facilities"
+                            ]
+                        },
+                        {
+                            "name": "Standard Hotel Package",
+                            "price": "₹22,500",
+                            "features": [
+                                "6 hours hall rental",
+                                "Enhanced hotel services",
+                                "Improved amenities",
+                                "Dedicated coordinator",
+                                "Premium facilities",
+                                "Fine dining options"
+                            ]
+                        },
+                        {
+                            "name": "Premium Hotel Package",
+                            "price": "₹31,000",
+                            "features": [
+                                "8 hours exclusive hall",
+                                "Premium hotel services",
+                                "All amenities included",
+                                "Personal event manager",
+                                "Luxury facilities",
+                                "Gourmet dining"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 92,
+                    "name": "Madurai Garden Venue",
+                    "specialty": "Garden Venue",
+                    "rating": 4.6,
+                    "price": "₹16,000 - ₹34,000",
+                    "capacity": "200-600 guests",
+                    "image": "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=800",
+                    "experience": "7 years",
+                    "features": ["Traditional Garden", "Cultural Elements", "Natural Beauty", "Outdoor Setting", "Traditional Decor"],
+                    "contact": {"phone": "+91 9876543223"},
+                    "packages": [
+                        {
+                            "name": "Basic Garden Package",
+                            "price": "₹16,000",
+                            "features": [
+                                "4 hours garden access",
+                                "Basic garden seating",
+                                "Traditional setup",
+                                "Natural environment",
+                                "Cultural elements"
+                            ]
+                        },
+                        {
+                            "name": "Standard Garden Package",
+                            "price": "₹25,000",
+                            "features": [
+                                "6 hours garden access",
+                                "Enhanced garden seating",
+                                "Professional setup",
+                                "Traditional decor",
+                                "Cultural atmosphere",
+                                "Natural beauty"
+                            ]
+                        },
+                        {
+                            "name": "Premium Garden Package",
+                            "price": "₹34,000",
+                            "features": [
+                                "8 hours exclusive garden",
+                                "Premium garden seating",
+                                "Complete setup services",
+                                "Premium traditional decor",
+                                "Authentic cultural experience",
+                                "Full natural access"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 93,
+                    "name": "Rameswaram Temple Hall",
+                    "specialty": "Temple Hall",
+                    "rating": 4.7,
+                    "price": "₹18,000 - ₹37,000",
+                    "capacity": "300-800 guests",
+                    "image": "https://images.unsplash.com/photo-1587132137056-83ddec79aa22?w=800",
+                    "experience": "8 years",
+                    "features": ["Sacred Location", "Spiritual Atmosphere", "Traditional Architecture", "Religious Significance", "Cultural Heritage"],
+                    "contact": {"phone": "+91 9876543224"},
+                    "packages": [
+                        {
+                            "name": "Basic Temple Package",
+                            "price": "₹18,000",
+                            "features": [
+                                "4 hours hall rental",
+                                "Basic temple seating",
+                                "Traditional setup",
+                                "Spiritual atmosphere",
+                                "Sacred location"
+                            ]
+                        },
+                        {
+                            "name": "Standard Temple Package",
+                            "price": "₹27,500",
+                            "features": [
+                                "6 hours hall rental",
+                                "Enhanced temple seating",
+                                "Professional setup",
+                                "Cultural heritage",
+                                "Religious significance",
+                                "Traditional architecture"
+                            ]
+                        },
+                        {
+                            "name": "Premium Temple Package",
+                            "price": "₹37,000",
+                            "features": [
+                                "8 hours exclusive hall",
+                                "Premium temple seating",
+                                "Complete setup services",
+                                "Full cultural experience",
+                                "Spiritual significance",
+                                "Heritage architecture"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 94,
+                    "name": "Salem Community Hall",
+                    "specialty": "Community Hall",
+                    "rating": 4.3,
+                    "price": "₹20,000 - ₹40,000",
+                    "capacity": "150-400 guests",
+                    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT06-j-cjFwptqnDjyTeWSbs8Ir9v_LKcAhpw&s",
+                    "experience": "9 years",
+                    "features": ["Community Space", "Affordable Options", "Local Accessibility", "Flexible Layout", "Basic Services"],
+                    "contact": {"phone": "+91 9876543225"},
+                    "packages": [
+                        {
+                            "name": "Basic Community Package",
+                            "price": "₹20,000",
+                            "features": [
+                                "4 hours hall rental",
+                                "Basic community seating",
+                                "Simple setup assistance",
+                                "Local accessibility",
+                                "Community space"
+                            ]
+                        },
+                        {
+                            "name": "Standard Community Package",
+                            "price": "₹30,000",
+                            "features": [
+                                "6 hours hall rental",
+                                "Enhanced community seating",
+                                "Professional setup",
+                                "Improved services",
+                                "Flexible layout",
+                                "Affordable options"
+                            ]
+                        },
+                        {
+                            "name": "Premium Community Package",
+                            "price": "₹40,000",
+                            "features": [
+                                "8 hours exclusive hall",
+                                "Premium community seating",
+                                "Complete setup services",
+                                "All services included",
+                                "Custom layout design",
+                                "Best local access"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 95,
+                    "name": "Ooty Outdoor Lawn",
+                    "specialty": "Outdoor Lawn",
+                    "rating": 4.4,
+                    "price": "₹22,000 - ₹43,000",
+                    "capacity": "250-700 guests",
+                    "image": "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=800",
+                    "experience": "10 years",
+                    "features": ["Hill Station Location", "Cool Climate", "Natural Beauty", "Mountain Views", "Outdoor Setting"],
+                    "contact": {"phone": "+91 9876543226"},
+                    "packages": [
+                        {
+                            "name": "Basic Lawn Package",
+                            "price": "₹22,000",
+                            "features": [
+                                "4 hours lawn access",
+                                "Basic outdoor seating",
+                                "Natural setup",
+                                "Hill station location",
+                                "Cool climate"
+                            ]
+                        },
+                        {
+                            "name": "Standard Lawn Package",
+                            "price": "₹32,500",
+                            "features": [
+                                "6 hours lawn access",
+                                "Enhanced outdoor seating",
+                                "Professional setup",
+                                "Mountain views",
+                                "Natural beauty",
+                                "Outdoor amenities"
+                            ]
+                        },
+                        {
+                            "name": "Premium Lawn Package",
+                            "price": "₹43,000",
+                            "features": [
+                                "8 hours exclusive lawn",
+                                "Premium outdoor seating",
+                                "Complete setup services",
+                                "Best mountain views",
+                                "Full natural access",
+                                "All outdoor amenities"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 96,
+                    "name": "Trichy Banquet Hall",
+                    "specialty": "Banquet Hall",
+                    "rating": 4.5,
+                    "price": "₹24,000 - ₹46,000",
+                    "capacity": "200-500 guests",
+                    "image": "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=800",
+                    "experience": "11 years",
+                    "features": ["Elegant Interior", "Professional Service", "Quality Setup", "Modern Amenities", "City Location"],
+                    "contact": {"phone": "+91 9876543227"},
+                    "packages": [
+                        {
+                            "name": "Basic Banquet Package",
+                            "price": "₹24,000",
+                            "features": [
+                                "4 hours hall rental",
+                                "Basic banquet seating",
+                                "Standard setup",
+                                "Professional service",
+                                "City location"
+                            ]
+                        },
+                        {
+                            "name": "Standard Banquet Package",
+                            "price": "₹35,000",
+                            "features": [
+                                "6 hours hall rental",
+                                "Enhanced banquet seating",
+                                "Professional setup",
+                                "Quality service",
+                                "Modern amenities",
+                                "Elegant interior"
+                            ]
+                        },
+                        {
+                            "name": "Premium Banquet Package",
+                            "price": "₹46,000",
+                            "features": [
+                                "8 hours exclusive hall",
+                                "Premium banquet seating",
+                                "Complete setup services",
+                                "Premium service",
+                                "All amenities included",
+                                "Luxury interior"
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "Karnataka": [
+                {
+                    "id": 97,
+                    "name": "Bangalore Grand Convention",
+                    "specialty": "Convention Hall",
+                    "rating": 4.3,
+                    "price": "₹10,000 - ₹25,000",
+                    "capacity": "300-800 guests",
+                    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROgG41er-i72PIkVjeHqPSO9gea8wx1YnH7g&s",
+                    "experience": "4 years",
+                    "features": ["Modern Technology", "Professional Staff", "Quality Equipment", "Spacious Layout", "IT City Location"],
+                    "contact": {"phone": "+91 9876543230"},
+                    "packages": [
+                        {
+                            "name": "Basic Convention Package",
+                            "price": "₹10,000",
+                            "features": [
+                                "4 hours hall rental",
+                                "Basic convention seating",
+                                "Standard equipment",
+                                "Professional staff",
+                                "IT city location"
+                            ]
+                        },
+                        {
+                            "name": "Standard Convention Package",
+                            "price": "₹17,500",
+                            "features": [
+                                "6 hours hall rental",
+                                "Enhanced convention seating",
+                                "Improved equipment",
+                                "Quality staff services",
+                                "Modern technology",
+                                "Spacious layout"
+                            ]
+                        },
+                        {
+                            "name": "Premium Convention Package",
+                            "price": "₹25,000",
+                            "features": [
+                                "8 hours exclusive hall",
+                                "Premium convention seating",
+                                "Advanced equipment",
+                                "Premium staff services",
+                                "Latest technology",
+                                "Best layout options"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 98,
+                    "name": "Mangalore Beach Resort",
+                    "specialty": "Beach Resort",
+                    "rating": 4.4,
+                    "price": "₹12,000 - ₹28,000",
+                    "capacity": "150-400 guests",
+                    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8LRk-YYyFMOFdpHKQTEtCpQzZygLVSotHUw&s",
+                    "experience": "5 years",
+                    "features": ["Coastal Location", "Beach Access", "Resort Facilities", "Sea Breeze", "Coastal Cuisine"],
+                    "contact": {"phone": "+91 9876543231"},
+                    "packages": [
+                        {
+                            "name": "Basic Resort Package",
+                            "price": "₹12,000",
+                            "features": [
+                                "4 hours beach access",
+                                "Basic resort seating",
+                                "Beach setup assistance",
+                                "Coastal location",
+                                "Resort facilities"
+                            ]
+                        },
+                        {
+                            "name": "Standard Resort Package",
+                            "price": "₹20,000",
+                            "features": [
+                                "6 hours beach access",
+                                "Enhanced resort seating",
+                                "Professional setup",
+                                "Premium facilities",
+                                "Sea breeze",
+                                "Coastal cuisine"
+                            ]
+                        },
+                        {
+                            "name": "Premium Resort Package",
+                            "price": "₹28,000",
+                            "features": [
+                                "8 hours exclusive beach",
+                                "Premium resort seating",
+                                "Complete setup services",
+                                "All facilities included",
+                                "Best coastal access",
+                                "Gourmet coastal cuisine"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 99,
+                    "name": "Mysore Luxury Hotel",
+                    "specialty": "Luxury Hotel",
+                    "rating": 4.5,
+                    "price": "₹14,000 - ₹31,000",
+                    "capacity": "100-300 guests",
+                    "image": "https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=800",
+                    "experience": "6 years",
+                    "features": ["Royal Heritage", "Luxury Accommodation", "Fine Dining", "Cultural Experience", "Premium Service"],
+                    "contact": {"phone": "+91 9876543232"},
+                    "packages": [
+                        {
+                            "name": "Basic Hotel Package",
+                            "price": "₹14,000",
+                            "features": [
+                                "4 hours hall rental",
+                                "Basic hotel services",
+                                "Standard amenities",
+                                "Royal heritage",
+                                "Cultural experience"
+                            ]
+                        },
+                        {
+                            "name": "Standard Hotel Package",
+                            "price": "₹22,500",
+                            "features": [
+                                "6 hours hall rental",
+                                "Enhanced hotel services",
+                                "Improved amenities",
+                                "Premium service",
+                                "Fine dining options",
+                                "Luxury accommodation"
+                            ]
+                        },
+                        {
+                            "name": "Premium Hotel Package",
+                            "price": "₹31,000",
+                            "features": [
+                                "8 hours exclusive hall",
+                                "Premium hotel services",
+                                "All amenities included",
+                                "Royal experience",
+                                "Gourmet dining",
+                                "Luxury heritage"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 100,
+                    "name": "Hubli Garden Venue",
+                    "specialty": "Garden Venue",
+                    "rating": 4.6,
+                    "price": "₹16,000 - ₹34,000",
+                    "capacity": "200-600 guests",
+                    "image": "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=800",
+                    "experience": "7 years",
+                    "features": ["Landscaped Gardens", "Natural Setting", "Outdoor Atmosphere", "Garden Decor", "Peaceful Environment"],
+                    "contact": {"phone": "+91 9876543233"},
+                    "packages": [
+                        {
+                            "name": "Basic Garden Package",
+                            "price": "₹16,000",
+                            "features": [
+                                "4 hours garden access",
+                                "Basic garden seating",
+                                "Natural setup",
+                                "Landscaped gardens",
+                                "Peaceful environment"
+                            ]
+                        },
+                        {
+                            "name": "Standard Garden Package",
+                            "price": "₹25,000",
+                            "features": [
+                                "6 hours garden access",
+                                "Enhanced garden seating",
+                                "Professional setup",
+                                "Garden decor",
+                                "Outdoor atmosphere",
+                                "Natural setting"
+                            ]
+                        },
+                        {
+                            "name": "Premium Garden Package",
+                            "price": "₹34,000",
+                            "features": [
+                                "8 hours exclusive garden",
+                                "Premium garden seating",
+                                "Complete setup services",
+                                "Premium garden decor",
+                                "Best outdoor atmosphere",
+                                "Full natural access"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 101,
+                    "name": "Belur Temple Hall",
+                    "specialty": "Temple Hall",
+                    "rating": 4.7,
+                    "price": "₹18,000 - ₹37,000",
+                    "capacity": "300-800 guests",
+                    "image": "https://images.unsplash.com/photo-1587132137056-83ddec79aa22?w=800",
+                    "experience": "8 years",
+                    "features": ["Historical Temple", "Architectural Beauty", "Spiritual Atmosphere", "Cultural Heritage", "Traditional Setting"],
+                    "contact": {"phone": "+91 9876543234"},
+                    "packages": [
+                        {
+                            "name": "Basic Temple Package",
+                            "price": "₹18,000",
+                            "features": [
+                                "4 hours hall rental",
+                                "Basic temple seating",
+                                "Traditional setup",
+                                "Historical temple",
+                                "Spiritual atmosphere"
+                            ]
+                        },
+                        {
+                            "name": "Standard Temple Package",
+                            "price": "₹27,500",
+                            "features": [
+                                "6 hours hall rental",
+                                "Enhanced temple seating",
+                                "Professional setup",
+                                "Architectural beauty",
+                                "Cultural heritage",
+                                "Traditional setting"
+                            ]
+                        },
+                        {
+                            "name": "Premium Temple Package",
+                            "price": "₹37,000",
+                            "features": [
+                                "8 hours exclusive hall",
+                                "Premium temple seating",
+                                "Complete setup services",
+                                "Full cultural experience",
+                                "Historical significance",
+                                "Architectural heritage"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 102,
+                    "name": "Dharwad Community Hall",
+                    "specialty": "Community Hall",
+                    "rating": 4.3,
+                    "price": "₹20,000 - ₹40,000",
+                    "capacity": "150-400 guests",
+                    "image": "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=800",
+                    "experience": "9 years",
+                    "features": ["Community Space", "Local Accessibility", "Affordable Options", "Basic Services", "Flexible Usage"],
+                    "contact": {"phone": "+91 9876543235"},
+                    "packages": [
+                        {
+                            "name": "Basic Community Package",
+                            "price": "₹20,000",
+                            "features": [
+                                "4 hours hall rental",
+                                "Basic community seating",
+                                "Simple setup assistance",
+                                "Local accessibility",
+                                "Community space"
+                            ]
+                        },
+                        {
+                            "name": "Standard Community Package",
+                            "price": "₹30,000",
+                            "features": [
+                                "6 hours hall rental",
+                                "Enhanced community seating",
+                                "Professional setup",
+                                "Improved services",
+                                "Flexible usage",
+                                "Affordable options"
+                            ]
+                        },
+                        {
+                            "name": "Premium Community Package",
+                            "price": "₹40,000",
+                            "features": [
+                                "8 hours exclusive hall",
+                                "Premium community seating",
+                                "Complete setup services",
+                                "All services included",
+                                "Custom usage options",
+                                "Best local access"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 103,
+                    "name": "Coorg Outdoor Lawn",
+                    "specialty": "Outdoor Lawn",
+                    "rating": 4.4,
+                    "price": "₹22,000 - ₹43,000",
+                    "capacity": "250-700 guests",
+                    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzXIKNUHLGCs3yyI-s6NWdp2x4XI75CSWA1A&s",
+                    "experience": "10 years",
+                    "features": ["Coffee Plantation", "Mountain Views", "Cool Climate", "Natural Beauty", "Outdoor Setting"],
+                    "contact": {"phone": "+91 9876543236"},
+                    "packages": [
+                        {
+                            "name": "Basic Lawn Package",
+                            "price": "₹22,000",
+                            "features": [
+                                "4 hours lawn access",
+                                "Basic outdoor seating",
+                                "Natural setup",
+                                "Coffee plantation",
+                                "Cool climate"
+                            ]
+                        },
+                        {
+                            "name": "Standard Lawn Package",
+                            "price": "₹32,500",
+                            "features": [
+                                "6 hours lawn access",
+                                "Enhanced outdoor seating",
+                                "Professional setup",
+                                "Mountain views",
+                                "Natural beauty",
+                                "Outdoor amenities"
+                            ]
+                        },
+                        {
+                            "name": "Premium Lawn Package",
+                            "price": "₹43,000",
+                            "features": [
+                                "8 hours exclusive lawn",
+                                "Premium outdoor seating",
+                                "Complete setup services",
+                                "Best mountain views",
+                                "Full natural access",
+                                "All outdoor amenities"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 104,
+                    "name": "Gulbarga Banquet Hall",
+                    "specialty": "Banquet Hall",
+                    "rating": 4.5,
+                    "price": "₹24,000 - ₹46,000",
+                    "capacity": "200-500 guests",
+                    "image": "https://content.jdmagicbox.com/comp/gulbarga/f4/9999p8472.8472.231121194948.y5f4/catalogue/brinda-convention-hall-brinda-kalyan-mantap-gulbarga-pzmioej3ei.jpg",
+                    "experience": "11 years",
+                    "features": ["Elegant Interior", "Professional Service", "Quality Setup", "Modern Facilities", "City Center Location"],
+                    "contact": {"phone": "+91 9876543237"},
+                    "packages": [
+                        {
+                            "name": "Basic Banquet Package",
+                            "price": "₹24,000",
+                            "features": [
+                                "4 hours hall rental",
+                                "Basic banquet seating",
+                                "Standard setup",
+                                "Professional service",
+                                "City center location"
+                            ]
+                        },
+                        {
+                            "name": "Standard Banquet Package",
+                            "price": "₹35,000",
+                            "features": [
+                                "6 hours hall rental",
+                                "Enhanced banquet seating",
+                                "Professional setup",
+                                "Quality service",
+                                "Modern facilities",
+                                "Elegant interior"
+                            ]
+                        },
+                        {
+                            "name": "Premium Banquet Package",
+                            "price": "₹46,000",
+                            "features": [
+                                "8 hours exclusive hall",
+                                "Premium banquet seating",
+                                "Complete setup services",
+                                "Premium service",
+                                "All facilities included",
+                                "Luxury interior"
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "Kerala": [
+                {
+                    "id": 105,
+                    "name": "Kochi Grand Convention",
+                    "specialty": "Convention Hall",
+                    "rating": 4.3,
+                    "price": "₹10,000 - ₹25,000",
+                    "capacity": "300-800 guests",
+                    "image": "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=800",
+                    "experience": "4 years",
+                    "features": ["Port City Location", "Modern Facilities", "Professional Services", "Quality Equipment", "Coastal Atmosphere"],
+                    "contact": {"phone": "+91 9876543240"},
+                    "packages": [
+                        {
+                            "name": "Basic Convention Package",
+                            "price": "₹10,000",
+                            "features": [
+                                "4 hours hall rental",
+                                "Basic convention seating",
+                                "Standard equipment",
+                                "Professional services",
+                                "Port city location"
+                            ]
+                        },
+                        {
+                            "name": "Standard Convention Package",
+                            "price": "₹17,500",
+                            "features": [
+                                "6 hours hall rental",
+                                "Enhanced convention seating",
+                                "Improved equipment",
+                                "Quality services",
+                                "Modern facilities",
+                                "Coastal atmosphere"
+                            ]
+                        },
+                        {
+                            "name": "Premium Convention Package",
+                            "price": "₹25,000",
+                            "features": [
+                                "8 hours exclusive hall",
+                                "Premium convention seating",
+                                "Advanced equipment",
+                                "Premium services",
+                                "All modern facilities",
+                                "Best coastal access"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 106,
+                    "name": "Kovalam Beach Resort",
+                    "specialty": "Beach Resort",
+                    "rating": 4.4,
+                    "price": "₹12,000 - ₹28,000",
+                    "capacity": "150-400 guests",
+                    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWXkbPvdiFofMZ7bPcBKiEY4aFWsJlc4QtbQ&s",
+                    "experience": "5 years",
+                    "features": ["Famous Beach", "Resort Amenities", "Sea Views", "Beach Activities", "Coastal Cuisine"],
+                    "contact": {"phone": "+91 9876543241"},
+                    "packages": [
+                        {
+                            "name": "Basic Resort Package",
+                            "price": "₹12,000",
+                            "features": [
+                                "4 hours beach access",
+                                "Basic resort seating",
+                                "Beach setup assistance",
+                                "Famous beach location",
+                                "Resort amenities"
+                            ]
+                        },
+                        {
+                            "name": "Standard Resort Package",
+                            "price": "₹20,000",
+                            "features": [
+                                "6 hours beach access",
+                                "Enhanced resort seating",
+                                "Professional setup",
+                                "Premium amenities",
+                                "Sea views",
+                                "Beach activities"
+                            ]
+                        },
+                        {
+                            "name": "Premium Resort Package",
+                            "price": "₹28,000",
+                            "features": [
+                                "8 hours exclusive beach",
+                                "Premium resort seating",
+                                "Complete setup services",
+                                "All amenities included",
+                                "Best sea views",
+                                "All beach activities"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 107,
+                    "name": "Trivandrum Luxury Hotel",
+                    "specialty": "Luxury Hotel",
+                    "rating": 4.5,
+                    "price": "₹14,000 - ₹31,000",
+                    "capacity": "100-300 guests",
+                    "image": "https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=800",
+                    "experience": "6 years",
+                    "features": ["Capital City", "Luxury Accommodation", "Fine Dining", "Premium Service", "Modern Amenities"],
+                    "contact": {"phone": "+91 9876543242"},
+                    "packages": [
+                        {
+                            "name": "Basic Hotel Package",
+                            "price": "₹14,000",
+                            "features": [
+                                "4 hours hall rental",
+                                "Basic hotel services",
+                                "Standard amenities",
+                                "Capital city location",
+                                "Modern amenities"
+                            ]
+                        },
+                        {
+                            "name": "Standard Hotel Package",
+                            "price": "₹22,500",
+                            "features": [
+                                "6 hours hall rental",
+                                "Enhanced hotel services",
+                                "Improved amenities",
+                                "Premium service",
+                                "Fine dining options",
+                                "Luxury accommodation"
+                            ]
+                        },
+                        {
+                            "name": "Premium Hotel Package",
+                            "price": "₹31,000",
+                            "features": [
+                                "8 hours exclusive hall",
+                                "Premium hotel services",
+                                "All amenities included",
+                                "Capital experience",
+                                "Gourmet dining",
+                                "Premium luxury"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 108,
+                    "name": "Munnar Garden Venue",
+                    "specialty": "Garden Venue",
+                    "rating": 4.6,
+                    "price": "₹16,000 - ₹34,000",
+                    "capacity": "200-600 guests",
+                    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4pqwMMRQ_lRt9fQrcCpSPWS_cuZ48PYApvg&s",
+                    "experience": "7 years",
+                    "features": ["Hill Station", "Tea Gardens", "Cool Climate", "Natural Beauty", "Mountain Views"],
+                    "contact": {"phone": "+91 9876543243"},
+                    "packages": [
+                        {
+                            "name": "Basic Garden Package",
+                            "price": "₹16,000",
+                            "features": [
+                                "4 hours garden access",
+                                "Basic garden seating",
+                                "Natural setup",
+                                "Hill station location",
+                                "Tea gardens"
+                            ]
+                        },
+                        {
+                            "name": "Standard Garden Package",
+                            "price": "₹25,000",
+                            "features": [
+                                "6 hours garden access",
+                                "Enhanced garden seating",
+                                "Professional setup",
+                                "Cool climate",
+                                "Natural beauty",
+                                "Mountain views"
+                            ]
+                        },
+                        {
+                            "name": "Premium Garden Package",
+                            "price": "₹34,000",
+                            "features": [
+                                "8 hours exclusive garden",
+                                "Premium garden seating",
+                                "Complete setup services",
+                                "Best mountain views",
+                                "Full natural access",
+                                "Tea garden experience"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 109,
+                    "name": "Guruvayur Temple Hall",
+                    "specialty": "Temple Hall",
+                    "rating": 4.7,
+                    "price": "₹18,000 - ₹37,000",
+                    "capacity": "300-800 guests",
+                    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTP73EPr0USUUIKgzFWFRLLcmmqb34T__UMuw&s",
+                    "experience": "8 years",
+                    "features": ["Famous Temple", "Spiritual Significance", "Traditional Architecture", "Cultural Heritage", "Religious Atmosphere"],
+                    "contact": {"phone": "+91 9876543244"},
+                    "packages": [
+                        {
+                            "name": "Basic Temple Package",
+                            "price": "₹18,000",
+                            "features": [
+                                "4 hours hall rental",
+                                "Basic temple seating",
+                                "Traditional setup",
+                                "Famous temple location",
+                                "Spiritual significance"
+                            ]
+                        },
+                        {
+                            "name": "Standard Temple Package",
+                            "price": "₹27,500",
+                            "features": [
+                                "6 hours hall rental",
+                                "Enhanced temple seating",
+                                "Professional setup",
+                                "Cultural heritage",
+                                "Religious atmosphere",
+                                "Traditional architecture"
+                            ]
+                        },
+                        {
+                            "name": "Premium Temple Package",
+                            "price": "₹37,000",
+                            "features": [
+                                "8 hours exclusive hall",
+                                "Premium temple seating",
+                                "Complete setup services",
+                                "Full cultural experience",
+                                "Spiritual significance",
+                                "Heritage architecture"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 110,
+                    "name": "Kottayam Community Hall",
+                    "specialty": "Community Hall",
+                    "rating": 4.3,
+                    "price": "₹20,000 - ₹40,000",
+                    "capacity": "150-400 guests",
+                    "image": "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=800",
+                    "experience": "9 years",
+                    "features": ["Community Space", "Local Accessibility", "Affordable Options", "Basic Amenities", "Flexible Usage"],
+                    "contact": {"phone": "+91 9876543245"},
+                    "packages": [
+                        {
+                            "name": "Basic Community Package",
+                            "price": "₹20,000",
+                            "features": [
+                                "4 hours hall rental",
+                                "Basic community seating",
+                                "Simple setup assistance",
+                                "Local accessibility",
+                                "Community space"
+                            ]
+                        },
+                        {
+                            "name": "Standard Community Package",
+                            "price": "₹30,000",
+                            "features": [
+                                "6 hours hall rental",
+                                "Enhanced community seating",
+                                "Professional setup",
+                                "Improved amenities",
+                                "Flexible usage",
+                                "Affordable options"
+                            ]
+                        },
+                        {
+                            "name": "Premium Community Package",
+                            "price": "₹40,000",
+                            "features": [
+                                "8 hours exclusive hall",
+                                "Premium community seating",
+                                "Complete setup services",
+                                "All amenities included",
+                                "Custom usage options",
+                                "Best local access"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 111,
+                    "name": "Wayanad Outdoor Lawn",
+                    "specialty": "Outdoor Lawn",
+                    "rating": 4.4,
+                    "price": "₹22,000 - ₹43,000",
+                    "capacity": "250-700 guests",
+                    "image": "https://eventsmanagementkerala.com/wp-content/uploads/elementor/thumbs/MeenangaNH-r8xgpmcw0zcb2n0ljk46zjdelztwsg6pt81jnew5to.webp",
+                    "experience": "10 years",
+                    "features": ["Forest Setting", "Natural Beauty", "Wildlife Views", "Outdoor Atmosphere", "Eco-Friendly"],
+                    "contact": {"phone": "+91 9876543246"},
+                    "packages": [
+                        {
+                            "name": "Basic Lawn Package",
+                            "price": "₹22,000",
+                            "features": [
+                                "4 hours lawn access",
+                                "Basic outdoor seating",
+                                "Natural setup",
+                                "Forest setting",
+                                "Natural beauty"
+                            ]
+                        },
+                        {
+                            "name": "Standard Lawn Package",
+                            "price": "₹32,500",
+                            "features": [
+                                "6 hours lawn access",
+                                "Enhanced outdoor seating",
+                                "Professional setup",
+                                "Wildlife views",
+                                "Outdoor atmosphere",
+                                "Eco-friendly"
+                            ]
+                        },
+                        {
+                            "name": "Premium Lawn Package",
+                            "price": "₹43,000",
+                            "features": [
+                                "8 hours exclusive lawn",
+                                "Premium outdoor seating",
+                                "Complete setup services",
+                                "Best wildlife views",
+                                "Full natural access",
+                                "All eco-amenities"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 112,
+                    "name": "Kannur Banquet Hall",
+                    "specialty": "Banquet Hall",
+                    "rating": 4.5,
+                    "price": "₹24,000 - ₹46,000",
+                    "capacity": "200-500 guests",
+                    "image": "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=800",
+                    "experience": "11 years",
+                    "features": ["Elegant Interior", "Professional Service", "Quality Setup", "Modern Facilities", "Coastal City Location"],
+                    "contact": {"phone": "+91 9876543247"},
+                    "packages": [
+                        {
+                            "name": "Basic Banquet Package",
+                            "price": "₹24,000",
+                            "features": [
+                                "4 hours hall rental",
+                                "Basic banquet seating",
+                                "Standard setup",
+                                "Professional service",
+                                "Coastal city location"
+                            ]
+                        },
+                        {
+                            "name": "Standard Banquet Package",
+                            "price": "₹35,000",
+                            "features": [
+                                "6 hours hall rental",
+                                "Enhanced banquet seating",
+                                "Professional setup",
+                                "Quality service",
+                                "Modern facilities",
+                                "Elegant interior"
+                            ]
+                        },
+                        {
+                            "name": "Premium Banquet Package",
+                            "price": "₹46,000",
+                            "features": [
+                                "8 hours exclusive hall",
+                                "Premium banquet seating",
+                                "Complete setup services",
+                                "Premium service",
+                                "All facilities included",
+                                "Luxury interior"
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "Telangana": [
+                {
+                    "id": 113,
+                    "name": "Hyderabad Grand Convention",
+                    "specialty": "Convention Hall",
+                    "rating": 4.3,
+                    "price": "₹10,000 - ₹25,000",
+                    "capacity": "300-800 guests",
+                    "image": "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=800",
+                    "experience": "4 years",
+                    "features": ["IT Hub Location", "Modern Technology", "Professional Services", "Quality Equipment", "City Center Access"],
+                    "contact": {"phone": "+91 9876543250"},
+                    "packages": [
+                        {
+                            "name": "Basic Convention Package",
+                            "price": "₹10,000",
+                            "features": [
+                                "4 hours hall rental",
+                                "Basic convention seating",
+                                "Standard equipment",
+                                "Professional services",
+                                "IT hub location"
+                            ]
+                        },
+                        {
+                            "name": "Standard Convention Package",
+                            "price": "₹17,500",
+                            "features": [
+                                "6 hours hall rental",
+                                "Enhanced convention seating",
+                                "Improved equipment",
+                                "Quality services",
+                                "Modern technology",
+                                "City center access"
+                            ]
+                        },
+                        {
+                            "name": "Premium Convention Package",
+                            "price": "₹25,000",
+                            "features": [
+                                "8 hours exclusive hall",
+                                "Premium convention seating",
+                                "Advanced equipment",
+                                "Premium services",
+                                "Latest technology",
+                                "Best city access"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 114,
+                    "name": "Secunderabad Beach Resort",
+                    "specialty": "Beach Resort",
+                    "rating": 4.4,
+                    "price": "₹12,000 - ₹28,000",
+                    "capacity": "150-400 guests",
+                    "image": "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800",
+                    "experience": "5 years",
+                    "features": ["Lake Access", "Resort Amenities", "Water Views", "Recreational Facilities", "Resort Atmosphere"],
+                    "contact": {"phone": "+91 9876543251"},
+                    "packages": [
+                        {
+                            "name": "Basic Resort Package",
+                            "price": "₹12,000",
+                            "features": [
+                                "4 hours lake access",
+                                "Basic resort seating",
+                                "Resort setup assistance",
+                                "Lake views",
+                                "Resort amenities"
+                            ]
+                        },
+                        {
+                            "name": "Standard Resort Package",
+                            "price": "₹20,000",
+                            "features": [
+                                "6 hours lake access",
+                                "Enhanced resort seating",
+                                "Professional setup",
+                                "Premium amenities",
+                                "Water views",
+                                "Recreational facilities"
+                            ]
+                        },
+                        {
+                            "name": "Premium Resort Package",
+                            "price": "₹28,000",
+                            "features": [
+                                "8 hours exclusive lake access",
+                                "Premium resort seating",
+                                "Complete setup services",
+                                "All amenities included",
+                                "Best water views",
+                                "All recreational facilities"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 115,
+                    "name": "Hitech City Luxury Hotel",
+                    "specialty": "Luxury Hotel",
+                    "rating": 4.5,
+                    "price": "₹14,000 - ₹31,000",
+                    "capacity": "100-300 guests",
+                    "image": "https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=800",
+                    "experience": "6 years",
+                    "features": ["IT District", "Luxury Accommodation", "Fine Dining", "Business Facilities", "Premium Service"],
+                    "contact": {"phone": "+91 9876543252"},
+                    "packages": [
+                        {
+                            "name": "Basic Hotel Package",
+                            "price": "₹14,000",
+                            "features": [
+                                "4 hours hall rental",
+                                "Basic hotel services",
+                                "Standard amenities",
+                                "IT district location",
+                                "Business facilities"
+                            ]
+                        },
+                        {
+                            "name": "Standard Hotel Package",
+                            "price": "₹22,500",
+                            "features": [
+                                "6 hours hall rental",
+                                "Enhanced hotel services",
+                                "Improved amenities",
+                                "Premium service",
+                                "Fine dining options",
+                                "Luxury accommodation"
+                            ]
+                        },
+                        {
+                            "name": "Premium Hotel Package",
+                            "price": "₹31,000",
+                            "features": [
+                                "8 hours exclusive hall",
+                                "Premium hotel services",
+                                "All amenities included",
+                                "IT experience",
+                                "Gourmet dining",
+                                "Premium business facilities"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 116,
+                    "name": "Warangal Garden Venue",
+                    "specialty": "Garden Venue",
+                    "rating": 4.6,
+                    "price": "₹16,000 - ₹34,000",
+                    "capacity": "200-600 guests",
+                    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTm3QSEcUSQTNnsl9ZVK7S-4M5yXEcg1weYbg&s",
+                    "experience": "7 years",
+                    "features": ["Historical City", "Traditional Garden", "Cultural Elements", "Natural Setting", "Heritage Atmosphere"],
+                    "contact": {"phone": "+91 9876543253"},
+                    "packages": [
+                        {
+                            "name": "Basic Garden Package",
+                            "price": "₹16,000",
+                            "features": [
+                                "4 hours garden access",
+                                "Basic garden seating",
+                                "Traditional setup",
+                                "Historical city location",
+                                "Cultural elements"
+                            ]
+                        },
+                        {
+                            "name": "Standard Garden Package",
+                            "price": "₹25,000",
+                            "features": [
+                                "6 hours garden access",
+                                "Enhanced garden seating",
+                                "Professional setup",
+                                "Heritage atmosphere",
+                                "Natural setting",
+                                "Traditional garden"
+                            ]
+                        },
+                        {
+                            "name": "Premium Garden Package",
+                            "price": "₹34,000",
+                            "features": [
+                                "8 hours exclusive garden",
+                                "Premium garden seating",
+                                "Complete setup services",
+                                "Full heritage experience",
+                                "Best natural access",
+                                "Cultural heritage"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 117,
+                    "name": "Nizamabad Temple Hall",
+                    "specialty": "Temple Hall",
+                    "rating": 4.7,
+                    "price": "₹18,000 - ₹37,000",
+                    "capacity": "300-800 guests",
+                    "image": "https://images.unsplash.com/photo-1587132137056-83ddec79aa22?w=800",
+                    "experience": "8 years",
+                    "features": ["Historical Temple", "Spiritual Significance", "Traditional Architecture", "Cultural Heritage", "Religious Atmosphere"],
+                    "contact": {"phone": "+91 9876543254"},
+                    "packages": [
+                        {
+                            "name": "Basic Temple Package",
+                            "price": "₹18,000",
+                            "features": [
+                                "4 hours hall rental",
+                                "Basic temple seating",
+                                "Traditional setup",
+                                "Historical temple",
+                                "Spiritual significance"
+                            ]
+                        },
+                        {
+                            "name": "Standard Temple Package",
+                            "price": "₹27,500",
+                            "features": [
+                                "6 hours hall rental",
+                                "Enhanced temple seating",
+                                "Professional setup",
+                                "Cultural heritage",
+                                "Religious atmosphere",
+                                "Traditional architecture"
+                            ]
+                        },
+                        {
+                            "name": "Premium Temple Package",
+                            "price": "₹37,000",
+                            "features": [
+                                "8 hours exclusive hall",
+                                "Premium temple seating",
+                                "Complete setup services",
+                                "Full cultural experience",
+                                "Spiritual significance",
+                                "Heritage architecture"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 118,
+                    "name": "Karimnagar Community Hall",
+                    "specialty": "Community Hall",
+                    "rating": 4.3,
+                    "price": "₹20,000 - ₹40,000",
+                    "capacity": "150-400 guests",
+                    "image": "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=800",
+                    "experience": "9 years",
+                    "features": ["Community Space", "Local Accessibility", "Affordable Options", "Basic Services", "Flexible Usage"],
+                    "contact": {"phone": "+91 9876543255"},
+                    "packages": [
+                        {
+                            "name": "Basic Community Package",
+                            "price": "₹20,000",
+                            "features": [
+                                "4 hours hall rental",
+                                "Basic community seating",
+                                "Simple setup assistance",
+                                "Local accessibility",
+                                "Community space"
+                            ]
+                        },
+                        {
+                            "name": "Standard Community Package",
+                            "price": "₹30,000",
+                            "features": [
+                                "6 hours hall rental",
+                                "Enhanced community seating",
+                                "Professional setup",
+                                "Improved services",
+                                "Flexible usage",
+                                "Affordable options"
+                            ]
+                        },
+                        {
+                            "name": "Premium Community Package",
+                            "price": "₹40,000",
+                            "features": [
+                                "8 hours exclusive hall",
+                                "Premium community seating",
+                                "Complete setup services",
+                                "All services included",
+                                "Custom usage options",
+                                "Best local access"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 119,
+                    "name": "Khammam Outdoor Lawn",
+                    "specialty": "Outdoor Lawn",
+                    "rating": 4.4,
+                    "price": "₹22,000 - ₹43,000",
+                    "capacity": "250-700 guests",
+                    "image": "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=800",
+                    "experience": "10 years",
+                    "features": ["Open Space", "Natural Setting", "Outdoor Atmosphere", "Flexible Layout", "Natural Beauty"],
+                    "contact": {"phone": "+91 9876543256"},
+                    "packages": [
+                        {
+                            "name": "Basic Lawn Package",
+                            "price": "₹22,000",
+                            "features": [
+                                "4 hours lawn access",
+                                "Basic outdoor seating",
+                                "Natural setup",
+                                "Open space",
+                                "Natural setting"
+                            ]
+                        },
+                        {
+                            "name": "Standard Lawn Package",
+                            "price": "₹32,500",
+                            "features": [
+                                "6 hours lawn access",
+                                "Enhanced outdoor seating",
+                                "Professional setup",
+                                "Outdoor atmosphere",
+                                "Flexible layout",
+                                "Natural beauty"
+                            ]
+                        },
+                        {
+                            "name": "Premium Lawn Package",
+                            "price": "₹43,000",
+                            "features": [
+                                "8 hours exclusive lawn",
+                                "Premium outdoor seating",
+                                "Complete setup services",
+                                "Best outdoor atmosphere",
+                                "Full natural access",
+                                "Custom layout design"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 120,
+                    "name": "Medak Banquet Hall",
+                    "specialty": "Banquet Hall",
+                    "rating": 4.5,
+                    "price": "₹24,000 - ₹46,000",
+                    "capacity": "200-500 guests",
+                    "image": "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=800",
+                    "experience": "11 years",
+                    "features": ["Elegant Interior", "Professional Service", "Quality Setup", "Modern Facilities", "District Center Location"],
+                    "contact": {"phone": "+91 9876543257"},
+                    "packages": [
+                        {
+                            "name": "Basic Banquet Package",
+                            "price": "₹24,000",
+                            "features": [
+                                "4 hours hall rental",
+                                "Basic banquet seating",
+                                "Standard setup",
+                                "Professional service",
+                                "District center location"
+                            ]
+                        },
+                        {
+                            "name": "Standard Banquet Package",
+                            "price": "₹35,000",
+                            "features": [
+                                "6 hours hall rental",
+                                "Enhanced banquet seating",
+                                "Professional setup",
+                                "Quality service",
+                                "Modern facilities",
+                                "Elegant interior"
+                            ]
+                        },
+                        {
+                            "name": "Premium Banquet Package",
+                            "price": "₹46,000",
+                            "features": [
+                                "8 hours exclusive hall",
+                                "Premium banquet seating",
+                                "Complete setup services",
+                                "Premium service",
+                                "All facilities included",
+                                "Luxury interior"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        };
+
+// DOM Elements
+const venuesGrid = document.getElementById('venuesGrid');
+const stateFilter = document.getElementById('stateFilter');
+const venueTypeFilter = document.getElementById('venueTypeFilter');
+const searchInput = document.getElementById('searchInput');
+const minCapacity = document.getElementById('minCapacity');
+const maxCapacity = document.getElementById('maxCapacity');
+const resetFilters = document.getElementById('resetFilters');
+const totalVenues = document.getElementById('totalVenues');
+const avgRating = document.getElementById('avgRating');
+const statesCovered = document.getElementById('statesCovered');
+const topRated = document.getElementById('topRated');
+const shortlistToast = document.getElementById('shortlistToast');
+
+// Current filters and shortlist
+let currentState = 'all';
+let currentVenueType = 'all';
+let currentSearch = '';
+let currentMinCapacity = '';
+let currentMaxCapacity = '';
+let shortlistedServices = JSON.parse(localStorage.getItem('shortlistedVenues')) || [];
+let bookings = JSON.parse(localStorage.getItem('venueBookings')) || [];
+
+// Initialize the page
+function init() {
+    updateStats();
+    displayVenues();
+    setupEventListeners();
+    checkPendingBookings();
+}
+
+// Update statistics
+function updateStats() {
+    let allVenues = [];
+    let totalRating = 0;
+    let topRatedCount = 0;
+    
+    for (const state in venuesData) {
+        venuesData[state].forEach(venue => {
+            allVenues.push(venue);
+            totalRating += venue.rating;
+            if (venue.rating >= 4.5) topRatedCount++;
+        });
+    }
+    
+    totalVenues.textContent = allVenues.length;
+    avgRating.textContent = (totalRating / allVenues.length).toFixed(1);
+    statesCovered.textContent = Object.keys(venuesData).length;
+    topRated.textContent = topRatedCount;
+}
+
+// Set up event listeners
+function setupEventListeners() {
+    // State filter
+    stateFilter.addEventListener('change', () => {
+        currentState = stateFilter.value;
+        displayVenues();
+    });
+
+    // Venue type filter
+    venueTypeFilter.addEventListener('change', () => {
+        currentVenueType = venueTypeFilter.value;
+        displayVenues();
+    });
+
+    // Search
+    searchInput.addEventListener('input', () => {
+        currentSearch = searchInput.value.toLowerCase();
+        displayVenues();
+    });
+
+    // Capacity filters
+    minCapacity.addEventListener('input', () => {
+        currentMinCapacity = minCapacity.value;
+        displayVenues();
+    });
+
+    maxCapacity.addEventListener('input', () => {
+        currentMaxCapacity = maxCapacity.value;
+        displayVenues();
+    });
+
+    // Reset filters
+    resetFilters.addEventListener('click', () => {
+        stateFilter.value = 'all';
+        venueTypeFilter.value = 'all';
+        searchInput.value = '';
+        minCapacity.value = '';
+        maxCapacity.value = '';
+        
+        currentState = 'all';
+        currentVenueType = 'all';
+        currentSearch = '';
+        currentMinCapacity = '';
+        currentMaxCapacity = '';
+        
+        displayVenues();
+    });
+        const bookingModal = document.getElementById('bookingModal');
+    const bookingForm = document.getElementById('bookingForm');
+    const closeBookingForm = document.getElementById('closeBookingForm');
+    const cancelBooking = document.getElementById('cancelBooking');
+    
+    // Close modal when clicking X
+    closeBookingForm.addEventListener('click', closeBookingModal);
+    
+    // Close modal when clicking cancel
+    cancelBooking.addEventListener('click', closeBookingModal);
+    
+    // Close modal when clicking outside
+    bookingModal.addEventListener('click', (e) => {
+        if (e.target === bookingModal) {
+            closeBookingModal();
+        }
+    });
+    
+    // Handle form submission
+    bookingForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        const formData = {
+            customerName: document.getElementById('customerName').value,
+            customerPhone: document.getElementById('customerPhone').value,
+            customerEmail: document.getElementById('customerEmail').value,
+            eventType: document.getElementById('eventType').value,
+            eventDate: document.getElementById('eventDate').value,
+            eventTime: document.getElementById('eventTime').value,
+            venueDuration: document.getElementById('venueDuration').value,
+            guestCount: document.getElementById('guestCount').value,
+            venuePackage: document.getElementById('venuePackage').value,
+            setupRequirements: document.getElementById('setupRequirements').value,
+            cateringNeeded: document.getElementById('cateringNeeded').value,
+            decorationNeeded: document.getElementById('decorationNeeded').value,
+            parkingRequirements: document.getElementById('parkingRequirements').value,
+            specialRequirements: document.getElementById('specialRequirements').value
+        };
+        
+        submitBookingForm(formData);
+    });
+}
+
+// Display venues based on current filters
+function displayVenues() {
+    venuesGrid.innerHTML = '';
+    
+    let venuesToShow = [];
+    
+    // Collect venues based on state filter
+    if (currentState === 'all') {
+        // Show venues from all states
+        for (const state in venuesData) {
+            venuesData[state].forEach(venue => {
+                venue.state = state;
+                venuesToShow.push(venue);
+            });
+        }
+    } else {
+        // Show venues from specific state
+        if (venuesData[currentState]) {
+            venuesData[currentState].forEach(venue => {
+                venue.state = currentState;
+                venuesToShow.push(venue);
+            });
+        }
+    }
+    
+    // Apply venue type filter
+    if (currentVenueType !== 'all') {
+        venuesToShow = venuesToShow.filter(venue => 
+            venue.specialty === currentVenueType
+        );
+    }
+    
+    // Apply search filter
+    if (currentSearch) {
+        venuesToShow = venuesToShow.filter(venue => {
+            const searchTerm = currentSearch;
+            const searchableText = (
+                venue.name + ' ' + 
+                venue.specialty + ' ' + 
+                venue.state + ' ' +
+                venue.features.join(' ')
+            ).toLowerCase();
+            
+            return searchableText.includes(searchTerm);
+        });
+    }
+    
+    // Display venues or show no results message
+    if (venuesToShow.length === 0) {
+        venuesGrid.innerHTML = `
+            <div class="no-results">
+                <h3>No venues found matching your criteria</h3>
+                <p>Try adjusting your filters or search terms</p>
+            </div>
+        `;
+    } else {
+        venuesToShow.forEach(venue => {
+            const venueCard = createVenueCard(venue);
+            venuesGrid.appendChild(venueCard);
+        });
+    }
+}
+
+// Create venue card element
+function createVenueCard(venue) {
+    const card = document.createElement('div');
+    card.className = 'catering-card';
+    
+    // Create feature tags
+    const featureTags = venue.features.map(feature => 
+        `<span class="catering-feature-tag">${feature}</span>`
+    ).join('');
+    
+    // Create packages HTML
+    let packagesHTML = '';
+    if (venue.packages && venue.packages.length > 0) {
+        packagesHTML = `
+            <div class="packages-section">
+                <div class="packages-title">
+                    Venue Packages
+                    <button class="packages-toggle">Show Packages</button>
+                </div>
+                <div class="packages-list">
+                    ${venue.packages.map(pkg => `
+                        <div class="package-item">
+                            <div class="package-name">${pkg.name}</div>
+                            <div class="package-price">${pkg.price}</div>
+                            <div class="package-features">
+                                <ul>
+                                    ${pkg.features.map(feature => `<li>${feature}</li>`).join('')}
+                                </ul>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        `;
+    }
+    
+    // Check if service is already shortlisted
+    const isShortlisted = shortlistedServices.some(item => item.id === venue.id);
+    
+    // Check if already booked
+    const existingBooking = bookings.find(booking => booking.id === venue.id);
+    const isBooked = existingBooking && existingBooking.status !== 'cancelled';
+    
+    card.innerHTML = `
+        <div class="catering-image" style="background-image: url('${venue.image}')">
+            <div class="state-badge">${venue.state}</div>
+            <div class="catering-rating">⭐ ${venue.rating}</div>
+            ${isBooked ? `<div class="booking-badge">${existingBooking.status.toUpperCase()}</div>` : ''}
+        </div>
+        <div class="catering-content">
+            <h3 class="catering-name">${venue.name}</h3>
+            <p class="catering-specialty">${venue.specialty}</p>
+            <div class="catering-details">
+                <span class="catering-price">${venue.price}</span>
+                <span class="catering-capacity">${venue.capacity}</span>
+            </div>
+            <div class="catering-features">
+                ${featureTags}
+            </div>
+            ${packagesHTML}
+            <div class="action-buttons">
+                <button class="btn ${isBooked ? 'btn-success' : 'btn-primary'} book-now-btn" 
+                        data-service-id="${venue.id}"
+                        ${isBooked ? 'disabled' : ''}>
+                    ${isBooked ? '✓ ' + existingBooking.status.charAt(0).toUpperCase() + existingBooking.status.slice(1) : 'Book Now'}
+                </button>
+                <button class="btn btn-secondary shortlist-btn ${isShortlisted ? 'added' : ''}" data-service-id="${venue.id}">
+                    ${isShortlisted ? '✓ Shortlisted' : 'Add to Shortlist'}
+                </button>
+            </div>
+            <div class="catering-contact">
+                <div class="catering-phone">${venue.contact.phone}</div>
+                <small>Contact for bookings and venue details</small>
+            </div>
+        </div>
+    `;
+    
+    // Add click event to toggle packages
+    const packagesToggle = card.querySelector('.packages-toggle');
+    const packagesList = card.querySelector('.packages-list');
+    
+    if (packagesToggle && packagesList) {
+        packagesToggle.addEventListener('click', () => {
+            packagesList.classList.toggle('show');
+            packagesToggle.textContent = packagesList.classList.contains('show') ? 
+                'Hide Packages' : 'Show Packages';
+        });
+    }
+    
+    // Add click event to Book Now button
+    const bookNowBtn = card.querySelector('.book-now-btn');
+    if (!isBooked) {
+        bookNowBtn.addEventListener('click', () => {
+            bookService(venue, bookNowBtn);
+        });
+    }
+    
+    // Add click event to Shortlist button
+    const shortlistBtn = card.querySelector('.shortlist-btn');
+    shortlistBtn.addEventListener('click', () => {
+        toggleShortlist(venue, shortlistBtn);
+    });
+    
+    return card;
+}
+
+// Global variables for booking
+let currentBookingVenue = null;
+let currentBookingButton = null;
+
+// Modified bookService function
+function bookService(venue, button) {
+    currentBookingVenue = venue;
+    currentBookingButton = button;
+    
+    // Show booking form modal
+    const bookingModal = document.getElementById('bookingModal');
+    bookingModal.classList.add('show');
+    
+    // Set minimum date to today
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('eventDate').min = today;
+    
+    // Pre-fill guest count based on venue capacity
+    const capacityMatch = venue.capacity.match(/(\d+)-(\d+)/);
+    if (capacityMatch) {
+        const avgCapacity = Math.round((parseInt(capacityMatch[1]) + parseInt(capacityMatch[2])) / 2);
+        document.getElementById('guestCount').placeholder = `e.g., ${avgCapacity}`;
+    }
+}
+
+// New function to handle booking form submission
+function submitBookingForm(formData) {
+    console.log('Submitting booking for venue:', currentBookingVenue);
+    
+    // Create comprehensive booking object
+    const booking = {
+        id: currentBookingVenue.id,
+        serviceId: currentBookingVenue.id,
+        name: currentBookingVenue.name,
+        serviceType: 'venue',
+        specialty: currentBookingVenue.specialty,
+        price: currentBookingVenue.price,
+        image: currentBookingVenue.image,
+        contact: currentBookingVenue.contact,
+        state: currentBookingVenue.state,
+        capacity: currentBookingVenue.capacity,
+        
+        // Customer details
+        customerName: formData.customerName,
+        customerPhone: formData.customerPhone,
+        customerEmail: formData.customerEmail,
+        
+        // Event details
+        eventType: formData.eventType,
+        eventDate: formData.eventDate,
+        eventTime: formData.eventTime,
+        guestCount: formData.guestCount,
+        
+        // Venue specific details
+        venueDuration: formData.venueDuration,
+        venuePackage: formData.venuePackage,
+        setupRequirements: formData.setupRequirements,
+        cateringNeeded: formData.cateringNeeded,
+        decorationNeeded: formData.decorationNeeded,
+        parkingRequirements: formData.parkingRequirements,
+        specialRequirements: formData.specialRequirements,
+        
+        // Booking metadata
+        bookingDate: new Date().toISOString().split('T')[0],
+        bookingTime: new Date().toLocaleTimeString(),
+        status: 'pending',
+        vendor: currentBookingVenue.name,
+        acceptedAt: null
+    };
+    
+    // Add to bookings
+    bookings.push(booking);
+    localStorage.setItem('venueBookings', JSON.stringify(bookings));
+    
+    // Update button
+    if (currentBookingButton) {
+        currentBookingButton.textContent = '✓ Pending';
+        currentBookingButton.classList.remove('btn-primary');
+        currentBookingButton.classList.add('btn-success');
+        currentBookingButton.disabled = true;
+    }
+    
+    // Show confirmation
+    showShortlistToast(`Booking request sent to ${currentBookingVenue.name}! Venue manager will review your requirements.`);
+    
+    // Simulate vendor response after 1 minute
+    setTimeout(() => {
+        updateBookingStatus(currentBookingVenue.id, 'accepted');
+    }, 60000);
+    
+    // Close modal
+    closeBookingModal();
+    
+    // Reset current booking variables
+    currentBookingVenue = null;
+    currentBookingButton = null;
+}
+
+// Function to close booking modal
+function closeBookingModal() {
+    const bookingModal = document.getElementById('bookingModal');
+    bookingModal.classList.remove('show');
+    document.getElementById('bookingForm').reset();
+}
+
+// Update booking status
+// Enhanced updateBookingStatus function
+function updateBookingStatus(venueId, status) {
+    const bookingIndex = bookings.findIndex(booking => booking.id === venueId);
+    
+    if (bookingIndex !== -1) {
+        bookings[bookingIndex].status = status;
+        bookings[bookingIndex].acceptedAt = new Date().toISOString();
+        localStorage.setItem('venueBookings', JSON.stringify(bookings));
+        
+        // Update UI if the card is visible
+        const bookButton = document.querySelector(`.book-now-btn[data-service-id="${venueId}"]`);
+        if (bookButton) {
+            bookButton.textContent = '✓ ' + status.charAt(0).toUpperCase() + status.slice(1);
+            bookButton.classList.remove('btn-primary');
+            bookButton.classList.add('btn-success');
+            
+            // Update badge if exists
+            const badge = bookButton.closest('.catering-card')?.querySelector('.booking-badge');
+            if (badge) {
+                badge.textContent = status.toUpperCase();
+            }
+        }
+        
+        const statusMessage = status === 'accepted' ? 'accepted' : 'rejected';
+        showShortlistToast(`Booking ${statusMessage} for ${bookings[bookingIndex].name}!`);
+        
+        // Add notification
+        if (typeof addNotification === 'function') {
+            addNotification(
+                'Booking ' + statusMessage.charAt(0).toUpperCase() + statusMessage.slice(1), 
+                `Your venue booking with ${bookings[bookingIndex].name} has been ${statusMessage}!`, 
+                status === 'accepted' ? 'success' : 'warning'
+            );
+        }
+    }
+}
+
+// Check for pending bookings that need to be auto-accepted
+function checkPendingBookings() {
+    const now = new Date();
+    bookings.forEach(booking => {
+        if (booking.status === 'pending') {
+            const bookingDate = new Date(booking.bookingDate);
+            const timeDiff = now - bookingDate;
+            
+            // If more than 1 minute has passed, auto-accept
+            if (timeDiff > 60000) {
+                updateBookingStatus(booking.id, 'accepted');
+            } else {
+                // Set timeout for remaining time
+                const remainingTime = 60000 - timeDiff;
+                setTimeout(() => {
+                    updateBookingStatus(booking.id, 'accepted');
+                }, remainingTime);
+            }
+        }
+    });
+}
+
+// Toggle shortlist function
+function toggleShortlist(venue, button) {
+    const index = shortlistedServices.findIndex(item => item.id === venue.id);
+    
+    if (index === -1) {
+        // Add to shortlist
+        shortlistedServices.push(venue);
+        button.textContent = '✓ Shortlisted';
+        button.classList.add('added');
+        showShortlistToast('Venue added to shortlist!');
+    } else {
+        // Remove from shortlist
+        shortlistedServices.splice(index, 1);
+        button.textContent = 'Add to Shortlist';
+        button.classList.remove('added');
+        showShortlistToast('Venue removed from shortlist!');
+    }
+    
+    // Save to localStorage
+    localStorage.setItem('shortlistedVenues', JSON.stringify(shortlistedServices));
+}
+
+// Show shortlist toast notification
+function showShortlistToast(message) {
+    shortlistToast.textContent = message;
+    shortlistToast.classList.add('show');
+    
+    setTimeout(() => {
+        shortlistToast.classList.remove('show');
+    }, 3000);
+}
+// Add to each service page
+document.addEventListener('DOMContentLoaded', function() {
+  // Add event listeners to all "Book Now" buttons
+  document.querySelectorAll('.book-now-btn').forEach(button => {
+    button.addEventListener('click', function() {
+      const serviceCard = this.closest('.service-card');
+      const serviceName = serviceCard.querySelector('.service-title').textContent;
+      const serviceCategory = document.querySelector('h1').textContent.toLowerCase();
+      const servicePrice = serviceCard.querySelector('.service-price')?.textContent || 'Not specified';
+      const serviceVendor = serviceCard.querySelector('.vendor-name')?.textContent || 'Not specified';
+      
+      // Add to bookings
+      if (typeof addBooking === 'function') {
+        addBooking({
+          name: serviceName,
+          category: serviceCategory,
+          price: servicePrice,
+          vendor: serviceVendor
+        });
+      } else {
+        // If not on dashboard, redirect to dashboard
+        window.location.href = 'customer-dashboard.html';
+      }
+    });
+  });
+  
+  // Add event listeners to all "Add to Shortlist" buttons
+  document.querySelectorAll('.add-to-shortlist-btn').forEach(button => {
+    button.addEventListener('click', function() {
+      const serviceCard = this.closest('.service-card');
+      const serviceName = serviceCard.querySelector('.service-title').textContent;
+      const serviceCategory = document.querySelector('h1').textContent.toLowerCase();
+      const servicePrice = serviceCard.querySelector('.service-price')?.textContent || 'Not specified';
+      const serviceVendor = serviceCard.querySelector('.vendor-name')?.textContent || 'Not specified';
+      const serviceRating = serviceCard.querySelector('.service-rating')?.textContent || 'Not rated';
+      
+      // Add to shortlist
+      if (typeof addToShortlist === 'function') {
+        addToShortlist({
+          name: serviceName,
+          category: serviceCategory,
+          price: servicePrice,
+          vendor: serviceVendor,
+          rating: serviceRating
+        });
+      } else {
+        // If not on dashboard, redirect to dashboard
+        window.location.href = 'customer-dashboard.html';
+      }
+    });
+  });
+});
+
+// ========== DASHBOARD INTEGRATION FUNCTIONS ==========
+
+// Generate unique ID function
+function generateId() {
+    return Date.now().toString(36) + Math.random().toString(36).substr(2);
+}
+
+// Add to shortlist function for dashboard integration
+function addToShortlist(itemData) {
+    const shortlist = JSON.parse(localStorage.getItem('shortlist')) || [];
+    
+    // Check if already in shortlist
+    const exists = shortlist.some(item => item.id === itemData.id);
+    if (exists) {
+        showShortlistToast('This item is already in your shortlist!');
+        return;
+    }
+    
+    // Add to shortlist
+    shortlist.push({
+        id: itemData.id,
+        name: itemData.name,
+        type: itemData.type,
+        price: itemData.price,
+        vendor: itemData.vendor,
+        addedDate: new Date().toISOString().split('T')[0],
+        image: itemData.image,
+        specialty: itemData.specialty
+    });
+    
+    localStorage.setItem('shortlist', JSON.stringify(shortlist));
+    showShortlistToast('Added to shortlist successfully!');
+    
+    // Update dashboard badge count
+    updateDashboardShortlistCount();
+}
+
+// Remove from shortlist function
+function removeFromShortlist(itemId) {
+    const shortlist = JSON.parse(localStorage.getItem('shortlist')) || [];
+    const updatedShortlist = shortlist.filter(item => item.id !== itemId);
+    localStorage.setItem('shortlist', JSON.stringify(updatedShortlist));
+    showShortlistToast('Item removed from shortlist');
+    updateDashboardShortlistCount();
+}
+
+// Update dashboard shortlist count
+function updateDashboardShortlistCount() {
+    const shortlist = JSON.parse(localStorage.getItem('shortlist')) || [];
+    // This will update the badge when user returns to dashboard
+    console.log('Shortlist updated. Total items:', shortlist.length);
+}
+
+// Add booking function for dashboard integration
+function addBooking(bookingData) {
+    const booking = {
+        id: bookingData.id,
+        name: bookingData.name,
+        serviceType: bookingData.serviceType,
+        price: bookingData.price,
+        vendor: bookingData.vendor,
+        date: bookingData.date,
+        time: bookingData.time,
+        status: 'pending',
+        bookingDate: new Date().toISOString().split('T')[0]
+    };
+    
+    const existingBookings = JSON.parse(localStorage.getItem('bookings')) || [];
+    existingBookings.push(booking);
+    localStorage.setItem('bookings', JSON.stringify(existingBookings));
+    
+    showShortlistToast(`Booking request sent for ${bookingData.name}!`);
+}
+
+// Notification function for compatibility
+function addNotification(title, message, type = 'info') {
+    const notifications = JSON.parse(localStorage.getItem('notifications')) || [];
+    const icons = {
+        info: '🔔',
+        success: '✅',
+        warning: '⚠️'
+    };
+    
+    notifications.unshift({
+        id: generateId(),
+        title,
+        message,
+        type,
+        icon: icons[type] || '🔔',
+        timestamp: new Date().toISOString(),
+        read: false
+    });
+    
+    localStorage.setItem('notifications', JSON.stringify(notifications));
+    console.log(`Notification: ${title} - ${message}`);
+}
+
+// Initialize the application
+init();
+    </script>
+</body>
+</html>
